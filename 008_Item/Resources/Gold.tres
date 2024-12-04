@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MaterialResource" load_steps=2 format=3 uid="uid://gls8d446ws3i"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/MaterialResource.cs" id="1_roho5"]
+
+[resource]
+script = ExtResource("1_roho5")
+index = 0
+money = 0
+rank = 0

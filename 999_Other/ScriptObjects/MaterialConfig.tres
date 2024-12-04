@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MaterialConfig" load_steps=5 format=3 uid="uid://ops8cem7dfh5"]
+
+[ext_resource type="Material" uid="uid://ctiqauosbda8m" path="res://999_Other/Materials/NormalPreviewMaterial.tres" id="1_10lvg"]
+[ext_resource type="Material" uid="uid://d3tf647fug7vt" path="res://999_Other/Materials/ErrorPreviewMaterial.tres" id="2_jmepv"]
+[ext_resource type="Material" uid="uid://3x2370jlynau" path="res://999_Other/Materials/Outline.tres" id="3_d5jji"]
+[ext_resource type="Script" path="res://999_Other/Scripts/MaterialConfig.cs" id="4_ab6y3"]
+
+[resource]
+script = ExtResource("4_ab6y3")
+config = {
+1: ExtResource("1_10lvg"),
+2: ExtResource("2_jmepv"),
+3: ExtResource("3_d5jji")
+}

@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ctiqauosbda8m"]
+
+[ext_resource type="Shader" path="res://999_Other/Shaders/NormalSpriteShader.gdshader" id="1_66qns"]
+
+[resource]
+shader = ExtResource("1_66qns")
+shader_parameter/addColor = Color(1, 1, 1, 0.494118)

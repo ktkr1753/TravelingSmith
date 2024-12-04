@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UICommonSettingResource" load_steps=2 format=3 uid="uid://bn8qdmbuud131"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/UICommonSettingResource.cs" id="1_b6efa"]
+
+[resource]
+script = ExtResource("1_b6efa")
+normalColor = Color(1, 1, 1, 1)
+betterColor = Color(0.1001, 0.91, 0.518548, 1)
+worseColor = Color(0.92, 0.22448, 0.1748, 1)

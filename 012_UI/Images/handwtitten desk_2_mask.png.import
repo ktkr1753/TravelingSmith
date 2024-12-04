@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://cg12wtpde2etm"
+path="res://.godot/imported/handwtitten desk_2_mask.png-5824cb20a669ff5beee40f9993f3eec5.res"
+
+[deps]
+
+source_file="res://012_UI/Images/handwtitten desk_2_mask.png"
+dest_files=["res://.godot/imported/handwtitten desk_2_mask.png-5824cb20a669ff5beee40f9993f3eec5.res"]
+
+[params]
+
+create_from=0
+threshold=0.5

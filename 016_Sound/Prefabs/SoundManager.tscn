@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckvurhmd2s468"]
+
+[ext_resource type="Script" path="res://016_Sound/Scripts/SoundManager.cs" id="1_43cjp"]
+
+[node name="SoundManager" type="Node2D" node_paths=PackedStringArray("bgmPlayer", "soundPlayers")]
+script = ExtResource("1_43cjp")
+bgmPlayer = NodePath("BGM")
+soundPlayers = [NodePath("Sound1"), NodePath("Sound2"), NodePath("Sound3"), NodePath("Sound4")]
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+
+[node name="Sound1" type="AudioStreamPlayer" parent="."]
+
+[node name="Sound2" type="AudioStreamPlayer" parent="."]
+
+[node name="Sound3" type="AudioStreamPlayer" parent="."]
+
+[node name="Sound4" type="AudioStreamPlayer" parent="."]

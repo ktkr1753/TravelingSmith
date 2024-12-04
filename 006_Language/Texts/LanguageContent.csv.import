@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://iw7xgtt0j7g3"
+
+[deps]
+
+files=["res://006_Language/Texts/LanguageContent.en.translation", "res://006_Language/Texts/LanguageContent.zh_TW.translation"]
+
+source_file="res://006_Language/Texts/LanguageContent.csv"
+dest_files=["res://006_Language/Texts/LanguageContent.en.translation", "res://006_Language/Texts/LanguageContent.zh_TW.translation"]
+
+[params]
+
+compress=true
+delimiter=0

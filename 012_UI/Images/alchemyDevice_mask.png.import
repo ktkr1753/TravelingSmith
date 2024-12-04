@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://5k5uxoexpk0l"
+path="res://.godot/imported/alchemyDevice_mask.png-173fa99a11715c89f77d560f47380ebf.res"
+
+[deps]
+
+source_file="res://012_UI/Images/alchemyDevice_mask.png"
+dest_files=["res://.godot/imported/alchemyDevice_mask.png-173fa99a11715c89f77d560f47380ebf.res"]
+
+[params]
+
+create_from=0
+threshold=0.5

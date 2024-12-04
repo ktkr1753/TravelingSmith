@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://bklwemc72tlym"]
+
+[ext_resource type="Script" path="res://001_GameManger/Scripts/GameManager.cs" id="1_g60x2"]
+[ext_resource type="PackedScene" uid="uid://k4fr30am0r15" path="res://012_UI/Prefabs/UIManager.tscn" id="2_r5hkv"]
+[ext_resource type="Resource" uid="uid://dimdru6yldldb" path="res://017_File/Resources/LocalSettingResource.tres" id="2_usnjq"]
+[ext_resource type="PackedScene" uid="uid://ckvurhmd2s468" path="res://016_Sound/Prefabs/SoundManager.tscn" id="3_c2m3b"]
+[ext_resource type="Resource" path="res://012_UI/Resources/UICommonSetting.tres" id="3_nf7bt"]
+
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("uiManager", "soundManager")]
+script = ExtResource("1_g60x2")
+uiManager = NodePath("UIManager")
+soundManager = NodePath("SoundManager")
+localSetting = ExtResource("2_usnjq")
+uiCommonSetting = ExtResource("3_nf7bt")
+
+[node name="UIManager" parent="." instance=ExtResource("2_r5hkv")]
+
+[node name="SoundManager" parent="." node_paths=PackedStringArray("soundPlayers") instance=ExtResource("3_c2m3b")]
+soundPlayers = []

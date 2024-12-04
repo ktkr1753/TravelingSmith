@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MaterialResource" load_steps=2 format=3 uid="uid://dl367yta527ie"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/MaterialResource.cs" id="1_s2l50"]
+
+[resource]
+script = ExtResource("1_s2l50")
+index = 601
+money = 1
+rank = 0

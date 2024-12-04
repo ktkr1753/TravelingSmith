@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://k4fr30am0r15"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/UIManager.cs" id="1_4e744"]
+
+[node name="UIManager" type="CanvasLayer" node_paths=PackedStringArray("background", "layer1", "layer2", "layer3")]
+script = ExtResource("1_4e744")
+background = NodePath("blcak_panel")
+layer1 = NodePath("layer1")
+layer2 = NodePath("layer2")
+layer3 = NodePath("layer3")
+UIs = {}
+
+[node name="blcak_panel" type="Panel" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"BlackPanel"
+
+[node name="layer3" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="layer2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="layer1" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

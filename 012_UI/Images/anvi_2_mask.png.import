@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://clk08xntrkrtb"
+path="res://.godot/imported/anvi_2_mask.png-47603dc35c01320fc245c1fbeb82483d.res"
+
+[deps]
+
+source_file="res://012_UI/Images/anvi_2_mask.png"
+dest_files=["res://.godot/imported/anvi_2_mask.png-47603dc35c01320fc245c1fbeb82483d.res"]
+
+[params]
+
+create_from=0
+threshold=0.5

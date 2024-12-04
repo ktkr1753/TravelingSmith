@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LocalSettingResource" load_steps=2 format=3 uid="uid://dimdru6yldldb"]
+
+[ext_resource type="Script" path="res://017_File/Scripts/LocalSettingResource.cs" id="1_sxe3e"]
+
+[resource]
+script = ExtResource("1_sxe3e")
+bgmVolume = 50
+soundVolume = 50
