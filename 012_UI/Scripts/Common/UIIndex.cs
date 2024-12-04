@@ -4,4 +4,5 @@ using System;
 public enum UIIndex
 {
     None = 0,
+    MainGameUI = 1,
 }

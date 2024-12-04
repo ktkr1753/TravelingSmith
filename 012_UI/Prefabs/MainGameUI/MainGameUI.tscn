@@ -1,0 +1,149 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx4w7dmi1luu7"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="2_c7qgf"]
+[ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="3_uculn"]
+
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickedItemImage", "infoPanel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2jxto")
+elements = [NodePath("PanelContainer/GridContainer/MainGameItemElement"), NodePath("PanelContainer/GridContainer/MainGameItemElement1"), NodePath("PanelContainer/GridContainer/MainGameItemElement2"), NodePath("PanelContainer/GridContainer/MainGameItemElement3"), NodePath("PanelContainer/GridContainer/MainGameItemElement4"), NodePath("PanelContainer/GridContainer/MainGameItemElement5"), NodePath("PanelContainer/GridContainer/MainGameItemElement6"), NodePath("PanelContainer/GridContainer/MainGameItemElement7"), NodePath("PanelContainer/GridContainer/MainGameItemElement8"), NodePath("PanelContainer/GridContainer/MainGameItemElement9"), NodePath("PanelContainer/GridContainer/MainGameItemElement10"), NodePath("PanelContainer/GridContainer/MainGameItemElement11"), NodePath("PanelContainer/GridContainer/MainGameItemElement12"), NodePath("PanelContainer/GridContainer/MainGameItemElement13"), NodePath("PanelContainer/GridContainer/MainGameItemElement14"), NodePath("PanelContainer/GridContainer/MainGameItemElement15"), NodePath("PanelContainer/GridContainer/MainGameItemElement16"), NodePath("PanelContainer/GridContainer/MainGameItemElement17"), NodePath("PanelContainer/GridContainer/MainGameItemElement18"), NodePath("PanelContainer/GridContainer/MainGameItemElement19"), NodePath("PanelContainer/GridContainer/MainGameItemElement20"), NodePath("PanelContainer/GridContainer/MainGameItemElement21"), NodePath("PanelContainer/GridContainer/MainGameItemElement22"), NodePath("PanelContainer/GridContainer/MainGameItemElement23"), NodePath("PanelContainer/GridContainer/MainGameItemElement24")]
+pickedItemImage = NodePath("PickedItemImage")
+infoPanel = NodePath("ItemInfoPanel")
+uIType = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 138.0
+offset_bottom = 138.0
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="MainGameItemElement" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="MainGameItemElement1" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 1
+
+[node name="MainGameItemElement2" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 2
+
+[node name="MainGameItemElement3" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 3
+
+[node name="MainGameItemElement4" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 4
+
+[node name="MainGameItemElement5" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 5
+
+[node name="MainGameItemElement6" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 6
+
+[node name="MainGameItemElement7" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 7
+
+[node name="MainGameItemElement8" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 8
+
+[node name="MainGameItemElement9" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 9
+
+[node name="MainGameItemElement10" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 10
+
+[node name="MainGameItemElement11" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 11
+
+[node name="MainGameItemElement12" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 12
+
+[node name="MainGameItemElement13" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 13
+
+[node name="MainGameItemElement14" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 14
+
+[node name="MainGameItemElement15" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 15
+
+[node name="MainGameItemElement16" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 16
+
+[node name="MainGameItemElement17" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 17
+
+[node name="MainGameItemElement18" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 18
+
+[node name="MainGameItemElement19" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 19
+
+[node name="MainGameItemElement20" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 20
+
+[node name="MainGameItemElement21" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 21
+
+[node name="MainGameItemElement22" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 22
+
+[node name="MainGameItemElement23" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 23
+
+[node name="MainGameItemElement24" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+index = 24
+
+[node name="PickedItemImage" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+stretch_mode = 4
+
+[node name="ItemInfoPanel" parent="." instance=ExtResource("3_uculn")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 319.0
+offset_top = 52.0
+offset_right = 469.0
+offset_bottom = 252.0
+grow_horizontal = 1
+grow_vertical = 1

@@ -1,12 +1,20 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=4 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=8 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
 [ext_resource type="Resource" uid="uid://gls8d446ws3i" path="res://008_Item/Resources/Gold.tres" id="2_ly67b"]
+[ext_resource type="Resource" uid="uid://y4q8uoeq7snd" path="res://008_Item/Resources/Pickaxe.tres" id="3_im246"]
+[ext_resource type="Resource" uid="uid://dw3oi6g65jf18" path="res://008_Item/Resources/Dart.tres" id="4_cdwam"]
+[ext_resource type="Resource" uid="uid://dyabg07ytwrsk" path="res://008_Item/Resources/Branch.tres" id="5_lox3u"]
+[ext_resource type="Resource" uid="uid://cx5q8nkhsbvyv" path="res://008_Item/Resources/RecipeDart.tres" id="6_qydid"]
 
 [resource]
 script = ExtResource("1_26gdp")
 config = {
+1: ExtResource("4_cdwam"),
+201: ExtResource("6_qydid"),
+301: ExtResource("3_im246"),
 601: ExtResource("1_0c7qs"),
-602: ExtResource("2_ly67b")
+602: ExtResource("2_ly67b"),
+603: ExtResource("5_lox3u")
 }

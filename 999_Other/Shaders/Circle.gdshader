@@ -12,7 +12,7 @@ const vec2 OFFSETS[4] = {
 
 void fragment() {
 	vec2 uv = UV - 0.5;
-	
+
 	float d = length(uv);
 	vec4 color = vec4(0.0);
 
@@ -23,14 +23,14 @@ void fragment() {
 	//float powPixelPos = round(pow(uv.x / TEXTURE_PIXEL_SIZE.x, 2) + pow(uv.y / TEXTURE_PIXEL_SIZE.y, 2));
 	float powOutlineR = pow(inner_ridus + line_thickness,2);
 	float powR =  pow(inner_ridus,2);
-	
+
 	if(powPixelPos < powOutlineR) {
 		if(powPixelPos < powR){
 			color = inner_color;
-		} 
+		}
 		else {
 			color = line_color;
-		}	
+		}
 	}
 	COLOR = color;
 }

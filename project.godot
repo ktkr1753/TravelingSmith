@@ -27,6 +27,16 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="TravelingSmith"
 
+[gui]
+
+theme/custom="res://012_UI/Themes/NormalUITheme.tres"
+theme/custom_font="res://999_Other/Fonts/Cubic_11_1.300_R.ttf"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://006_Language/Texts/LanguageContent.en.translation", "res://006_Language/Texts/LanguageContent.zh_TW.translation")
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

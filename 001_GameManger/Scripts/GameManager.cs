@@ -10,6 +10,9 @@ public partial class GameManager : Node2D
     [Export] public UIManager uiManager;
     [Export] public SoundManager soundManager;
 
+    //config
+    [Export] public ItemConfigResource itemConfig;
+
     [Export] public LocalSettingResource localSetting;
     [Export] public UICommonSettingResource uiCommonSetting;
 
@@ -17,6 +20,14 @@ public partial class GameManager : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-	}
+        if (instance == null)
+        {
+            instance = this;
+        }
+        soundManager.Init();
+        uiManager.Init();
 
+
+        uiManager.OpenUI(UIIndex.MainGameUI);
+	}
 }
