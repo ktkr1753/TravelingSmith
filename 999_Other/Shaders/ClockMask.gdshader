@@ -15,14 +15,17 @@ void vertex() {
 void fragment() {
 	
 	float angle = 2.0 * PI * percent;
-	vec2 mod_uv = vec2(mod(UV, vec2(1.000, 1.000) / atlas_size)) + (offset / atlas_size);
+	
+	vec2 tempUV = UV + (vec2(-0.5, -0.5) / atlas_size);
+	//vec2 tempUV = UV;
+	//vec2 uv = vec2(mod(tempUV, vec2(1.0, 1.0) / atlas_size)) + (offset / atlas_size);
 	vec2 uv = UV + vec2(-0.5, -0.5);
 	float uvAngle = atan(-uv.x/ uv.y);
 	
 	vec4 inputColor = texture(TEXTURE, UV);
 	vec4 mixColor = inputColor * mask_color;
 	vec4 color = mixColor;
-	if(uv.x > 0.0 && uvAngle < angle)
+	if(uv.x > 0.0)
 	{
 		if(uv.y > 0.0)
 		{
@@ -30,6 +33,7 @@ void fragment() {
 			{
 				color = inputColor;
 			}
+			//color = vec4(1.0,0.0,0.0,1.0);
 		}
 		else if(uv.y < 0.0) 
 		{
@@ -37,6 +41,7 @@ void fragment() {
 			{
 				color = inputColor;
 			}
+			//color = vec4(0.0,1.0,0.0,1.0);
 		}
 	}
 	else if(uv.x < 0.0)
@@ -47,6 +52,7 @@ void fragment() {
 			{
 				color = inputColor;
 			}
+			//color = vec4(0.0,0.0,1.0,1.0);
 		}
 		else if(uv.y < 0.0) 
 		{
@@ -54,6 +60,7 @@ void fragment() {
 			{
 				color = inputColor;
 			}
+			//color = vec4(1.0,1.0,1.0,1.0);
 		}
 	}
 	
