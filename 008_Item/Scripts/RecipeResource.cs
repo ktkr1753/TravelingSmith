@@ -2,9 +2,15 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, IProduce
+public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, IMake
 {
-    [Export] public Godot.Collections.Array<ItemIndex> materials = new Godot.Collections.Array<ItemIndex>();
+    private Godot.Collections.Array<ItemIndex> _materials = new Godot.Collections.Array<ItemIndex>();
+
+    [Export] public Godot.Collections.Array<ItemIndex> materials 
+    {
+        get { return _materials; }
+        private set { _materials = value; }
+    } 
     private ItemIndex _productItem = ItemIndex.None;
     [Export] public ItemIndex productItem
     {
@@ -17,6 +23,64 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         get { return _needTime; }
         set { _needTime = value; }
     }
+    private double _nowTime = 0;
+    [Export] public double nowTime
+    {
+        get { return _nowTime; }
+        set { _nowTime = value; }
+    }
+
+    public bool isKeepProduce { get { return false; } }
+
+    private bool _isProducing = false;
+    [Export] public bool isProducing
+    {
+        get { return _isProducing; }
+        private set 
+        { 
+            if(_isProducing != value) 
+            {
+                _isProducing = value;
+                onIsProducingChange?.Invoke(_isProducing);
+            }
+        }
+    }
+
+    public event Action<bool> onIsProducingChange;
+
+    private Action<IProduce> _onCreateProduct;
+    public Action<IProduce> onCreateProduct
+    {
+        get { return _onCreateProduct; }
+        set { _onCreateProduct = value; }
+    }
+
+    public void StartProduce() 
+    {
+        isProducing = true;
+        GameManager.instance.itemManager.AddProducingItem(this);
+    }
+    public void StopProduce() 
+    {
+        isProducing = false;
+        GameManager.instance.itemManager.RemoveProducingItem(this);
+    }
+    public bool CreateProduct() 
+    {
+        bool isCreate = false;
+        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++)
+        {
+            if (GameManager.instance.itemManager.heldItems[i] == null)
+            {
+                ItemBaseResource item = GameManager.instance.itemManager.CreateItem(productItem);
+                GameManager.instance.itemManager.SetHeldItem(i, item);
+                isCreate = true;
+                break;
+            }
+        }
+
+        return isCreate;
+    }
 
     public override RecipeResource Clone()
     {
@@ -25,7 +89,8 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         result.materials = materials.Clone();
         result.productItem = productItem;
         result.needTime = needTime;
-
+        result.nowTime = nowTime;
+        result.isProducing = isProducing;
         return result;
     }
 

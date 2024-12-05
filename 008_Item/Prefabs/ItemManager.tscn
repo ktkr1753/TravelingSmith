@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kdruv63w5u5v"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/ItemManager.cs" id="1_uxduj"]
+
+[node name="ItemManager" type="Node2D"]
+script = ExtResource("1_uxduj")

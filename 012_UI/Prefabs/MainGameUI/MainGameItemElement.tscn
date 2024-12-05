@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5x05yhvprj4w"]
+[gd_scene load_steps=9 format=3 uid="uid://b5x05yhvprj4w"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_h72xt"]
+[ext_resource type="Texture2D" uid="uid://dk7nuokvm64vb" path="res://012_UI/Images/circleProgress.png" id="3_mmttk"]
 
 [sub_resource type="Animation" id="Animation_11adu"]
 length = 0.001
@@ -58,7 +60,7 @@ _data = {
 "shine": SubResource("Animation_kqq2o")
 }
 
-[node name="MainGameItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "image", "productImage", "durabilityLabel", "selectedHint")]
+[node name="MainGameItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "image", "productImage", "durabilityLabel", "selectedHint", "circleProgressImage")]
 offset_right = 50.0
 offset_bottom = 50.0
 theme_type_variation = &"EmptyPanelContainer"
@@ -68,6 +70,8 @@ image = NodePath("MarginContainer/PanelContainer/TextureRect")
 productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")
 durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
 selectedHint = NodePath("SelectedHint")
+circleProgressImage = NodePath("MarginContainer/PanelContainer/CircleProgress")
+clockMaskShader = ExtResource("2_h72xt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -106,6 +110,12 @@ offset_bottom = 24.0
 grow_horizontal = 0
 mouse_filter = 2
 stretch_mode = 4
+
+[node name="CircleProgress" type="TextureRect" parent="MarginContainer/PanelContainer"]
+visible = false
+self_modulate = Color(0.117647, 0.737255, 0.45098, 1)
+layout_mode = 2
+texture = ExtResource("3_mmttk")
 
 [node name="DurabilityLabel" type="Label" parent="MarginContainer/PanelContainer"]
 custom_minimum_size = Vector2(20, 0)

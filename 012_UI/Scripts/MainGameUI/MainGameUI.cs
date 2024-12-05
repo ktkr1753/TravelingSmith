@@ -7,7 +7,7 @@ public partial class MainGameUI : UIBase
     [Export] private TextureRect pickedItemImage;
     [Export] private ItemInfoPanel infoPanel;
 
-	public Godot.Collections.Array<ItemBaseResource> items = new Godot.Collections.Array<ItemBaseResource>();
+	//public Godot.Collections.Array<ItemBaseResource> items = new Godot.Collections.Array<ItemBaseResource>();
 
     //碰到的物件ID
     private int _nowEnterElementIndex = -1;
@@ -56,7 +56,7 @@ public partial class MainGameUI : UIBase
                 _nowPickElementIndex = value;
                 if(_nowPickElementIndex != -1) 
                 {
-                    SetPickedItemImageImage(items[_nowPickElementIndex]);
+                    SetPickedItemImageImage(GameManager.instance.itemManager.heldItems[_nowPickElementIndex]);
                     RefreshItemElement(_nowPickElementIndex, null);
                 }
                 else 
@@ -75,25 +75,16 @@ public partial class MainGameUI : UIBase
     public override void Init()
     {
         base.Init();
+        GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
+        InitItems();
         InitElements();
-
-        //測試
-        for (int i = 0; i < 25; i++) 
-        {
-            if(i == 0 || i == 2) 
-            {
-                items.Add(GameManager.instance.itemConfig.config[ItemIndex.Iron]);
-            }
-            else if (i == 24)
-            {
-                items.Add(GameManager.instance.itemConfig.config[ItemIndex.RecipeDart]);
-            }
-            else 
-            {
-                items.Add(null);
-            }
-        }
         RefreshItemElements();
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
     }
 
     public override void _Process(double delta)
@@ -124,6 +115,14 @@ public partial class MainGameUI : UIBase
         }
     }
 
+    private void InitItems() 
+    {
+        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++)
+        {
+            ItemBaseResource item = GameManager.instance.itemManager.heldItems[i];
+        }
+    }
+
     private void InitElements() 
     {
         for(int i = 0; i < elements.Count; i++) 
@@ -145,7 +144,7 @@ public partial class MainGameUI : UIBase
             }
             else 
             {
-    			RefreshItemElement(i, items[i]);
+    			RefreshItemElement(i, GameManager.instance.itemManager.heldItems[i]);
             }
         }
 	}
@@ -189,7 +188,15 @@ public partial class MainGameUI : UIBase
 
     private void SetInfoPanel(ItemBaseResource item) 
     {
-        infoPanel.SetData(item);
+        if(item != null) 
+        {
+            infoPanel.Visible = true;
+            infoPanel.SetData(item);
+        }
+        else 
+        {
+            infoPanel.Visible = false;
+        }
     }
 
 
@@ -207,7 +214,6 @@ public partial class MainGameUI : UIBase
         {
             nowEnterElementIndex = index;
             //Debug.Print($"OnElementMouseEnter index:{nowEnterElementIndex}");
-            SetInfoPanel(items[nowEnterElementIndex]);
         }
     }
 
@@ -227,6 +233,7 @@ public partial class MainGameUI : UIBase
         recordClickPos = GetViewport().GetMousePosition();
 
         //Debug.Print($"OnElementButtonDown index:{nowSelectedElementIndex}");
+        SetInfoPanel(GameManager.instance.itemManager.heldItems[nowEnterElementIndex]);
     }
 
     private void OnElementButtonUp(int index) 
@@ -235,16 +242,14 @@ public partial class MainGameUI : UIBase
         ItemBaseResource putItem = null;
         if (nowPickElementIndex != -1) 
         {
-            pickedItem = items[nowPickElementIndex];
+            pickedItem = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
         }
 
         if (nowEnterElementIndex != -1 && pickedItem != null) 
         {
-            putItem = items[nowEnterElementIndex];
-            items[nowPickElementIndex] = putItem;
-            items[nowEnterElementIndex] = pickedItem;
-            RefreshItemElement(nowPickElementIndex, items[nowPickElementIndex]);
-            RefreshItemElement(nowEnterElementIndex, items[nowEnterElementIndex]);
+            putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
+            GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);
+            GameManager.instance.itemManager.SetHeldItem(nowEnterElementIndex, pickedItem);
         }
         else 
         {
@@ -262,4 +267,10 @@ public partial class MainGameUI : UIBase
         }
         //Debug.Print($"OnElementButtonUp index:{nowSelectedElementIndex}");
     }
+
+    private void OnHeldItemChange(int index) 
+    {
+        RefreshItemElement(index, GameManager.instance.itemManager.heldItems[index]);
+    }
+
 }

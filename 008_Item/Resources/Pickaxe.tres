@@ -10,7 +10,9 @@ region = Rect2(0, 48, 24, 24)
 [resource]
 script = ExtResource("1_j4yna")
 productItem = 601
-needTime = 1.0
+needTime = 3.0
+nowTime = 0.0
+isProducing = false
 index = 301
 texture = SubResource("AtlasTexture_1frpg")
 money = 1

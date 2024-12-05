@@ -16,12 +16,70 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         get { return _needTime; }
         set { _needTime = value; }
     }
+    private double _nowTime = 0;
+    [Export] public double nowTime
+    {
+        get { return _nowTime; }
+        set { _nowTime = value; }
+    }
+
+    public bool isKeepProduce { get { return true; } }
+
+    private bool _isProducing = false;
+    [Export] public bool isProducing
+    {
+        get { return _isProducing; }
+        private set 
+        { 
+            _isProducing = value;
+            onIsProducingChange?.Invoke(_isProducing);
+        }
+    }
+
+    public event Action<bool> onIsProducingChange;
+
+    private Action<IProduce> _onCreateProduct;
+    public Action<IProduce> onCreateProduct
+    {
+        get { return _onCreateProduct; }
+        set { _onCreateProduct = value; }
+    }
+
+    public void StartProduce()
+    {
+        isProducing = true;
+        GameManager.instance.itemManager.AddProducingItem(this);
+    }
+    public void StopProduce()
+    {
+        isProducing = false;
+        GameManager.instance.itemManager.RemoveProducingItem(this);
+    }
+
+    public bool CreateProduct()
+    {
+        bool isCreate = false;
+        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++)
+        {
+            if (GameManager.instance.itemManager.heldItems[i] == null)
+            {
+                ItemBaseResource item = GameManager.instance.itemManager.CreateItem(productItem);
+                GameManager.instance.itemManager.SetHeldItem(i, item);
+                isCreate = true;
+                break;
+            }
+        }
+
+        return isCreate;
+    }
 
     public override ToolResource Clone()
     {
         ToolResource result = base.Clone() as ToolResource;
         result.productItem = productItem;
         result.needTime = needTime;
+        result.nowTime = nowTime;
+        result.isProducing = isProducing;
         return result;
     }
 

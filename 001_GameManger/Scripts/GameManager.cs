@@ -9,6 +9,7 @@ public partial class GameManager : Node2D
     //管理器
     [Export] public UIManager uiManager;
     [Export] public SoundManager soundManager;
+    [Export] public ItemManager itemManager;
 
     //config
     [Export] public ItemConfigResource itemConfig;
@@ -26,6 +27,7 @@ public partial class GameManager : Node2D
         }
         soundManager.Init();
         uiManager.Init();
+        itemManager.Init();
 
 
         uiManager.OpenUI(UIIndex.MainGameUI);

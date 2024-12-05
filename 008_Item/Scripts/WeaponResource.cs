@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class WeaponResource : ItemBaseResource, IClone<WeaponResource>
+public partial class WeaponResource : ItemBaseResource, IClone<WeaponResource>, IUseable
 {
     [Export] public int attackPoint = 0;
     private int _durability = 0;

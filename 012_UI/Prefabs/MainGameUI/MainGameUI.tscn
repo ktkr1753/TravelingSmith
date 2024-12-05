@@ -28,6 +28,7 @@ columns = 5
 
 [node name="MainGameItemElement" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
+index = 0
 
 [node name="MainGameItemElement1" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2

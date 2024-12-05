@@ -12,14 +12,16 @@ public partial class MainGameItemElement : Control
 	}
 
 
-	[Export] private int index;
+	[Export] private int index = -1;
 	[Export] private AnimationPlayer animation;
 	[Export] private TextureRect image;
 	[Export] private TextureRect productImage;
 	[Export] private Label durabilityLabel;
 	[Export] private NinePatchRect selectedHint;
+    [Export] private TextureRect circleProgressImage;
+    [Export] private Shader clockMaskShader;
 
-	private ItemBaseResource _item;
+    private ItemBaseResource _item;
 	public ItemBaseResource item
 	{
 		get { return _item; }
@@ -102,18 +104,52 @@ public partial class MainGameItemElement : Control
     public const string clip_idle = "idle";
     public const string clip_shine = "shine";
 
-	public void SetData(ItemBaseResource item) 
+    public const string material_selfColor = "selfColor";
+    public const string material_maskColor = "maskColor";
+	public const string material_percent = "percent";
+	public const string material_atlasSize = "atlasSize";
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        SetNowPercent(delta);
+    }
+
+    public void SetData(ItemBaseResource item) 
 	{
 		this.item = item;
-		SetView();
+        SetView();
     }
 
 	private void SetView() 
 	{
-		SetImage();
+		InitMaterial();
+        SetImage();
 		SetProductImage();
         SetDurabilityLabel();
+		SetCircleProgress(); 
 	}
+
+	private void InitMaterial()
+	{
+        if (item is IProduce produce)
+        {
+            Color selfColor = circleProgressImage.SelfModulate;
+            ShaderMaterial material = new ShaderMaterial();
+			material.Shader = clockMaskShader;
+            material.SetShaderParameter(material_selfColor, new Vector4(selfColor.R, selfColor.G, selfColor.B, selfColor.A));
+            material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
+			material.SetShaderParameter(material_percent, 1f);
+			material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
+            circleProgressImage.Material = material;
+        }
+		else 
+		{
+            circleProgressImage.Material = null;
+        }
+
+    }
 
 	private void SetImage() 
 	{
@@ -148,6 +184,19 @@ public partial class MainGameItemElement : Control
         }
 	}
 
+	private void SetNowPercent(double deltaTime) 
+	{
+        if (item is IProduce produce) 
+		{
+            if (circleProgressImage.Material is ShaderMaterial material)
+            {
+                float nowPercent = (float)(produce.nowTime / produce.needTime);
+                material.SetShaderParameter(material_percent, nowPercent);
+            }
+        }
+    }
+
+
 	private void SetDurabilityLabel() 
 	{
 		if(item is IUseable useable) 
@@ -158,6 +207,18 @@ public partial class MainGameItemElement : Control
 		else 
 		{
 			durabilityLabel.Visible = false;
+        }
+	}
+
+	private void SetCircleProgress() 
+	{
+		if(item is IProduce produce) 
+		{
+			circleProgressImage.Visible = true;
+		}
+		else 
+		{
+            circleProgressImage.Visible = false;
         }
 	}
 
