@@ -6,8 +6,11 @@ public partial class MainGameUI : UIBase
 	[Export] Godot.Collections.Array<MainGameItemElement> elements = new Godot.Collections.Array<MainGameItemElement>();
     [Export] private TextureRect pickedItemImage;
     [Export] private ItemInfoPanel infoPanel;
-
-	//public Godot.Collections.Array<ItemBaseResource> items = new Godot.Collections.Array<ItemBaseResource>();
+    [Export] private ProgressBar hpProgressBar;
+    [Export] private Label nowHpLabel;
+    [Export] private Label maxHpLabel;
+    [Export] private Label moneyLabel;
+    //public Godot.Collections.Array<ItemBaseResource> items = new Godot.Collections.Array<ItemBaseResource>();
 
     //碰到的物件ID
     private int _nowEnterElementIndex = -1;
@@ -76,15 +79,19 @@ public partial class MainGameUI : UIBase
     {
         base.Init();
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
+        GameManager.instance.battleManager.onHPChange += OnHPChange;
         InitItems();
         InitElements();
         RefreshItemElements();
+        SetHP();
+        SetMoney();
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
+        GameManager.instance.battleManager.onHPChange -= OnHPChange;
     }
 
     public override void _Process(double delta)
@@ -152,6 +159,19 @@ public partial class MainGameUI : UIBase
     public void RefreshItemElement(int index, ItemBaseResource item)
     {
 		elements[index].SetData(item);
+    }
+
+    private void SetHP() 
+    {
+        hpProgressBar.MaxValue = GameManager.instance.battleManager.maxHP;
+        hpProgressBar.Value = GameManager.instance.battleManager.nowHP;
+        maxHpLabel.Text = $"{GameManager.instance.battleManager.maxHP}";
+        nowHpLabel.Text = $"{GameManager.instance.battleManager.nowHP}";
+    }
+
+    private void SetMoney() 
+    {
+        moneyLabel.Text = $"{GameManager.instance.itemManager.money}";
     }
 
     private void SetItemSelectedState(int nowEnterElementIndex, int nowSelectedElementIndex)
@@ -273,4 +293,8 @@ public partial class MainGameUI : UIBase
         RefreshItemElement(index, GameManager.instance.itemManager.heldItems[index]);
     }
 
+    private void OnHPChange(int nowHP) 
+    {
+        SetHP();
+    }
 }

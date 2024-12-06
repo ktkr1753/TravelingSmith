@@ -14,13 +14,13 @@ void vertex() {
 }
 
 void fragment() {
-	
+
 	float angle = 2.0 * PI * percent;
 	vec2 tempUV = vec2(mod(UV, vec2(1.0, 1.0) / atlasSize)) + (offset / atlasSize);
 
 	vec2 uv = tempUV + (vec2(-0.5, -0.5) / atlasSize);
 	float uvAngle = atan(-uv.x/ uv.y);
-	
+
 	vec4 inputColor = selfColor * texture(TEXTURE, UV);
 	vec4 mixColor = inputColor * maskColor;
 	vec4 color = mixColor;
@@ -58,6 +58,6 @@ void fragment() {
 			}
 		}
 	}
-	
+
 	COLOR = color;
 }

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://qomsu7k6xmeo"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/MapManager.cs" id="1_56yve"]
+[ext_resource type="PackedScene" uid="uid://04nj0wollggp" path="res://007_Map/Prefabs/Map1.tscn" id="2_in3fi"]
+
+[node name="MapManager" type="Node2D" node_paths=PackedStringArray("nowMap")]
+script = ExtResource("1_56yve")
+nowMap = NodePath("Map1")
+
+[node name="Map1" parent="." instance=ExtResource("2_in3fi")]

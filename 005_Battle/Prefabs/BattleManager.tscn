@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://yw0tcnylx0t0"]
+
+[ext_resource type="Script" path="res://005_Battle/Scripts/BattleManager.cs" id="1_rhl5l"]
+
+[node name="BattleManager" type="Node2D"]
+script = ExtResource("1_rhl5l")
+maxHP = 100

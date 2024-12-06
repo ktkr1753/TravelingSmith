@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://d1r8hovdgunom"]
+
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_2dq7h"]
+[ext_resource type="PackedScene" uid="uid://cs0ourwq1chej" path="res://019_Monster/Prefabs/Slime.tscn" id="1_tl0x8"]
+
+[resource]
+script = ExtResource("1_2dq7h")
+index = 1
+prefab = ExtResource("1_tl0x8")
+maxHp = 1
+nowHp = 0
+attackPoint = 1
+attackNeedTime = 1.0
+attackNowTime = 0.0
+moveSpeed = 10.0

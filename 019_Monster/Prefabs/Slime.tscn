@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs0ourwq1chej"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_vkl70"]
+[ext_resource type="Texture2D" uid="uid://cruhe16njfeej" path="res://019_Monster/Images/TS_monster_slime-idle.png" id="2_xpn0y"]
+
+[node name="Slime" instance=ExtResource("1_vkl70")]
+
+[node name="Image" parent="." index="1"]
+position = Vector2(0, -8)
+texture = ExtResource("2_xpn0y")

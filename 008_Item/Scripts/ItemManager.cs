@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class ItemManager : Node
 {
+    public int money = 0;
+
 	private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
     [Export] public Godot.Collections.Array<ItemBaseResource> heldItems 
 	{

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=73 format=3 uid="uid://b8vlfwwcuog2j"]
+[gd_resource type="Theme" load_steps=77 format=3 uid="uid://b8vlfwwcuog2j"]
 
 [ext_resource type="Texture2D" uid="uid://dyegqua47qlrb" path="res://012_UI/Images/slot2.png" id="1_4dji3"]
 [ext_resource type="Texture2D" uid="uid://dhkyvcu3h87fd" path="res://012_UI/Images/button_2-normal.png" id="1_5d6tj"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://cpgcgd35y4me1" path="res://012_UI/Images/UIFrame_dark.png" id="21_t4gld"]
 [ext_resource type="Texture2D" uid="uid://bulux2by3p4df" path="res://012_UI/Images/UIFrame_paper.png" id="23_fdk4h"]
 [ext_resource type="Texture2D" uid="uid://b7xppcklkxm8w" path="res://012_UI/Images/UIFrame_speak1.png" id="24_u0ctp"]
+[ext_resource type="Texture2D" uid="uid://ci2lnsjcib0iu" path="res://012_UI/Images/HPBarBackground.png" id="25_aps8u"]
+[ext_resource type="Texture2D" uid="uid://cgvyi3byd1fqs" path="res://012_UI/Images/HPBar.png" id="26_xsx5p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2jih"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -247,6 +249,20 @@ texture_margin_top = 2.0
 texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dpqmg"]
+texture = ExtResource("25_aps8u")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vjv6y"]
+texture = ExtResource("26_xsx5p")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ginrv"]
 texture = ExtResource("1_4dji3")
 texture_margin_left = 2.0
@@ -373,6 +389,10 @@ PanelContainer_paper/base_type = &"PanelContainer"
 PanelContainer_paper/styles/panel = SubResource("StyleBoxTexture_p5mrr")
 Panelcontainer_Speak/base_type = &"PanelContainer"
 Panelcontainer_Speak/styles/panel = SubResource("StyleBoxTexture_rgq11")
+ProgressBar_Red/base_type = &"ProgressBar"
+ProgressBar_Red/font_sizes/font_size = 12
+ProgressBar_Red/styles/background = SubResource("StyleBoxTexture_dpqmg")
+ProgressBar_Red/styles/fill = SubResource("StyleBoxTexture_vjv6y")
 TitleLabel/base_type = &"Label"
 TitleLabel/font_sizes/font_size = 18
 TranslucentPanelContainer/base_type = &"PanelContainer"
