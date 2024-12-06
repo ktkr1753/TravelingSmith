@@ -13,6 +13,23 @@ public partial class ItemManager : Node
 		private set { _heldItems = value; }
 	}
 
+    public double gameSpeed
+    {
+        get
+        {
+            double result = 1;
+            if (GameManager.instance.battleManager.isGameOver)
+            {
+                result = 0;
+            }
+            else
+            {
+                result = GameManager.instance.localSetting.gameSpeedSetting;
+            }
+            return result;
+        }
+    }
+
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
 
 	public event Action<int> onHeldItemChange;
@@ -48,7 +65,8 @@ public partial class ItemManager : Node
 
 	public override void _Process(double delta)
 	{
-		ProcessProducingItems(delta);
+        base._Process(delta);
+        ProcessProducingItems(delta);
     }
 
     public ItemBaseResource CreateItem(ItemIndex index) 
@@ -116,13 +134,15 @@ public partial class ItemManager : Node
 
     private void ProcessProducingItems(double deltaTime) 
 	{
-		List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
+        double addTime = deltaTime * gameSpeed;
+
+        List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
 		foreach(var producingItem in producingItems) 
 		{
 			if (producingItem is IProduce produce)
 			{
-				if(produce.nowTime + deltaTime > produce.needTime) 
+				if(produce.nowTime + addTime > produce.needTime) 
 				{
                     bool isSuccess = produce.CreateProduct();
 
@@ -130,7 +150,7 @@ public partial class ItemManager : Node
                     {
 					    if (produce.isKeepProduce) 
 					    {
-                            produce.nowTime = (produce.nowTime + deltaTime) % produce.needTime;
+                            produce.nowTime = (produce.nowTime + addTime) % produce.needTime;
                         }
 					    else 
 					    {
@@ -145,7 +165,7 @@ public partial class ItemManager : Node
                 }
 				else 
 				{
-	                produce.nowTime = (produce.nowTime + deltaTime) % produce.needTime;
+	                produce.nowTime = (produce.nowTime + addTime) % produce.needTime;
 				}
             }
 			else 
