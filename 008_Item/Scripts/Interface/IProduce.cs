@@ -14,6 +14,4 @@ public partial interface IProduce
 
     public void StartProduce();
     public void StopProduce();
-
-    public bool CreateProduct();
 }

@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=8 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="2_c7qgf"]
+[ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement_Clear.tscn" id="3_mpf7q"]
 [ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="3_uculn"]
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="4_tu1ht"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="5_6mqyh"]
+[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameItemElementPool.cs" id="5_fuckt"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickedItemImage", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "moneyLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickItemElement", "itemFxtPool", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "moneyLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +17,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2jxto")
 elements = [NodePath("PanelContainer/GridContainer/MainGameItemElement"), NodePath("PanelContainer/GridContainer/MainGameItemElement1"), NodePath("PanelContainer/GridContainer/MainGameItemElement2"), NodePath("PanelContainer/GridContainer/MainGameItemElement3"), NodePath("PanelContainer/GridContainer/MainGameItemElement4"), NodePath("PanelContainer/GridContainer/MainGameItemElement5"), NodePath("PanelContainer/GridContainer/MainGameItemElement6"), NodePath("PanelContainer/GridContainer/MainGameItemElement7"), NodePath("PanelContainer/GridContainer/MainGameItemElement8"), NodePath("PanelContainer/GridContainer/MainGameItemElement9"), NodePath("PanelContainer/GridContainer/MainGameItemElement10"), NodePath("PanelContainer/GridContainer/MainGameItemElement11"), NodePath("PanelContainer/GridContainer/MainGameItemElement12"), NodePath("PanelContainer/GridContainer/MainGameItemElement13"), NodePath("PanelContainer/GridContainer/MainGameItemElement14"), NodePath("PanelContainer/GridContainer/MainGameItemElement15"), NodePath("PanelContainer/GridContainer/MainGameItemElement16"), NodePath("PanelContainer/GridContainer/MainGameItemElement17"), NodePath("PanelContainer/GridContainer/MainGameItemElement18"), NodePath("PanelContainer/GridContainer/MainGameItemElement19"), NodePath("PanelContainer/GridContainer/MainGameItemElement20"), NodePath("PanelContainer/GridContainer/MainGameItemElement21"), NodePath("PanelContainer/GridContainer/MainGameItemElement22"), NodePath("PanelContainer/GridContainer/MainGameItemElement23"), NodePath("PanelContainer/GridContainer/MainGameItemElement24")]
-pickedItemImage = NodePath("PickedItemImage")
+pickItemElement = NodePath("MainGameItemElement_Clear")
+itemFxtPool = NodePath("ItemFXPool")
 infoPanel = NodePath("ItemInfoPanel")
 hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("VBox/HPPanel/HBoxContainer/NowHPLabel")
@@ -138,14 +141,9 @@ index = 23
 layout_mode = 2
 index = 24
 
-[node name="PickedItemImage" type="TextureRect" parent="."]
+[node name="MainGameItemElement_Clear" parent="." instance=ExtResource("3_mpf7q")]
 visible = false
-custom_minimum_size = Vector2(48, 48)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-stretch_mode = 4
 
 [node name="ItemInfoPanel" parent="." instance=ExtResource("3_uculn")]
 visible = false
@@ -161,6 +159,38 @@ offset_right = 319.0
 offset_bottom = 286.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="ItemFXPool" type="Control" parent="." node_paths=PackedStringArray("parent", "backup")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_fuckt")
+prefab = ExtResource("3_mpf7q")
+parent = NodePath("InuseControl")
+backup = NodePath("BackupControl")
+
+[node name="InuseControl" type="Control" parent="ItemFXPool"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackupControl" type="Control" parent="ItemFXPool"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="."]
 layout_mode = 1

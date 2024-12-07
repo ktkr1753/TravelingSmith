@@ -13,6 +13,13 @@ public partial class MainGameItemElement : Control
 
 
 	[Export] private int index = -1;
+
+	private bool _showProcess = true;
+    [Export] public bool showProcess 
+	{
+		get { return _showProcess; }
+		set { _showProcess = value; }
+	}
 	[Export] private AnimationPlayer animation;
 	[Export] private TextureRect image;
 	[Export] private TextureRect productImage;
@@ -212,6 +219,12 @@ public partial class MainGameItemElement : Control
 
 	private void SetCircleProgress() 
 	{
+		if (!showProcess) 
+		{
+            circleProgressImage.Visible = false;
+            return;
+		}
+
 		if(item is IProduce produce) 
 		{
 			circleProgressImage.Visible = true;

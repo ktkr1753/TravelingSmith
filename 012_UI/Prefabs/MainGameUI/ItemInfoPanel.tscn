@@ -31,6 +31,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+showProcess = false
 
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2

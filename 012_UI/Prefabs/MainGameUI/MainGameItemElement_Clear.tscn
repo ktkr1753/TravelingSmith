@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://be06qt5siw62v"]
+
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="1_x5sk2"]
+
+[node name="MainGameItemElement_Clear" instance=ExtResource("1_x5sk2")]
+
+[node name="PanelContainer" parent="MarginContainer" index="0"]
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="Button" parent="MarginContainer" index="1"]
+mouse_filter = 2
+disabled = true

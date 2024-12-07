@@ -38,13 +38,6 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
 
     public event Action<bool> onIsProducingChange;
 
-    private Action<IProduce> _onCreateProduct;
-    public Action<IProduce> onCreateProduct
-    {
-        get { return _onCreateProduct; }
-        set { _onCreateProduct = value; }
-    }
-
     public void StartProduce()
     {
         isProducing = true;
@@ -54,23 +47,6 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
     {
         isProducing = false;
         GameManager.instance.itemManager.RemoveProducingItem(this);
-    }
-
-    public bool CreateProduct()
-    {
-        bool isCreate = false;
-        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++)
-        {
-            if (GameManager.instance.itemManager.heldItems[i] == null)
-            {
-                ItemBaseResource item = GameManager.instance.itemManager.CreateItem(productItem);
-                GameManager.instance.itemManager.SetHeldItem(i, item);
-                isCreate = true;
-                break;
-            }
-        }
-
-        return isCreate;
     }
 
     public override ToolResource Clone()

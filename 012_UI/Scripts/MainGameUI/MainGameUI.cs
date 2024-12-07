@@ -1,10 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class MainGameUI : UIBase
 {
 	[Export] Godot.Collections.Array<MainGameItemElement> elements = new Godot.Collections.Array<MainGameItemElement>();
-    [Export] private TextureRect pickedItemImage;
+    [Export] private MainGameItemElement pickItemElement;
+    [Export] private MainGameItemElementPool itemFxtPool;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
@@ -59,12 +61,12 @@ public partial class MainGameUI : UIBase
                 _nowPickElementIndex = value;
                 if(_nowPickElementIndex != -1) 
                 {
-                    SetPickedItemImageImage(GameManager.instance.itemManager.heldItems[_nowPickElementIndex]);
+                    SetPickedItemElement(GameManager.instance.itemManager.heldItems[_nowPickElementIndex]);
                     RefreshItemElement(_nowPickElementIndex, null);
                 }
                 else 
                 {
-                    SetPickedItemImageImage(null);
+                    SetPickedItemElement(null);
                 }
             }
 
@@ -74,11 +76,14 @@ public partial class MainGameUI : UIBase
 
     public const float moveThreshold = 5;
 
+    public const double flyTime = 0.1;
 
     public override void Init()
     {
         base.Init();
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
+        GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
+        GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
         GameManager.instance.battleManager.onHPChange += OnHPChange;
         InitItems();
         InitElements();
@@ -91,6 +96,8 @@ public partial class MainGameUI : UIBase
     {
         base._ExitTree();
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
+        GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
+        GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
         GameManager.instance.battleManager.onHPChange -= OnHPChange;
     }
 
@@ -193,17 +200,17 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private void SetPickedItemImageImage(ItemBaseResource item) 
+    private void SetPickedItemElement(ItemBaseResource item) 
     {
         if (item != null)
         {
-            pickedItemImage.Visible = true;
-            pickedItemImage.Texture = item.texture;
+            pickItemElement.Visible = true;
         }
         else 
         {
-            pickedItemImage.Visible = false;
+            pickItemElement.Visible = false;
         }
+        pickItemElement.SetData(item);
     }
 
     private void SetInfoPanel(ItemBaseResource item) 
@@ -219,14 +226,29 @@ public partial class MainGameUI : UIBase
         }
     }
 
-
     private void UpdateSelectedItemImagePos() 
     {
-        if (pickedItemImage.Visible) 
+        if (pickItemElement.Visible) 
         {
-            pickedItemImage.GlobalPosition = GetViewport().GetMousePosition() - new Vector2(pickedItemImage.Size.X / 2, pickedItemImage.Size.Y / 2);
+            pickItemElement.GlobalPosition = GetViewport().GetMousePosition() - new Vector2(pickItemElement.Size.X / 2, pickItemElement.Size.Y / 2);
         }
     }
+
+    private Tween StartFlyItem(ItemBaseResource item, Vector2 startPoint, Vector2 endPoint, double duration) 
+    {
+        Tween tween = GetTree().CreateTween();
+
+        MainGameItemElement itemElement = itemFxtPool.GetElement();
+        itemElement.showProcess = false;
+        itemElement.SetData(item);
+        itemElement.GlobalPosition = startPoint;
+
+        tween.TweenProperty(itemElement, "global_position", endPoint, duration);
+        tween.TweenCallback(Callable.From(() => { itemFxtPool.ReturnElement(itemElement); }));
+
+        return tween;
+    }
+
 
     private void OnElementMouseEnter(int index) 
     {
@@ -296,5 +318,42 @@ public partial class MainGameUI : UIBase
     private void OnHPChange(int nowHP) 
     {
         SetHP();
+    }
+
+    private void OnUseMaterials(IMake make, HashSet<KeyValuePair<int, ItemBaseResource>> usedMaterials) 
+    {
+        int endIndex = -1;
+        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++) 
+        {
+            if (GameManager.instance.itemManager.heldItems[i] == make) 
+            {
+                endIndex = i;            
+            }
+        }
+
+        if(endIndex != -1) 
+        {
+            foreach(KeyValuePair<int, ItemBaseResource> KV in usedMaterials) 
+            {
+                Vector2 startPoint = elements[KV.Key].GlobalPosition;
+                Vector2 endPoint = elements[endIndex].GlobalPosition;
+                ItemBaseResource item = KV.Value;
+                StartFlyItem(item, startPoint, endPoint, flyTime);
+            }
+        }
+    }
+
+    private void OnCreateProduct(IProduce produce, int endIndex, ItemBaseResource item) 
+    {
+        for(int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++) 
+        {
+            if (GameManager.instance.itemManager.heldItems[i] == produce) 
+            {
+                int startIndex = i;
+                Vector2 startPoint = elements[startIndex].GlobalPosition;
+                Vector2 endPoint = elements[endIndex].GlobalPosition;
+                StartFlyItem(item, startPoint, endPoint, flyTime);
+            }
+        }
     }
 }

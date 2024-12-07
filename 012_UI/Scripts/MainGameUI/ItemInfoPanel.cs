@@ -121,17 +121,8 @@ public partial class ItemInfoPanel : PanelContainer
             bool isFail = false;
             if (item is IMake make && !make.isProducing)
 			{
-				bool isSuccess = GameManager.instance.itemManager.TryMake(make, out HashSet<int> usedItemsIndex);
-				isFail = !isSuccess;
-
-                if (!isFail) 
-				{
-					foreach(int index in usedItemsIndex) 
-					{
-						GameManager.instance.itemManager.SetHeldItem(index, null);
-                    }
-				}
-			}
+                isFail = !GameManager.instance.itemManager.Make(make);
+            }
 
 			if (!isFail)
 			{

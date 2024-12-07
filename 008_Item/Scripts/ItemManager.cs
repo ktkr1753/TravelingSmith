@@ -33,8 +33,10 @@ public partial class ItemManager : Node
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
 
 	public event Action<int> onHeldItemChange;
+    public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
+    public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
 
-	public void Init() 
+    public void Init() 
 	{
 		//測試用道具
         for (int i = 0; i < 25; i++)
@@ -116,6 +118,24 @@ public partial class ItemManager : Node
         return !isFail;
     }
 
+    public bool Make(IMake make) 
+    {
+        bool result = false;
+        if(TryMake(make, out HashSet<int> usedItemsIndex)) 
+        {
+            HashSet<KeyValuePair<int, ItemBaseResource>> items = new HashSet<KeyValuePair<int, ItemBaseResource>>();
+            foreach (int index in usedItemsIndex)
+            {
+                items.Add(new KeyValuePair<int, ItemBaseResource>(index, heldItems[index]));
+                SetHeldItem(index, null);
+            }
+
+            onUseMaterial?.Invoke(make, items);
+            result = true;
+        }
+        return result;
+    }
+
 	public void AddProducingItem(ItemBaseResource item) 
 	{
 		if(item is IProduce && !producingItems.Contains(item)) 
@@ -144,7 +164,7 @@ public partial class ItemManager : Node
 			{
 				if(produce.nowTime + addTime > produce.needTime) 
 				{
-                    bool isSuccess = produce.CreateProduct();
+                    bool isSuccess = CreateProduct(produce);
 
                     if (isSuccess) 
                     {
@@ -180,4 +200,22 @@ public partial class ItemManager : Node
 			producingItems.Remove(needRemoves[i]);
         }
 	}
+
+    public bool CreateProduct(IProduce produce)
+    {
+        bool isCreate = false;
+        for (int i = 0; i < heldItems.Count; i++)
+        {
+            if (heldItems[i] == null)
+            {
+                ItemBaseResource item = CreateItem(produce.productItem);
+                SetHeldItem(i, item);
+                isCreate = true;
+                onCreateProduct?.Invoke(produce, i, item);
+                break;
+            }
+        }
+
+        return isCreate;
+    }
 }
