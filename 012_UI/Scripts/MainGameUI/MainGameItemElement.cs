@@ -136,6 +136,7 @@ public partial class MainGameItemElement : Control
 		{
             image.Texture = null;
             productImage.Visible = false;
+            durabilityLabel.Visible = false;
             circleProgressImage.Visible = false;
         }
 		else 

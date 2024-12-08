@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://brtkpepoe2erq"]
+
+[ext_resource type="Script" path="res://021_FX/Scripts/FXObject.cs" id="1_06rwk"]
+[ext_resource type="Texture2D" uid="uid://sos3fuc2h3q5" path="res://021_FX/Images/Fire Effect and Bullet 16x16.png" id="2_2p1q2"]
+
+[sub_resource type="Animation" id="Animation_n8cy1"]
+resource_name = "FX1"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(160, 96, 16, 16), Rect2(176, 96, 16, 16), Rect2(192, 96, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_tt72r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, -16, 16, 16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hwtyw"]
+_data = {
+"FX1": SubResource("Animation_n8cy1"),
+"RESET": SubResource("Animation_tt72r")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flauy"]
+atlas = ExtResource("2_2p1q2")
+region = Rect2(0, -16, 16, 16)
+
+[node name="FXObject" type="Node2D" node_paths=PackedStringArray("image", "animation")]
+script = ExtResource("1_06rwk")
+image = NodePath("Sprite2D")
+animation = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hwtyw")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_flauy")

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public partial class ElementPoolBase<T2> : Node where T2 : Node
 {
     [Export] public PackedScene prefab;
-    [Export] public Control parent;
-    [Export] public Control backup;
+    [Export] public Node parent;
+    [Export] public Node backup;
 
     public List<T2> inuses = new List<T2>();
     public Queue<T2> unuses = new Queue<T2>();

@@ -66,6 +66,12 @@ public partial class MonsterObject : Node2D
             data.attackNowTime = (data.attackNowTime + addTime) % data.attackNeedTime;
 
             GameManager.instance.battleManager.Damage(data.attackPoint);
+
+            int rndX = GameManager.instance.randomManager.GetRange(RandomType.Other, -5, 5);
+            int rndY = GameManager.instance.randomManager.GetRange(RandomType.Other, -5, 5);
+            Vector2 targetPos = GameManager.instance.mapManager.nowMap.targetPoint.Position;
+            Vector2 position = new Vector2(targetPos.X + rndX, targetPos.Y + rndY);
+            GameManager.instance.mapManager.PlayFX(data.attackFX, position);
         }
         else 
         {

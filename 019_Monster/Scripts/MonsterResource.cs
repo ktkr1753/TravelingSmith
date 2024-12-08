@@ -11,6 +11,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
 	[Export] public int attackPoint;
     [Export] public double attackNeedTime;
     [Export] public double attackNowTime;
+    [Export] public FXEnum attackFX;
     [Export] public double moveSpeed;
 
 
@@ -24,6 +25,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
         result.attackPoint = attackPoint;
         result.attackNeedTime = attackNeedTime;
         result.attackNowTime = attackNowTime;
+        result.attackFX = attackFX;
         result.moveSpeed = moveSpeed;
         return result;
     }
