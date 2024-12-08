@@ -102,6 +102,47 @@ public partial class MainGameItemElement : Control
         }
 	}
 
+	private bool _isPicking = false;
+	public bool isPicking
+    {
+		get { return _isPicking; }
+		set 
+		{
+            if (_isPicking != value) 
+			{
+                _isPicking = value;
+                OnViewStateChange();
+            }
+		}
+	}
+
+	private bool _isFlying = false;
+    public bool isFlying
+    {
+        get { return _isFlying; }
+        set 
+		{
+			if(_isFlying != value) 
+			{
+				_isFlying = value;
+				OnViewStateChange();
+            }
+		}
+    }
+
+	private void OnViewStateChange() 
+	{
+		if(isPicking || isFlying) 
+		{
+            image.Texture = null;
+            productImage.Visible = false;
+            circleProgressImage.Visible = false;
+        }
+		else 
+		{
+			SetView();
+        }
+	}
 
     public event Action<int> onMainButtonDown;
     public event Action<int> onMainButtonUp;
@@ -126,12 +167,12 @@ public partial class MainGameItemElement : Control
     public void SetData(ItemBaseResource item) 
 	{
 		this.item = item;
+		InitMaterial();
         SetView();
     }
 
 	private void SetView() 
 	{
-		InitMaterial();
         SetImage();
 		SetProductImage();
         SetDurabilityLabel();

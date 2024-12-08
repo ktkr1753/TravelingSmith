@@ -8,7 +8,7 @@ public partial class MonsterObject : Node2D
 
     public MonsterResource data;
 
-    public const double closeDistance = 50;
+    public const double closeDistance = 15;
 
 
     public void SetData(MonsterResource data) 

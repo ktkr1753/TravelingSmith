@@ -12,7 +12,6 @@ public partial class MainGameUI : UIBase
     [Export] private Label nowHpLabel;
     [Export] private Label maxHpLabel;
     [Export] private Label moneyLabel;
-    //public Godot.Collections.Array<ItemBaseResource> items = new Godot.Collections.Array<ItemBaseResource>();
 
     //碰到的物件ID
     private int _nowEnterElementIndex = -1;
@@ -57,12 +56,18 @@ public partial class MainGameUI : UIBase
         {
             if(_nowPickElementIndex != value) 
             {
-                //RefreshItemElement(_nowPickElementIndex, items[_nowPickElementIndex]);
+                int preState = _nowPickElementIndex;
                 _nowPickElementIndex = value;
+
+                if (preState != -1) 
+                {
+                    elements[preState].isPicking = false;
+                }
+
                 if(_nowPickElementIndex != -1) 
                 {
                     SetPickedItemElement(GameManager.instance.itemManager.heldItems[_nowPickElementIndex]);
-                    RefreshItemElement(_nowPickElementIndex, null);
+                    elements[_nowPickElementIndex].isPicking = true;
                 }
                 else 
                 {
@@ -76,7 +81,7 @@ public partial class MainGameUI : UIBase
 
     public const float moveThreshold = 5;
 
-    public const double flyTime = 0.1;
+    public const double flyTime = 0.2;
 
     public override void Init()
     {
@@ -234,7 +239,7 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private Tween StartFlyItem(ItemBaseResource item, Vector2 startPoint, Vector2 endPoint, double duration) 
+    private Tween StartFlyItem(ItemBaseResource item, Vector2 startPoint, Vector2 endPoint, double duration, Action endCallback = null) 
     {
         Tween tween = GetTree().CreateTween();
 
@@ -244,7 +249,11 @@ public partial class MainGameUI : UIBase
         itemElement.GlobalPosition = startPoint;
 
         tween.TweenProperty(itemElement, "global_position", endPoint, duration);
-        tween.TweenCallback(Callable.From(() => { itemFxtPool.ReturnElement(itemElement); }));
+        tween.TweenCallback(Callable.From(() => 
+        { 
+            itemFxtPool.ReturnElement(itemElement);
+            endCallback?.Invoke();
+        }));
 
         return tween;
     }
@@ -292,13 +301,21 @@ public partial class MainGameUI : UIBase
             putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
             GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);
             GameManager.instance.itemManager.SetHeldItem(nowEnterElementIndex, pickedItem);
+
+            //飛行演出
+            Vector2 point1 = elements[nowPickElementIndex].GlobalPosition;
+            Vector2 point2 = elements[nowEnterElementIndex].GlobalPosition;
+            //被替換的飛行
+            elements[nowPickElementIndex].isFlying = true;
+            int tempNowPickElementIndex = nowPickElementIndex;
+            StartFlyItem(putItem, point2, point1, flyTime, () =>
+            {
+                elements[tempNowPickElementIndex].isFlying = false;
+            });
         }
         else 
         {
-            if(nowPickElementIndex != -1) 
-            {
-                RefreshItemElement(nowPickElementIndex, pickedItem);
-            }
+
         }
 
         recordClickPos = null;
@@ -352,7 +369,11 @@ public partial class MainGameUI : UIBase
                 int startIndex = i;
                 Vector2 startPoint = elements[startIndex].GlobalPosition;
                 Vector2 endPoint = elements[endIndex].GlobalPosition;
-                StartFlyItem(item, startPoint, endPoint, flyTime);
+                elements[endIndex].isFlying = true;
+                StartFlyItem(item, startPoint, endPoint, flyTime, () =>
+                {
+                    elements[endIndex].isFlying = false;
+                });
             }
         }
     }
