@@ -167,8 +167,10 @@ public partial class MainGameItemElement : Control
 
     public void SetData(ItemBaseResource item) 
 	{
-		this.item = item;
-		InitMaterial();
+		UnregisterEvent(this.item);
+        this.item = item;
+		RegisterEvent(this.item);
+        InitMaterial();
         SetView();
     }
 
@@ -180,9 +182,28 @@ public partial class MainGameItemElement : Control
 		SetCircleProgress(); 
 	}
 
-	private void InitMaterial()
+	private void RegisterEvent(ItemBaseResource item) 
 	{
-        if (item is IProduce produce)
+        if (item is IUseable useable)
+        {
+			useable.onDurabilityChange += OnDurabilityChange;
+			useable.onUseUp += OnUseUp;
+        }
+    }
+
+	private void UnregisterEvent(ItemBaseResource item) 
+	{
+		if(item is IUseable useable) 
+		{
+            useable.onDurabilityChange -= OnDurabilityChange;
+            useable.onUseUp -= OnUseUp;
+        }
+	}
+
+
+    private void InitMaterial()
+	{
+        if (item is IProduce produce || item is IUseable useable)
         {
             Color selfColor = circleProgressImage.SelfModulate;
             ShaderMaterial material = new ShaderMaterial();
@@ -197,7 +218,6 @@ public partial class MainGameItemElement : Control
 		{
             circleProgressImage.Material = null;
         }
-
     }
 
 	private void SetImage() 
@@ -243,11 +263,25 @@ public partial class MainGameItemElement : Control
                 material.SetShaderParameter(material_percent, nowPercent);
             }
         }
+		else if(item is IUseable useable) 
+		{
+            if (circleProgressImage.Material is ShaderMaterial material)
+            {
+                float nowPercent = (float)(useable.nowTime / useable.needTime);
+                material.SetShaderParameter(material_percent, nowPercent);
+            }
+        }
     }
 
 
 	private void SetDurabilityLabel() 
 	{
+		if(isPicking || isFlying) 
+		{
+            durabilityLabel.Visible = false;
+			return;
+        }
+
 		if(item is IUseable useable) 
 		{
             durabilityLabel.Visible = true;
@@ -267,7 +301,7 @@ public partial class MainGameItemElement : Control
             return;
 		}
 
-		if(item is IProduce produce) 
+		if(item is IProduce produce || item is IUseable useable) 
 		{
 			circleProgressImage.Visible = true;
 		}
@@ -277,7 +311,17 @@ public partial class MainGameItemElement : Control
         }
 	}
 
-	private void OnMouseEnter() 
+	private void OnDurabilityChange(int durability) 
+	{
+		SetDurabilityLabel();
+    }
+
+	private void OnUseUp() 
+	{
+
+	}
+
+    private void OnMouseEnter() 
 	{
         //SetSelectedHint(true);
 		onMouseEnter?.Invoke(index);

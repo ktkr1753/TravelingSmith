@@ -14,6 +14,26 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public FXEnum attackFX;
     [Export] public double moveSpeed;
 
+    public event Action<int> onHPChange;
+    public event Action onDie;
+
+    public void Damage(int damage)
+    {
+        if (damage > 0)
+        {
+            nowHp = Math.Max(0, nowHp - damage);
+            //後續處理
+            onHPChange?.Invoke(nowHp);
+
+            if (nowHp == 0)
+            {
+                onDie?.Invoke();
+            }
+        }
+    }
+
+
+
 
     public MonsterResource Clone()
     {

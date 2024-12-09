@@ -37,5 +37,6 @@ public partial class GameManager : Node2D
 
 
         uiManager.OpenUI(UIIndex.MainGameUI);
-	}
+        uiManager.OpenUI(UIIndex.ShopUI);
+    }
 }

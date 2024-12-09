@@ -10,7 +10,12 @@ region = Rect2(0, 24, 24, 24)
 [resource]
 script = ExtResource("1_kjliw")
 attackPoint = 1
+range = 200.0
+fx = 1
 durability = 2
+needTime = 1.0
+nowTime = 0.0
+isUsing = false
 index = 1
 texture = SubResource("AtlasTexture_sk5r3")
 money = 1

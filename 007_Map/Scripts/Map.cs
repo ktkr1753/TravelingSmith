@@ -10,6 +10,8 @@ public partial class Map : Node2D
 
     [Export] public double nowTime = 0;
 
+    public List<MonsterObject> monsters = new List<MonsterObject>();
+
     public int nowWave = 0; 
 
     public override void _Process(double delta)
@@ -50,9 +52,22 @@ public partial class Map : Node2D
                 Vector2 spawnPoint = spawnPoints[rnd].GlobalPosition;
                 result = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 result.SetData(monsterData);
+                result.onDestroy += OnMonsterDestory;
+
+                monsters.Add(result);
             }
         }
 
         return result;
+    }
+
+    public void OnMonsterDestory(MonsterObject monster) 
+    {
+        monster.onDestroy -= OnMonsterDestory;
+        if(this == null || !this.IsExist()) 
+        {
+            return;
+        }
+        monsters.Remove(monster);
     }
 }

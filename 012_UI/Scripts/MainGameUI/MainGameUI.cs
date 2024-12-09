@@ -41,6 +41,10 @@ public partial class MainGameUI : UIBase
                 //Debug.Print($"nowSelectedElementIndex change:{value}");
                 _nowSelectedElementIndex = value;
                 SetItemSelectedState(nowEnterElementIndex, nowSelectedElementIndex);
+                if(_nowSelectedElementIndex >= 0 && _nowSelectedElementIndex < GameManager.instance.itemManager.heldItems.Count) 
+                {
+                    SetInfoPanel(GameManager.instance.itemManager.heldItems[nowEnterElementIndex]);
+                }
             }
         }
     }
@@ -282,9 +286,6 @@ public partial class MainGameUI : UIBase
         nowSelectedElementIndex = index;
 
         recordClickPos = GetViewport().GetMousePosition();
-
-        //Debug.Print($"OnElementButtonDown index:{nowSelectedElementIndex}");
-        SetInfoPanel(GameManager.instance.itemManager.heldItems[nowEnterElementIndex]);
     }
 
     private void OnElementButtonUp(int index) 
@@ -330,6 +331,12 @@ public partial class MainGameUI : UIBase
     private void OnHeldItemChange(int index) 
     {
         RefreshItemElement(index, GameManager.instance.itemManager.heldItems[index]);
+        if(index == nowPickElementIndex) 
+        {
+            ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
+            SetPickedItemElement(item);
+            SetInfoPanel(item);
+        }
     }
 
     private void OnHPChange(int nowHP) 

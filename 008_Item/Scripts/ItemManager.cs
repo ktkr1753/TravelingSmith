@@ -31,10 +31,12 @@ public partial class ItemManager : Node
     }
 
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
+    HashSet<ItemBaseResource> attackingItems = new HashSet<ItemBaseResource>();
 
-	public event Action<int> onHeldItemChange;
+    public event Action<int> onHeldItemChange;
     public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
     public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
+
 
     public void Init() 
 	{
@@ -69,6 +71,7 @@ public partial class ItemManager : Node
 	{
         base._Process(delta);
         ProcessProducingItems(delta);
+        ProcessAttackingItems(delta);
     }
 
     public ItemBaseResource CreateItem(ItemIndex index) 
@@ -121,7 +124,7 @@ public partial class ItemManager : Node
     public bool Make(IMake make) 
     {
         bool result = false;
-        if(TryMake(make, out HashSet<int> usedItemsIndex)) 
+        if(TryMake(make, out HashSet<int> usedItemsIndex) && !make.isCostMaterial) 
         {
             HashSet<KeyValuePair<int, ItemBaseResource>> items = new HashSet<KeyValuePair<int, ItemBaseResource>>();
             foreach (int index in usedItemsIndex)
@@ -130,6 +133,7 @@ public partial class ItemManager : Node
                 SetHeldItem(index, null);
             }
 
+            make.isCostMaterial = true;
             onUseMaterial?.Invoke(make, items);
             result = true;
         }
@@ -165,7 +169,6 @@ public partial class ItemManager : Node
 				if(produce.nowTime + addTime > produce.needTime) 
 				{
                     bool isSuccess = CreateProduct(produce);
-
                     if (isSuccess) 
                     {
 					    if (produce.isKeepProduce) 
@@ -176,6 +179,11 @@ public partial class ItemManager : Node
 					    {
 						    produce.StopProduce();
 						    produce.nowTime = 0;
+                        }
+
+                        if(producingItem is IMake make) 
+                        {
+                            make.isCostMaterial = false;
                         }
                     }
                     else //物品太多生產失敗，不做事 
@@ -218,4 +226,100 @@ public partial class ItemManager : Node
 
         return isCreate;
     }
+
+    public void AddAttackingItem(ItemBaseResource item) 
+    {
+        if(item is IAttack && !attackingItems.Contains(item)) 
+        {
+            attackingItems.Add(item);
+        }
+    }
+
+    public void RemoveAttackingItem(ItemBaseResource item)
+    {
+        if (attackingItems.Contains(item))
+        {
+            attackingItems.Remove(item);
+        }
+    }
+
+    private void ProcessAttackingItems(double deltaTime) 
+    {
+        double addTime = deltaTime * gameSpeed;
+
+        List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
+
+        foreach (var attackingItem in attackingItems)
+        {
+            if (attackingItem is IAttack attacker)
+            {
+                if (attacker.nowTime + addTime > attacker.needTime)
+                {
+                    bool isSuccess = AttackSomething(attacker);
+
+                    if (isSuccess)
+                    {
+                        attacker.nowTime = (attacker.nowTime + addTime) % attacker.needTime;
+
+                    }
+                    else //找不到可攻擊目標
+                    {
+
+                    }
+
+                    if(attacker.durability <= 0) 
+                    {
+                        for(int i = 0; i < heldItems.Count; i++) 
+                        {
+                            if (heldItems[i] == attacker) 
+                            {
+                                attacker.StopUsing();
+                                SetHeldItem(i, null);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    attacker.nowTime = (attacker.nowTime + addTime) % attacker.needTime;
+                }
+            }
+            else
+            {
+                Debug.PrintErr($"不是IAttack, attackingItems index:{attackingItem.index}");
+                needRemoves.Add(attackingItem);
+            }
+        }
+
+        for (int i = 0; i < needRemoves.Count; i++)
+        {
+            attackingItems.Remove(needRemoves[i]);
+        }
+    }
+
+    public bool AttackSomething(IAttack attcker)
+    {
+        bool isAttack = false;
+
+        List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(attcker.range);
+
+        if(attcker.durability > 0 && monsters.Count > 0) 
+        {
+            for(int i = 0; i < monsters.Count; i++) 
+            {
+                if (monsters[0].Value.data.nowHp > 0) 
+                {
+                    monsters[0].Value.data.Damage(attcker.attackPoint);
+                    attcker.durability = Math.Max(0, attcker.durability - 1);
+                    GameManager.instance.mapManager.PlayFX(attcker.fx, monsters[0].Value.GlobalPosition);
+                    isAttack = true;
+                    break;
+                }
+            }
+        }
+
+        return isAttack;
+    }
+
 }

@@ -10,7 +10,15 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
     {
         get { return _materials; }
         private set { _materials = value; }
-    } 
+    }
+
+    private bool _isCostMaterial = false;
+    [Export] public bool isCostMaterial 
+    {
+        get { return _isCostMaterial; }
+        set { _isCostMaterial = value; }
+    }
+
     private ItemIndex _productItem = ItemIndex.None;
     [Export] public ItemIndex productItem
     {

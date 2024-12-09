@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://5qah1s74j6mg"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIcon.cs" id="1_hghdf"]
+
+[node name="ItemIcon" type="PanelContainer" node_paths=PackedStringArray("itemImage")]
+offset_right = 8.0
+offset_bottom = 8.0
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("1_hghdf")
+itemImage = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+theme_type_variation = &"EmptyButton"
+
+[connection signal="pressed" from="Button" to="." method="OnMainButtonClick"]

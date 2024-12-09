@@ -8,12 +8,24 @@ public partial class MonsterObject : Node2D
 
     public MonsterResource data;
 
+    public event Action<MonsterObject> onDestroy;
+
     public const double closeDistance = 15;
 
 
     public void SetData(MonsterResource data) 
     {
+        if(this.data != null) 
+        {
+            data.onDie -= Destroy;
+        }
+
         this.data = data;
+
+        if(data != null) 
+        {
+            data.onDie += Destroy;
+        }
     }
 
     public override void _Process(double delta)
@@ -21,6 +33,13 @@ public partial class MonsterObject : Node2D
         base._Process(delta);
 
         BehaviorMachine(delta);
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        onDestroy?.Invoke(this);
     }
 
     public void BehaviorMachine(double delta) 

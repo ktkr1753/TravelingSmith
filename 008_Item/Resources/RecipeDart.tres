@@ -10,6 +10,7 @@ region = Rect2(0, 72, 24, 24)
 [resource]
 script = ExtResource("1_jaewr")
 materials = [601]
+isCostMaterial = false
 productItem = 1
 needTime = 5.0
 nowTime = 0.0
