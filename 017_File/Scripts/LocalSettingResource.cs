@@ -7,8 +7,24 @@ public partial class LocalSettingResource : Resource, IClone<LocalSettingResourc
     [Export] public int bgmVolume = 50;
     [Export] public int soundVolume = 50;
 
-    [Export] public double gameSpeedSetting = 1;
-    [Export] public bool isPause = false;
+    private double _gameSpeedSetting = 1;
+    [Export] public double gameSpeedSetting 
+    {
+        get 
+        {
+            return _gameSpeedSetting;
+        }
+        set 
+        {
+            if(gameSpeedSetting != value) 
+            {
+                _gameSpeedSetting = value;
+                onGameSpeedSettingChange?.Invoke(_gameSpeedSetting);
+            }
+        }
+    }
+
+    public event Action<double> onGameSpeedSettingChange;
 
 
     public LocalSettingResource Clone()
@@ -17,7 +33,6 @@ public partial class LocalSettingResource : Resource, IClone<LocalSettingResourc
         result.bgmVolume = bgmVolume;
         result.soundVolume = soundVolume;
         result.gameSpeedSetting = gameSpeedSetting;
-        result.isPause = isPause;
         return result;
     }
 

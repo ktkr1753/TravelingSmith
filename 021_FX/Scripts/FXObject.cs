@@ -9,7 +9,27 @@ public partial class FXObject : Node2D
 
     public const string clip_FX1 = "FX1";
 
-	public async Task PlayFX(FXEnum fxEnum) 
+    public override void _Ready()
+    {
+        base._Ready();
+
+        GameManager.instance.localSetting.onGameSpeedSettingChange += OnGameSpeedChange;
+		OnGameSpeedChange(GameManager.instance.localSetting.gameSpeedSetting);
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        GameManager.instance.localSetting.onGameSpeedSettingChange -= OnGameSpeedChange;
+    }
+
+	private void OnGameSpeedChange(double gameSpeed) 
+	{
+		animation.SpeedScale = (float)gameSpeed;
+	}
+
+    public async Task PlayFX(FXEnum fxEnum) 
 	{
 		bool isFail = false;
 		switch (fxEnum) 
