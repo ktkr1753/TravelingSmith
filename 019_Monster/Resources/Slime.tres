@@ -7,7 +7,7 @@
 script = ExtResource("1_2dq7h")
 index = 1
 prefab = ExtResource("1_tl0x8")
-maxHp = 1
+maxHp = 2
 nowHp = 0
 attackPoint = 1
 attackNeedTime = 1.0

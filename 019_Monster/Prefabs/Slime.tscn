@@ -5,6 +5,6 @@
 
 [node name="Slime" instance=ExtResource("1_vkl70")]
 
-[node name="Image" parent="." index="1"]
+[node name="Image" parent="." index="2"]
 position = Vector2(0, -8)
 texture = ExtResource("2_xpn0y")

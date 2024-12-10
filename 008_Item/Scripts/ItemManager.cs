@@ -4,7 +4,19 @@ using System.Collections.Generic;
 
 public partial class ItemManager : Node
 {
-    public int money = 0;
+    private int _money = 0;
+    [Export] public int money 
+    {
+        get { return _money; }
+        set 
+        { 
+            if(_money != value) 
+            {
+                _money = value;
+                onMoneyChange?.Invoke(_money);
+            }
+        }
+    }
 
 	private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
     [Export] public Godot.Collections.Array<ItemBaseResource> heldItems 
@@ -33,10 +45,10 @@ public partial class ItemManager : Node
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
     HashSet<ItemBaseResource> attackingItems = new HashSet<ItemBaseResource>();
 
+    public event Action<int> onMoneyChange;
     public event Action<int> onHeldItemChange;
     public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
     public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
-
 
     public void Init() 
 	{
@@ -49,6 +61,14 @@ public partial class ItemManager : Node
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
             }
+            else if(i == 1) 
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.FellingAxe);
+            }
+            else if (i == 2)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeStraightSword);
+            }
             else if (i == 24)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
@@ -56,6 +76,23 @@ public partial class ItemManager : Node
 
             heldItems.Add(item);
         }
+    }
+
+    public int AddHeldItem(ItemIndex itemIndex) 
+    {
+        int index = -1;
+        for (int i = 0; i < heldItems.Count; i++)
+        {
+            if (heldItems[i] == null)
+            {
+                ItemBaseResource item = CreateItem(itemIndex);
+                SetHeldItem(i, item);
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
 	public void SetHeldItem(int index, ItemBaseResource item) 
@@ -211,20 +248,19 @@ public partial class ItemManager : Node
 
     public bool CreateProduct(IProduce produce)
     {
-        bool isCreate = false;
+        bool isSuccess = false;
         for (int i = 0; i < heldItems.Count; i++)
         {
             if (heldItems[i] == null)
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
                 SetHeldItem(i, item);
-                isCreate = true;
+                isSuccess = true;
                 onCreateProduct?.Invoke(produce, i, item);
                 break;
             }
         }
-
-        return isCreate;
+        return isSuccess;
     }
 
     public void AddAttackingItem(ItemBaseResource item) 

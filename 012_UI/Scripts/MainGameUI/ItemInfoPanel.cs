@@ -7,6 +7,13 @@ public partial class ItemInfoPanel : PanelContainer
 	[Export] private MainGameItemElement itemElement;
 	[Export] private Label nameLabel;
 	[Export] private Label moneyLabel;
+
+    [Export] private Control attackTimeParent;
+    [Export] private Label attackTimeLabel;
+    [Export] private Control attackPointParent;
+    [Export] private Label attackPointLabel;
+    [Export] private Control attackRangeParent;
+    [Export] private Label attackRangeLabel;
     [Export] private Control materialParent;
     [Export] private ItemIconPool materialPool;
     [Export] private Control productParent;
@@ -18,6 +25,7 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private Button produceStopButton;
     [Export] private Button startUseButton;
     [Export] private Button stopUseButton;
+    [Export] private Button discardButton;
 
     private ItemBaseResource item;
 
@@ -69,6 +77,9 @@ public partial class ItemInfoPanel : PanelContainer
 	{
 		SetName();
 		SetMoney();
+        SetAttackTime();
+        SetAttackPoint();
+        SetAttackRange();
         SetMaterial();
         SetProduct();
         SetProduceCostTime();
@@ -83,6 +94,45 @@ public partial class ItemInfoPanel : PanelContainer
 	private void SetMoney() 
 	{
 		moneyLabel.Text = $"{item.money}";
+    }
+
+    private void SetAttackTime() 
+    {
+        if (item is IAttack attacker) 
+        {
+            attackTimeParent.Visible = true;
+            attackTimeLabel.Text = $"{attacker.needTime}";
+        }
+        else 
+        {
+            attackTimeParent.Visible = false;
+        }
+    }
+
+    private void SetAttackPoint()
+    {
+        if (item is IAttack attacker)
+        {
+            attackPointParent.Visible = true;
+            attackPointLabel.Text = $"{attacker.attackPoint}";
+        }
+        else
+        {
+            attackPointParent.Visible = false;
+        }
+    }
+
+    private void SetAttackRange() 
+    {
+        if (item is IAttack attacker)
+        {
+            attackRangeParent.Visible = true;
+            attackRangeLabel.Text = $"{attacker.range}";
+        }
+        else
+        {
+            attackRangeParent.Visible = false;
+        }
     }
 
     private void SetMaterial() 
@@ -137,6 +187,7 @@ public partial class ItemInfoPanel : PanelContainer
 		if(item is IProduce produce) 
 		{
 			buttonsParent.Visible = true;
+            discardButton.Visible = true;
             startUseButton.Visible = false;
             stopUseButton.Visible = false;
             if (produce.isProducing) 
@@ -169,6 +220,7 @@ public partial class ItemInfoPanel : PanelContainer
 		else if (item is IUseable useable)
 		{
             buttonsParent.Visible = true;
+            discardButton.Visible = true;
             produceStopButton.Visible = false;
             produceStartButton.Visible = false;
 
@@ -185,7 +237,12 @@ public partial class ItemInfoPanel : PanelContainer
         }
 		else 
 		{
-            buttonsParent.Visible = false;
+            buttonsParent.Visible = true;
+            discardButton.Visible = true;
+            startUseButton.Visible = false;
+            stopUseButton.Visible = false;
+            produceStopButton.Visible = false;
+            produceStartButton.Visible = false;
         }
 	}
 
@@ -245,6 +302,21 @@ public partial class ItemInfoPanel : PanelContainer
         {
             useable.StopUsing();
             SetButtons();
+        }
+    }
+
+    public void OnDiscardClick() 
+    {
+        if(item != null) 
+        {
+            for(int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++) 
+            {
+                if (GameManager.instance.itemManager.heldItems[i] == item) 
+                {
+                    GameManager.instance.itemManager.SetHeldItem(i, null);
+                    break;
+                }
+            }
         }
     }
 }

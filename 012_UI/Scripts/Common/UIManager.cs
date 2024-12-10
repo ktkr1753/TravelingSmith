@@ -9,6 +9,7 @@ public partial class UIManager : CanvasLayer
     [Export] Control layer2;
     [Export] Control layer3;
     [Export] Godot.Collections.Dictionary<UIIndex, UIConfigResource> UIs;
+    [Export] private MainGameItemElementPool itemFxtPool;
     Godot.Collections.Dictionary<UILayer, Control> layers = new Godot.Collections.Dictionary<UILayer, Control>();
 
     List<UIBase> openUIs = new List<UIBase>();
@@ -139,6 +140,11 @@ public partial class UIManager : CanvasLayer
         isFoucsUIOpen = isFoucs;
     }
 
+    public T GetOpenedUI<T>(UIIndex uiType) where T : UIBase 
+    {
+        return GetOpenedUI(uiType) as T;
+    }
+
     public UIBase GetOpenedUI(UIIndex uiType)
     {
         UIBase result = null;
@@ -152,5 +158,24 @@ public partial class UIManager : CanvasLayer
         }
 
         return result;
+    }
+
+    public Tween StartFlyItem(ItemBaseResource item, Vector2 startPoint, Vector2 endPoint, double duration, Action endCallback = null)
+    {
+        Tween tween = GetTree().CreateTween();
+
+        MainGameItemElement itemElement = itemFxtPool.GetElement();
+        itemElement.showProcess = false;
+        itemElement.SetData(item);
+        itemElement.GlobalPosition = startPoint;
+
+        tween.TweenProperty(itemElement, "global_position", endPoint, duration);
+        tween.TweenCallback(Callable.From(() =>
+        {
+            itemFxtPool.ReturnElement(itemElement);
+            endCallback?.Invoke();
+        }));
+
+        return tween;
     }
 }

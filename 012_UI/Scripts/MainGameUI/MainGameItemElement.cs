@@ -165,6 +165,12 @@ public partial class MainGameItemElement : Control
         SetNowPercent(delta);
     }
 
+    public void SetData(int index,ItemBaseResource item)
+    {
+		this.index = index;
+		SetData(item);
+    }
+
     public void SetData(ItemBaseResource item) 
 	{
 		UnregisterEvent(this.item);

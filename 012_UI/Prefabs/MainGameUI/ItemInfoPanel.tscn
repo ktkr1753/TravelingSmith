@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIconPool.cs" id="4_q8w2x"]
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/MainGameUI/ItemIcon.tscn" id="5_3bx7m"]
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "attackTimeParent", "attackTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -22,17 +22,24 @@ script = ExtResource("1_jhhof")
 itemElement = NodePath("VBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
+attackTimeParent = NodePath("VBoxContainer/AttackTimeHBox")
+attackTimeLabel = NodePath("VBoxContainer/AttackTimeHBox/TimeLabel")
+attackPointParent = NodePath("VBoxContainer/AttackPointHBox")
+attackPointLabel = NodePath("VBoxContainer/AttackPointHBox/AttakPointLabel")
+attackRangeParent = NodePath("VBoxContainer/AttackRangeHBox")
+attackRangeLabel = NodePath("VBoxContainer/AttackRangeHBox/AttakRangeLabel")
 materialParent = NodePath("VBoxContainer/MaterialHBox")
-materialPool = NodePath("VBoxContainer/MaterialHBox/InuseHBox")
+materialPool = NodePath("VBoxContainer/MaterialHBox/GridContainer")
 productParent = NodePath("VBoxContainer/ProductHBox")
 productIcon = NodePath("VBoxContainer/ProductHBox/ItemIcon")
 produceCostTimeParent = NodePath("VBoxContainer/ProductTimeHBox")
 produceCostTimeLabel = NodePath("VBoxContainer/ProductTimeHBox/TimeLabel")
-buttonsParent = NodePath("VBoxContainer/ProduceButtonParent")
-produceStartButton = NodePath("VBoxContainer/ProduceButtonParent/StartProduceButton")
-produceStopButton = NodePath("VBoxContainer/ProduceButtonParent/StopProduceButton")
-startUseButton = NodePath("VBoxContainer/ProduceButtonParent/StartUseButton")
-stopUseButton = NodePath("VBoxContainer/ProduceButtonParent/StopUseButton")
+buttonsParent = NodePath("VBoxContainer/ButtonParent")
+produceStartButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StartProduceButton")
+produceStopButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StopProduceButton")
+startUseButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StartUseButton")
+stopUseButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StopUseButton")
+discardButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/DiscardButton")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -63,15 +70,65 @@ text = "1"
 horizontal_alignment = 2
 text_overrun_behavior = 3
 
+[node name="AttackTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+layout_mode = 2
+text = "攻擊間隔:"
+
+[node name="TimeLabel" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "12"
+horizontal_alignment = 2
+
+[node name="SecondLabel" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+layout_mode = 2
+text = "秒"
+
+[node name="AttackPointHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/AttackPointHBox"]
+layout_mode = 2
+text = "攻擊力:"
+
+[node name="AttakPointLabel" type="Label" parent="VBoxContainer/AttackPointHBox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "12"
+horizontal_alignment = 2
+
+[node name="AttackRangeHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/AttackRangeHBox"]
+layout_mode = 2
+text = "距離:"
+
+[node name="AttakRangeLabel" type="Label" parent="VBoxContainer/AttackRangeHBox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "12"
+horizontal_alignment = 2
+
 [node name="MaterialHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MaterialHBox"]
 layout_mode = 2
 text = "素材:"
 
-[node name="InuseHBox" type="HBoxContainer" parent="VBoxContainer/MaterialHBox" node_paths=PackedStringArray("parent", "backup")]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/MaterialHBox" node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 4
 script = ExtResource("4_q8w2x")
 prefab = ExtResource("5_3bx7m")
 parent = NodePath(".")
@@ -82,6 +139,7 @@ visible = false
 layout_mode = 2
 
 [node name="ProductHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/ProductHBox"]
@@ -92,6 +150,7 @@ text = "產物:"
 layout_mode = 2
 
 [node name="ProductTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/ProductTimeHBox"]
@@ -112,40 +171,53 @@ text = "秒"
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ProduceButtonParent" type="PanelContainer" parent="VBoxContainer"]
+[node name="ButtonParent" type="PanelContainer" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="StartProduceButton" type="Button" parent="VBoxContainer/ProduceButtonParent"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ButtonParent"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="StartProduceButton" type="Button" parent="VBoxContainer/ButtonParent/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "製作"
 
-[node name="StopProduceButton" type="Button" parent="VBoxContainer/ProduceButtonParent"]
+[node name="StopProduceButton" type="Button" parent="VBoxContainer/ButtonParent/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "停止"
 
-[node name="StartUseButton" type="Button" parent="VBoxContainer/ProduceButtonParent"]
+[node name="StartUseButton" type="Button" parent="VBoxContainer/ButtonParent/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "使用"
 
-[node name="StopUseButton" type="Button" parent="VBoxContainer/ProduceButtonParent"]
+[node name="StopUseButton" type="Button" parent="VBoxContainer/ButtonParent/HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "停止"
 
-[connection signal="pressed" from="VBoxContainer/ProduceButtonParent/StartProduceButton" to="." method="OnStartProduceClick"]
-[connection signal="pressed" from="VBoxContainer/ProduceButtonParent/StopProduceButton" to="." method="OnStopProduceClick"]
-[connection signal="pressed" from="VBoxContainer/ProduceButtonParent/StartUseButton" to="." method="OnStartUseClick"]
-[connection signal="pressed" from="VBoxContainer/ProduceButtonParent/StopUseButton" to="." method="OnStopUseClick"]
+[node name="DiscardButton" type="Button" parent="VBoxContainer/ButtonParent/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(80, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "丟棄"
+
+[connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StartProduceButton" to="." method="OnStartProduceClick"]
+[connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StopProduceButton" to="." method="OnStopProduceClick"]
+[connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StartUseButton" to="." method="OnStartUseClick"]
+[connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StopUseButton" to="." method="OnStopUseClick"]
+[connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/DiscardButton" to="." method="OnDiscardClick"]

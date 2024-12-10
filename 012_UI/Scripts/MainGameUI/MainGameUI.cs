@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 public partial class MainGameUI : UIBase
 {
-	[Export] Godot.Collections.Array<MainGameItemElement> elements = new Godot.Collections.Array<MainGameItemElement>();
+	[Export] public Godot.Collections.Array<MainGameItemElement> elements = new Godot.Collections.Array<MainGameItemElement>();
     [Export] private MainGameItemElement pickItemElement;
-    [Export] private MainGameItemElementPool itemFxtPool;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
@@ -90,6 +89,7 @@ public partial class MainGameUI : UIBase
     public override void Init()
     {
         base.Init();
+        GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
@@ -104,6 +104,7 @@ public partial class MainGameUI : UIBase
     public override void _ExitTree()
     {
         base._ExitTree();
+        GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
@@ -243,26 +244,6 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private Tween StartFlyItem(ItemBaseResource item, Vector2 startPoint, Vector2 endPoint, double duration, Action endCallback = null) 
-    {
-        Tween tween = GetTree().CreateTween();
-
-        MainGameItemElement itemElement = itemFxtPool.GetElement();
-        itemElement.showProcess = false;
-        itemElement.SetData(item);
-        itemElement.GlobalPosition = startPoint;
-
-        tween.TweenProperty(itemElement, "global_position", endPoint, duration);
-        tween.TweenCallback(Callable.From(() => 
-        { 
-            itemFxtPool.ReturnElement(itemElement);
-            endCallback?.Invoke();
-        }));
-
-        return tween;
-    }
-
-
     private void OnElementMouseEnter(int index) 
     {
         if(index != nowEnterElementIndex) 
@@ -309,7 +290,7 @@ public partial class MainGameUI : UIBase
             //被替換的飛行
             elements[nowPickElementIndex].isFlying = true;
             int tempNowPickElementIndex = nowPickElementIndex;
-            StartFlyItem(putItem, point2, point1, flyTime, () =>
+            GameManager.instance.uiManager.StartFlyItem(putItem, point2, point1, flyTime, () =>
             {
                 elements[tempNowPickElementIndex].isFlying = false;
             });
@@ -331,10 +312,16 @@ public partial class MainGameUI : UIBase
     private void OnHeldItemChange(int index) 
     {
         RefreshItemElement(index, GameManager.instance.itemManager.heldItems[index]);
+        
         if(index == nowPickElementIndex) 
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
             SetPickedItemElement(item);
+            SetInfoPanel(item);
+        }
+        else if(index == nowSelectedElementIndex) 
+        {
+            ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowSelectedElementIndex];
             SetInfoPanel(item);
         }
     }
@@ -362,7 +349,7 @@ public partial class MainGameUI : UIBase
                 Vector2 startPoint = elements[KV.Key].GlobalPosition;
                 Vector2 endPoint = elements[endIndex].GlobalPosition;
                 ItemBaseResource item = KV.Value;
-                StartFlyItem(item, startPoint, endPoint, flyTime);
+                GameManager.instance.uiManager.StartFlyItem(item, startPoint, endPoint, flyTime);
             }
         }
     }
@@ -377,11 +364,16 @@ public partial class MainGameUI : UIBase
                 Vector2 startPoint = elements[startIndex].GlobalPosition;
                 Vector2 endPoint = elements[endIndex].GlobalPosition;
                 elements[endIndex].isFlying = true;
-                StartFlyItem(item, startPoint, endPoint, flyTime, () =>
+                GameManager.instance.uiManager.StartFlyItem(item, startPoint, endPoint, flyTime, () =>
                 {
                     elements[endIndex].isFlying = false;
                 });
             }
         }
+    }
+
+    private void OnMoneyChange(int money) 
+    {
+        SetMoney();
     }
 }

@@ -27,8 +27,7 @@ uiCommonSetting = ExtResource("3_nf7bt")
 
 [node name="UIManager" parent="." instance=ExtResource("2_r5hkv")]
 
-[node name="SoundManager" parent="." node_paths=PackedStringArray("soundPlayers") instance=ExtResource("3_c2m3b")]
-soundPlayers = []
+[node name="SoundManager" parent="." instance=ExtResource("3_c2m3b")]
 
 [node name="ItemManager" parent="." instance=ExtResource("7_1qxjk")]
 

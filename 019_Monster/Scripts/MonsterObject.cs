@@ -3,6 +3,7 @@ using System;
 
 public partial class MonsterObject : Node2D
 {
+    [Export] public ProgressBar hpProgressBar;
 	[Export] public Sprite2D mainImage;
     [Export] public AnimationPlayer anim;
 
@@ -15,18 +16,52 @@ public partial class MonsterObject : Node2D
 
     public void SetData(MonsterResource data) 
     {
-        if(this.data != null) 
-        {
-            data.onDie -= Destroy;
-        }
-
+        UnregisterEvent(this.data);
         this.data = data;
+        RegisterEvent(this.data);
 
-        if(data != null) 
+        SetView();
+    }
+
+    private void RegisterEvent(MonsterResource data) 
+    {
+        if (data != null)
         {
+            data.onHPChange += OnHpChange;
             data.onDie += Destroy;
         }
     }
+    private void UnregisterEvent(MonsterResource data)
+    {
+        if(data != null) 
+        {
+            data.onHPChange -= OnHpChange;
+            data.onDie -= Destroy;
+        }
+    }
+
+    private void SetView() 
+    {
+        SetHpProgressbar();
+    }
+
+    private void SetHpProgressbar() 
+    {
+        if(data != null) 
+        {
+            if (data.maxHp == data.nowHp)
+            {
+                hpProgressBar.Visible = false;
+            }
+            else 
+            {
+                hpProgressBar.Visible = true;
+                hpProgressBar.MaxValue = data.maxHp;
+                hpProgressBar.Value = data.nowHp;
+            }
+        }
+    }
+
 
     public override void _Process(double delta)
     {
@@ -58,9 +93,6 @@ public partial class MonsterObject : Node2D
             Move(delta);
         }
     }
-
-
-
 
     public bool IsCloseTarget() 
     {
@@ -107,6 +139,10 @@ public partial class MonsterObject : Node2D
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));
     }
 
+    private void OnHpChange(int nowHp) 
+    {
+        SetHpProgressbar();
+    }
 
     public void Destroy()
     {

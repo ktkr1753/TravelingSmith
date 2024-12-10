@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 public partial class Map : Node2D
 {
-	[Export] Godot.Collections.Array<Node2D> spawnPoints = new Godot.Collections.Array<Node2D>();
     [Export] Node2D monsterParent;
     [Export] public Node2D targetPoint;
 
     [Export] public double nowTime = 0;
 
     public List<MonsterObject> monsters = new List<MonsterObject>();
+
+    public const int spawnDistance = 380;
 
     public int nowWave = 0; 
 
@@ -45,17 +46,14 @@ public partial class Map : Node2D
             MonsterResource monsterData = tempMonster.Clone();
             monsterData.nowHp = monsterData.maxHp;
 
-            int rnd = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, 0, spawnPoints.Count);
+            float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, 0, (float)(2 * Math.PI));
+            Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
 
-            if(rnd < spawnPoints.Count) 
-            {
-                Vector2 spawnPoint = spawnPoints[rnd].GlobalPosition;
-                result = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
-                result.SetData(monsterData);
-                result.onDestroy += OnMonsterDestory;
+            result = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
+            result.SetData(monsterData);
+            result.onDestroy += OnMonsterDestory;
 
-                monsters.Add(result);
-            }
+            monsters.Add(result);
         }
 
         return result;

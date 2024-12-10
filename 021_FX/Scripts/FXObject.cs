@@ -51,6 +51,5 @@ public partial class FXObject : Node2D
 		{
 			await ToSignal(animation, "animation_finished").ToTask();
 		}
-		//QueueFree();
     }
 }

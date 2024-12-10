@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cesxes6tpdrbh"
-path="res://.godot/imported/arrow_down.png-51c0b6cd5500d79608e2d9db45b52cc7.ctex"
+uid="uid://di8ghgh6306mm"
+path="res://.godot/imported/HPBar_2.png-672dae4b6560b9991d1b8d5f86ab4827.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://012_UI/Images/arrow_down.png"
-dest_files=["res://.godot/imported/arrow_down.png-51c0b6cd5500d79608e2d9db45b52cc7.ctex"]
+source_file="res://012_UI/Images/HPBar_2.png"
+dest_files=["res://.godot/imported/HPBar_2.png-672dae4b6560b9991d1b8d5f86ab4827.ctex"]
 
 [params]
 

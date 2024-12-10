@@ -2,11 +2,24 @@
 
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterObject.cs" id="1_057hj"]
 
-[node name="MonsterTemp" type="Node2D" node_paths=PackedStringArray("mainImage", "anim")]
+[node name="MonsterTemp" type="Node2D" node_paths=PackedStringArray("hpProgressBar", "mainImage", "anim")]
 script = ExtResource("1_057hj")
+hpProgressBar = NodePath("ProgressBar")
 mainImage = NodePath("Image")
 anim = NodePath("AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_top = -18.0
+offset_right = 8.0
+offset_bottom = -13.0
+grow_horizontal = 2
+theme_type_variation = &"ProgressBar_RedSmall"
+show_percentage = false
 
 [node name="Image" type="Sprite2D" parent="."]
