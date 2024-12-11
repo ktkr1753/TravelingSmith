@@ -18,10 +18,37 @@ public partial class GameManager : Node2D
     //config
     [Export] public ItemConfigResource itemConfig;
     [Export] public MonsterConfigResource monsterConfig;
+    [Export] public ExpConfigResource expConfig;
 
     [Export] public LocalSettingResource localSetting;
     [Export] public UICommonSettingResource uiCommonSetting;
 
+    public bool _isChoosePause = false;
+    public bool isChoosePause 
+    {
+        get { return _isChoosePause; } 
+        set 
+        {  
+            _isChoosePause = value; 
+        }
+    }
+
+    public double gameSpeed
+    {
+        get
+        {
+            double result = 1;
+            if (battleManager.isGameOver || isChoosePause)
+            {
+                result = 0;
+            }
+            else
+            {
+                result = localSetting.gameSpeedSetting;
+            }
+            return result;
+        }
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()

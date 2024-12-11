@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickItemElement", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "moneyLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickItemElement", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +35,10 @@ infoPanel = NodePath("ItemInfoPanel")
 hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("VBox/HPPanel/HBoxContainer/NowHPLabel")
 maxHpLabel = NodePath("VBox/HPPanel/HBoxContainer/MaxHPLabel")
+expProgressBar = NodePath("VBox/ExpPanel/ProgressBar")
+expLabelParent = NodePath("VBox/ExpPanel/HBoxContainer")
+nowExpLabel = NodePath("VBox/ExpPanel/HBoxContainer/NowHPLabel")
+maxExpLabel = NodePath("VBox/ExpPanel/HBoxContainer/MaxHPLabel")
 moneyLabel = NodePath("VBox/Control/MoneyPanel/HBoxContainer/MoneyLabel")
 isBackGround = false
 uIType = 1
@@ -156,6 +160,8 @@ index = 24
 [node name="MainGameItemElement_Clear" parent="." instance=ExtResource("3_mpf7q")]
 visible = false
 layout_mode = 0
+normalColor = Color(0, 0, 0, 0)
+pauseColor = Color(0, 0, 0, 0)
 
 [node name="ItemInfoPanel" parent="." instance=ExtResource("3_uculn")]
 visible = false
@@ -212,7 +218,7 @@ anchor_right = 1.0
 offset_left = -100.0
 offset_bottom = 40.0
 grow_horizontal = 0
-theme_override_constants/separation = 10
+theme_override_constants/separation = 3
 
 [node name="HPPanel" type="PanelContainer" parent="VBox"]
 custom_minimum_size = Vector2(100, 0)
@@ -262,7 +268,39 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource("4_tu1ht")
 
+[node name="ExpPanel" type="PanelContainer" parent="VBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBox/ExpPanel"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_type_variation = &"ProgressBar_Yellow"
+value = 50.0
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBox/ExpPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="NowHPLabel" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+text = "50"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+layout_mode = 2
+text = "/"
+
+[node name="MaxHPLabel" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+text = "100"
+
 [node name="Control" type="Control" parent="VBox"]
+custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
 [node name="MoneyPanel" type="PanelContainer" parent="VBox/Control"]

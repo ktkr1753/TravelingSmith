@@ -25,7 +25,7 @@ public partial class Map : Node2D
 
     private void UpdateSpawn(double delta) 
     {
-        double addTime = delta * GameManager.instance.battleManager.gameSpeed;
+        double addTime = delta * GameManager.instance.gameSpeed;
         nowTime = nowTime + addTime;
 
         //測試

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=81 format=3 uid="uid://b8vlfwwcuog2j"]
+[gd_resource type="Theme" load_steps=85 format=3 uid="uid://b8vlfwwcuog2j"]
 
 [ext_resource type="Texture2D" uid="uid://dyegqua47qlrb" path="res://012_UI/Images/slot2.png" id="1_4dji3"]
 [ext_resource type="Texture2D" uid="uid://dhkyvcu3h87fd" path="res://012_UI/Images/button_2-normal.png" id="1_5d6tj"]
@@ -32,6 +32,8 @@
 [ext_resource type="Texture2D" uid="uid://cgvyi3byd1fqs" path="res://012_UI/Images/HPBar.png" id="26_xsx5p"]
 [ext_resource type="Texture2D" uid="uid://cejd53soxxni3" path="res://012_UI/Images/HPBarBackground_2.png" id="27_u8o0h"]
 [ext_resource type="Texture2D" uid="uid://di8ghgh6306mm" path="res://012_UI/Images/HPBar_2.png" id="28_75lub"]
+[ext_resource type="Texture2D" uid="uid://c6h54245w7nbr" path="res://012_UI/Images/progressBackground_yellow.png" id="29_ybnj3"]
+[ext_resource type="Texture2D" uid="uid://dn7jgt1ncny63" path="res://012_UI/Images/progress_yellow.png" id="30_frikm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2jih"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -279,6 +281,20 @@ texture_margin_top = 2.0
 texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_shr5k"]
+texture = ExtResource("29_ybnj3")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pc0iu"]
+texture = ExtResource("30_frikm")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ginrv"]
 texture = ExtResource("1_4dji3")
 texture_margin_left = 2.0
@@ -412,6 +428,9 @@ ProgressBar_Red/styles/fill = SubResource("StyleBoxTexture_vjv6y")
 ProgressBar_RedSmall/base_type = &"ProgressBar"
 ProgressBar_RedSmall/styles/background = SubResource("StyleBoxTexture_wnjv6")
 ProgressBar_RedSmall/styles/fill = SubResource("StyleBoxTexture_jtuot")
+ProgressBar_Yellow/base_type = &"ProgressBar"
+ProgressBar_Yellow/styles/background = SubResource("StyleBoxTexture_shr5k")
+ProgressBar_Yellow/styles/fill = SubResource("StyleBoxTexture_pc0iu")
 TitleLabel/base_type = &"Label"
 TitleLabel/font_sizes/font_size = 18
 TranslucentPanelContainer/base_type = &"PanelContainer"

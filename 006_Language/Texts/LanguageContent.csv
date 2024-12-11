@@ -10,12 +10,17 @@ ts_common_Dismiss,Dismiss,解散
 
 ts_itemName_Dart,Dart,飛刀
 ts_itemName_StraightSword,Straight Sword,直劍
+ts_itemName_HuntingBow,Hunting Bow,獵弓
+ts_itemName_Board,Board,木板
 ts_itemName_RecipeDart,Recipe Dart,飛刀配方
 ts_itemName_RecipeStraightSword,Recipe Straight Sword,直劍配方
+ts_itemName_RecipeBoard,Recipe Board,木板配方
+ts_itemName_RecipeHuntingBow,RecipeHuntingBow,獵弓配方
 ts_itemName_Pickaxe,Pickaxe,礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
 ts_itemName_Iron,Iron,鐵
 ts_itemName_Gold,Gold,金
 ts_itemName_Branch,Branch,樹枝
+ts_itemName_Titanium,Titanium,鈦金
 
 ts_monsterName_Slime,Slime,史萊姆

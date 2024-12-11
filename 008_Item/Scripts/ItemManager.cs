@@ -25,25 +25,26 @@ public partial class ItemManager : Node
 		private set { _heldItems = value; }
 	}
 
-    public double gameSpeed
+    public bool isHeldItemFull 
     {
-        get
+        get 
         {
-            double result = 1;
-            if (GameManager.instance.battleManager.isGameOver)
+            bool isAnyEmpty = false;
+
+            for(int i = 0; i < _heldItems.Count; i++) 
             {
-                result = 0;
+                if (_heldItems[i] == null) 
+                {
+                    isAnyEmpty = true;
+                }
             }
-            else
-            {
-                result = GameManager.instance.localSetting.gameSpeedSetting;
-            }
-            return result;
+            return !isAnyEmpty;
         }
     }
 
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
     HashSet<ItemBaseResource> attackingItems = new HashSet<ItemBaseResource>();
+    HashSet<ItemBaseResource> repairingItems = new HashSet<ItemBaseResource>();
 
     public event Action<int> onMoneyChange;
     public event Action<int> onHeldItemChange;
@@ -62,14 +63,6 @@ public partial class ItemManager : Node
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
             }
             else if(i == 1) 
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.FellingAxe);
-            }
-            else if (i == 2)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeStraightSword);
-            }
-            else if (i == 24)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
             }
@@ -109,6 +102,7 @@ public partial class ItemManager : Node
         base._Process(delta);
         ProcessProducingItems(delta);
         ProcessAttackingItems(delta);
+        ProcessRepairingItems(delta);
     }
 
     public ItemBaseResource CreateItem(ItemIndex index) 
@@ -195,7 +189,7 @@ public partial class ItemManager : Node
 
     private void ProcessProducingItems(double deltaTime) 
 	{
-        double addTime = deltaTime * gameSpeed;
+        double addTime = deltaTime * GameManager.instance.gameSpeed;
 
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
@@ -203,7 +197,7 @@ public partial class ItemManager : Node
 		{
 			if (producingItem is IProduce produce)
 			{
-				if(produce.nowTime + addTime > produce.needTime) 
+				if(produce.nowTime + addTime >= produce.needTime) 
 				{
                     bool isSuccess = CreateProduct(produce);
                     if (isSuccess) 
@@ -225,7 +219,7 @@ public partial class ItemManager : Node
                     }
                     else //物品太多生產失敗，不做事 
                     {
-
+                        produce.nowTime = produce.needTime;
                     }
                 }
 				else 
@@ -281,7 +275,7 @@ public partial class ItemManager : Node
 
     private void ProcessAttackingItems(double deltaTime) 
     {
-        double addTime = deltaTime * gameSpeed;
+        double addTime = deltaTime * GameManager.instance.gameSpeed;
 
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
@@ -289,7 +283,7 @@ public partial class ItemManager : Node
         {
             if (attackingItem is IAttack attacker)
             {
-                if (attacker.nowTime + addTime > attacker.needTime)
+                if (attacker.nowTime + addTime >= attacker.needTime)
                 {
                     bool isSuccess = AttackSomething(attacker);
 
@@ -300,7 +294,7 @@ public partial class ItemManager : Node
                     }
                     else //找不到可攻擊目標
                     {
-
+                        attacker.nowTime = attacker.needTime;
                     }
 
                     if(attacker.durability <= 0) 
@@ -358,4 +352,118 @@ public partial class ItemManager : Node
         return isAttack;
     }
 
+    public void AddRepairingItem(ItemBaseResource item)
+    {
+        if (item is IRepair && !repairingItems.Contains(item))
+        {
+            repairingItems.Add(item);
+        }
+    }
+
+    public void RemoveRepairingItem(ItemBaseResource item)
+    {
+        if (repairingItems.Contains(item))
+        {
+            repairingItems.Remove(item);
+        }
+    }
+
+    private void ProcessRepairingItems(double deltaTime)
+    {
+        double addTime = deltaTime * GameManager.instance.gameSpeed;
+
+        List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
+
+        foreach (var repairingItem in repairingItems)
+        {
+            if (repairingItem is IRepair repairing)
+            {
+                if (repairing.nowTime + addTime >= repairing.needTime)
+                {
+                    bool isSuccess = Repair(repairing);
+
+                    if (isSuccess)
+                    {
+                        repairing.nowTime = (repairing.nowTime + addTime) % repairing.needTime;
+
+                    }
+                    else //不須修復
+                    {
+                        repairing.nowTime = repairing.needTime;
+                    }
+
+                    if (repairing.durability <= 0)
+                    {
+                        for (int i = 0; i < heldItems.Count; i++)
+                        {
+                            if (heldItems[i] == repairing)
+                            {
+                                repairing.StopUsing();
+                                SetHeldItem(i, null);
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    repairing.nowTime = (repairing.nowTime + addTime) % repairing.needTime;
+                }
+            }
+            else
+            {
+                Debug.PrintErr($"不是IRepair, repairingItems index:{repairingItem.index}");
+                needRemoves.Add(repairingItem);
+            }
+        }
+
+        for (int i = 0; i < needRemoves.Count; i++)
+        {
+            repairingItems.Remove(needRemoves[i]);
+        }
+    }
+
+    private bool Repair(IRepair repairing) 
+    {
+        bool isSuccess = false;
+        if(repairing.durability > 0 && GameManager.instance.battleManager.nowHP < GameManager.instance.battleManager.maxHP) 
+        {
+            repairing.durability = Math.Max(0, repairing.durability - 1);
+            GameManager.instance.battleManager.Repair(repairing.repairPoint);
+            isSuccess = true;
+        }
+
+        return isSuccess;
+    }
+
+    public List<ItemBaseResource> GetPickItems(int itemNum) 
+    {
+        List<ItemBaseResource> result = new List<ItemBaseResource>();
+
+        List<ItemBaseResource> tempItems = new List<ItemBaseResource>();
+        foreach(var KV in GameManager.instance.itemConfig.config) 
+        {
+            if(KV.Value is ToolResource tool || KV.Value is RecipeResource recipe) 
+            {
+                tempItems.Add(KV.Value);
+            }
+        }
+
+
+        if(tempItems.Count <= itemNum) 
+        {
+            result = tempItems;
+        }
+        else 
+        {
+            List<int> rndList = GameManager.instance.randomManager.GetNotRepeatList(RandomType.PickItem, 0, tempItems.Count, itemNum);
+
+            for(int i = 0; i < rndList.Count; i++) 
+            {
+                result.Add(tempItems[rndList[i]]);
+            }
+        }
+
+        return result;
+    }
 }

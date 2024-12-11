@@ -111,7 +111,7 @@ public partial class MonsterObject : Node2D
 
     public void Attack(double delta) 
     {
-        double addTime = delta * GameManager.instance.battleManager.gameSpeed;
+        double addTime = delta * GameManager.instance.gameSpeed;
         if (data.attackNowTime + addTime > data.attackNeedTime) 
         {
             data.attackNowTime = (data.attackNowTime + addTime) % data.attackNeedTime;
@@ -133,7 +133,7 @@ public partial class MonsterObject : Node2D
 
     public void Move(double delta) 
     {
-        double addTime = delta * GameManager.instance.battleManager.gameSpeed;
+        double addTime = delta * GameManager.instance.gameSpeed;
         Vector2 moveNormal = (GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition - GlobalPosition).Normalized();
 
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));

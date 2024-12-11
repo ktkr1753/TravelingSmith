@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="RepairResource" load_steps=4 format=3 uid="uid://dgtlnxuk7dayj"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/RepairResource.cs" id="1_0dp47"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_qxw8t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wukd7"]
+atlas = ExtResource("2_qxw8t")
+region = Rect2(0, 96, 24, 24)
+
+[resource]
+script = ExtResource("1_0dp47")
+repairPoint = 1
+durability = 2
+needTime = 2.0
+nowTime = 0.0
+isUsing = false
+index = 101
+texture = SubResource("AtlasTexture_wukd7")
+money = 1
+rank = 0

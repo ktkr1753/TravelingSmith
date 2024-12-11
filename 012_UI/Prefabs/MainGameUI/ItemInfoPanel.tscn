@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIconPool.cs" id="4_q8w2x"]
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/MainGameUI/ItemIcon.tscn" id="5_3bx7m"]
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "attackTimeParent", "attackTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -22,12 +22,14 @@ script = ExtResource("1_jhhof")
 itemElement = NodePath("VBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
-attackTimeParent = NodePath("VBoxContainer/AttackTimeHBox")
-attackTimeLabel = NodePath("VBoxContainer/AttackTimeHBox/TimeLabel")
+useTimeParent = NodePath("VBoxContainer/UseTimeHBox")
+useTimeLabel = NodePath("VBoxContainer/UseTimeHBox/TimeLabel")
 attackPointParent = NodePath("VBoxContainer/AttackPointHBox")
 attackPointLabel = NodePath("VBoxContainer/AttackPointHBox/AttakPointLabel")
 attackRangeParent = NodePath("VBoxContainer/AttackRangeHBox")
 attackRangeLabel = NodePath("VBoxContainer/AttackRangeHBox/AttakRangeLabel")
+repairPointParent = NodePath("VBoxContainer/RepairPointHBox")
+repairPointLabel = NodePath("VBoxContainer/RepairPointHBox/RepairPointLabel")
 materialParent = NodePath("VBoxContainer/MaterialHBox")
 materialPool = NodePath("VBoxContainer/MaterialHBox/GridContainer")
 productParent = NodePath("VBoxContainer/ProductHBox")
@@ -70,21 +72,21 @@ text = "1"
 horizontal_alignment = 2
 text_overrun_behavior = 3
 
-[node name="AttackTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="UseTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/UseTimeHBox"]
 layout_mode = 2
-text = "攻擊間隔:"
+text = "使用間隔:"
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+[node name="TimeLabel" type="Label" parent="VBoxContainer/UseTimeHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="SecondLabel" type="Label" parent="VBoxContainer/AttackTimeHBox"]
+[node name="SecondLabel" type="Label" parent="VBoxContainer/UseTimeHBox"]
 layout_mode = 2
 text = "秒"
 
@@ -111,6 +113,20 @@ layout_mode = 2
 text = "距離:"
 
 [node name="AttakRangeLabel" type="Label" parent="VBoxContainer/AttackRangeHBox"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "12"
+horizontal_alignment = 2
+
+[node name="RepairPointHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/RepairPointHBox"]
+layout_mode = 2
+text = "修復:"
+
+[node name="RepairPointLabel" type="Label" parent="VBoxContainer/RepairPointHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"

@@ -8,12 +8,14 @@ public partial class ItemInfoPanel : PanelContainer
 	[Export] private Label nameLabel;
 	[Export] private Label moneyLabel;
 
-    [Export] private Control attackTimeParent;
-    [Export] private Label attackTimeLabel;
+    [Export] private Control useTimeParent;
+    [Export] private Label useTimeLabel;
     [Export] private Control attackPointParent;
     [Export] private Label attackPointLabel;
     [Export] private Control attackRangeParent;
     [Export] private Label attackRangeLabel;
+    [Export] private Control repairPointParent;
+    [Export] private Label repairPointLabel;
     [Export] private Control materialParent;
     [Export] private ItemIconPool materialPool;
     [Export] private Control productParent;
@@ -77,9 +79,10 @@ public partial class ItemInfoPanel : PanelContainer
 	{
 		SetName();
 		SetMoney();
-        SetAttackTime();
+        SetUseTime();
         SetAttackPoint();
         SetAttackRange();
+        SetRepairPoint();
         SetMaterial();
         SetProduct();
         SetProduceCostTime();
@@ -96,16 +99,16 @@ public partial class ItemInfoPanel : PanelContainer
 		moneyLabel.Text = $"{item.money}";
     }
 
-    private void SetAttackTime() 
+    private void SetUseTime() 
     {
-        if (item is IAttack attacker) 
+        if (item is IUseable useable) 
         {
-            attackTimeParent.Visible = true;
-            attackTimeLabel.Text = $"{attacker.needTime}";
+            useTimeParent.Visible = true;
+            useTimeLabel.Text = $"{useable.needTime}";
         }
         else 
         {
-            attackTimeParent.Visible = false;
+            useTimeParent.Visible = false;
         }
     }
 
@@ -132,6 +135,19 @@ public partial class ItemInfoPanel : PanelContainer
         else
         {
             attackRangeParent.Visible = false;
+        }
+    }
+
+    private void SetRepairPoint() 
+    {
+        if (item is IRepair repairing)
+        {
+            repairPointParent.Visible = true;
+            repairPointLabel.Text = $"{repairing.repairPoint}";
+        }
+        else
+        {
+            repairPointParent.Visible = false;
         }
     }
 
@@ -202,7 +218,7 @@ public partial class ItemInfoPanel : PanelContainer
 
 				if(produce is IMake make) 
 				{
-					if (GameManager.instance.itemManager.TryMake(make))
+					if (make.isCostMaterial || GameManager.instance.itemManager.TryMake(make))
 					{
 						produceStartButton.Disabled = false;
                     }

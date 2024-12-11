@@ -10,6 +10,10 @@ public partial class MainGameUI : UIBase
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
     [Export] private Label maxHpLabel;
+    [Export] private ProgressBar expProgressBar;
+    [Export] private Control expLabelParent;
+    [Export] private Label nowExpLabel;
+    [Export] private Label maxExpLabel;
     [Export] private Label moneyLabel;
 
     //碰到的物件ID
@@ -93,11 +97,14 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
-        GameManager.instance.battleManager.onHPChange += OnHPChange;
+        GameManager.instance.battleManager.onHPChange += OnHpChange;
+        GameManager.instance.battleManager.onExpChange += OnExpChange;
+        GameManager.instance.battleManager.onLevelChange += OnLevelChange;
         InitItems();
         InitElements();
         RefreshItemElements();
-        SetHP();
+        SetHp();
+        SetExp();
         SetMoney();
     }
 
@@ -108,7 +115,9 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
-        GameManager.instance.battleManager.onHPChange -= OnHPChange;
+        GameManager.instance.battleManager.onHPChange -= OnHpChange;
+        GameManager.instance.battleManager.onExpChange -= OnExpChange;
+        GameManager.instance.battleManager.onLevelChange -= OnLevelChange;
     }
 
     public override void _Process(double delta)
@@ -178,12 +187,39 @@ public partial class MainGameUI : UIBase
 		elements[index].SetData(item);
     }
 
-    private void SetHP() 
+    private void SetHp() 
     {
         hpProgressBar.MaxValue = GameManager.instance.battleManager.maxHP;
         hpProgressBar.Value = GameManager.instance.battleManager.nowHP;
         maxHpLabel.Text = $"{GameManager.instance.battleManager.maxHP}";
         nowHpLabel.Text = $"{GameManager.instance.battleManager.nowHP}";
+    }
+
+    private void SetExp() 
+    {
+        int nowLevel = GameManager.instance.battleManager.nowLevel;
+        int maxLevel = GameManager.instance.battleManager.maxLevel;
+        if (nowLevel == maxLevel) 
+        {
+            expProgressBar.MaxValue = 100;
+            expProgressBar.Value = 100;
+            expLabelParent.Visible = false;
+        }
+        else 
+        {
+            int expInterval = GameManager.instance.expConfig.expIntervals[nowLevel];
+            int preNeedExp = 0;
+            if (nowLevel > 0) 
+            {
+                preNeedExp = GameManager.instance.expConfig.expAllIntervals[nowLevel - 1];
+            }
+
+            expProgressBar.MaxValue = expInterval;
+            expProgressBar.Value = GameManager.instance.battleManager.nowExp - preNeedExp;
+            expLabelParent.Visible = true;
+            maxExpLabel.Text = $"{expProgressBar.MaxValue}";
+            nowExpLabel.Text = $"{expProgressBar.Value}";
+        }
     }
 
     private void SetMoney() 
@@ -326,9 +362,13 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private void OnHPChange(int nowHP) 
+    private void OnHpChange(int nowHP) 
     {
-        SetHP();
+        SetHp();
+    }
+    private void OnExpChange(int preExp, int nowExp)
+    {
+        SetExp();
     }
 
     private void OnUseMaterials(IMake make, HashSet<KeyValuePair<int, ItemBaseResource>> usedMaterials) 
@@ -375,5 +415,17 @@ public partial class MainGameUI : UIBase
     private void OnMoneyChange(int money) 
     {
         SetMoney();
+    }
+
+    private void OnLevelChange(int preLevel, int nextLevel) 
+    {
+        if(nextLevel >= preLevel) 
+        {
+            for(int i = preLevel; i < nextLevel; i++) 
+            {
+                List<ItemBaseResource> canPickItems = GameManager.instance.itemManager.GetPickItems(3);
+                GameManager.instance.uiManager.OpenUI(UIIndex.PickUI, new List<object>() { canPickItems });
+            }
+        }
     }
 }

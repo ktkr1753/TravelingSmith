@@ -13,6 +13,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public double attackNowTime;
     [Export] public FXEnum attackFX;
     [Export] public double moveSpeed;
+    [Export] public int exp;
 
     public event Action<int> onHPChange;
     public event Action onDie;
@@ -27,13 +28,16 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
 
             if (nowHp == 0)
             {
+                Die();
                 onDie?.Invoke();
             }
         }
     }
 
-
-
+    public void Die() 
+    {
+        GameManager.instance.battleManager.nowExp += exp;
+    }
 
     public MonsterResource Clone()
     {
@@ -47,6 +51,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
         result.attackNowTime = attackNowTime;
         result.attackFX = attackFX;
         result.moveSpeed = moveSpeed;
+        result.exp = exp;
         return result;
     }
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=11 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=16 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -10,17 +10,27 @@
 [ext_resource type="Resource" uid="uid://8p0yf281eaah" path="res://008_Item/Resources/StraightSword.tres" id="7_xtqf7"]
 [ext_resource type="Resource" uid="uid://sxm5kqrnjvn" path="res://008_Item/Resources/RecipeStraightSword.tres" id="8_32hti"]
 [ext_resource type="Resource" uid="uid://r6xh6biceq0c" path="res://008_Item/Resources/FellingAxe.tres" id="9_1ewuy"]
+[ext_resource type="Resource" uid="uid://co87n0p1u1u63" path="res://008_Item/Resources/HuntingBow.tres" id="10_tj8pj"]
+[ext_resource type="Resource" uid="uid://dgtlnxuk7dayj" path="res://008_Item/Resources/Board.tres" id="11_8ta0t"]
+[ext_resource type="Resource" uid="uid://oe8usdeuucib" path="res://008_Item/Resources/RecipeBoard.tres" id="12_wysjf"]
+[ext_resource type="Resource" uid="uid://v272hegbqswk" path="res://008_Item/Resources/RecipeHuntingBow.tres" id="13_ejktg"]
+[ext_resource type="Resource" uid="uid://chx7oj7nddcn" path="res://008_Item/Resources/Titanium.tres" id="14_cyqno"]
 
 [resource]
 script = ExtResource("1_26gdp")
 config = {
 1: ExtResource("4_cdwam"),
 2: ExtResource("7_xtqf7"),
+3: ExtResource("10_tj8pj"),
+101: ExtResource("11_8ta0t"),
 201: ExtResource("6_qydid"),
 202: ExtResource("8_32hti"),
+203: ExtResource("12_wysjf"),
+204: ExtResource("13_ejktg"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 601: ExtResource("1_0c7qs"),
 602: ExtResource("2_ly67b"),
-603: ExtResource("5_lox3u")
+603: ExtResource("5_lox3u"),
+604: ExtResource("14_cyqno")
 }

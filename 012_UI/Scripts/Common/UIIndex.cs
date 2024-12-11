@@ -7,4 +7,5 @@ public enum UIIndex
     MainGameUI = 1,
     GameOverUI = 2,
     ShopUI = 3,
+    PickUI = 4,
 }

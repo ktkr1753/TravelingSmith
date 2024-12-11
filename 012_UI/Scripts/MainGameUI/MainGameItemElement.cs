@@ -27,6 +27,8 @@ public partial class MainGameItemElement : Control
 	[Export] private NinePatchRect selectedHint;
     [Export] private TextureRect circleProgressImage;
     [Export] private Shader clockMaskShader;
+	[Export] private Color normalColor;
+    [Export] private Color pauseColor;
 
     private ItemBaseResource _item;
 	public ItemBaseResource item
@@ -190,17 +192,27 @@ public partial class MainGameItemElement : Control
 
 	private void RegisterEvent(ItemBaseResource item) 
 	{
-        if (item is IUseable useable)
+		if(item is IProduce produce) 
+		{
+			produce.onIsProducingChange += OnProducingChange;
+        }
+        else if (item is IUseable useable)
         {
-			useable.onDurabilityChange += OnDurabilityChange;
+            useable.onIsUsingChange += OnUsingChange;
+            useable.onDurabilityChange += OnDurabilityChange;
 			useable.onUseUp += OnUseUp;
         }
     }
 
 	private void UnregisterEvent(ItemBaseResource item) 
 	{
-		if(item is IUseable useable) 
+        if (item is IProduce produce)
+        {
+            produce.onIsProducingChange -= OnProducingChange;
+        }
+        else if (item is IUseable useable) 
 		{
+			useable.onIsUsingChange -= OnUsingChange;
             useable.onDurabilityChange -= OnDurabilityChange;
             useable.onUseUp -= OnUseUp;
         }
@@ -211,10 +223,9 @@ public partial class MainGameItemElement : Control
 	{
         if (item is IProduce produce || item is IUseable useable)
         {
-            Color selfColor = circleProgressImage.SelfModulate;
             ShaderMaterial material = new ShaderMaterial();
 			material.Shader = clockMaskShader;
-            material.SetShaderParameter(material_selfColor, new Vector4(selfColor.R, selfColor.G, selfColor.B, selfColor.A));
+            material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
             material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
 			material.SetShaderParameter(material_percent, 1f);
 			material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
@@ -258,6 +269,35 @@ public partial class MainGameItemElement : Control
             productImage.Visible = false;
         }
 	}
+
+	private void SetCircleColor() 
+	{
+        if (circleProgressImage.Material is ShaderMaterial material) 
+		{
+			if (item is IProduce produce)
+			{
+				if (produce.isProducing)
+				{
+                    material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
+                }
+				else 
+				{
+                    material.SetShaderParameter(material_selfColor, new Vector4(pauseColor.R, pauseColor.G, pauseColor.B, pauseColor.A));
+                }
+			}
+			else if (item is IUseable useable)
+			{
+				if (useable.isUsing)
+				{
+                    material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
+                }
+				else
+				{
+                    material.SetShaderParameter(material_selfColor, new Vector4(pauseColor.R, pauseColor.G, pauseColor.B, pauseColor.A));
+                }
+			}
+		}
+    }
 
 	private void SetNowPercent(double deltaTime) 
 	{
@@ -321,6 +361,16 @@ public partial class MainGameItemElement : Control
 	{
 		SetDurabilityLabel();
     }
+
+    private void OnProducingChange(bool isProducing)
+    {
+        SetCircleColor();
+    }
+
+    private void OnUsingChange(bool isUsing) 
+	{
+		SetCircleColor();
+	}
 
 	private void OnUseUp() 
 	{

@@ -55,7 +55,7 @@ public partial class RandomManager
     /// <param name="bound1"></param> 最小值
     /// <param name="bound2"></param> 最大值
     /// <returns></returns>
-    public List<int> GetNotRepeatList(RandomType randomType, int bound1, int bound2)
+    public List<int> GetNotRepeatList(RandomType randomType, int bound1, int bound2, int pickNum = 0)
     {
         List<int> result = new List<int>();
         int min = Mathf.Min(bound1, bound2);
@@ -66,7 +66,15 @@ public partial class RandomManager
         {
             tempList.Add(i);
         }
-        int pickNum = tempList.Count;
+        if(pickNum == 0) 
+        {
+            pickNum = tempList.Count;
+        }
+        else 
+        {
+            pickNum = Math.Clamp(pickNum, 0, tempList.Count);
+        }
+
         for (int i = 0; i < pickNum; i++)
         {
             int randomPick = GetRange(randomType, 0, tempList.Count);

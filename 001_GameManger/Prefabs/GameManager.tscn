@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bklwemc72tlym"]
+[gd_scene load_steps=12 format=3 uid="uid://bklwemc72tlym"]
 
 [ext_resource type="Script" path="res://001_GameManger/Scripts/GameManager.cs" id="1_g60x2"]
 [ext_resource type="Resource" uid="uid://dkr82wb8aifgn" path="res://008_Item/Resources/ItemConfigResource.tres" id="2_ka38w"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ckvurhmd2s468" path="res://016_Sound/Prefabs/SoundManager.tscn" id="3_c2m3b"]
 [ext_resource type="Resource" uid="uid://dt5urqic1wy0p" path="res://019_Monster/Resources/MonsterConfigResource.tres" id="3_f0kso"]
 [ext_resource type="Resource" path="res://012_UI/Resources/UICommonSetting.tres" id="3_nf7bt"]
+[ext_resource type="Resource" uid="uid://dfdg3vdi43fdo" path="res://005_Battle/Resources/ExpConfigResource.tres" id="4_0usut"]
 [ext_resource type="PackedScene" uid="uid://qomsu7k6xmeo" path="res://007_Map/Prefabs/MapManager.tscn" id="6_d2loq"]
 [ext_resource type="PackedScene" uid="uid://kdruv63w5u5v" path="res://008_Item/Prefabs/ItemManager.tscn" id="7_1qxjk"]
 [ext_resource type="PackedScene" uid="uid://yw0tcnylx0t0" path="res://005_Battle/Prefabs/BattleManager.tscn" id="8_bb6xn"]
@@ -20,6 +21,7 @@ itemManager = NodePath("ItemManager")
 battleManager = NodePath("BattleManager")
 itemConfig = ExtResource("2_ka38w")
 monsterConfig = ExtResource("3_f0kso")
+expConfig = ExtResource("4_0usut")
 localSetting = ExtResource("2_usnjq")
 uiCommonSetting = ExtResource("3_nf7bt")
 

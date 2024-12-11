@@ -6,26 +6,96 @@ public partial class BattleManager : Node
 	[Export] public int maxHP;
 	[Export] public int nowHP;
 
-	public bool isGameOver = false;
-
-	public event Action<int> onHPChange;
-
-    public double gameSpeed
+    private int _nowExp = 0;
+    [Export] public int nowExp 
     {
-        get
+        get { return _nowExp; }
+        set 
         {
-            double result = 1;
-            if (isGameOver)
+            if(_nowExp != value) 
             {
-                result = 0;
+                int preState = _nowExp;
+                _nowExp = value;
+                OnExpChange(preState, _nowExp);
+                onExpChange?.Invoke(preState, _nowExp);
             }
-            else
-            {
-                result = GameManager.instance.localSetting.gameSpeedSetting;
-            }
-            return result;
         }
     }
+
+    private void OnExpChange(int preExp, int nextExp) 
+    {
+        if(preExp <= nextExp) 
+        {
+            for(int level = nowLevel; level < GameManager.instance.expConfig.expAllIntervals.Count; level++) 
+            {
+                int needExp = GameManager.instance.expConfig.expAllIntervals[level];
+
+                if (needExp > nextExp) 
+                {
+                    nowLevel = level;
+                    break;
+                }
+            }
+        }
+        else 
+        {
+            bool isFind = false;
+            for (int level = nowLevel; level >= 0; level--)
+            {
+                int needExp = GameManager.instance.expConfig.expAllIntervals[level];
+                if (needExp < nextExp)
+                {
+                    isFind = true;
+                    nowLevel = level + 1;
+                    break;
+                }
+            }
+
+            if (!isFind) 
+            {
+                nowLevel = 0;
+            }
+        }
+    }
+
+    public event Action<int, int> onExpChange;
+
+
+    private int _nowLevel = 0;
+    [Export] public int nowLevel 
+    {
+        get { return _nowLevel; }
+        set 
+        {
+            if (_nowLevel != value) 
+            {
+                int preState = _nowLevel;
+                _nowLevel = value;
+                OnLevelChange(preState, _nowLevel);
+                onLevelChange?.Invoke(preState, _nowLevel);
+            }
+        }
+    }
+
+    private void OnLevelChange(int preLevel, int nextLevel) 
+    {
+
+    }
+
+    public event Action<int, int> onLevelChange;
+
+    public int maxLevel 
+    {
+        get 
+        {
+            return GameManager.instance.expConfig.expIntervals.Count;
+        }
+    }
+
+
+    public bool isGameOver = false;
+
+	public event Action<int> onHPChange;
 
     public void Init() 
 	{
@@ -48,4 +118,14 @@ public partial class BattleManager : Node
 			}
         }
 	}
+
+    public void Repair(int repairPoint) 
+    {
+        if (repairPoint > 0) 
+        {
+            nowHP = Math.Min(maxHP, nowHP + repairPoint);
+
+            onHPChange?.Invoke(nowHP);
+        }
+    }
 }
