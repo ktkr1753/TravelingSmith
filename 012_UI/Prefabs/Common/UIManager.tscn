@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://ddl5vk1c4olbp" path="res://012_UI/Prefabs/GameOverUI/GameOverUI.tscn" id="4_4hwwk"]
 [ext_resource type="PackedScene" uid="uid://bk0clgpkqunl2" path="res://012_UI/Prefabs/ShopUI/ShopUI.tscn" id="5_ju5fg"]
 [ext_resource type="PackedScene" uid="uid://wjnb30pcpwpu" path="res://012_UI/Prefabs/PickUI/PickUI.tscn" id="6_2sg1l"]
-[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameItemElementPool.cs" id="6_d3ofv"]
-[ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement_Clear.tscn" id="7_dlmak"]
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementPool.cs" id="6_d3ofv"]
+[ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/Common/ItemElement_Clear.tscn" id="7_dlmak"]
 
 [sub_resource type="Resource" id="Resource_4hkr0"]
 script = ExtResource("2_lox7d")

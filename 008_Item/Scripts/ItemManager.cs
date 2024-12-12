@@ -25,6 +25,15 @@ public partial class ItemManager : Node
 		private set { _heldItems = value; }
 	}
 
+    private Godot.Collections.Array<AreaResource> _areas = new Godot.Collections.Array<AreaResource>();
+
+    [Export] public Godot.Collections.Array<AreaResource> areas 
+    {
+        get { return _areas; }
+        private set { _areas = value; }
+    }
+
+
     public bool isHeldItemFull 
     {
         get 

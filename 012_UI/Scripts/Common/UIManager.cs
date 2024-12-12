@@ -9,7 +9,7 @@ public partial class UIManager : CanvasLayer
     [Export] Control layer2;
     [Export] Control layer3;
     [Export] Godot.Collections.Dictionary<UIIndex, UIConfigResource> UIs;
-    [Export] private MainGameItemElementPool itemFxtPool;
+    [Export] private ItemElementPool itemFxtPool;
     Godot.Collections.Dictionary<UILayer, Control> layers = new Godot.Collections.Dictionary<UILayer, Control>();
 
     List<UIBase> openUIs = new List<UIBase>();
@@ -164,7 +164,7 @@ public partial class UIManager : CanvasLayer
     {
         Tween tween = GetTree().CreateTween();
 
-        MainGameItemElement itemElement = itemFxtPool.GetElement();
+        ItemElement itemElement = itemFxtPool.GetElement();
         itemElement.showProcess = false;
         itemElement.SetData(item);
         itemElement.GlobalPosition = startPoint;

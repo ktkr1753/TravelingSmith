@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b5x05yhvprj4w"]
 
-[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameItemElement.cs" id="1_nckdc"]
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
 [ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_h72xt"]
 [ext_resource type="Texture2D" uid="uid://dk7nuokvm64vb" path="res://012_UI/Images/circleProgress.png" id="3_mmttk"]
@@ -60,7 +60,7 @@ _data = {
 "shine": SubResource("Animation_kqq2o")
 }
 
-[node name="MainGameItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "image", "productImage", "durabilityLabel", "selectedHint", "circleProgressImage")]
+[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "image", "productImage", "durabilityLabel", "selectedHint", "circleProgressImage")]
 offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2

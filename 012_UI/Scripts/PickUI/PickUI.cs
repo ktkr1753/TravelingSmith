@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class PickUI : UIBase
 {
-    [Export] MainGameItemElementPool itemElementPool;
+    [Export] ItemElementPool itemElementPool;
     [Export] ItemInfoPanel itemInfoPanel;
     [Export] Button confirmButton;
     private List<ItemBaseResource> items = new List<ItemBaseResource>();
@@ -28,12 +28,12 @@ public partial class PickUI : UIBase
     {
         if(preState >= 0 && preState < itemElementPool.inuses.Count) 
         {
-            itemElementPool.inuses[preState].nowSelectedState = MainGameItemElement.SelectedState.None;
+            itemElementPool.inuses[preState].nowSelectedState = ItemElement.SelectedState.None;
         }
 
         if(nextState >= 0 && nextState < itemElementPool.inuses.Count) 
         {
-            itemElementPool.inuses[nextState].nowSelectedState = MainGameItemElement.SelectedState.Selected;
+            itemElementPool.inuses[nextState].nowSelectedState = ItemElement.SelectedState.Selected;
             SetInfoPanel(itemElementPool.inuses[nextState].item);
         }
         else 
@@ -74,7 +74,7 @@ public partial class PickUI : UIBase
         ClearItems();
         for (int i = 0; i < items.Count; i++) 
         {
-            MainGameItemElement element = itemElementPool.GetElement();
+            ItemElement element = itemElementPool.GetElement();
             element.SetData(i, items[i]);
             element.onMainButtonDown += OnItemButtonDown;
         }
@@ -84,7 +84,7 @@ public partial class PickUI : UIBase
     {
         for (int i = 0; i < itemElementPool.inuses.Count; i++)
         {
-            MainGameItemElement element = itemElementPool.inuses[i];
+            ItemElement element = itemElementPool.inuses[i];
             element.SetData(-1, null);
             element.onMainButtonDown -= OnItemButtonDown;
         }
@@ -128,7 +128,7 @@ public partial class PickUI : UIBase
     {
         GameManager.instance.uiManager.CloseUI(this);
 
-        MainGameItemElement itemElement = itemElementPool.inuses[nowSelectedItemIndex];
+        ItemElement itemElement = itemElementPool.inuses[nowSelectedItemIndex];
 
         Vector2 startPoint = itemElement.GlobalPosition;
 

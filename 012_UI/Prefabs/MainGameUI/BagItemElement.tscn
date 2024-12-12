@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://biwrdcmh1aho8"]
+
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="1_qncfv"]
+
+[node name="BagItemElement" type="PanelContainer"]
+offset_right = 8.0
+offset_bottom = 8.0
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ItemElement" parent="." instance=ExtResource("1_qncfv")]
+layout_mode = 2

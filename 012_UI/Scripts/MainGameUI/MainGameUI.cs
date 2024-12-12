@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public partial class MainGameUI : UIBase
 {
-	[Export] public Godot.Collections.Array<MainGameItemElement> elements = new Godot.Collections.Array<MainGameItemElement>();
-    [Export] private MainGameItemElement pickItemElement;
+	[Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
+    [Export] private ItemElement pickItemElement;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
@@ -233,15 +233,15 @@ public partial class MainGameUI : UIBase
         {
             if (i == nowSelectedElementIndex)
             {
-                elements[i].nowSelectedState = MainGameItemElement.SelectedState.Selected;
+                elements[i].nowSelectedState = ItemElement.SelectedState.Selected;
             }
             else if (i == nowEnterElementIndex)
             {
-                elements[i].nowSelectedState = MainGameItemElement.SelectedState.Hover;
+                elements[i].nowSelectedState = ItemElement.SelectedState.Hover;
             }
             else
             {
-                elements[i].nowSelectedState = MainGameItemElement.SelectedState.None;
+                elements[i].nowSelectedState = ItemElement.SelectedState.None;
             }
         }
     }

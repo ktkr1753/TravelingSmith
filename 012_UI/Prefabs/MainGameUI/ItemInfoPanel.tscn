@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6ylnogsow47o"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanel.cs" id="1_jhhof"]
-[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="2_15mni"]
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_15mni"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="3_1e10j"]
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIconPool.cs" id="4_q8w2x"]
-[ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/MainGameUI/ItemIcon.tscn" id="5_3bx7m"]
+[ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 
 [node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
 anchors_preset = 8

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://5qah1s74j6mg"]
 
-[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIcon.cs" id="1_hghdf"]
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemIcon.cs" id="1_hghdf"]
 
 [node name="ItemIcon" type="PanelContainer" node_paths=PackedStringArray("itemImage")]
 offset_right = 8.0

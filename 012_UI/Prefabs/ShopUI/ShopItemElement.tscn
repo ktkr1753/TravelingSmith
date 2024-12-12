@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cc8o4nxp4cvmf"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopItemElement.cs" id="1_r2qbc"]
-[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="2_5tan3"]
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_5tan3"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="2_tusly"]
 
 [node name="ShopItemElement" type="PanelContainer" node_paths=PackedStringArray("itemElement", "moneyLabel")]

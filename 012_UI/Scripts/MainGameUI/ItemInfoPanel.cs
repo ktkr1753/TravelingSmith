@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public partial class ItemInfoPanel : PanelContainer
 {
-	[Export] private MainGameItemElement itemElement;
+	[Export] private ItemElement itemElement;
 	[Export] private Label nameLabel;
 	[Export] private Label moneyLabel;
 

@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class MainGameItemElement : Control
+public partial class ItemElement : Control
 {
 	public enum SelectedState
 	{

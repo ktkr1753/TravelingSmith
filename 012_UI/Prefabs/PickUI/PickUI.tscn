@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://012_UI/Scripts/PickUI/PickUI.cs" id="1_8lcqi"]
 [ext_resource type="Texture2D" uid="uid://c3jdlmk4exaqj" path="res://012_UI/Images/white.png" id="2_hapmo"]
-[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameItemElementPool.cs" id="2_kme4u"]
-[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/MainGameUI/MainGameItemElement.tscn" id="3_283vr"]
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementPool.cs" id="2_kme4u"]
+[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="3_283vr"]
 [ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="5_ksm8r"]
 
 [node name="PickUI" type="Control" node_paths=PackedStringArray("itemElementPool", "itemInfoPanel", "confirmButton")]

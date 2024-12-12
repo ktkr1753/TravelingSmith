@@ -10,8 +10,8 @@ public partial class ShopItemElement : Control
         private set { _index = value; }
     }
 
-    private MainGameItemElement _itemElement;
-    [Export] public MainGameItemElement itemElement 
+    private ItemElement _itemElement;
+    [Export] public ItemElement itemElement 
     {
         get { return _itemElement; }
         private set { _itemElement = value; }
