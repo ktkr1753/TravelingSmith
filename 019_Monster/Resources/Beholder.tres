@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://dktr3x6d7llnr"]
+
+[ext_resource type="PackedScene" uid="uid://ct5ywdfvmi67v" path="res://019_Monster/Prefabs/Beholder.tscn" id="1_3wjw1"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_abij0"]
+
+[resource]
+script = ExtResource("1_abij0")
+index = 2
+prefab = ExtResource("1_3wjw1")
+maxHp = 3
+nowHp = 0
+attackPoint = 2
+attackNeedTime = 1.0
+attackNowTime = 0.0
+attackFX = 1
+moveSpeed = 15.0
+exp = 2

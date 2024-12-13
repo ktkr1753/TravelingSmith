@@ -202,10 +202,16 @@ public partial class ItemInfoPanel : PanelContainer
 	{
 		if(item is IProduce produce) 
 		{
-			buttonsParent.Visible = true;
-            discardButton.Visible = true;
+			//buttonsParent.Visible = true;
+            //discardButton.Visible = true;
+            buttonsParent.Visible = false;
+            discardButton.Visible = false;
             startUseButton.Visible = false;
             stopUseButton.Visible = false;
+
+            produceStartButton.Visible = false;
+            produceStopButton.Visible = false;
+            /*
             if (produce.isProducing) 
 			{
 				produceStopButton.Visible = true;
@@ -232,14 +238,20 @@ public partial class ItemInfoPanel : PanelContainer
                     produceStartButton.Disabled = false;
                 }
             }
+            */
         }
 		else if (item is IUseable useable)
 		{
-            buttonsParent.Visible = true;
-            discardButton.Visible = true;
+            //buttonsParent.Visible = true;
+            //discardButton.Visible = true;
+            buttonsParent.Visible = false;
+            discardButton.Visible = false;
             produceStopButton.Visible = false;
             produceStartButton.Visible = false;
 
+            startUseButton.Visible = false;
+            stopUseButton.Visible = false;
+            /*
             if (useable.isUsing) 
             {
                 startUseButton.Visible = false;
@@ -250,11 +262,14 @@ public partial class ItemInfoPanel : PanelContainer
                 startUseButton.Visible = true;
                 stopUseButton.Visible = false;
             }
+            */
         }
 		else 
 		{
-            buttonsParent.Visible = true;
-            discardButton.Visible = true;
+            //buttonsParent.Visible = true;
+            //discardButton.Visible = true;
+            buttonsParent.Visible = false;
+            discardButton.Visible = false;
             startUseButton.Visible = false;
             stopUseButton.Visible = false;
             produceStopButton.Visible = false;

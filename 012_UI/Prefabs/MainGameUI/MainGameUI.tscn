@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "pickItemElement", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "itemsPanel", "pickItemElement", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +29,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2jxto")
-elements = [NodePath("PanelContainer/GridContainer/MainGameItemElement"), NodePath("PanelContainer/GridContainer/MainGameItemElement1"), NodePath("PanelContainer/GridContainer/MainGameItemElement2"), NodePath("PanelContainer/GridContainer/MainGameItemElement3"), NodePath("PanelContainer/GridContainer/MainGameItemElement4"), NodePath("PanelContainer/GridContainer/MainGameItemElement5"), NodePath("PanelContainer/GridContainer/MainGameItemElement6"), NodePath("PanelContainer/GridContainer/MainGameItemElement7"), NodePath("PanelContainer/GridContainer/MainGameItemElement8"), NodePath("PanelContainer/GridContainer/MainGameItemElement9"), NodePath("PanelContainer/GridContainer/MainGameItemElement10"), NodePath("PanelContainer/GridContainer/MainGameItemElement11"), NodePath("PanelContainer/GridContainer/MainGameItemElement12"), NodePath("PanelContainer/GridContainer/MainGameItemElement13"), NodePath("PanelContainer/GridContainer/MainGameItemElement14"), NodePath("PanelContainer/GridContainer/MainGameItemElement15"), NodePath("PanelContainer/GridContainer/MainGameItemElement16"), NodePath("PanelContainer/GridContainer/MainGameItemElement17"), NodePath("PanelContainer/GridContainer/MainGameItemElement18"), NodePath("PanelContainer/GridContainer/MainGameItemElement19"), NodePath("PanelContainer/GridContainer/MainGameItemElement20"), NodePath("PanelContainer/GridContainer/MainGameItemElement21"), NodePath("PanelContainer/GridContainer/MainGameItemElement22"), NodePath("PanelContainer/GridContainer/MainGameItemElement23"), NodePath("PanelContainer/GridContainer/MainGameItemElement24")]
+elements = [NodePath("PanelContainer/GridContainer/ItemElement"), NodePath("PanelContainer/GridContainer/ItemElement2"), NodePath("PanelContainer/GridContainer/ItemElement3"), NodePath("PanelContainer/GridContainer/ItemElement4"), NodePath("PanelContainer/GridContainer/ItemElement5"), NodePath("PanelContainer/GridContainer/ItemElement6"), NodePath("PanelContainer/GridContainer/ItemElement7"), NodePath("PanelContainer/GridContainer/ItemElement8"), NodePath("PanelContainer/GridContainer/ItemElement9"), NodePath("PanelContainer/GridContainer/ItemElement10"), NodePath("PanelContainer/GridContainer/ItemElement11"), NodePath("PanelContainer/GridContainer/ItemElement12"), NodePath("PanelContainer/GridContainer/ItemElement13"), NodePath("PanelContainer/GridContainer/ItemElement14"), NodePath("PanelContainer/GridContainer/ItemElement15"), NodePath("PanelContainer/GridContainer/ItemElement16"), NodePath("PanelContainer/GridContainer/ItemElement17"), NodePath("PanelContainer/GridContainer/ItemElement18"), NodePath("PanelContainer/GridContainer/ItemElement19"), NodePath("PanelContainer/GridContainer/ItemElement20"), NodePath("PanelContainer/GridContainer/ItemElement21"), NodePath("PanelContainer/GridContainer/ItemElement22"), NodePath("PanelContainer/GridContainer/ItemElement23"), NodePath("PanelContainer/GridContainer/ItemElement24"), NodePath("PanelContainer/GridContainer/ItemElement25")]
+itemsPanel = NodePath("PanelContainer")
 pickItemElement = NodePath("MainGameItemElement_Clear")
 infoPanel = NodePath("ItemInfoPanel")
 hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
@@ -57,105 +58,80 @@ grow_vertical = 2
 layout_mode = 2
 columns = 5
 
-[node name="MainGameItemElement" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 0
 
-[node name="MainGameItemElement1" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement2" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 1
 
-[node name="MainGameItemElement2" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement3" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 2
 
-[node name="MainGameItemElement3" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement4" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 3
 
-[node name="MainGameItemElement4" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement5" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 4
 
-[node name="MainGameItemElement5" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement6" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 5
 
-[node name="MainGameItemElement6" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement7" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 6
 
-[node name="MainGameItemElement7" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement8" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 7
 
-[node name="MainGameItemElement8" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement9" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 8
 
-[node name="MainGameItemElement9" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement10" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 9
 
-[node name="MainGameItemElement10" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement11" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 10
 
-[node name="MainGameItemElement11" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement12" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 11
 
-[node name="MainGameItemElement12" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement13" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 12
 
-[node name="MainGameItemElement13" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement14" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 13
 
-[node name="MainGameItemElement14" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement15" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 14
 
-[node name="MainGameItemElement15" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement16" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 15
 
-[node name="MainGameItemElement16" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement17" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 16
 
-[node name="MainGameItemElement17" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement18" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 17
 
-[node name="MainGameItemElement18" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement19" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 18
 
-[node name="MainGameItemElement19" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement20" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 19
 
-[node name="MainGameItemElement20" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement21" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 20
 
-[node name="MainGameItemElement21" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement22" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 21
 
-[node name="MainGameItemElement22" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement23" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 22
 
-[node name="MainGameItemElement23" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement24" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 23
 
-[node name="MainGameItemElement24" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement25" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
-index = 24
 
 [node name="MainGameItemElement_Clear" parent="." instance=ExtResource("3_mpf7q")]
 visible = false
@@ -274,6 +250,7 @@ layout_mode = 2
 theme_type_variation = &"EmptyPanelContainer"
 
 [node name="ProgressBar" type="ProgressBar" parent="VBox/ExpPanel"]
+custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"ProgressBar_Yellow"

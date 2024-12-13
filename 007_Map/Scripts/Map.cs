@@ -29,34 +29,56 @@ public partial class Map : Node2D
         nowTime = nowTime + addTime;
 
         //測試
-        int waveTime = 5;
+        int waveTime = 10;
         if(nowTime / waveTime > nowWave) 
         {
-            CreateMonster(MonsterIndex.Slime);
+            CreateWaveMonster();
             nowWave = (int)Math.Ceiling(nowTime / waveTime);
+        }
+    }
+
+    public void CreateWaveMonster() 
+    {
+        if(nowWave < 5) 
+        {
+            CreateMonster(MonsterIndex.Slime, 1);
+        }
+        else if (nowWave < 15)
+        {
+            CreateMonster(MonsterIndex.Slime, 3);
+        }
+        else if(nowWave < 25) 
+        {
+            CreateMonster(MonsterIndex.Slime, 3);
+            CreateMonster(MonsterIndex.Beholder, 1);
+        }
+        else 
+        {
+            CreateMonster(MonsterIndex.Beholder, 3);
         }
 
     }
 
-    public MonsterObject CreateMonster(MonsterIndex index)
+
+    public void CreateMonster(MonsterIndex index, int num = 1)
     {
-        MonsterObject result = null;
-        if (GameManager.instance.monsterConfig.config.TryGetValue(index, out MonsterResource tempMonster))
+        for(int i = 0; i < num; i++) 
         {
-            MonsterResource monsterData = tempMonster.Clone();
-            monsterData.nowHp = monsterData.maxHp;
+            if (GameManager.instance.monsterConfig.config.TryGetValue(index, out MonsterResource tempMonster))
+            {
+                MonsterResource monsterData = tempMonster.Clone();
+                monsterData.nowHp = monsterData.maxHp;
 
-            float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, 0, (float)(2 * Math.PI));
-            Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
+                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, 0, (float)(2 * Math.PI));
+                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
 
-            result = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
-            result.SetData(monsterData);
-            result.onDestroy += OnMonsterDestory;
+                MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
+                monster.SetData(monsterData);
+                monster.onDestroy += OnMonsterDestory;
 
-            monsters.Add(result);
+                monsters.Add(monster);
+            }
         }
-
-        return result;
     }
 
     public void OnMonsterDestory(MonsterObject monster) 

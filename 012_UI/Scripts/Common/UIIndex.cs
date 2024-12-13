@@ -8,4 +8,5 @@ public enum UIIndex
     GameOverUI = 2,
     ShopUI = 3,
     PickUI = 4,
+    DropItemUI = 5,
 }

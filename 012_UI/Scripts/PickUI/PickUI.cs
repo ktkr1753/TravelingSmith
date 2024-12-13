@@ -58,7 +58,6 @@ public partial class PickUI : UIBase
     public override void _ExitTree()
     {
         base._ExitTree();
-        GameManager.instance.isChoosePause = false;
     }
 
 
@@ -113,11 +112,9 @@ public partial class PickUI : UIBase
         }
         else 
         {
-            confirmButton.Disabled = true;
+            confirmButton.Disabled = false;
         }
     }
-
-
 
     private void OnItemButtonDown(int index) 
     {
@@ -126,30 +123,53 @@ public partial class PickUI : UIBase
 
     public void OnConfirmClick() 
     {
-        GameManager.instance.uiManager.CloseUI(this);
-
         ItemElement itemElement = itemElementPool.inuses[nowSelectedItemIndex];
 
-        Vector2 startPoint = itemElement.GlobalPosition;
-
-        int putIndex = GameManager.instance.itemManager.AddHeldItem(itemElement.item.index);
-
-        Vector2 endPoint = Vector2.Zero;
-        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
-        if (mainGameUI != null) 
+        if (GameManager.instance.itemManager.isHeldItemFull) 
         {
-            mainGameUI.elements[putIndex].isFlying = true;
-            endPoint = mainGameUI.elements[putIndex].GlobalPosition;
+            GameManager.instance.uiManager.CloseUI(this);
+
+            GameManager.instance.itemManager.waitAddItem = itemElement.item;
+            MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+            if(mainGameUI != null) 
+            {
+                List<Control> interacts = new List<Control>();
+                for(int i = 0; i < mainGameUI.elements.Count; i++) 
+                {
+                    interacts.Add(mainGameUI.elements[i].mainButton);
+                }
+
+                DropItemUI dropItemUI = GameManager.instance.uiManager.OpenUI<DropItemUI>(UIIndex.DropItemUI, new List<object>()
+                {
+                    mainGameUI.itemsPanel,
+                    interacts
+                });
+            }
         }
-
-        GameManager.instance.uiManager.StartFlyItem(itemElement.item, startPoint, endPoint, 0.3, () =>
+        else 
         {
-            mainGameUI.elements[putIndex].isFlying = false;
-        });
+            GameManager.instance.uiManager.CloseUI(this);
+
+            Vector2 startPoint = itemElement.GlobalPosition;
+            int putIndex = GameManager.instance.itemManager.AddHeldItem(itemElement.item.index);
+            Vector2 endPoint = Vector2.Zero;
+            MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+            if (mainGameUI != null) 
+            {
+                mainGameUI.elements[putIndex].isFlying = true;
+                endPoint = mainGameUI.elements[putIndex].GlobalPosition;
+                GameManager.instance.uiManager.StartFlyItem(itemElement.item, startPoint, endPoint, 0.3, () =>
+                {
+                    mainGameUI.elements[putIndex].isFlying = false;
+                });
+            }
+            GameManager.instance.isChoosePause = false;
+        }
     }
 
     public void OnCancelClick() 
     {
         GameManager.instance.uiManager.CloseUI(this);
+        GameManager.instance.isChoosePause = false;
     }
 }

@@ -1,109 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://kdruv63w5u5v"]
+[gd_scene load_steps=5 format=3 uid="uid://kdruv63w5u5v"]
 
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemManager.cs" id="1_uxduj"]
-[ext_resource type="Script" path="res://022_Area/Scripts/AreaResource.cs" id="2_2yy1j"]
-
-[sub_resource type="Resource" id="Resource_ml4ss"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_iee4n"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_m0p0t"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_too0e"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_inmcl"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_a10s2"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_1t17e"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_bxfsg"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_s1r40"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_0d8g2"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_43irc"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_kkwic"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_lnhat"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_hvkic"]
-script = ExtResource("2_2yy1j")
-index = 0
-
-[sub_resource type="Resource" id="Resource_35pip"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_r2ham"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_obwfv"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_huih0"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_xiyoc"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_s8v1w"]
-script = ExtResource("2_2yy1j")
-index = 1
-
-[sub_resource type="Resource" id="Resource_m3q2c"]
-script = ExtResource("2_2yy1j")
-index = 0
-
-[sub_resource type="Resource" id="Resource_pkgws"]
-script = ExtResource("2_2yy1j")
-index = 2
-
-[sub_resource type="Resource" id="Resource_keo5b"]
-script = ExtResource("2_2yy1j")
-index = 2
-
-[sub_resource type="Resource" id="Resource_vrf6o"]
-script = ExtResource("2_2yy1j")
-index = 3
-
-[sub_resource type="Resource" id="Resource_eh3ef"]
-script = ExtResource("2_2yy1j")
-index = 3
+[ext_resource type="Resource" uid="uid://ci0dwfoesff3x" path="res://022_Area/Resources/Normal.tres" id="2_hu3m5"]
+[ext_resource type="Resource" uid="uid://36i6legdrwls" path="res://022_Area/Resources/Produce.tres" id="3_8plqd"]
+[ext_resource type="Resource" uid="uid://cgnk5gqxw0ik5" path="res://022_Area/Resources/Useable.tres" id="4_gk4s8"]
 
 [node name="ItemManager" type="Node2D"]
 script = ExtResource("1_uxduj")
 money = 100
-areas = [SubResource("Resource_ml4ss"), SubResource("Resource_iee4n"), SubResource("Resource_m0p0t"), SubResource("Resource_too0e"), SubResource("Resource_inmcl"), SubResource("Resource_a10s2"), SubResource("Resource_1t17e"), SubResource("Resource_bxfsg"), SubResource("Resource_s1r40"), SubResource("Resource_0d8g2"), SubResource("Resource_43irc"), SubResource("Resource_kkwic"), SubResource("Resource_lnhat"), SubResource("Resource_hvkic"), SubResource("Resource_35pip"), SubResource("Resource_r2ham"), SubResource("Resource_obwfv"), SubResource("Resource_huih0"), SubResource("Resource_xiyoc"), SubResource("Resource_s8v1w"), SubResource("Resource_m3q2c"), SubResource("Resource_pkgws"), SubResource("Resource_keo5b"), SubResource("Resource_vrf6o"), SubResource("Resource_eh3ef")]
+areas = [ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("3_8plqd"), ExtResource("3_8plqd"), ExtResource("4_gk4s8"), ExtResource("4_gk4s8")]

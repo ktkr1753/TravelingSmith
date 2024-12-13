@@ -1,9 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5x05yhvprj4w"]
+[gd_scene load_steps=14 format=3 uid="uid://b5x05yhvprj4w"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
 [ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_h72xt"]
 [ext_resource type="Texture2D" uid="uid://dk7nuokvm64vb" path="res://012_UI/Images/circleProgress.png" id="3_mmttk"]
+[ext_resource type="Script" path="res://002_Tools/Scripts/MultiButton.cs" id="4_lbqt4"]
+[ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="5_rc377"]
+[ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="6_upqt5"]
+[ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="7_fw5hp"]
+[ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="8_kno4q"]
 
 [sub_resource type="Animation" id="Animation_11adu"]
 length = 0.001
@@ -60,17 +65,20 @@ _data = {
 "shine": SubResource("Animation_kqq2o")
 }
 
-[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "image", "productImage", "durabilityLabel", "selectedHint", "circleProgressImage")]
+[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "areaImage", "image", "productImage", "durabilityLabel", "selectedHint", "mainButton", "dropButton", "circleProgressImage")]
 offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("1_nckdc")
 animation = NodePath("AnimationPlayer")
-image = NodePath("MarginContainer/PanelContainer/TextureRect")
+areaImage = NodePath("MarginContainer/PanelContainer/AreaImage")
+image = NodePath("MarginContainer/PanelContainer/ItemImage")
 productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")
 durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
 selectedHint = NodePath("SelectedHint")
+mainButton = NodePath("MarginContainer/Button")
+dropButton = NodePath("Control/TextureButton")
 circleProgressImage = NodePath("MarginContainer/PanelContainer/CircleProgress")
 clockMaskShader = ExtResource("2_h72xt")
 normalColor = Color(0.117647, 0.737255, 0.45098, 1)
@@ -94,7 +102,13 @@ layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"PanelContainer_Clear"
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer"]
+[node name="AreaImage" type="TextureRect" parent="MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+
+[node name="ItemImage" type="TextureRect" parent="MarginContainer/PanelContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 mouse_filter = 2
@@ -139,6 +153,8 @@ text_overrun_behavior = 3
 [node name="Button" type="Button" parent="MarginContainer"]
 layout_mode = 2
 theme_type_variation = &"EmptyButton"
+button_mask = 3
+script = ExtResource("4_lbqt4")
 
 [node name="SelectedHint" type="NinePatchRect" parent="."]
 visible = false
@@ -149,7 +165,27 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[connection signal="button_down" from="MarginContainer/Button" to="." method="OnMainButtonDown"]
-[connection signal="button_up" from="MarginContainer/Button" to="." method="OnMainButtonUp"]
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureButton" type="TextureButton" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_bottom = 16.0
+grow_horizontal = 0
+texture_normal = ExtResource("5_rc377")
+texture_pressed = ExtResource("6_upqt5")
+texture_hover = ExtResource("7_fw5hp")
+texture_disabled = ExtResource("8_kno4q")
+
+[connection signal="button_downEx" from="MarginContainer/Button" to="." method="OnMainButtonDown"]
+[connection signal="button_upEx" from="MarginContainer/Button" to="." method="OnMainButtonUp"]
 [connection signal="mouse_entered" from="MarginContainer/Button" to="." method="OnMouseEnter"]
 [connection signal="mouse_exited" from="MarginContainer/Button" to="." method="OnMouseExit"]
+[connection signal="pressedEx" from="MarginContainer/Button" to="." method="OnMainPressed"]
+[connection signal="pressed" from="Control/TextureButton" to="." method="OnDropButtonPressed"]

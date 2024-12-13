@@ -4,7 +4,6 @@ using System;
 [GlobalClass]
 public partial class MaterialResource : ItemBaseResource, IClone<MaterialResource>
 {
-
     public override MaterialResource Clone()
     {
         MaterialResource result = base.Clone() as MaterialResource;

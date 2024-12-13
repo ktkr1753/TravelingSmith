@@ -17,6 +17,7 @@ public partial class GameManager : Node2D
 
     //config
     [Export] public ItemConfigResource itemConfig;
+    [Export] public AreaConfigResource areaConfig;
     [Export] public MonsterConfigResource monsterConfig;
     [Export] public ExpConfigResource expConfig;
 

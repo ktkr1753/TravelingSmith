@@ -21,10 +21,13 @@ public partial class ItemElement : Control
 		set { _showProcess = value; }
 	}
 	[Export] private AnimationPlayer animation;
+	[Export] private TextureRect areaImage;
 	[Export] private TextureRect image;
 	[Export] private TextureRect productImage;
 	[Export] private Label durabilityLabel;
 	[Export] private NinePatchRect selectedHint;
+	[Export] public Button mainButton;
+	[Export] public TextureButton dropButton;
     [Export] private TextureRect circleProgressImage;
     [Export] private Shader clockMaskShader;
 	[Export] private Color normalColor;
@@ -36,6 +39,8 @@ public partial class ItemElement : Control
 		get { return _item; }
 		private set { _item = value; }
 	}
+
+	private AreaResource area;
 
 	private SelectedState _nowSelectedState = SelectedState.None;
 	public SelectedState nowSelectedState 
@@ -149,8 +154,10 @@ public partial class ItemElement : Control
 
     public event Action<int> onMainButtonDown;
     public event Action<int> onMainButtonUp;
+	public event Action<int> onMainRightPressed;
     public event Action<int> onMouseEnter;
     public event Action<int> onMouseExit;
+	public event Action<int> onDropPressed;
 
     public const string clip_idle = "idle";
     public const string clip_shine = "shine";
@@ -159,6 +166,13 @@ public partial class ItemElement : Control
     public const string material_maskColor = "maskColor";
 	public const string material_percent = "percent";
 	public const string material_atlasSize = "atlasSize";
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        InitMaterial();
+    }
 
     public override void _Process(double delta)
     {
@@ -178,16 +192,31 @@ public partial class ItemElement : Control
 		UnregisterEvent(this.item);
         this.item = item;
 		RegisterEvent(this.item);
-        InitMaterial();
+        //InitMaterial();
         SetView();
     }
 
-	private void SetView() 
+    public void SetArea(AreaResource area)
+    {
+		this.area = area;
+		SetAreaView();
+    }
+
+    private void SetView() 
 	{
         SetImage();
 		SetProductImage();
         SetDurabilityLabel();
-		SetCircleProgress(); 
+        SetCircleColor();
+        SetCircleProgress(); 
+	}
+
+	private void SetAreaView() 
+	{
+		if(area != null) 
+		{
+			areaImage.Texture = area.texture;
+		}
 	}
 
 	private void RegisterEvent(ItemBaseResource item) 
@@ -221,6 +250,7 @@ public partial class ItemElement : Control
 
     private void InitMaterial()
 	{
+        /*
         if (item is IProduce produce || item is IUseable useable)
         {
             ShaderMaterial material = new ShaderMaterial();
@@ -235,6 +265,14 @@ public partial class ItemElement : Control
 		{
             circleProgressImage.Material = null;
         }
+		*/
+        ShaderMaterial material = new ShaderMaterial();
+        material.Shader = clockMaskShader;
+        material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
+        material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
+        material.SetShaderParameter(material_percent, 1f);
+        material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
+        circleProgressImage.Material = material;
     }
 
 	private void SetImage() 
@@ -319,7 +357,6 @@ public partial class ItemElement : Control
         }
     }
 
-
 	private void SetDurabilityLabel() 
 	{
 		if(isPicking || isFlying) 
@@ -357,6 +394,11 @@ public partial class ItemElement : Control
         }
 	}
 
+	public void SetDropButton(bool isShow) 
+	{
+		dropButton.Visible = isShow;
+    }
+
 	private void OnDurabilityChange(int durability) 
 	{
 		SetDurabilityLabel();
@@ -389,15 +431,34 @@ public partial class ItemElement : Control
         onMouseExit?.Invoke(index);
     }
 
-	private void OnMainButtonDown() 
+	private void OnMainButtonDown(bool isRight) 
 	{
 		//Debug.Print($"OnMainButtonDown:{index}");
-		onMainButtonDown?.Invoke(index);
+		if (!isRight) 
+		{
+			onMainButtonDown?.Invoke(index);
+		}
 	}
 
-	private void OnMainButtonUp() 
+	private void OnMainButtonUp(bool isRight) 
 	{
-        //Debug.Print($"OnMainButtonUp:{index}");
-        onMainButtonUp?.Invoke(index);
+		//Debug.Print($"OnMainButtonUp:{index}");
+		if (!isRight) 
+		{
+	        onMainButtonUp?.Invoke(index);
+		}
+    }
+
+	private void OnMainPressed(bool isRight) 
+	{
+        if (isRight)
+        {
+            onMainRightPressed?.Invoke(index);
+        }
+    }
+
+	private void OnDropButtonPressed() 
+	{
+		onDropPressed?.Invoke(index);
     }
 }

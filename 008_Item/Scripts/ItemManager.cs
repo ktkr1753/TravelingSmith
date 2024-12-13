@@ -25,6 +25,8 @@ public partial class ItemManager : Node
 		private set { _heldItems = value; }
 	}
 
+    public ItemBaseResource waitAddItem = null;
+
     private Godot.Collections.Array<AreaResource> _areas = new Godot.Collections.Array<AreaResource>();
 
     [Export] public Godot.Collections.Array<AreaResource> areas 
@@ -73,7 +75,15 @@ public partial class ItemManager : Node
             }
             else if(i == 1) 
             {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
+            }
+            else if (i == 2)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
+            }
+            else if (i == 3)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
             }
 
             heldItems.Add(item);
@@ -101,7 +111,7 @@ public partial class ItemManager : Node
 	{
         if (index >= 0 && index < heldItems.Count) 
 		{
-			heldItems[index] = item;
+            heldItems[index] = item;
 			onHeldItemChange?.Invoke(index);
         }
     }
@@ -130,10 +140,11 @@ public partial class ItemManager : Node
         return TryMake(make, out HashSet<int> usedItemsIndex);
     }
 
-	public bool TryMake(IMake make, out HashSet<int> usedItemsIndex) 
+	public bool TryMake(IMake make, out HashSet<int> usedItemsIndex, Godot.Collections.Array<ItemElement> itemElements = null) 
 	{
         bool isFail = false;
         usedItemsIndex = new HashSet<int>();
+
         for (int i = 0; i < make.materials.Count; i++)
         {
             bool isFind = false;
@@ -143,7 +154,8 @@ public partial class ItemManager : Node
                 {
                     continue;
                 }
-                else if (make.materials[i] == GameManager.instance.itemManager.heldItems[j]?.index)
+                else if (make.materials[i] == GameManager.instance.itemManager.heldItems[j]?.index 
+                    && (itemElements == null || !itemElements[i].isFlying)) //視覺物件正在飛的話就不拿來用
                 {
                     usedItemsIndex.Add(j);
                     isFind = true;
@@ -161,10 +173,10 @@ public partial class ItemManager : Node
         return !isFail;
     }
 
-    public bool Make(IMake make) 
+    public bool Make(IMake make, Godot.Collections.Array<ItemElement> itemElements = null) 
     {
         bool result = false;
-        if(TryMake(make, out HashSet<int> usedItemsIndex) && !make.isCostMaterial) 
+        if(TryMake(make, out HashSet<int> usedItemsIndex, itemElements) && !make.isCostMaterial) 
         {
             HashSet<KeyValuePair<int, ItemBaseResource>> items = new HashSet<KeyValuePair<int, ItemBaseResource>>();
             foreach (int index in usedItemsIndex)

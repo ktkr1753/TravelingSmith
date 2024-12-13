@@ -5,4 +5,5 @@ using System;
 public partial class AreaResource : Resource
 {
 	[Export] public AreaIndex index;
+	[Export] public Texture2D texture;
 }

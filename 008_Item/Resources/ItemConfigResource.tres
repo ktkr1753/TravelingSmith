@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=16 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=22 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -15,6 +15,12 @@
 [ext_resource type="Resource" uid="uid://oe8usdeuucib" path="res://008_Item/Resources/RecipeBoard.tres" id="12_wysjf"]
 [ext_resource type="Resource" uid="uid://v272hegbqswk" path="res://008_Item/Resources/RecipeHuntingBow.tres" id="13_ejktg"]
 [ext_resource type="Resource" uid="uid://chx7oj7nddcn" path="res://008_Item/Resources/Titanium.tres" id="14_cyqno"]
+[ext_resource type="Resource" uid="uid://c80bnppw3db4i" path="res://008_Item/Resources/KnightsSword.tres" id="15_rp4ma"]
+[ext_resource type="Resource" uid="uid://cu3nw886ae21v" path="res://008_Item/Resources/TitaniumForge.tres" id="16_ik27c"]
+[ext_resource type="Resource" uid="uid://djtabs1meene" path="res://008_Item/Resources/RecipeKnightsSword.tres" id="17_6url1"]
+[ext_resource type="Resource" uid="uid://c1q7doj8lljem" path="res://008_Item/Resources/RecipePearlNecklace.tres" id="18_lyxpr"]
+[ext_resource type="Resource" uid="uid://d1psowghy3syd" path="res://008_Item/Resources/PearlNecklace.tres" id="19_b6wg4"]
+[ext_resource type="Resource" uid="uid://dkjc0lmxe0wm4" path="res://008_Item/Resources/Pearl.tres" id="20_loivc"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -22,15 +28,21 @@ config = {
 1: ExtResource("4_cdwam"),
 2: ExtResource("7_xtqf7"),
 3: ExtResource("10_tj8pj"),
+4: ExtResource("15_rp4ma"),
 101: ExtResource("11_8ta0t"),
 201: ExtResource("6_qydid"),
 202: ExtResource("8_32hti"),
 203: ExtResource("12_wysjf"),
 204: ExtResource("13_ejktg"),
+205: ExtResource("16_ik27c"),
+206: ExtResource("17_6url1"),
+207: ExtResource("18_lyxpr"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
+501: ExtResource("19_b6wg4"),
 601: ExtResource("1_0c7qs"),
 602: ExtResource("2_ly67b"),
 603: ExtResource("5_lox3u"),
-604: ExtResource("14_cyqno")
+604: ExtResource("14_cyqno"),
+605: ExtResource("20_loivc")
 }

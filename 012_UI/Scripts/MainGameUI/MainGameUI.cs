@@ -1,10 +1,12 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class MainGameUI : UIBase
 {
 	[Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
+    [Export] public PanelContainer itemsPanel;
     [Export] private ItemElement pickItemElement;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
@@ -42,6 +44,12 @@ public partial class MainGameUI : UIBase
             if (_nowSelectedElementIndex != value) 
             {
                 //Debug.Print($"nowSelectedElementIndex change:{value}");
+
+                int preSelectedElementIndex = _nowSelectedElementIndex;
+                if (preSelectedElementIndex >= 0 && preSelectedElementIndex < elements.Count) 
+                {
+                    elements[preSelectedElementIndex].SetDropButton(false);
+                }
                 _nowSelectedElementIndex = value;
                 SetItemSelectedState(nowEnterElementIndex, nowSelectedElementIndex);
                 if(_nowSelectedElementIndex >= 0 && _nowSelectedElementIndex < GameManager.instance.itemManager.heldItems.Count) 
@@ -100,9 +108,8 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onHPChange += OnHpChange;
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
-        InitItems();
-        InitElements();
-        RefreshItemElements();
+        InitItemElements();
+        //RefreshItemElements();
         SetHp();
         SetExp();
         SetMoney();
@@ -125,6 +132,7 @@ public partial class MainGameUI : UIBase
         base._Process(delta);
 
         CheckIsPickItem();
+        CheckItemsWork();
         UpdateSelectedItemImagePos();
     }
 
@@ -137,10 +145,6 @@ public partial class MainGameUI : UIBase
             {
                 nowPickElementIndex = nowSelectedElementIndex;
             }
-            else 
-            {
-                nowPickElementIndex = -1;
-            }
         }
         else 
         {
@@ -148,43 +152,81 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private void InitItems() 
+    private void CheckItemsWork() 
     {
-        for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++)
+        for(int i = 0; i < GameManager.instance.itemManager.heldItems.Count && i < GameManager.instance.itemManager.areas.Count; i++) 
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[i];
+            switch (GameManager.instance.itemManager.areas[i].index)
+            {
+                case AreaIndex.Normal:
+                    {
+                        if (item is IProduce produce && produce.isProducing)
+                        {
+                            produce.StopProduce();
+                        }
+                        else if (item is IUseable useable && useable.isUsing)
+                        {
+                            useable.StopUsing();
+                        }
+                    }
+                    break;
+                case AreaIndex.Produce:
+                    {
+                        if (item is IProduce produce && !produce.isProducing)
+                        {
+                            bool isFail = false;
+                            if (item is IMake make && !make.isCostMaterial)
+                            {
+                                isFail = !GameManager.instance.itemManager.Make(make, elements);
+                            }
+
+                            if (!isFail)
+                            {
+                                produce.StartProduce();
+                            }
+                        }
+                        else if (item is IUseable useable && useable.isUsing)
+                        {
+                            useable.StopUsing();
+                        }
+                    }
+                    break;
+                case AreaIndex.Useable:
+                    {
+                        if (item is IProduce produce && produce.isProducing)
+                        {
+                            produce.StopProduce();
+                        }
+                        else if (item is IUseable useable && !useable.isUsing)
+                        {
+                            useable.StartUsing();
+                        }
+                    }
+                    break;
+            }
         }
     }
 
-    private void InitElements() 
+
+    private void InitItemElements() 
     {
-        for(int i = 0; i < elements.Count; i++) 
+        for (int i = 0; i < elements.Count; i++)
         {
+            elements[i].SetData(i, GameManager.instance.itemManager.heldItems[i]);
+            elements[i].SetArea(GameManager.instance.itemManager.areas[i]);
             elements[i].onMouseEnter += OnElementMouseEnter;
             elements[i].onMouseExit += OnElementMouseExit;
             elements[i].onMainButtonDown += OnElementButtonDown;
             elements[i].onMainButtonUp += OnElementButtonUp;
+            elements[i].onMainRightPressed += OnElementButtonRightPressed;
+            elements[i].onDropPressed += OnElementDropButtonPressed;
         }
     }
 
-    public void RefreshItemElements() 
-	{
-		for(int i = 0; i < elements.Count; i++) 
-		{
-            if (nowSelectedElementIndex == i) 
-            {
-                RefreshItemElement(i, null);
-            }
-            else 
-            {
-    			RefreshItemElement(i, GameManager.instance.itemManager.heldItems[i]);
-            }
-        }
-	}
-
     public void RefreshItemElement(int index, ItemBaseResource item)
     {
-		elements[index].SetData(item);
+		elements[index].SetData(index, item);
     }
 
     private void SetHp() 
@@ -343,6 +385,50 @@ public partial class MainGameUI : UIBase
             nowSelectedElementIndex = nowEnterElementIndex;
         }
         //Debug.Print($"OnElementButtonUp index:{nowSelectedElementIndex}");
+    }
+
+    private void OnElementButtonRightPressed(int index) 
+    {
+        nowSelectedElementIndex = index;
+
+        if (index > 0 && index < GameManager.instance.itemManager.heldItems.Count 
+            && GameManager.instance.itemManager.heldItems[index] != null) 
+        {
+            elements[index].SetDropButton(true);
+        }
+    }
+
+    private void OnElementDropButtonPressed(int index) 
+    {
+        if (index > 0 && index < GameManager.instance.itemManager.heldItems.Count
+            && GameManager.instance.itemManager.heldItems[index] != null)
+        {
+            if(GameManager.instance.itemManager.waitAddItem != null) 
+            {
+                ItemBaseResource item = GameManager.instance.itemManager.CreateItem(GameManager.instance.itemManager.waitAddItem.index);
+                GameManager.instance.itemManager.SetHeldItem(index, item);
+                GameManager.instance.itemManager.waitAddItem = null;
+
+                UIBase dropUI = GameManager.instance.uiManager.GetOpenedUI(UIIndex.DropItemUI);
+                if (dropUI != null) 
+                {
+                    GameManager.instance.uiManager.CloseUI(dropUI);
+                }
+
+                /*
+                UIBase pickUI = GameManager.instance.uiManager.GetOpenedUI(UIIndex.PickUI);
+                if (pickUI != null)
+                {
+                    GameManager.instance.uiManager.CloseUI(pickUI);
+                }
+                */
+            }
+            else 
+            {
+                GameManager.instance.itemManager.SetHeldItem(index, null);
+            }
+            elements[index].SetDropButton(false);
+        }
     }
 
     private void OnHeldItemChange(int index) 
