@@ -56,7 +56,7 @@ public partial class UIManager : CanvasLayer
             {
                 ui = openUIs[i];
                 isFind = true;
-                Debug.Print("uiType:", uiType, "已開啟，不再重複生成");
+                Debug.PrintWarn("uiType:", uiType, "已開啟，不再重複生成");
                 break;
             }
         }
@@ -106,7 +106,7 @@ public partial class UIManager : CanvasLayer
 
     public void CloseUI(UIBase ui, bool check = true)
     {
-        Debug.Print("CloseUI:", ui.Name);
+        //Debug.Print("CloseUI:", ui.Name);
         if (!check || openUIs.Contains(ui))
         {
             ui.QueueFree();

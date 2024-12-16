@@ -181,6 +181,13 @@ public partial class ItemElement : Control
         SetNowPercent(delta);
     }
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+		UnregisterEvent(item);
+    }
+
     public void SetData(int index,ItemBaseResource item)
     {
 		this.index = index;
@@ -250,29 +257,16 @@ public partial class ItemElement : Control
 
     private void InitMaterial()
 	{
-        /*
-        if (item is IProduce produce || item is IUseable useable)
-        {
-            ShaderMaterial material = new ShaderMaterial();
+		if(circleProgressImage.Material == null) 
+		{
+			ShaderMaterial material = new ShaderMaterial();
 			material.Shader = clockMaskShader;
-            material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
-            material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
+			material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
+			material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
 			material.SetShaderParameter(material_percent, 1f);
 			material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
-            circleProgressImage.Material = material;
-        }
-		else 
-		{
-            circleProgressImage.Material = null;
-        }
-		*/
-        ShaderMaterial material = new ShaderMaterial();
-        material.Shader = clockMaskShader;
-        material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
-        material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
-        material.SetShaderParameter(material_percent, 1f);
-        material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
-        circleProgressImage.Material = material;
+			circleProgressImage.Material = material;
+		}
     }
 
 	private void SetImage() 

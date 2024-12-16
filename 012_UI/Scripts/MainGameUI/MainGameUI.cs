@@ -7,7 +7,6 @@ public partial class MainGameUI : UIBase
 {
 	[Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
     [Export] public PanelContainer itemsPanel;
-    [Export] private ItemElement pickItemElement;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
@@ -89,8 +88,6 @@ public partial class MainGameUI : UIBase
                     SetPickedItemElement(null);
                 }
             }
-
-            _nowPickElementIndex = value; 
         }
     }
 
@@ -133,7 +130,7 @@ public partial class MainGameUI : UIBase
 
         CheckIsPickItem();
         CheckItemsWork();
-        UpdateSelectedItemImagePos();
+        //UpdateSelectedItemImagePos();
     }
 
     private void CheckIsPickItem() 
@@ -292,13 +289,21 @@ public partial class MainGameUI : UIBase
     {
         if (item != null)
         {
-            pickItemElement.Visible = true;
+            PickUpUI pickUpUI = GameManager.instance.uiManager.GetOpenedUI<PickUpUI>(UIIndex.PickUpUI);
+            if (pickUpUI != null)
+            {
+                pickUpUI.SetData(item);
+            }
+            else 
+            {
+
+                pickUpUI = GameManager.instance.uiManager.OpenUI<PickUpUI>(UIIndex.PickUpUI, new List<object>() { item });
+            }
         }
-        else 
+        else
         {
-            pickItemElement.Visible = false;
+            GameManager.instance.uiManager.CloseUI(UIIndex.PickUpUI);
         }
-        pickItemElement.SetData(item);
     }
 
     private void SetInfoPanel(ItemBaseResource item) 
@@ -311,14 +316,6 @@ public partial class MainGameUI : UIBase
         else 
         {
             infoPanel.Visible = false;
-        }
-    }
-
-    private void UpdateSelectedItemImagePos() 
-    {
-        if (pickItemElement.Visible) 
-        {
-            pickItemElement.GlobalPosition = GetViewport().GetMousePosition() - new Vector2(pickItemElement.Size.X / 2, pickItemElement.Size.Y / 2);
         }
     }
 
@@ -356,7 +353,7 @@ public partial class MainGameUI : UIBase
             pickedItem = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
         }
 
-        if (nowEnterElementIndex != -1 && pickedItem != null) 
+        if (nowEnterElementIndex != -1 && pickedItem != null && nowEnterElementIndex != nowPickElementIndex) 
         {
             putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
             GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);

@@ -49,17 +49,4 @@ public partial class MultiButton : Button
     {
         EmitSignal(SignalName.pressedEx, _right);
     }
-
-    /*
-    public override void _Pressed()
-    {
-        base._Pressed();
-
-        if (_right) 
-        {
-            GrabFocus();
-        }
-        EmitSignal(SignalName.pressedEx, _right);
-    }
-    */
 }

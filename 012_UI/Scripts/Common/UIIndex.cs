@@ -9,4 +9,5 @@ public enum UIIndex
     ShopUI = 3,
     PickUI = 4,
     DropItemUI = 5,
+    PickUpUI = 6,
 }

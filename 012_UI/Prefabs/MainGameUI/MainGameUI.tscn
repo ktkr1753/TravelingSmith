@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "itemsPanel", "pickItemElement", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,6 @@ grow_vertical = 2
 script = ExtResource("1_2jxto")
 elements = [NodePath("PanelContainer/GridContainer/ItemElement"), NodePath("PanelContainer/GridContainer/ItemElement2"), NodePath("PanelContainer/GridContainer/ItemElement3"), NodePath("PanelContainer/GridContainer/ItemElement4"), NodePath("PanelContainer/GridContainer/ItemElement5"), NodePath("PanelContainer/GridContainer/ItemElement6"), NodePath("PanelContainer/GridContainer/ItemElement7"), NodePath("PanelContainer/GridContainer/ItemElement8"), NodePath("PanelContainer/GridContainer/ItemElement9"), NodePath("PanelContainer/GridContainer/ItemElement10"), NodePath("PanelContainer/GridContainer/ItemElement11"), NodePath("PanelContainer/GridContainer/ItemElement12"), NodePath("PanelContainer/GridContainer/ItemElement13"), NodePath("PanelContainer/GridContainer/ItemElement14"), NodePath("PanelContainer/GridContainer/ItemElement15"), NodePath("PanelContainer/GridContainer/ItemElement16"), NodePath("PanelContainer/GridContainer/ItemElement17"), NodePath("PanelContainer/GridContainer/ItemElement18"), NodePath("PanelContainer/GridContainer/ItemElement19"), NodePath("PanelContainer/GridContainer/ItemElement20"), NodePath("PanelContainer/GridContainer/ItemElement21"), NodePath("PanelContainer/GridContainer/ItemElement22"), NodePath("PanelContainer/GridContainer/ItemElement23"), NodePath("PanelContainer/GridContainer/ItemElement24"), NodePath("PanelContainer/GridContainer/ItemElement25")]
 itemsPanel = NodePath("PanelContainer")
-pickItemElement = NodePath("MainGameItemElement_Clear")
 infoPanel = NodePath("ItemInfoPanel")
 hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("VBox/HPPanel/HBoxContainer/NowHPLabel")
