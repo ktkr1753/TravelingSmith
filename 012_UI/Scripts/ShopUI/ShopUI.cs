@@ -19,6 +19,7 @@ public partial class ShopUI : UIBase
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> moveButtonTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> arrorTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private ShopItemElementPool itemPool;
+    [Export] private Control sellPanel;
 
     private PositionState _positionState = PositionState.Out;
     public PositionState positionState 
@@ -40,7 +41,36 @@ public partial class ShopUI : UIBase
         SetArrowImage();
     }
 
-	public List<ItemBaseResource> sellItems = new List<ItemBaseResource>();
+    private int _nowPickElementIndex = -1;
+    public int nowPickElementIndex
+    {
+        get { return _nowPickElementIndex; }
+        set
+        {
+            if (_nowPickElementIndex != value)
+            {
+                int preState = _nowPickElementIndex;
+                _nowPickElementIndex = value;
+
+                if (preState >= 0 && preState < itemPool.inuses.Count)
+                {
+                    itemPool.inuses[preState].itemElement.isPicking = false;
+                }
+
+                if (_nowPickElementIndex >= 0 && _nowPickElementIndex < itemPool.inuses.Count)
+                {
+                    SetPickedItemElement(itemPool.inuses[_nowPickElementIndex].item);
+                    itemPool.inuses[_nowPickElementIndex].itemElement.isPicking = true;
+                }
+                else
+                {
+                    SetPickedItemElement(null);
+                }
+            }
+        }
+    }
+
+    public List<ItemBaseResource> sellItems = new List<ItemBaseResource>();
 
     public const double flyTime = 0.2;
 
@@ -112,6 +142,7 @@ public partial class ShopUI : UIBase
             ShopItemElement element = itemPool.GetElement();
             element.SetData(i, sellItems[i]);
             element.itemElement.onMainButtonDown += OnShopItemButtonDown;
+            element.itemElement.onMainButtonUp += OnShopItemButtonUp;
         }
     }
 
@@ -128,6 +159,19 @@ public partial class ShopUI : UIBase
     {
         element.SetData(-1, null);
         element.itemElement.onMainButtonDown -= OnShopItemButtonDown;
+        element.itemElement.onMainButtonUp -= OnShopItemButtonUp;
+    }
+
+    public bool IsInSellRect(Vector2 globalPosition) 
+    {
+        bool result = false;
+        Rect2 sellRect = new Rect2(sellPanel.GlobalPosition, sellPanel.Size);
+        if (sellRect.HasPoint(globalPosition)) 
+        {
+            result = true;
+        }
+
+        return  result;
     }
 
     private void OnShopItemButtonDown(int index) 
@@ -150,30 +194,84 @@ public partial class ShopUI : UIBase
 
             if(GameManager.instance.itemManager.money >= element.money) 
             {
-                int addIndex = GameManager.instance.itemManager.AddHeldItem(element.item.index);
-                if(addIndex != -1) 
+                nowPickElementIndex = inuseOrder;
+            }
+        }
+    }
+
+    private void OnShopItemButtonUp(int index) 
+    {
+        ItemBaseResource pickedItem = null;
+        ShopItemElement element = null;
+        if (nowPickElementIndex != -1)
+        {
+            element = itemPool.inuses[nowPickElementIndex];
+            pickedItem = element.item;
+        }
+
+        if (pickedItem != null) 
+        {
+            MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+            if (mainGameUI != null)
+            {
+                if (mainGameUI.nowEnterElementIndex >= 0)
                 {
-                    //資料
-                    sellItems.Remove(element.item);
-                    GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - element.money);
-                    //演出
-                    MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
-                    if (mainGameUI != null) 
+                    int addIndex = -1;
+                    if (GameManager.instance.itemManager.heldItems[mainGameUI.nowEnterElementIndex] == null) 
                     {
+                        addIndex = mainGameUI.nowEnterElementIndex;
+                        ItemBaseResource item = GameManager.instance.itemManager.CreateItem(pickedItem.index);
+                        GameManager.instance.itemManager.SetHeldItem(addIndex, item);
+                    }
+                    else 
+                    {
+                        addIndex = GameManager.instance.itemManager.AddHeldItem(pickedItem.index);
+                    }
+
+                    if (addIndex != -1)
+                    {
+                        //資料
+                        sellItems.Remove(pickedItem);
+                        GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - element.money);
+                        //演出
+                        /*
                         mainGameUI.elements[addIndex].isFlying = true;
                         Vector2 endPosition = mainGameUI.elements[addIndex].GlobalPosition;
                         GameManager.instance.uiManager.StartFlyItem(element.item, element.GlobalPosition, endPosition, flyTime, () =>
                         {
                             mainGameUI.elements[addIndex].isFlying = false;
                         });
+                        */
+                        ClearShopItemElementData(element);
+                        itemPool.ReturnElement(element);
                     }
-
-                    ClearShopItemElementData(element);
-                    itemPool.ReturnElement(element);
                 }
             }
         }
+        nowPickElementIndex = -1;
     }
+
+    private void SetPickedItemElement(ItemBaseResource item)
+    {
+        if (item != null)
+        {
+            PickUpUI pickUpUI = GameManager.instance.uiManager.GetOpenedUI<PickUpUI>(UIIndex.PickUpUI);
+            if (pickUpUI != null)
+            {
+                pickUpUI.SetData(item);
+            }
+            else
+            {
+
+                pickUpUI = GameManager.instance.uiManager.OpenUI<PickUpUI>(UIIndex.PickUpUI, new List<object>() { item });
+            }
+        }
+        else
+        {
+            GameManager.instance.uiManager.CloseUI(UIIndex.PickUpUI);
+        }
+    }
+
 
     public async void OnMoveClick() 
     {

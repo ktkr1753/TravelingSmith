@@ -65,7 +65,7 @@ _data = {
 "moveOut": SubResource("Animation_5hd6s")
 }
 
-[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "moveButtonImage", "arrorImage", "itemPool")]
+[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "moveButtonImage", "arrorImage", "itemPool", "sellPanel")]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -86,6 +86,7 @@ arrorTextures = {
 4: ExtResource("3_mje0c")
 }
 itemPool = NodePath("HBoxContainer/PanelContainer")
+sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/SellPanel")
 isBackGround = false
 uIType = 3
 
@@ -167,25 +168,25 @@ visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="SellPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme_type_variation = &"WhitePanelContainer"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("8_3dgtg")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel/VBoxContainer"]
 layout_mode = 2
-text = "舊物回收"
+text = "回收"
 horizontal_alignment = 1
 vertical_alignment = 1
 

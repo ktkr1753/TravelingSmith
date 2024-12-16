@@ -106,7 +106,6 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
         InitItemElements();
-        //RefreshItemElements();
         SetHp();
         SetExp();
         SetMoney();
@@ -130,7 +129,6 @@ public partial class MainGameUI : UIBase
 
         CheckIsPickItem();
         CheckItemsWork();
-        //UpdateSelectedItemImagePos();
     }
 
     private void CheckIsPickItem() 
@@ -353,26 +351,37 @@ public partial class MainGameUI : UIBase
             pickedItem = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
         }
 
-        if (nowEnterElementIndex != -1 && pickedItem != null && nowEnterElementIndex != nowPickElementIndex) 
+        if (pickedItem != null)
         {
-            putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
-            GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);
-            GameManager.instance.itemManager.SetHeldItem(nowEnterElementIndex, pickedItem);
-
-            //飛行演出
-            Vector2 point1 = elements[nowPickElementIndex].GlobalPosition;
-            Vector2 point2 = elements[nowEnterElementIndex].GlobalPosition;
-            //被替換的飛行
-            elements[nowPickElementIndex].isFlying = true;
-            int tempNowPickElementIndex = nowPickElementIndex;
-            GameManager.instance.uiManager.StartFlyItem(putItem, point2, point1, flyTime, () =>
+            if(nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex) 
             {
-                elements[tempNowPickElementIndex].isFlying = false;
-            });
-        }
-        else 
-        {
+                putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
+                GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);
+                GameManager.instance.itemManager.SetHeldItem(nowEnterElementIndex, pickedItem);
 
+                //飛行演出
+                Vector2 point1 = elements[nowPickElementIndex].GlobalPosition;
+                Vector2 point2 = elements[nowEnterElementIndex].GlobalPosition;
+                //被替換的飛行
+                elements[nowPickElementIndex].isFlying = true;
+                int tempNowPickElementIndex = nowPickElementIndex;
+                GameManager.instance.uiManager.StartFlyItem(putItem, point2, point1, flyTime, () =>
+                {
+                    elements[tempNowPickElementIndex].isFlying = false;
+                });
+            }
+            else
+            {
+                ShopUI shopUI = GameManager.instance.uiManager.GetOpenedUI<ShopUI>(UIIndex.ShopUI);
+                if(shopUI != null) 
+                {
+                    if (shopUI.IsInSellRect(GetViewport().GetMousePosition())) 
+                    {
+                        bool isSuccess = GameManager.instance.itemManager.SellItem(nowPickElementIndex);
+                        //Debug.Print($"Sell Shop, isSuccess:{isSuccess}");
+                    }
+                }
+            }
         }
 
         recordClickPos = null;

@@ -135,6 +135,32 @@ public partial class ItemManager : Node
 		return result;
 	}
 
+    public bool SellItem(ItemBaseResource item)
+    {
+        bool isSuccess = false;
+        for(int i = 0; i < heldItems.Count; i++) 
+        {
+            if (heldItems[i] == item) 
+            {
+                isSuccess = SellItem(i);
+                break;
+            }
+        }
+        return isSuccess;
+    }
+
+    public bool SellItem(int index) 
+    {
+        bool isSuccess = false;
+        if (index >= 0 && index < heldItems.Count && heldItems[index] != null) 
+        {
+            money += heldItems[index].money;
+            GameManager.instance.itemManager.SetHeldItem(index, null);
+            isSuccess = true;
+        }
+        return isSuccess;
+    }
+
     public bool TryMake(IMake make) 
     {
         return TryMake(make, out HashSet<int> usedItemsIndex);
@@ -487,4 +513,5 @@ public partial class ItemManager : Node
 
         return result;
     }
+
 }
