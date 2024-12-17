@@ -77,7 +77,7 @@ image = NodePath("MarginContainer/PanelContainer/ItemImage")
 productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")
 durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
 selectedHint = NodePath("SelectedHint")
-mainButton = NodePath("MarginContainer/Button")
+mainButton = NodePath("Button")
 dropButton = NodePath("Control/TextureButton")
 circleProgressImage = NodePath("MarginContainer/PanelContainer/CircleProgress")
 clockMaskShader = ExtResource("2_h72xt")
@@ -150,7 +150,7 @@ horizontal_alignment = 2
 vertical_alignment = 2
 text_overrun_behavior = 3
 
-[node name="Button" type="Button" parent="MarginContainer"]
+[node name="Button" type="Button" parent="."]
 layout_mode = 2
 theme_type_variation = &"EmptyButton"
 button_mask = 3
@@ -183,9 +183,9 @@ texture_pressed = ExtResource("6_upqt5")
 texture_hover = ExtResource("7_fw5hp")
 texture_disabled = ExtResource("8_kno4q")
 
-[connection signal="button_downEx" from="MarginContainer/Button" to="." method="OnMainButtonDown"]
-[connection signal="button_upEx" from="MarginContainer/Button" to="." method="OnMainButtonUp"]
-[connection signal="mouse_entered" from="MarginContainer/Button" to="." method="OnMouseEnter"]
-[connection signal="mouse_exited" from="MarginContainer/Button" to="." method="OnMouseExit"]
-[connection signal="pressedEx" from="MarginContainer/Button" to="." method="OnMainPressed"]
+[connection signal="button_downEx" from="Button" to="." method="OnMainButtonDown"]
+[connection signal="button_upEx" from="Button" to="." method="OnMainButtonUp"]
+[connection signal="mouse_entered" from="Button" to="." method="OnMouseEnter"]
+[connection signal="mouse_exited" from="Button" to="." method="OnMouseExit"]
+[connection signal="pressedEx" from="Button" to="." method="OnMainPressed"]
 [connection signal="pressed" from="Control/TextureButton" to="." method="OnDropButtonPressed"]

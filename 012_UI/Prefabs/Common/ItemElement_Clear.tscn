@@ -15,6 +15,6 @@ theme_override_constants/margin_bottom = 4
 [node name="PanelContainer" parent="MarginContainer" index="0"]
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="Button" parent="MarginContainer" index="1"]
+[node name="Button" parent="." index="2"]
 mouse_filter = 2
 disabled = true

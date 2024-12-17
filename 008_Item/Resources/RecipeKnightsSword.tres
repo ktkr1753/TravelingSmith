@@ -9,7 +9,7 @@ region = Rect2(0, 72, 24, 24)
 
 [resource]
 script = ExtResource("1_xvagk")
-materials = [604, 604]
+materials = [604, 604, 603]
 isCostMaterial = false
 productItem = 4
 needTime = 10.0

@@ -416,7 +416,7 @@ public partial class ItemElement : Control
     private void OnMouseEnter() 
 	{
         //SetSelectedHint(true);
-		onMouseEnter?.Invoke(index);
+        onMouseEnter?.Invoke(index);
     }
 
 	private void OnMouseExit() 

@@ -419,6 +419,8 @@ public partial class MainGameUI : UIBase
                 if (dropUI != null) 
                 {
                     GameManager.instance.uiManager.CloseUI(dropUI);
+
+                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
                 }
 
                 /*

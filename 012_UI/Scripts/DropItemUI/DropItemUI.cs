@@ -7,13 +7,15 @@ public partial class DropItemUI : UIBase
 	[Export] public Filter filter;
     [Export] public Control mask;
 
+    Action finishCallback = null;
+
     public override void Init()
     {
         base.Init();
 
         if(parameters.Count > 1) 
         {
-            GameManager.instance.isChoosePause = true;
+            finishCallback = GameManager.instance.AddNeedPause();
             Control view = parameters[0] as Control;
             List<Control> interacts = parameters[1] as List<Control>;
 
@@ -24,7 +26,8 @@ public partial class DropItemUI : UIBase
     public override void _ExitTree()
     {
         base._ExitTree();
-        GameManager.instance.isChoosePause = false;
+        finishCallback?.Invoke();
+        finishCallback = null;
     }
 
     public void SetData(Control view, List<Control> interacts) 

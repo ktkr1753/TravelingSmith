@@ -7,5 +7,4 @@
 
 [node name="ItemManager" type="Node2D"]
 script = ExtResource("1_uxduj")
-money = 100
 areas = [ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("3_8plqd"), ExtResource("3_8plqd"), ExtResource("4_gk4s8"), ExtResource("4_gk4s8")]

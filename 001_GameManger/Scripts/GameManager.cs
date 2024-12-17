@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class GameManager : Node2D
 {
@@ -34,12 +35,54 @@ public partial class GameManager : Node2D
         }
     }
 
+    private HashSet<int> _isNeedPause = new HashSet<int>();
+    public Action AddNeedPause() 
+    {
+
+        int rndCode = randomManager.GetRange(RandomType.Other, int.MinValue, int.MaxValue);
+        _isNeedPause.Add(rndCode);
+        //Debug.Print($"AddNeedPause _isNeedPause count:{_isNeedPause.Count}");
+        Action finishCallback = () =>
+        {
+            RemoveNeedPause(rndCode);
+        };
+
+        return finishCallback;
+    }
+
+    public bool isNeedPause 
+    {
+        get 
+        {
+            bool result = false;
+            if(_isNeedPause.Count > 0) 
+            {
+                result = true;
+            }
+            return result;
+        }
+    }
+
+    private void RemoveNeedPause(int code) 
+    {
+        if (_isNeedPause.Contains(code))
+        {
+            _isNeedPause.Remove(code);
+            //Debug.Print($"AddNeedPause _isNeedPause count:{_isNeedPause.Count}");
+        }
+        else 
+        {
+            Debug.PrintWarn($"RemoveNeedPause 不存在code:{code}");
+        }
+    }
+
+
     public double gameSpeed
     {
         get
         {
             double result = 1;
-            if (battleManager.isGameOver || isChoosePause)
+            if (battleManager.isGameOver || isNeedPause)
             {
                 result = 0;
             }
@@ -65,6 +108,6 @@ public partial class GameManager : Node2D
 
 
         uiManager.OpenUI(UIIndex.MainGameUI);
-        uiManager.OpenUI(UIIndex.ShopUI);
+        //uiManager.OpenUI(UIIndex.ShopUI);
     }
 }

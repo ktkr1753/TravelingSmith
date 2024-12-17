@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bk0clgpkqunl2"]
+[gd_scene load_steps=19 format=3 uid="uid://bk0clgpkqunl2"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopUI.cs" id="1_cg8mc"]
 [ext_resource type="PackedScene" uid="uid://cc8o4nxp4cvmf" path="res://012_UI/Prefabs/ShopUI/ShopItemElement.tscn" id="2_2q00o"]
@@ -8,6 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://c6j0bokhqghs7" path="res://012_UI/Images/button_3-disabled.png" id="3_t8xna"]
 [ext_resource type="Texture2D" uid="uid://c7vlv5efiguqd" path="res://012_UI/Images/arrow-right.png" id="5_qrf0f"]
 [ext_resource type="Texture2D" uid="uid://cycebds37dbm6" path="res://012_UI/Images/changeMoney.png" id="8_3dgtg"]
+[ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="8_450r2"]
+[ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="9_1prah"]
+[ext_resource type="Texture2D" uid="uid://cnlgkyifv004n" path="res://012_UI/Images/return.png" id="9_wk56d"]
+[ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="11_jrt03"]
+[ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="12_chkuv"]
+[ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="13_ulo8e"]
 
 [sub_resource type="Animation" id="Animation_8diqq"]
 length = 0.001
@@ -65,12 +71,14 @@ _data = {
 "moveOut": SubResource("Animation_5hd6s")
 }
 
-[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "moveButtonImage", "arrorImage", "itemPool", "sellPanel")]
+[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "sellPanel")]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_cg8mc")
 animation = NodePath("AnimationPlayer")
+refreshCostLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer/Label")
+refreshButton = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button")
 moveButtonImage = NodePath("HBoxContainer/NinePatchRect")
 arrorImage = NodePath("HBoxContainer/NinePatchRect/TextureRect")
 moveButtonTextures = {
@@ -87,7 +95,6 @@ arrorTextures = {
 }
 itemPool = NodePath("HBoxContainer/PanelContainer")
 sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/SellPanel")
-isBackGround = false
 uIType = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -105,7 +112,7 @@ anchor_bottom = 0.5
 offset_left = 457.0
 offset_top = 80.5
 offset_right = 640.0
-offset_bottom = 311.5
+offset_bottom = 336.5
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -158,6 +165,75 @@ backup = NodePath("VBoxContainer/BackupControl")
 layout_mode = 2
 mouse_filter = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(65, 25)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 1
+
+[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("9_1prah")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+text = "123"
+horizontal_alignment = 2
+
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+self_modulate = Color(0, 0.77, 0.385, 1)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("9_wk56d")
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture_normal = ExtResource("8_450r2")
+texture_pressed = ExtResource("11_jrt03")
+texture_hover = ExtResource("12_chkuv")
+texture_disabled = ExtResource("13_ulo8e")
+stretch_mode = 4
+
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(160, 144)
 layout_mode = 2
@@ -191,3 +267,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/Button" to="." method="OnMoveClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnRefreshClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="OnCloseClick"]

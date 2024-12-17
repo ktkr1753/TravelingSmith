@@ -14,6 +14,8 @@ public partial class ShopUI : UIBase
     }
 
     [Export] private AnimationPlayer animation;
+    [Export] private Label refreshCostLabel;
+    [Export] private Button refreshButton;
     [Export] private NinePatchRect moveButtonImage;
     [Export] private TextureRect arrorImage;
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> moveButtonTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
@@ -70,7 +72,20 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private int refreshCount = 0;
+    public int refreshCost 
+    {
+        get 
+        {
+            int result = 0;
+            result = (int)Math.Ceiling(GameManager.instance.mapManager.nowMap.nowWave / 2.0) + (int)Math.Ceiling(refreshCount * 1.5);
+
+            return result;
+        }
+    }
+
     public List<ItemBaseResource> sellItems = new List<ItemBaseResource>();
+    private Action pauseFinishCallback;
 
     public const double flyTime = 0.2;
 
@@ -81,14 +96,28 @@ public partial class ShopUI : UIBase
     {
         base.Init();
 
+        GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
+
+        pauseFinishCallback = GameManager.instance.AddNeedPause();
         //測試
         TestRandomItem();
 
         SetView();
     }
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        pauseFinishCallback?.Invoke();
+        pauseFinishCallback = null;
+
+        GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
+    }
+
     private void TestRandomItem() 
     {
+        sellItems.Clear();
         List<ItemIndex> indexs = new List<ItemIndex>();
         foreach (ItemIndex itemIndex in GameManager.instance.itemConfig.config.Keys) 
         {
@@ -104,11 +133,24 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private void RefrershItem() 
+    {
+        GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - refreshCost);
+        TestRandomItem();
+        SetShopItemElements();
+
+        refreshCount++;
+        SetRefreshCost();
+        SetRefreshButton();
+    }
+
     private void SetView() 
     {
         SetMoveButtonImage();
         SetArrowImage();
         SetShopItemElements();
+        SetRefreshCost();
+        SetRefreshButton();
     }
 
     private void SetMoveButtonImage() 
@@ -155,6 +197,11 @@ public partial class ShopUI : UIBase
         itemPool.ReturnAllElement();
     }
 
+    private void SetRefreshCost()
+    {
+        refreshCostLabel.Text = $"{refreshCost}";
+    }
+
     private void ClearShopItemElementData(ShopItemElement element) 
     {
         element.SetData(-1, null);
@@ -176,8 +223,7 @@ public partial class ShopUI : UIBase
 
     private void OnShopItemButtonDown(int index) 
     {
-        Debug.Print($"OnShopItemButtonDown index:{index}");
-
+        //Debug.Print($"OnShopItemButtonDown index:{index}");
         int inuseOrder = -1;
         for(int i = 0; i < itemPool.inuses.Count; i++) 
         {
@@ -272,6 +318,18 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private void SetRefreshButton() 
+    {
+        if (GameManager.instance.itemManager.money >= refreshCost)
+        {
+            refreshButton.Disabled = false;
+        }
+        else
+        {
+            refreshButton.Disabled = true;
+        }
+    }
+
 
     public async void OnMoveClick() 
     {
@@ -298,5 +356,19 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private void OnMoneyChange(int money) 
+    {
+        SetRefreshButton();
+    }
 
+
+    public void OnRefreshClick() 
+    {
+        RefrershItem();
+    }
+
+    public void OnCloseClick()
+    {
+        GameManager.instance.uiManager.CloseUI(this);
+    }
 }

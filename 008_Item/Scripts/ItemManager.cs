@@ -75,15 +75,7 @@ public partial class ItemManager : Node
             }
             else if(i == 1) 
             {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
-            }
-            else if (i == 2)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
-            }
-            else if (i == 3)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
             }
 
             heldItems.Add(item);

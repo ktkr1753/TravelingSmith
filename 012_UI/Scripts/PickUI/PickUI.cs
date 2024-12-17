@@ -8,6 +8,7 @@ public partial class PickUI : UIBase
     [Export] ItemInfoPanel itemInfoPanel;
     [Export] Button confirmButton;
     private List<ItemBaseResource> items = new List<ItemBaseResource>();
+    private Action pauseFinishCallback;
 
     private int _nowSelectedItemIndex = -1;
     public int nowSelectedItemIndex 
@@ -49,7 +50,8 @@ public partial class PickUI : UIBase
 
         if (parameters.Count > 0) 
         {
-            GameManager.instance.isChoosePause = true;
+            //GameManager.instance.isChoosePause = true;
+            pauseFinishCallback = GameManager.instance.AddNeedPause();
             items = parameters[0] as List<ItemBaseResource>;
             SetView();
         }
@@ -58,6 +60,9 @@ public partial class PickUI : UIBase
     public override void _ExitTree()
     {
         base._ExitTree();
+
+        pauseFinishCallback?.Invoke();
+        pauseFinishCallback = null;
     }
 
 
@@ -163,13 +168,12 @@ public partial class PickUI : UIBase
                     mainGameUI.elements[putIndex].isFlying = false;
                 });
             }
-            GameManager.instance.isChoosePause = false;
+            GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
         }
     }
 
     public void OnCancelClick() 
     {
         GameManager.instance.uiManager.CloseUI(this);
-        GameManager.instance.isChoosePause = false;
     }
 }
