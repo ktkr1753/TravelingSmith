@@ -44,6 +44,36 @@ public partial class PickUI : UIBase
         SetConfirmButton();
     }
 
+    private int _nowPickElementIndex = -1;
+    public int nowPickElementIndex
+    {
+        get { return _nowPickElementIndex; }
+        set
+        {
+            if (_nowPickElementIndex != value)
+            {
+                int preState = _nowPickElementIndex;
+                _nowPickElementIndex = value;
+
+                if (preState >= 0 && preState < itemElementPool.inuses.Count)
+                {
+                    itemElementPool.inuses[preState].isPicking = false;
+                }
+
+                if (_nowPickElementIndex >= 0 && _nowPickElementIndex < itemElementPool.inuses.Count)
+                {
+                    SetPickedItemElement(itemElementPool.inuses[_nowPickElementIndex].item);
+                    itemElementPool.inuses[_nowPickElementIndex].isPicking = true;
+                }
+                else
+                {
+                    SetPickedItemElement(null);
+                }
+            }
+        }
+    }
+
+
     public override void Init()
     {
         base.Init();
@@ -81,6 +111,7 @@ public partial class PickUI : UIBase
             ItemElement element = itemElementPool.GetElement();
             element.SetData(i, items[i]);
             element.onMainButtonDown += OnItemButtonDown;
+            element.onMainButtonUp += OnItemButtonUp;
         }
     }
 
@@ -91,6 +122,7 @@ public partial class PickUI : UIBase
             ItemElement element = itemElementPool.inuses[i];
             element.SetData(-1, null);
             element.onMainButtonDown -= OnItemButtonDown;
+            element.onMainButtonUp -= OnItemButtonUp;
         }
 
         itemElementPool.ReturnAllElement();
@@ -121,9 +153,72 @@ public partial class PickUI : UIBase
         }
     }
 
+    private void SetPickedItemElement(ItemBaseResource item)
+    {
+        if (item != null)
+        {
+            PickUpUI pickUpUI = GameManager.instance.uiManager.GetOpenedUI<PickUpUI>(UIIndex.PickUpUI);
+            if (pickUpUI != null)
+            {
+                pickUpUI.SetData(item);
+            }
+            else
+            {
+
+                pickUpUI = GameManager.instance.uiManager.OpenUI<PickUpUI>(UIIndex.PickUpUI, new List<object>() { item });
+            }
+        }
+        else
+        {
+            GameManager.instance.uiManager.CloseUI(UIIndex.PickUpUI);
+        }
+    }
+
     private void OnItemButtonDown(int index) 
     {
         nowSelectedItemIndex = index;
+
+        nowPickElementIndex = index;
+    }
+
+    private void OnItemButtonUp(int index) 
+    {
+        ItemBaseResource pickedItem = null;
+        ItemElement element;
+        if (nowPickElementIndex != -1)
+        {
+            element = itemElementPool.inuses[nowPickElementIndex];
+            pickedItem = element.item;
+        }
+
+        if (pickedItem != null) 
+        {
+            MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+            if (mainGameUI != null)
+            {
+                if (mainGameUI.nowEnterElementIndex >= 0)
+                {
+                    int addIndex = -1;
+                    if (GameManager.instance.itemManager.heldItems[mainGameUI.nowEnterElementIndex] == null)
+                    {
+                        addIndex = mainGameUI.nowEnterElementIndex;
+                        ItemBaseResource item = GameManager.instance.itemManager.CreateItem(pickedItem.index);
+                        GameManager.instance.itemManager.SetHeldItem(addIndex, item);
+                    }
+                    else
+                    {
+                        addIndex = GameManager.instance.itemManager.AddHeldItem(pickedItem.index);
+                    }
+
+                    if (addIndex != -1) 
+                    {
+                        GameManager.instance.uiManager.CloseUI(this);
+                        GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
+                    }
+                }
+            }
+        }
+        nowPickElementIndex = -1;
     }
 
     public void OnConfirmClick() 

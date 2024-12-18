@@ -433,7 +433,7 @@ public partial class MainGameUI : UIBase
             }
             else 
             {
-                GameManager.instance.itemManager.SetHeldItem(index, null);
+                GameManager.instance.itemManager.RemoveItem(index);
             }
             elements[index].SetDropButton(false);
         }

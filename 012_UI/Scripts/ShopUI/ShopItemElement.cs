@@ -34,6 +34,19 @@ public partial class ShopItemElement : Control
         private set { _money = value; }
     }
 
+    public override void _Ready()
+    {
+        base._Ready();
+
+        GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
+    }
 
     public void SetData(int index, ItemBaseResource item) 
     {
@@ -43,6 +56,8 @@ public partial class ShopItemElement : Control
         InitMoney();
         SetView();
     }
+
+
 
     private void InitMoney() 
     {
@@ -57,6 +72,7 @@ public partial class ShopItemElement : Control
     private void SetView() 
     {
         SetMoney();
+        SetMoneyColor();
     }
 
     private void SetMoney() 
@@ -65,5 +81,25 @@ public partial class ShopItemElement : Control
         {
             moneyLabel.Text = $"{money}";
         }
+    }
+
+    private void SetMoneyColor() 
+    {
+        if (item != null)
+        {
+            if(GameManager.instance.itemManager.money >= money) 
+            {
+                moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+            }
+            else 
+            {
+                moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+            }
+        }
+    }
+
+    private void OnMoneyChange(int money) 
+    {
+        SetMoneyColor();
     }
 }

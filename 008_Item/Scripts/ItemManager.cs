@@ -75,7 +75,15 @@ public partial class ItemManager : Node
             }
             else if(i == 1) 
             {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
+            }
+            else if (i == 2)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
+            }
+            else if (i == 3)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
             }
 
             heldItems.Add(item);
@@ -97,6 +105,27 @@ public partial class ItemManager : Node
         }
 
         return index;
+    }
+
+    public void RemoveItem(int index) 
+    {
+        if (index >= 0 && index < heldItems.Count)
+        {
+            ItemBaseResource item = heldItems[index];
+            if (producingItems.Contains(item)) 
+            {
+                producingItems.Remove(item);
+            }
+            if (attackingItems.Contains(item)) 
+            {
+                attackingItems.Remove(item);
+            }
+            if (repairingItems.Contains(item)) 
+            {
+                repairingItems.Remove(item);
+            }
+            SetHeldItem(index, null);
+        }
     }
 
 	public void SetHeldItem(int index, ItemBaseResource item) 
@@ -147,7 +176,7 @@ public partial class ItemManager : Node
         if (index >= 0 && index < heldItems.Count && heldItems[index] != null) 
         {
             money += heldItems[index].money;
-            GameManager.instance.itemManager.SetHeldItem(index, null);
+            GameManager.instance.itemManager.RemoveItem(index);
             isSuccess = true;
         }
         return isSuccess;
@@ -200,7 +229,7 @@ public partial class ItemManager : Node
             foreach (int index in usedItemsIndex)
             {
                 items.Add(new KeyValuePair<int, ItemBaseResource>(index, heldItems[index]));
-                SetHeldItem(index, null);
+                RemoveItem(index);
             }
 
             make.isCostMaterial = true;
@@ -229,7 +258,10 @@ public partial class ItemManager : Node
     private void ProcessProducingItems(double deltaTime) 
 	{
         double addTime = deltaTime * GameManager.instance.gameSpeed;
-
+        if(addTime == 0) 
+        {
+            return;
+        }
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
 		foreach(var producingItem in producingItems) 
@@ -315,7 +347,10 @@ public partial class ItemManager : Node
     private void ProcessAttackingItems(double deltaTime) 
     {
         double addTime = deltaTime * GameManager.instance.gameSpeed;
-
+        if (addTime == 0)
+        {
+            return;
+        }
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
         foreach (var attackingItem in attackingItems)
@@ -343,7 +378,7 @@ public partial class ItemManager : Node
                             if (heldItems[i] == attacker) 
                             {
                                 attacker.StopUsing();
-                                SetHeldItem(i, null);
+                                RemoveItem(i);
                                 break;
                             }
                         }
@@ -410,7 +445,10 @@ public partial class ItemManager : Node
     private void ProcessRepairingItems(double deltaTime)
     {
         double addTime = deltaTime * GameManager.instance.gameSpeed;
-
+        if (addTime == 0)
+        {
+            return;
+        }
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
         foreach (var repairingItem in repairingItems)
@@ -438,7 +476,7 @@ public partial class ItemManager : Node
                             if (heldItems[i] == repairing)
                             {
                                 repairing.StopUsing();
-                                SetHeldItem(i, null);
+                                RemoveItem(i);
                                 break;
                             }
                         }

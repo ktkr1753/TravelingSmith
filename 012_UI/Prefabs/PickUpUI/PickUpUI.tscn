@@ -16,6 +16,5 @@ pickUpElement = NodePath("ItemElement_Clear")
 isBackGround = false
 uIType = 6
 
-[node name="ItemElement_Clear" parent="." node_paths=PackedStringArray("mainButton") instance=ExtResource("1_nkj66")]
+[node name="ItemElement_Clear" parent="." instance=ExtResource("1_nkj66")]
 layout_mode = 0
-mainButton = NodePath("MarginContainer/Button")
