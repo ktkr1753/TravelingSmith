@@ -8,6 +8,8 @@ public partial class Map : Node2D
     [Export] public Node2D targetPoint;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
+    [Export] public Node2D shopParent;
+    [Export] public PackedScene shopPrefab;
     [Export] public double nowTime = 0;
     public List<MonsterObject> monsters = new List<MonsterObject>();
 
@@ -33,6 +35,10 @@ public partial class Map : Node2D
     public float targetMoveSpeed = 10;
     private int nowCreateRoadIndex = -1;
 
+    private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
+    private int nowCreateShopIndex = -1;
+    private int visitedShopIndex = -1;
+
     public override void _Ready()
     {
         base._Ready();
@@ -47,6 +53,7 @@ public partial class Map : Node2D
         UpdateSpawn(delta);
         TargetMove(delta);
         CheckRoad();
+        CheckInShop();
     }
 
 
@@ -107,6 +114,36 @@ public partial class Map : Node2D
             {
                 Node2D tempRoad = roadObjs.Dequeue();
                 tempRoad.QueueFree();
+            }
+
+            if(nowCreateRoadIndex % 3 == 2) 
+            {
+                nowCreateShopIndex++;
+                ShopObject shop = UtilityTool.CreateInstance<ShopObject>(shopPrefab, shopParent, new Vector2(nowCreateRoadIndex * viewPortSize.X + viewPortSize.X / 2, 140));
+                shop.SetIndex(nowCreateShopIndex);
+                shopObjs.Enqueue(shop);
+
+                if(shopObjs.Count > 1) 
+                {
+                    ShopObject tempshop = shopObjs.Dequeue();
+                    tempshop.QueueFree();
+                }
+            }
+        }
+    }
+
+    private void CheckInShop() 
+    {
+        if(shopObjs.Count > 0) 
+        {
+            foreach(ShopObject shop in shopObjs) 
+            {
+                if(shop.index > visitedShopIndex && targetPoint.GlobalPosition.X >= shop.GlobalPosition.X) 
+                {
+                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
+                    visitedShopIndex = shop.index;
+                    break;
+                }
             }
         }
     }

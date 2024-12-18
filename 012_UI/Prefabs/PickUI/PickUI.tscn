@@ -71,12 +71,12 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 5
 alignment = 1
 
 [node name="ConfirmButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
 size_flags_horizontal = 4

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b31ks470twpcf"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/ShopObject.cs" id="1_6b2mc"]
+[ext_resource type="Texture2D" uid="uid://cu3nwa507fgkt" path="res://007_Map/Images/test.png" id="1_ytqq4"]
+
+[node name="Shop" type="Node2D"]
+script = ExtResource("1_6b2mc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ytqq4")

@@ -213,7 +213,6 @@ public partial class PickUI : UIBase
                     if (addIndex != -1) 
                     {
                         GameManager.instance.uiManager.CloseUI(this);
-                        GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
                     }
                 }
             }
@@ -263,14 +262,11 @@ public partial class PickUI : UIBase
                     mainGameUI.elements[putIndex].isFlying = false;
                 });
             }
-            GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
         }
     }
 
     public void OnCancelClick() 
     {
         GameManager.instance.uiManager.CloseUI(this);
-
-        GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
     }
 }
