@@ -13,5 +13,5 @@ attackPoint = 1
 attackNeedTime = 1.0
 attackNowTime = 0.0
 attackFX = 1
-moveSpeed = 10.0
+moveSpeed = 20.0
 exp = 1

@@ -175,5 +175,7 @@ public partial class PickUI : UIBase
     public void OnCancelClick() 
     {
         GameManager.instance.uiManager.CloseUI(this);
+
+        GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
     }
 }

@@ -1,19 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://04nj0wollggp"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/Map.cs" id="1_8cs5l"]
-[ext_resource type="Texture2D" uid="uid://bralg18sbu8is" path="res://007_Map/Images/background_2.png" id="1_bb6sh"]
+[ext_resource type="PackedScene" uid="uid://defkma7jjqr47" path="res://007_Map/Prefabs/Road1.tscn" id="2_ndk6r"]
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="3_fvelh"]
 [ext_resource type="Texture2D" uid="uid://ca1cta7gpfk0f" path="res://007_Map/Images/Carriage.png" id="4_ut38t"]
 
-[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint")]
+[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent")]
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
 targetPoint = NodePath("Target")
+roadParent = NodePath("RoadParent")
+roadPrefab = ExtResource("2_ndk6r")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
-texture = ExtResource("1_bb6sh")
-centered = false
+[node name="RoadParent" type="Node2D" parent="."]
 
 [node name="Target" type="Node2D" parent="."]
 position = Vector2(320, 180)
@@ -23,5 +22,7 @@ texture = ExtResource("3_fvelh")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Target"]
 texture = ExtResource("4_ut38t")
+
+[node name="Camera2D" type="Camera2D" parent="Target"]
 
 [node name="Monsters" type="Node2D" parent="."]

@@ -10,7 +10,7 @@ region = Rect2(0, 24, 24, 24)
 [resource]
 script = ExtResource("1_kjliw")
 attackPoint = 1
-range = 200.0
+range = 150.0
 fx = 1
 durability = 2
 needTime = 1.0

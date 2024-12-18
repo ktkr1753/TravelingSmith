@@ -86,6 +86,10 @@ public partial class MonsterObject : Node2D
 
         if (IsCloseTarget()) 
         {
+            if (!IsTooCloseTarget()) 
+            {
+                Move(delta);
+            }
             Attack(delta);
         }
         else 
@@ -101,6 +105,21 @@ public partial class MonsterObject : Node2D
         if(GameManager.instance.mapManager.nowMap?.targetPoint != null)
         {
             if(GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < closeDistance) 
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    public bool IsTooCloseTarget() 
+    {
+        bool result = false;
+
+        if (GameManager.instance.mapManager.nowMap?.targetPoint != null)
+        {
+            if (GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < (closeDistance / 2))
             {
                 result = true;
             }

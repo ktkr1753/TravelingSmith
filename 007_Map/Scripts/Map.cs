@@ -6,20 +6,47 @@ public partial class Map : Node2D
 {
     [Export] Node2D monsterParent;
     [Export] public Node2D targetPoint;
-
+    [Export] public Node2D roadParent;
+    [Export] public PackedScene roadPrefab;
     [Export] public double nowTime = 0;
-
     public List<MonsterObject> monsters = new List<MonsterObject>();
 
     public const int spawnDistance = 380;
 
-    public int nowWave = 0; 
+    public int nowWave = 0;
+
+
+    private Vector2 _viewPortSize = Vector2.Zero;
+    public Vector2 viewPortSize 
+    {
+        get 
+        {
+            if(_viewPortSize == Vector2.Zero) 
+            {
+                _viewPortSize = GetViewport().GetVisibleRect().Size;
+            }
+
+            return _viewPortSize;
+        }
+    }
+    private Queue<Node2D> roadObjs = new Queue<Node2D>();
+    public float targetMoveSpeed = 10;
+    private int nowCreateRoadIndex = -1;
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        CheckRoad();
+    }
 
     public override void _Process(double delta)
     {
         base._Process(delta);
 
         UpdateSpawn(delta);
+        TargetMove(delta);
+        CheckRoad();
     }
 
 
@@ -56,7 +83,32 @@ public partial class Map : Node2D
         {
             CreateMonster(MonsterIndex.Beholder, 3);
         }
+    }
 
+    public void TargetMove(double delta) 
+    {
+        double addTime = delta * GameManager.instance.gameSpeed;
+
+        Vector2 moveNormal = new Vector2(1, 0);
+
+        targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(targetMoveSpeed * addTime));
+    }
+
+    private void CheckRoad() 
+    {
+        float needRoadIndex = ((targetPoint.GlobalPosition.X - viewPortSize.X / 2) / viewPortSize.X);
+        if(needRoadIndex > nowCreateRoadIndex) 
+        {
+            nowCreateRoadIndex++;
+            Node2D road = UtilityTool.CreateInstance<Node2D>(roadPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
+            roadObjs.Enqueue(road);
+
+            if (roadObjs.Count > 4) 
+            {
+                Node2D tempRoad = roadObjs.Dequeue();
+                tempRoad.QueueFree();
+            }
+        }
     }
 
 
@@ -69,7 +121,7 @@ public partial class Map : Node2D
                 MonsterResource monsterData = tempMonster.Clone();
                 monsterData.nowHp = monsterData.maxHp;
 
-                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, 0, (float)(2 * Math.PI));
+                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-1/2 * Math.PI), (float)(1/2 * Math.PI));
                 Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
