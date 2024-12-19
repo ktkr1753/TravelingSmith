@@ -1,12 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://04nj0wollggp"]
+[gd_scene load_steps=9 format=3 uid="uid://04nj0wollggp"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/Map.cs" id="1_8cs5l"]
 [ext_resource type="PackedScene" uid="uid://defkma7jjqr47" path="res://007_Map/Prefabs/Road1.tscn" id="2_ndk6r"]
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="3_fvelh"]
 [ext_resource type="PackedScene" uid="uid://b31ks470twpcf" path="res://007_Map/Prefabs/Shop.tscn" id="3_re5r2"]
 [ext_resource type="Texture2D" uid="uid://ca1cta7gpfk0f" path="res://007_Map/Images/Carriage.png" id="4_ut38t"]
+[ext_resource type="Script" path="res://007_Map/Scripts/MapItemObjectPool.cs" id="6_d7nto"]
+[ext_resource type="PackedScene" uid="uid://ca0mlaowat46f" path="res://007_Map/Prefabs/MapItemObject.tscn" id="7_t7xnu"]
 
-[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
+size = Vector2(100, 900)
+
+[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent", "itemPool")]
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
 targetPoint = NodePath("Target")
@@ -14,6 +19,7 @@ roadParent = NodePath("RoadParent")
 roadPrefab = ExtResource("2_ndk6r")
 shopParent = NodePath("ShopParent")
 shopPrefab = ExtResource("3_re5r2")
+itemPool = NodePath("Items")
 
 [node name="RoadParent" type="Node2D" parent="."]
 
@@ -32,4 +38,21 @@ texture = ExtResource("4_ut38t")
 
 [node name="Camera2D" type="Camera2D" parent="Target"]
 
+[node name="DeadLine" type="Area2D" parent="Target"]
+position = Vector2(-400, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target/DeadLine"]
+shape = SubResource("RectangleShape2D_n1gu1")
+
 [node name="Monsters" type="Node2D" parent="."]
+
+[node name="Items" type="Node2D" parent="." node_paths=PackedStringArray("parent", "backup")]
+script = ExtResource("6_d7nto")
+prefab = ExtResource("7_t7xnu")
+parent = NodePath(".")
+backup = NodePath("backup")
+
+[node name="backup" type="Node2D" parent="Items"]
+visible = false
+
+[connection signal="area_entered" from="Target/DeadLine" to="." method="OnMapItemTouchDeadLine"]

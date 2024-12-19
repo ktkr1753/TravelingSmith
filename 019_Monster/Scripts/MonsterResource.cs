@@ -14,6 +14,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public FXEnum attackFX;
     [Export] public double moveSpeed;
     [Export] public int exp;
+    [Export] public Godot.Collections.Array<MonsterDropItemResource> drops = new Godot.Collections.Array<MonsterDropItemResource>();
 
     public event Action<int> onHPChange;
     public event Action onDie;
@@ -52,6 +53,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
         result.attackFX = attackFX;
         result.moveSpeed = moveSpeed;
         result.exp = exp;
+        result.drops = drops;
         return result;
     }
 

@@ -1,7 +1,13 @@
-[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://d1r8hovdgunom"]
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=5 format=3 uid="uid://d1r8hovdgunom"]
 
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_2dq7h"]
 [ext_resource type="PackedScene" uid="uid://cs0ourwq1chej" path="res://019_Monster/Prefabs/Slime.tscn" id="1_tl0x8"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterDropItemResource.cs" id="1_xptdd"]
+
+[sub_resource type="Resource" id="Resource_0l4c2"]
+script = ExtResource("1_xptdd")
+itemIndex = 605
+dropRate = 1.0
 
 [resource]
 script = ExtResource("1_2dq7h")
@@ -15,3 +21,4 @@ attackNowTime = 0.0
 attackFX = 1
 moveSpeed = 20.0
 exp = 1
+drops = [SubResource("Resource_0l4c2")]

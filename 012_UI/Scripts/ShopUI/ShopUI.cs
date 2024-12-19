@@ -78,7 +78,7 @@ public partial class ShopUI : UIBase
         get 
         {
             int result = 0;
-            result = (int)Math.Ceiling(GameManager.instance.mapManager.nowMap.nowWave / 2.0) + (int)Math.Ceiling(refreshCount * 1.5);
+            result = GameManager.instance.mapManager.nowMap.visitedShopIndex + 1 + (int)Math.Ceiling(refreshCount * 1.5);
 
             return result;
         }
@@ -121,7 +121,14 @@ public partial class ShopUI : UIBase
         List<ItemIndex> indexs = new List<ItemIndex>();
         foreach (ItemIndex itemIndex in GameManager.instance.itemConfig.config.Keys) 
         {
-            indexs.Add(itemIndex);
+            if(GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item)) 
+            {
+                if(item is CommodityResource commodity) 
+                {
+                    continue;
+                }
+                indexs.Add(itemIndex);
+            }
         }
 
         for(int i = 0; i < 5; i++) 

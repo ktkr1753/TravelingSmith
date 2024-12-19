@@ -28,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_2jxto")
 elements = [NodePath("PanelContainer/GridContainer/ItemElement"), NodePath("PanelContainer/GridContainer/ItemElement2"), NodePath("PanelContainer/GridContainer/ItemElement3"), NodePath("PanelContainer/GridContainer/ItemElement4"), NodePath("PanelContainer/GridContainer/ItemElement5"), NodePath("PanelContainer/GridContainer/ItemElement6"), NodePath("PanelContainer/GridContainer/ItemElement7"), NodePath("PanelContainer/GridContainer/ItemElement8"), NodePath("PanelContainer/GridContainer/ItemElement9"), NodePath("PanelContainer/GridContainer/ItemElement10"), NodePath("PanelContainer/GridContainer/ItemElement11"), NodePath("PanelContainer/GridContainer/ItemElement12"), NodePath("PanelContainer/GridContainer/ItemElement13"), NodePath("PanelContainer/GridContainer/ItemElement14"), NodePath("PanelContainer/GridContainer/ItemElement15"), NodePath("PanelContainer/GridContainer/ItemElement16"), NodePath("PanelContainer/GridContainer/ItemElement17"), NodePath("PanelContainer/GridContainer/ItemElement18"), NodePath("PanelContainer/GridContainer/ItemElement19"), NodePath("PanelContainer/GridContainer/ItemElement20"), NodePath("PanelContainer/GridContainer/ItemElement21"), NodePath("PanelContainer/GridContainer/ItemElement22"), NodePath("PanelContainer/GridContainer/ItemElement23"), NodePath("PanelContainer/GridContainer/ItemElement24"), NodePath("PanelContainer/GridContainer/ItemElement25")]
 itemsPanel = NodePath("PanelContainer")

@@ -75,15 +75,7 @@ public partial class ItemManager : Node
             }
             else if(i == 1) 
             {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
-            }
-            else if (i == 2)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
-            }
-            else if (i == 3)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
             }
 
             heldItems.Add(item);
@@ -539,6 +531,22 @@ public partial class ItemManager : Node
             {
                 result.Add(tempItems[rndList[i]]);
             }
+        }
+
+        return result;
+    }
+
+    public int GetBuyMoney(ItemBaseResource item) 
+    {
+        int result = 0;
+
+        if(item is IProduce) 
+        {
+            result = item.money * 5;
+        }
+        else 
+        {
+            result = item.money * 2;
         }
 
         return result;

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class Map : Node2D
 {
@@ -11,6 +12,7 @@ public partial class Map : Node2D
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
     [Export] public double nowTime = 0;
+    [Export] public MapItemObjectPool itemPool;
     public List<MonsterObject> monsters = new List<MonsterObject>();
 
     public const int spawnDistance = 380;
@@ -37,7 +39,12 @@ public partial class Map : Node2D
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
     private int nowCreateShopIndex = -1;
-    private int visitedShopIndex = -1;
+    private int _visitedShopIndex = -1;
+    public int visitedShopIndex 
+    {
+        get { return _visitedShopIndex; }
+        private set { _visitedShopIndex = value; }
+    }
 
     public override void _Ready()
     {
@@ -140,8 +147,8 @@ public partial class Map : Node2D
             {
                 if(shop.index > visitedShopIndex && targetPoint.GlobalPosition.X >= shop.GlobalPosition.X) 
                 {
-                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
                     visitedShopIndex = shop.index;
+                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
                     break;
                 }
             }
@@ -170,6 +177,40 @@ public partial class Map : Node2D
         }
     }
 
+    private void DropMonsterItem(MonsterObject monster)
+    {
+        if (monster?.data?.drops == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < monster.data.drops.Count; i++)
+        {
+            float rnd = GameManager.instance.randomManager.GetRange(RandomType.DropItem, 0f, 1f);
+            if (rnd <= monster.data.drops[i].dropRate)
+            {
+                CreateMapItem(monster.data.drops[i].itemIndex, monster.GlobalPosition);
+                break;
+            }
+        }
+    }
+
+
+    public void CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
+    {
+        if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item))
+        {
+            MapItemObject itemObject = itemPool.GetElement();
+            itemObject.OnNeedReturn += OnMapItemNeedReturn;
+            itemObject.GlobalPosition = globalPos;
+            itemObject.SetData(item);
+        }
+        else
+        {
+            Debug.PrintWarn($"未定義道具:{itemIndex}");
+        }
+    }
+
     public void OnMonsterDestory(MonsterObject monster) 
     {
         monster.onDestroy -= OnMonsterDestory;
@@ -177,6 +218,30 @@ public partial class Map : Node2D
         {
             return;
         }
+        DropMonsterItem(monster);
         monsters.Remove(monster);
+    }
+
+    private void OnMapItemNeedReturn(MapItemObject mapItem) 
+    {
+        mapItem.OnNeedReturn -= OnMapItemNeedReturn;
+        mapItem.SetData(null);
+        itemPool.ReturnElement(mapItem);
+    }
+
+    private void OnMapItemTouchDeadLine(Area2D area) 
+    {
+        if (area.Owner is MapItemObject mapItem) 
+        {
+            //要等到ProcessFrame時才能處理，不然會報錯
+            WaitReturnMapItem(mapItem);
+        }
+    }
+
+    
+    private async Task WaitReturnMapItem(MapItemObject mapItem) 
+    {
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        OnMapItemNeedReturn(mapItem);
     }
 }

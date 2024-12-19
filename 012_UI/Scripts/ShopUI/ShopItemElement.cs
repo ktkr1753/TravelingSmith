@@ -33,18 +33,17 @@ public partial class ShopItemElement : Control
         get { return _money; }
         private set { _money = value; }
     }
-
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        base._Ready();
-
+        base._EnterTree();
+        //Debug.Print("_EnterTree");
         GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
-
+        //Debug.Print("_ExitTree");
         GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
     }
 
@@ -63,7 +62,7 @@ public partial class ShopItemElement : Control
     {
         if(item != null) 
         {
-            money = item.money * 5;
+            money = GameManager.instance.itemManager.GetBuyMoney(item);
         }
     }
 
@@ -89,10 +88,12 @@ public partial class ShopItemElement : Control
         {
             if(GameManager.instance.itemManager.money >= money) 
             {
+                //Debug.Print($"SetMoneyColor 1 item:{item.index}, money:{money} , GameManager.instance.itemManager.money:{GameManager.instance.itemManager.money}");
                 moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
             }
             else 
             {
+                //Debug.Print($"SetMoneyColor 2 item:{item.index}, money:{money} , GameManager.instance.itemManager.money:{GameManager.instance.itemManager.money}");
                 moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
             }
         }
@@ -100,6 +101,7 @@ public partial class ShopItemElement : Control
 
     private void OnMoneyChange(int money) 
     {
+        //Debug.Print("OnMoneyChange");
         SetMoneyColor();
     }
 }
