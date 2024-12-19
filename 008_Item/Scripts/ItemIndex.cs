@@ -19,6 +19,7 @@ public enum ItemIndex
     TitaniumForge = 205,
     RecipeKnightsSword = 206,
     RecipePearlNecklace = 207,
+    RecipeIronRing = 208,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
@@ -26,6 +27,7 @@ public enum ItemIndex
 
     //換金道具 501~600
     PearlNecklace = 501,
+    IronRing = 502,
     //素材 601~700
     Iron = 601,
 	Gold = 602,

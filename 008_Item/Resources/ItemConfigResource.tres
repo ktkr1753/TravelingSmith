@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=22 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=24 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -21,6 +21,8 @@
 [ext_resource type="Resource" uid="uid://c1q7doj8lljem" path="res://008_Item/Resources/RecipePearlNecklace.tres" id="18_lyxpr"]
 [ext_resource type="Resource" uid="uid://d1psowghy3syd" path="res://008_Item/Resources/PearlNecklace.tres" id="19_b6wg4"]
 [ext_resource type="Resource" uid="uid://dkjc0lmxe0wm4" path="res://008_Item/Resources/Pearl.tres" id="20_loivc"]
+[ext_resource type="Resource" uid="uid://do5l4o3drovlg" path="res://008_Item/Resources/RecipeIronRing.tres" id="21_4qrnh"]
+[ext_resource type="Resource" uid="uid://burw3sm4pidcl" path="res://008_Item/Resources/IronRing.tres" id="22_v4ph0"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -37,9 +39,11 @@ config = {
 205: ExtResource("16_ik27c"),
 206: ExtResource("17_6url1"),
 207: ExtResource("18_lyxpr"),
+208: ExtResource("21_4qrnh"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 501: ExtResource("19_b6wg4"),
+502: ExtResource("22_v4ph0"),
 601: ExtResource("1_0c7qs"),
 602: ExtResource("2_ly67b"),
 603: ExtResource("5_lox3u"),

@@ -9,10 +9,10 @@ region = Rect2(24, 24, 24, 24)
 
 [resource]
 script = ExtResource("1_o11tb")
-attackPoint = 3
+attackPoint = 4
 range = 50.0
 fx = 1
-durability = 4
+durability = 8
 needTime = 2.0
 nowTime = 0.0
 isUsing = false

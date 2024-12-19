@@ -165,7 +165,8 @@ public partial class Map : Node2D
                 MonsterResource monsterData = tempMonster.Clone();
                 monsterData.nowHp = monsterData.maxHp;
 
-                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-1/2 * Math.PI), (float)(1/2 * Math.PI));
+                //float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-1/2 * Math.PI), (float)(1/2 * Math.PI));
+                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-Math.PI), (float)(Math.PI));
                 Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);

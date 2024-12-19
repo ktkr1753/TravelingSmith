@@ -194,7 +194,7 @@ public partial class ItemManager : Node
                     continue;
                 }
                 else if (make.materials[i] == GameManager.instance.itemManager.heldItems[j]?.index 
-                    && (itemElements == null || !itemElements[i].isFlying)) //視覺物件正在飛的話就不拿來用
+                    && (itemElements == null || !itemElements[j].isFlying)) //視覺物件正在飛的話就不拿來用
                 {
                     usedItemsIndex.Add(j);
                     isFind = true;

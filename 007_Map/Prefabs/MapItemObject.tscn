@@ -1,12 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ca0mlaowat46f"]
+[gd_scene load_steps=4 format=3 uid="uid://ca0mlaowat46f"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/MapItemObject.cs" id="1_gcjt2"]
 [ext_resource type="Material" uid="uid://cyfh6sc6u24je" path="res://007_Map/Material/OutLineMaterial.tres" id="2_3odft"]
-[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="3_gtfig"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3tlvc"]
-atlas = ExtResource("3_gtfig")
-region = Rect2(96, 0, 24, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4sbfi"]
 size = Vector2(24, 24)
@@ -18,7 +13,6 @@ area = NodePath("Area2D")
 outLineMaterial = ExtResource("2_3odft")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_3tlvc")
 
 [node name="Area2D" type="Area2D" parent="."]
 

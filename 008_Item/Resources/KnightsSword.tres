@@ -9,7 +9,7 @@ region = Rect2(72, 24, 24, 24)
 
 [resource]
 script = ExtResource("1_10vcs")
-attackPoint = 4
+attackPoint = 6
 range = 50.0
 fx = 1
 durability = 20
