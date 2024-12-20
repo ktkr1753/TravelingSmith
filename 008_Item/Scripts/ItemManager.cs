@@ -512,9 +512,36 @@ public partial class ItemManager : Node
         List<ItemBaseResource> tempItems = new List<ItemBaseResource>();
         foreach(var KV in GameManager.instance.itemConfig.config) 
         {
-            if(KV.Value is ToolResource tool || KV.Value is RecipeResource recipe) 
+            if(KV.Value is ToolResource tool) 
             {
                 tempItems.Add(KV.Value);
+            }
+            else if(KV.Value is RecipeResource recipe) 
+            {
+                bool isFail = false;
+                for(int i = 0; i < recipe.materials.Count; i++) 
+                {
+                    bool isFind = false;
+                    for(int j = 0; j < heldItems.Count; j++) 
+                    {
+                        if (heldItems[j]?.index == recipe.materials[i]) 
+                        {
+                            isFind = true;
+                            break;
+                        }
+                    }
+
+                    if (!isFind) 
+                    {
+                        isFail = true;
+                        break;
+                    }
+                }
+
+                if (!isFail) 
+                {
+                    tempItems.Add(KV.Value);
+                }
             }
         }
 

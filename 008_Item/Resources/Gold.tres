@@ -5,11 +5,11 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nvgma"]
 atlas = ExtResource("2_0nbmt")
-region = Rect2(24, 0, 24, 24)
+region = Rect2(120, 0, 24, 24)
 
 [resource]
 script = ExtResource("1_roho5")
 index = 602
 texture = SubResource("AtlasTexture_nvgma")
-money = 2
+money = 3
 rank = 0

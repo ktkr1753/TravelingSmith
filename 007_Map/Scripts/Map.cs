@@ -123,7 +123,7 @@ public partial class Map : Node2D
                 tempRoad.QueueFree();
             }
 
-            if(nowCreateRoadIndex % 3 == 2) 
+            if(nowCreateRoadIndex % 2 == 1) 
             {
                 nowCreateShopIndex++;
                 ShopObject shop = UtilityTool.CreateInstance<ShopObject>(shopPrefab, shopParent, new Vector2(nowCreateRoadIndex * viewPortSize.X + viewPortSize.X / 2, 140));

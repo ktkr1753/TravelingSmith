@@ -12,6 +12,8 @@ ts_itemName_Dart,Dart,飛刀
 ts_itemName_StraightSword,Straight Sword,直劍
 ts_itemName_HuntingBow,Hunting Bow,獵弓
 ts_itemName_KnightsSword,Knight's Sword,騎士配劍
+ts_itemName_MatchStaff,Match Staff,打火仗
+ts_itemName_CeremonialStaff,Ceremonial Staff,儀式權杖
 ts_itemName_Board,Board,木板
 ts_itemName_RecipeDart,Recipe Dart,飛刀配方
 ts_itemName_RecipeStraightSword,Recipe Straight Sword,直劍配方
@@ -21,8 +23,13 @@ ts_itemName_TitaniumForge,Titanium Forge,鈦金鍛造爐
 ts_itemName_RecipeKnightsSword,Recipe Knight's Sword,騎士配劍配方
 ts_itemName_RecipePearlNecklace,Recipe Pearl Necklace,珍珠項鍊配方
 ts_itemName_RecipeIronRing,Recipe Iron Ring,鐵戒指配方
+ts_itemName_GoldForge,Gold Forge,金鍛造爐
+ts_itemName_RecipeMatchStaff,Recipe Match Staff,打火仗配方
+ts_itemName_RecipeCeremonialStaff,Recipe Ceremonial Staff,儀式權杖配方
+ts_itemName_FlareGemstoneBurin,Flare Gemstone Burin,焰火石雕刻刀
 ts_itemName_Pickaxe,Pickaxe,礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
+ts_itemName_FlareGemstonePickaxe,Flare Gemstone Pickaxe,焰火石礦鎬
 ts_itemName_PearlNecklace,Pearl Necklace,珍珠項鍊
 ts_itemName_IronRing,Iron Ring,鐵戒指
 ts_itemName_Iron,Iron,鐵
@@ -30,5 +37,8 @@ ts_itemName_Gold,Gold,金
 ts_itemName_Branch,Branch,樹枝
 ts_itemName_Titanium,Titanium,鈦金
 ts_itemName_Pearl,Pearl,珍珠
+ts_itemName_GoldOre,Gold Ore,金礦石
+ts_itemName_FlareGemstoneOre,Flare Gemstone Ore,焰火石原礦
+ts_itemName_FlareGemstone,Flare Gemstone,焰火石
 
 ts_monsterName_Slime,Slime,史萊姆

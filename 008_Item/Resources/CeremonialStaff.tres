@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=4 format=3 uid="uid://c1makqi8yt28m"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/WeaponResource.cs" id="1_bx2lh"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_d6rvd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31hpb"]
+atlas = ExtResource("2_d6rvd")
+region = Rect2(120, 24, 24, 24)
+
+[resource]
+script = ExtResource("1_bx2lh")
+attackPoint = 3
+range = 150.0
+fx = 1
+durability = 12
+needTime = 0.5
+nowTime = 0.0
+isUsing = false
+index = 6
+texture = SubResource("AtlasTexture_31hpb")
+money = 5
+rank = 0
