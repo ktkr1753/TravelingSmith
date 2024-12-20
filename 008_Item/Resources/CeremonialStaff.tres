@@ -18,5 +18,5 @@ nowTime = 0.0
 isUsing = false
 index = 6
 texture = SubResource("AtlasTexture_31hpb")
-money = 5
+money = 8
 rank = 0

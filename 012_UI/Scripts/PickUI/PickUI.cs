@@ -179,6 +179,8 @@ public partial class PickUI : UIBase
         nowSelectedItemIndex = index;
 
         nowPickElementIndex = index;
+
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
     private void OnItemButtonUp(int index) 
@@ -212,6 +214,7 @@ public partial class PickUI : UIBase
 
                     if (addIndex != -1) 
                     {
+                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
                         GameManager.instance.uiManager.CloseUI(this);
                     }
                 }

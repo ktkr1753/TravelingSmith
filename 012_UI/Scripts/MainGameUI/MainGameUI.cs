@@ -340,6 +340,8 @@ public partial class MainGameUI : UIBase
         nowSelectedElementIndex = index;
 
         recordClickPos = GetViewport().GetMousePosition();
+
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
     private void OnElementButtonUp(int index) 
@@ -369,6 +371,7 @@ public partial class MainGameUI : UIBase
                 {
                     elements[tempNowPickElementIndex].isFlying = false;
                 });
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
             }
             else
             {
@@ -379,6 +382,10 @@ public partial class MainGameUI : UIBase
                     {
                         bool isSuccess = GameManager.instance.itemManager.SellItem(nowPickElementIndex);
                         //Debug.Print($"Sell Shop, isSuccess:{isSuccess}");
+                        if (isSuccess) 
+                        {
+                            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
+                        }
                     }
                 }
             }
@@ -397,7 +404,7 @@ public partial class MainGameUI : UIBase
     {
         nowSelectedElementIndex = index;
 
-        if (index > 0 && index < GameManager.instance.itemManager.heldItems.Count 
+        if (index >= 0 && index < GameManager.instance.itemManager.heldItems.Count 
             && GameManager.instance.itemManager.heldItems[index] != null) 
         {
             elements[index].SetDropButton(true);
@@ -406,7 +413,7 @@ public partial class MainGameUI : UIBase
 
     private void OnElementDropButtonPressed(int index) 
     {
-        if (index > 0 && index < GameManager.instance.itemManager.heldItems.Count
+        if (index >= 0 && index < GameManager.instance.itemManager.heldItems.Count
             && GameManager.instance.itemManager.heldItems[index] != null)
         {
             if(GameManager.instance.itemManager.waitAddItem != null) 
@@ -435,6 +442,7 @@ public partial class MainGameUI : UIBase
             {
                 GameManager.instance.itemManager.RemoveItem(index);
             }
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button19);
             elements[index].SetDropButton(false);
         }
     }

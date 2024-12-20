@@ -93,8 +93,10 @@ text = "跳過"
 [node name="ItemInfoPanel" parent="." instance=ExtResource("5_ksm8r")]
 visible = false
 layout_mode = 1
-offset_left = 70.0
-offset_right = 220.0
+offset_left = 71.0
+offset_top = -30.0
+offset_right = 120.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/ConfirmButton" to="." method="OnConfirmClick"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/SkipButton" to="." method="OnCancelClick"]

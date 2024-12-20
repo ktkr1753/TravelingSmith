@@ -248,6 +248,7 @@ public partial class ShopUI : UIBase
             if(GameManager.instance.itemManager.money >= element.money) 
             {
                 nowPickElementIndex = inuseOrder;
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
             }
         }
     }
@@ -295,6 +296,7 @@ public partial class ShopUI : UIBase
                             mainGameUI.elements[addIndex].isFlying = false;
                         });
                         */
+                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
                         ClearShopItemElementData(element);
                         itemPool.ReturnElement(element);
                     }
@@ -372,10 +374,12 @@ public partial class ShopUI : UIBase
     public void OnRefreshClick() 
     {
         RefrershItem();
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
     public void OnCloseClick()
     {
         GameManager.instance.uiManager.CloseUI(this);
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_cancel4);
     }
 }
