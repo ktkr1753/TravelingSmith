@@ -1,9 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=29 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_c7qgf"]
+[ext_resource type="Texture2D" uid="uid://cd7g2uldy7xba" path="res://012_UI/Images/button_4-disabled.png" id="3_544tu"]
 [ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/Common/ItemElement_Clear.tscn" id="3_mpf7q"]
+[ext_resource type="Texture2D" uid="uid://di6nwgy4qdahd" path="res://012_UI/Images/button_3-normal.png" id="3_qk5px"]
 [ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="3_uculn"]
+[ext_resource type="Texture2D" uid="uid://c7vlv5efiguqd" path="res://012_UI/Images/arrow-right.png" id="4_s72yp"]
+[ext_resource type="Texture2D" uid="uid://g4ryx26aea75" path="res://012_UI/Images/arrow-left.png" id="4_scb4c"]
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="4_tu1ht"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="5_6mqyh"]
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementPool.cs" id="5_fuckt"]
@@ -21,7 +25,63 @@
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
+[sub_resource type="Animation" id="Animation_jpk2g"]
+resource_name = "moveIn"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 96), Vector2(-167, 96)]
+}
+
+[sub_resource type="Animation" id="Animation_4kbeh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 96)]
+}
+
+[sub_resource type="Animation" id="Animation_0nl35"]
+resource_name = "moveOut"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-167, 96), Vector2(0, 96)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_alfty"]
+_data = {
+"RESET": SubResource("Animation_4kbeh"),
+"moveIn": SubResource("Animation_jpk2g"),
+"moveOut": SubResource("Animation_0nl35")
+}
+
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "moveButtonImage", "arrorImage", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,8 +90,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_2jxto")
-elements = [NodePath("PanelContainer/GridContainer/ItemElement"), NodePath("PanelContainer/GridContainer/ItemElement2"), NodePath("PanelContainer/GridContainer/ItemElement3"), NodePath("PanelContainer/GridContainer/ItemElement4"), NodePath("PanelContainer/GridContainer/ItemElement5"), NodePath("PanelContainer/GridContainer/ItemElement6"), NodePath("PanelContainer/GridContainer/ItemElement7"), NodePath("PanelContainer/GridContainer/ItemElement8"), NodePath("PanelContainer/GridContainer/ItemElement9"), NodePath("PanelContainer/GridContainer/ItemElement10"), NodePath("PanelContainer/GridContainer/ItemElement11"), NodePath("PanelContainer/GridContainer/ItemElement12"), NodePath("PanelContainer/GridContainer/ItemElement13"), NodePath("PanelContainer/GridContainer/ItemElement14"), NodePath("PanelContainer/GridContainer/ItemElement15"), NodePath("PanelContainer/GridContainer/ItemElement16"), NodePath("PanelContainer/GridContainer/ItemElement17"), NodePath("PanelContainer/GridContainer/ItemElement18"), NodePath("PanelContainer/GridContainer/ItemElement19"), NodePath("PanelContainer/GridContainer/ItemElement20"), NodePath("PanelContainer/GridContainer/ItemElement21"), NodePath("PanelContainer/GridContainer/ItemElement22"), NodePath("PanelContainer/GridContainer/ItemElement23"), NodePath("PanelContainer/GridContainer/ItemElement24"), NodePath("PanelContainer/GridContainer/ItemElement25")]
-itemsPanel = NodePath("PanelContainer")
+elements = [NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement2"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement3"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement4"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement5"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement6"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement7"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement8"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement9"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement10"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement11"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement12"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement13"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement14"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement15"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement16"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement17"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement18"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement19"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement20"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement21"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement22"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement23"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement24"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement25")]
+animation = NodePath("AnimationPlayer")
+moveButtonImage = NodePath("HBoxContainer/NinePatchRect")
+arrorImage = NodePath("HBoxContainer/NinePatchRect/TextureRect")
+moveButtonTextures = {
+1: ExtResource("3_qk5px"),
+2: ExtResource("3_544tu"),
+3: ExtResource("3_qk5px"),
+4: ExtResource("3_544tu")
+}
+arrorTextures = {
+1: ExtResource("4_s72yp"),
+2: ExtResource("4_scb4c"),
+3: ExtResource("4_scb4c"),
+4: ExtResource("4_s72yp")
+}
+itemsPanel = NodePath("HBoxContainer/PanelContainer")
 infoPanel = NodePath("ItemInfoPanel")
 hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("VBox/HPPanel/HBoxContainer/NowHPLabel")
@@ -44,94 +119,139 @@ moneyLabel = NodePath("VBox/Control/MoneyPanel/HBoxContainer/MoneyLabel")
 isBackGround = false
 uIType = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_alfty")
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -84.0
-offset_right = 168.0
+offset_right = 184.0
 offset_bottom = 84.0
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 columns = 5
 
-[node name="ItemElement" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement2" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement2" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement3" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement3" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement4" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement4" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement5" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement5" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement6" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement6" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement7" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement7" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement8" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement8" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement9" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement9" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement10" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement10" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement11" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement11" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement12" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement12" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement13" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement13" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement14" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement14" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement15" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement15" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement16" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement16" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement17" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement17" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement18" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement18" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement19" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement19" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement20" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement20" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement21" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement21" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement22" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement22" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement23" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement23" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement24" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement24" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
-[node name="ItemElement25" parent="PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+[node name="ItemElement25" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+texture = ExtResource("3_qk5px")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(8, 8)
+mouse_filter = 2
+texture = ExtResource("4_scb4c")
+stretch_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"EmptyButton"
 
 [node name="MainGameItemElement_Clear" parent="." instance=ExtResource("3_mpf7q")]
 visible = false
@@ -373,6 +493,7 @@ texture_hover = ExtResource("18_bq83n")
 texture_disabled = ExtResource("19_72eb0")
 texture_focused = ExtResource("17_320u8")
 
+[connection signal="pressed" from="HBoxContainer/NinePatchRect/Button" to="." method="OnMoveClick"]
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/PauseButton" to="GameSpeedControl" method="OnPauseClick"]
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="GameSpeedControl" method="OnPlayClick"]
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/FastForwardButton" to="GameSpeedControl" method="OnFastForwardClick"]

@@ -5,7 +5,21 @@ using System.Linq;
 
 public partial class MainGameUI : UIBase
 {
-	[Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
+    public enum PositionState
+    {
+        None = 0,
+        In = 1,
+        MovingIn = 2,
+        Out = 3,
+        MovingOut = 4,
+    }
+
+    [Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
+    [Export] private AnimationPlayer animation;
+    [Export] private NinePatchRect moveButtonImage;
+    [Export] private TextureRect arrorImage;
+    [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> moveButtonTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
+    [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> arrorTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] public PanelContainer itemsPanel;
     [Export] private ItemInfoPanel infoPanel;
     [Export] private ProgressBar hpProgressBar;
@@ -16,6 +30,26 @@ public partial class MainGameUI : UIBase
     [Export] private Label nowExpLabel;
     [Export] private Label maxExpLabel;
     [Export] private Label moneyLabel;
+
+    private PositionState _positionState = PositionState.Out;
+    public PositionState positionState
+    {
+        get { return _positionState; }
+        set
+        {
+            if (_positionState != value)
+            {
+                _positionState = value;
+                OnPositionStateChange(_positionState);
+            }
+        }
+    }
+
+    private void OnPositionStateChange(PositionState nowPositionState)
+    {
+        SetMoveButtonImage();
+        SetArrowImage();
+    }
 
     //碰到的物件ID
     private int _nowEnterElementIndex = -1;
@@ -92,8 +126,10 @@ public partial class MainGameUI : UIBase
     }
 
     public const float moveThreshold = 5;
-
     public const double flyTime = 0.2;
+
+    public const string clip_moveIn = "moveIn";
+    public const string clip_moveOut = "moveOut";
 
     public override void Init()
     {
@@ -106,9 +142,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
         InitItemElements();
-        SetHp();
-        SetExp();
-        SetMoney();
+        SetView();
     }
 
     public override void _ExitTree()
@@ -129,6 +163,16 @@ public partial class MainGameUI : UIBase
 
         CheckIsPickItem();
         CheckItemsWork();
+    }
+
+    
+    private void SetView()
+    {
+        SetHp();
+        SetExp();
+        SetMoney();
+        SetMoveButtonImage();
+        SetArrowImage();
     }
 
     private void CheckIsPickItem() 
@@ -222,6 +266,29 @@ public partial class MainGameUI : UIBase
     public void RefreshItemElement(int index, ItemBaseResource item)
     {
 		elements[index].SetData(index, item);
+    }
+
+    private void SetMoveButtonImage()
+    {
+        if (moveButtonTextures.TryGetValue(positionState, out Texture2D texture))
+        {
+            moveButtonImage.Texture = texture;
+        }
+        else
+        {
+            Debug.PrintErr($"沒有moveButtonTexture, positionState:{positionState}");
+        }
+    }
+    private void SetArrowImage()
+    {
+        if (arrorTextures.TryGetValue(positionState, out Texture2D texture))
+        {
+            arrorImage.Texture = texture;
+        }
+        else
+        {
+            Debug.PrintErr($"沒有arrorTexture, positionState:{positionState}");
+        }
     }
 
     private void SetHp() 
@@ -528,6 +595,31 @@ public partial class MainGameUI : UIBase
                 List<ItemBaseResource> canPickItems = GameManager.instance.itemManager.GetPickItems(3);
                 GameManager.instance.uiManager.OpenUI(UIIndex.PickUI, new List<object>() { canPickItems });
             }
+        }
+    }
+
+    public async void OnMoveClick()
+    {
+        switch (positionState)
+        {
+            case PositionState.Out:
+                {
+                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
+                    positionState = PositionState.MovingIn;
+                    animation.Play(clip_moveIn);
+                    await ToSignal(animation, "animation_finished").ToTask();
+                    positionState = PositionState.In;
+                }
+                break;
+            case PositionState.In:
+                {
+                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
+                    positionState = PositionState.MovingOut;
+                    animation.Play(clip_moveOut);
+                    await ToSignal(animation, "animation_finished").ToTask();
+                    positionState = PositionState.Out;
+                }
+                break;
         }
     }
 }
