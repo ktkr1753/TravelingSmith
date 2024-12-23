@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwursc1rxpf7s"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/MapHintUI/MapElement.cs" id="1_toway"]
+[ext_resource type="Texture2D" uid="uid://xcjk2bjy435r" path="res://012_UI/Images/UIFrame_speak4.png" id="2_wltsn"]
+
+[node name="MapElement" type="PanelContainer" node_paths=PackedStringArray("image", "hpProgressBar", "distanceLabel")]
+offset_right = 37.0
+offset_bottom = 42.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("1_toway")
+image = NodePath("HBoxContainer/PanelContainer/VBoxContainer/TextureRect")
+hpProgressBar = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HPProgressBar")
+distanceLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/Label")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"PanelContainer_paper"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HPProgressBar" type="ProgressBar" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+mouse_filter = 2
+theme_type_variation = &"ProgressBar_RedSmall"
+show_percentage = false
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(33, 0)
+layout_mode = 2
+text = "500m"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Control" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 21
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Control"]
+layout_mode = 2
+texture = ExtResource("2_wltsn")
+stretch_mode = 4

@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0q3ekojqfn17"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/MapHintUI/MapHintUI.cs" id="1_6ptc4"]
+[ext_resource type="PackedScene" uid="uid://bwursc1rxpf7s" path="res://012_UI/Prefabs/MapHintUI/MapElement.tscn" id="1_bkcq6"]
+[ext_resource type="Script" path="res://012_UI/Scripts/MapHintUI/MapElementPool.cs" id="2_qrox6"]
+
+[node name="MapHintUI" type="Control" node_paths=PackedStringArray("elementPool")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_6ptc4")
+elementPool = NodePath("MapElementInuse")
+isBackGround = false
+isFoucs = false
+uIType = 7
+
+[node name="MapElementInuse" type="VBoxContainer" parent="." node_paths=PackedStringArray("parent", "backup")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -37.0
+offset_top = 19.0
+offset_bottom = 146.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("2_qrox6")
+prefab = ExtResource("1_bkcq6")
+parent = NodePath(".")
+backup = NodePath("../MapElementBackup")
+
+[node name="MapElementBackup" type="Control" parent="."]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_left = 564.0
+offset_top = 131.0
+offset_right = 640.0
+offset_bottom = 131.0
+mouse_filter = 2

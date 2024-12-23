@@ -10,7 +10,7 @@ region = Rect2(24, 48, 24, 24)
 [resource]
 script = ExtResource("1_4qn4d")
 productItem = 603
-needTime = 3.0
+needTime = 10.0
 nowTime = 0.0
 isProducing = false
 index = 302

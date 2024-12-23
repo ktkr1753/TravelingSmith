@@ -310,27 +310,32 @@ mouse_filter = 2
 layout_mode = 1
 offset_right = 100.0
 offset_bottom = 50.0
+mouse_filter = 2
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 2
 
 [node name="VBox" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 3
 
 [node name="HPPanel" type="PanelContainer" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
 size_flags_vertical = 1
+mouse_filter = 2
 theme_type_variation = &"ProgressBar_Red"
 value = 50.0
 show_percentage = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="NowHPLabel" type="Label" parent="MarginContainer/VBox/HPPanel/HBoxContainer"]
@@ -350,6 +355,7 @@ text = "100"
 
 [node name="Control" type="Control" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBox/HPPanel/Control"]
 layout_mode = 1
@@ -362,23 +368,27 @@ offset_bottom = 8.0
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 2
 texture = ExtResource("4_tu1ht")
 
 [node name="ExpPanel" type="PanelContainer" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 
 [node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBox/ExpPanel"]
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 size_flags_vertical = 1
+mouse_filter = 2
 theme_type_variation = &"ProgressBar_Yellow"
 value = 50.0
 show_percentage = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/ExpPanel"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="NowHPLabel" type="Label" parent="MarginContainer/VBox/ExpPanel/HBoxContainer"]
@@ -399,6 +409,7 @@ text = "100"
 [node name="Control" type="Control" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/VBox/Control"]
 layout_mode = 1
@@ -409,13 +420,16 @@ offset_top = -8.0
 offset_right = 52.0
 offset_bottom = 8.0
 grow_vertical = 2
+mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/Control/MoneyPanel"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBox/Control/MoneyPanel/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("5_6mqyh")
 
 [node name="MoneyLabel" type="Label" parent="MarginContainer/VBox/Control/MoneyPanel/HBoxContainer"]
@@ -427,10 +441,10 @@ horizontal_alignment = 2
 
 [node name="GameSpeedControl" type="Control" parent="." node_paths=PackedStringArray("pauseButton", "playButton", "fastForwardButton")]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-grow_horizontal = 0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("8_h57qy")
 pauseButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/PauseButton")
@@ -439,12 +453,12 @@ fastForwardButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/FastF
 
 [node name="PanelContainer" type="PanelContainer" parent="GameSpeedControl"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -59.0
-offset_bottom = 27.0
-grow_horizontal = 0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+offset_right = 59.0
+grow_vertical = 0
 mouse_filter = 2
 theme_type_variation = &"PanelContainer_Brown"
 

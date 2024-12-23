@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class GameManager : Node2D
 {
@@ -108,6 +109,15 @@ public partial class GameManager : Node2D
 
 
         uiManager.OpenUI(UIIndex.MainGameUI);
+        uiManager.OpenUI(UIIndex.MapElementUI);
         //uiManager.OpenUI(UIIndex.ShopUI);
+    }
+
+    public async Task<Variant[]> Wait(float seconds)
+    {
+        //Debug.Print("Before Wait");
+        var result = await ToSignal(GetTree().CreateTimer(seconds), "timeout");
+        //Debug.Print("After Wait");
+        return result;
     }
 }

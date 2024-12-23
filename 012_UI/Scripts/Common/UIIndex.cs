@@ -10,4 +10,6 @@ public enum UIIndex
     PickUI = 4,
     DropItemUI = 5,
     PickUpUI = 6,
+    MapElementUI = 7,
+    BattleInfoUI = 8,
 }

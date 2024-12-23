@@ -15,7 +15,7 @@ public partial class Map : Node2D
     [Export] public MapItemObjectPool itemPool;
     public List<MonsterObject> monsters = new List<MonsterObject>();
 
-    public const int spawnDistance = 380;
+    public const int spawnDistance = 600;
 
     public int nowWave = 0;
 
@@ -34,7 +34,7 @@ public partial class Map : Node2D
         }
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
-    public float targetMoveSpeed = 10;
+    private float targetMoveSpeed = 10;
     private int nowCreateRoadIndex = -1;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
@@ -45,6 +45,8 @@ public partial class Map : Node2D
         get { return _visitedShopIndex; }
         private set { _visitedShopIndex = value; }
     }
+
+    public event Action<MonsterObject> onCreateMonster;
 
     public override void _Ready()
     {
@@ -78,35 +80,38 @@ public partial class Map : Node2D
         }
     }
 
-    public void CreateWaveMonster() 
+    private async void CreateWaveMonster() 
     {
-        if(nowWave < 5) 
+        if(nowWave < 10) 
         {
-            CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.Slime, 1);
         }
-        else if (nowWave < 15)
+        else if (nowWave < 20)
         {
-            CreateMonster(MonsterIndex.Slime, 3);
+            await CreateMonster(MonsterIndex.Slime, 2);
         }
-        else if(nowWave < 25) 
+        else if(nowWave < 30) 
         {
-            CreateMonster(MonsterIndex.Slime, 3);
-            CreateMonster(MonsterIndex.Beholder, 1);
+            await CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.Beholder, 1);
         }
         else 
         {
-            CreateMonster(MonsterIndex.Beholder, 3);
+            await CreateMonster(MonsterIndex.Beholder, 2);
         }
     }
 
-    public void TargetMove(double delta) 
+    private void TargetMove(double delta) 
     {
-        double addTime = delta * GameManager.instance.gameSpeed;
-
-        Vector2 moveNormal = new Vector2(1, 0);
-
-        targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(targetMoveSpeed * addTime));
+        List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(MonsterObject.closeDistance);
+        if(monsters.Count == 0)     //附近有怪物不能動
+        {
+            double addTime = delta * GameManager.instance.gameSpeed;
+            Vector2 moveNormal = new Vector2(1, 0);
+            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(targetMoveSpeed * addTime));
+        }
     }
+
 
     private void CheckRoad() 
     {
@@ -156,7 +161,7 @@ public partial class Map : Node2D
     }
 
 
-    public void CreateMonster(MonsterIndex index, int num = 1)
+    public async Task CreateMonster(MonsterIndex index, int num = 1)
     {
         for(int i = 0; i < num; i++) 
         {
@@ -166,14 +171,19 @@ public partial class Map : Node2D
                 monsterData.nowHp = monsterData.maxHp;
 
                 //float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-1/2 * Math.PI), (float)(1/2 * Math.PI));
-                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-Math.PI), (float)(Math.PI));
-                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.X + spawnDistance * Mathf.Sin(rndAngle));
+                //float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-Math.PI), (float)(Math.PI));
+                float rndAngle = 0;
+                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.Y + spawnDistance * Mathf.Sin(rndAngle));
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
                 monster.onDestroy += OnMonsterDestory;
 
                 monsters.Add(monster);
+
+                onCreateMonster?.Invoke(monster);
+
+                await GameManager.instance.Wait(1);
             }
         }
     }
@@ -197,7 +207,7 @@ public partial class Map : Node2D
     }
 
 
-    public void CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
+    private void CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
     {
         if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item))
         {
@@ -212,7 +222,7 @@ public partial class Map : Node2D
         }
     }
 
-    public void OnMonsterDestory(MonsterObject monster) 
+    private void OnMonsterDestory(MonsterObject monster) 
     {
         monster.onDestroy -= OnMonsterDestory;
         if(this == null || !this.IsExist()) 
