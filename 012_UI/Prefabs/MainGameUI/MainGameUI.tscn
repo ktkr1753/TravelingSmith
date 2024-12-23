@@ -25,6 +25,21 @@
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
 
+[sub_resource type="Animation" id="Animation_4kbeh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 142)]
+}
+
 [sub_resource type="Animation" id="Animation_jpk2g"]
 resource_name = "moveIn"
 length = 0.2
@@ -39,22 +54,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(0, 96), Vector2(-167, 96)]
-}
-
-[sub_resource type="Animation" id="Animation_4kbeh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HBoxContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 96)]
+"values": [Vector2(0, 142), Vector2(-167, 142)]
 }
 
 [sub_resource type="Animation" id="Animation_0nl35"]
@@ -71,7 +71,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-167, 96), Vector2(0, 96)]
+"values": [Vector2(-167, 142), Vector2(0, 142)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_alfty"]
@@ -108,14 +108,14 @@ arrorTextures = {
 }
 itemsPanel = NodePath("HBoxContainer/PanelContainer")
 infoPanel = NodePath("ItemInfoPanel")
-hpProgressBar = NodePath("VBox/HPPanel/ProgressBar")
-nowHpLabel = NodePath("VBox/HPPanel/HBoxContainer/NowHPLabel")
-maxHpLabel = NodePath("VBox/HPPanel/HBoxContainer/MaxHPLabel")
-expProgressBar = NodePath("VBox/ExpPanel/ProgressBar")
-expLabelParent = NodePath("VBox/ExpPanel/HBoxContainer")
-nowExpLabel = NodePath("VBox/ExpPanel/HBoxContainer/NowHPLabel")
-maxExpLabel = NodePath("VBox/ExpPanel/HBoxContainer/MaxHPLabel")
-moneyLabel = NodePath("VBox/Control/MoneyPanel/HBoxContainer/MoneyLabel")
+hpProgressBar = NodePath("MarginContainer/VBox/HPPanel/ProgressBar")
+nowHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/NowHPLabel")
+maxHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/MaxHPLabel")
+expProgressBar = NodePath("MarginContainer/VBox/ExpPanel/ProgressBar")
+expLabelParent = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer")
+nowExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/NowHPLabel")
+maxExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/MaxHPLabel")
+moneyLabel = NodePath("MarginContainer/VBox/Control/MoneyPanel/HBoxContainer/MoneyLabel")
 isBackGround = false
 uIType = 1
 
@@ -126,13 +126,13 @@ libraries = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -84.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -218.0
 offset_right = 184.0
-offset_bottom = 84.0
-grow_vertical = 2
+offset_bottom = -50.0
+grow_vertical = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -306,70 +306,70 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 40.0
-grow_horizontal = 0
+offset_right = 100.0
+offset_bottom = 50.0
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 2
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 3
 
-[node name="HPPanel" type="PanelContainer" parent="VBox"]
+[node name="HPPanel" type="PanelContainer" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="ProgressBar" type="ProgressBar" parent="VBox/HPPanel"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
 size_flags_vertical = 1
 theme_type_variation = &"ProgressBar_Red"
 value = 50.0
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox/HPPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
 alignment = 1
 
-[node name="NowHPLabel" type="Label" parent="VBox/HPPanel/HBoxContainer"]
+[node name="NowHPLabel" type="Label" parent="MarginContainer/VBox/HPPanel/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 text = "50"
 horizontal_alignment = 2
 
-[node name="Label2" type="Label" parent="VBox/HPPanel/HBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/VBox/HPPanel/HBoxContainer"]
 layout_mode = 2
 text = "/"
 
-[node name="MaxHPLabel" type="Label" parent="VBox/HPPanel/HBoxContainer"]
+[node name="MaxHPLabel" type="Label" parent="MarginContainer/VBox/HPPanel/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 text = "100"
 
-[node name="Control" type="Control" parent="VBox/HPPanel"]
+[node name="Control" type="Control" parent="MarginContainer/VBox/HPPanel"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBox/HPPanel/Control"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBox/HPPanel/Control"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
 offset_top = -8.0
-offset_right = 12.0
+offset_right = 16.0
 offset_bottom = 8.0
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 texture = ExtResource("4_tu1ht")
 
-[node name="ExpPanel" type="PanelContainer" parent="VBox"]
+[node name="ExpPanel" type="PanelContainer" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="ProgressBar" type="ProgressBar" parent="VBox/ExpPanel"]
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBox/ExpPanel"]
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 size_flags_vertical = 1
@@ -377,51 +377,48 @@ theme_type_variation = &"ProgressBar_Yellow"
 value = 50.0
 show_percentage = false
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox/ExpPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/ExpPanel"]
 layout_mode = 2
 alignment = 1
 
-[node name="NowHPLabel" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+[node name="NowHPLabel" type="Label" parent="MarginContainer/VBox/ExpPanel/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 text = "50"
 horizontal_alignment = 2
 
-[node name="Label2" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+[node name="Label2" type="Label" parent="MarginContainer/VBox/ExpPanel/HBoxContainer"]
 layout_mode = 2
 text = "/"
 
-[node name="MaxHPLabel" type="Label" parent="VBox/ExpPanel/HBoxContainer"]
+[node name="MaxHPLabel" type="Label" parent="MarginContainer/VBox/ExpPanel/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 text = "100"
 
-[node name="Control" type="Control" parent="VBox"]
+[node name="Control" type="Control" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
-[node name="MoneyPanel" type="PanelContainer" parent="VBox/Control"]
+[node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/VBox/Control"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -22.0
 offset_top = -8.0
+offset_right = 52.0
 offset_bottom = 8.0
-grow_horizontal = 0
 grow_vertical = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBox/Control/MoneyPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/Control/MoneyPanel"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBox/Control/MoneyPanel/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBox/Control/MoneyPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("5_6mqyh")
 
-[node name="MoneyLabel" type="Label" parent="VBox/Control/MoneyPanel/HBoxContainer"]
+[node name="MoneyLabel" type="Label" parent="MarginContainer/VBox/Control/MoneyPanel/HBoxContainer"]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -430,11 +427,10 @@ horizontal_alignment = 2
 
 [node name="GameSpeedControl" type="Control" parent="." node_paths=PackedStringArray("pauseButton", "playButton", "fastForwardButton")]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+grow_horizontal = 0
 mouse_filter = 2
 script = ExtResource("8_h57qy")
 pauseButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/PauseButton")
@@ -443,15 +439,12 @@ fastForwardButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/FastF
 
 [node name="PanelContainer" type="PanelContainer" parent="GameSpeedControl"]
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -55.0
-offset_top = -23.0
+offset_left = -59.0
+offset_bottom = 27.0
 grow_horizontal = 0
-grow_vertical = 0
 mouse_filter = 2
 theme_type_variation = &"PanelContainer_Brown"
 
