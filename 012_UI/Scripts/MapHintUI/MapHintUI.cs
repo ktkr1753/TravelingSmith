@@ -8,7 +8,7 @@ public partial class MapHintUI : UIBase
     public override void Init()
     {
         base.Init();
-        Debug.Print("MapHintUI Init");
+
         GameManager.instance.mapManager.nowMap.onCreateMonster += OnCreateMonster;
     }
 

@@ -129,7 +129,7 @@ public partial class MapElement : Control
 		}
     }
 
-	private void OnHPChange(int nowHP) 
+	private void OnHPChange(int preHP,int nowHP) 
 	{
         hpProgressBar.Value = nowHP;
     }

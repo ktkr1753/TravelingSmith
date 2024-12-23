@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 public partial class Map : Node2D
 {
     [Export] Node2D monsterParent;
+    [Export] public Camera2D camera;
     [Export] public Node2D targetPoint;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
-    [Export] public double nowTime = 0;
+    [Export] public double nowTime = -30;
     [Export] public MapItemObjectPool itemPool;
     public List<MonsterObject> monsters = new List<MonsterObject>();
 
-    public const int spawnDistance = 600;
+    public const int spawnDistance = 1000;
 
     public int nowWave = 0;
 
@@ -34,7 +35,7 @@ public partial class Map : Node2D
         }
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
-    private float targetMoveSpeed = 10;
+    private float targetMoveSpeed = 50;
     private int nowCreateRoadIndex = -1;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
@@ -128,7 +129,7 @@ public partial class Map : Node2D
                 tempRoad.QueueFree();
             }
 
-            if(nowCreateRoadIndex % 2 == 1) 
+            if(nowCreateRoadIndex % 5 == 4) 
             {
                 nowCreateShopIndex++;
                 ShopObject shop = UtilityTool.CreateInstance<ShopObject>(shopPrefab, shopParent, new Vector2(nowCreateRoadIndex * viewPortSize.X + viewPortSize.X / 2, 140));

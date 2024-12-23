@@ -11,9 +11,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
 size = Vector2(100, 900)
 
-[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent", "itemPool")]
+[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "camera", "targetPoint", "roadParent", "shopParent", "itemPool")]
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
+camera = NodePath("Target/Camera2D")
 targetPoint = NodePath("Target")
 roadParent = NodePath("RoadParent")
 roadPrefab = ExtResource("2_ndk6r")

@@ -62,6 +62,18 @@ public partial class MonsterObject : Node2D
         }
     }
 
+    private void ShowBattleHPInfo(int hpChange) 
+    {
+        BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
+
+        if(hpChange < 0) 
+        {
+            Vector2 viewPos = (GetViewportRect().Size / 2) + (GlobalPosition - GameManager.instance.mapManager.nowMap.camera.GlobalPosition);
+            Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
+            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
+        }
+    }
+
 
     public override void _Process(double delta)
     {
@@ -158,9 +170,10 @@ public partial class MonsterObject : Node2D
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));
     }
 
-    private void OnHpChange(int nowHp) 
+    private void OnHpChange(int preHP,int nowHp) 
     {
         SetHpProgressbar();
+        ShowBattleHPInfo(nowHp - preHP);
     }
 
     public void Destroy()

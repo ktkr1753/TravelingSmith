@@ -524,7 +524,7 @@ public partial class ItemManager : Node
                     bool isFind = false;
                     for(int j = 0; j < heldItems.Count; j++) 
                     {
-                        if (heldItems[j]?.index == recipe.materials[i]) 
+                        if (heldItems[j]?.index == recipe.materials[i] || (heldItems[j] is ToolResource heldTool && heldTool.productItem == recipe.materials[i])) 
                         {
                             isFind = true;
                             break;

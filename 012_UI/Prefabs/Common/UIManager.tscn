@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://k4fr30am0r15"]
+[gd_scene load_steps=21 format=3 uid="uid://k4fr30am0r15"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/UIManager.cs" id="1_4e744"]
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/UIConfigResource.cs" id="2_lox7d"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/Common/ItemElement_Clear.tscn" id="7_dlmak"]
 [ext_resource type="PackedScene" uid="uid://cxx8nfm5dl3xu" path="res://012_UI/Prefabs/PickUpUI/PickUpUI.tscn" id="8_lk24d"]
 [ext_resource type="PackedScene" uid="uid://d0q3ekojqfn17" path="res://012_UI/Prefabs/MapHintUI/MapHintUI.tscn" id="9_e6p0r"]
+[ext_resource type="PackedScene" uid="uid://c84plmb386xlw" path="res://012_UI/Prefabs/BattleInfoUI/BattleInfoUI.tscn" id="10_xe4od"]
 
 [sub_resource type="Resource" id="Resource_4hkr0"]
 script = ExtResource("2_lox7d")
@@ -47,6 +48,11 @@ script = ExtResource("2_lox7d")
 prefab = ExtResource("9_e6p0r")
 layer = 3
 
+[sub_resource type="Resource" id="Resource_7x8q2"]
+script = ExtResource("2_lox7d")
+prefab = ExtResource("10_xe4od")
+layer = 3
+
 [node name="UIManager" type="CanvasLayer" node_paths=PackedStringArray("background", "layer1", "layer2", "layer3", "itemFxtPool")]
 script = ExtResource("1_4e744")
 background = NodePath("blcak_panel")
@@ -60,7 +66,8 @@ UIs = {
 4: SubResource("Resource_j81ct"),
 5: SubResource("Resource_byga1"),
 6: SubResource("Resource_54y10"),
-7: SubResource("Resource_dgkb0")
+7: SubResource("Resource_dgkb0"),
+8: SubResource("Resource_7x8q2")
 }
 itemFxtPool = NodePath("ItemFXPool")
 

@@ -16,16 +16,17 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public int exp;
     [Export] public Godot.Collections.Array<MonsterDropItemResource> drops = new Godot.Collections.Array<MonsterDropItemResource>();
 
-    public event Action<int> onHPChange;
+    public event Action<int, int> onHPChange;
     public event Action onDie;
 
     public void Damage(int damage)
     {
         if (damage > 0)
         {
+            int preHp = nowHp;
             nowHp = Math.Max(0, nowHp - damage);
             //後續處理
-            onHPChange?.Invoke(nowHp);
+            onHPChange?.Invoke(preHp, nowHp);
 
             if (nowHp == 0)
             {
