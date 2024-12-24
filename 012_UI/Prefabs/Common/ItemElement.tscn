@@ -81,8 +81,8 @@ mainButton = NodePath("Button")
 dropButton = NodePath("Control/TextureButton")
 circleProgressImage = NodePath("MarginContainer/PanelContainer/CircleProgress")
 clockMaskShader = ExtResource("2_h72xt")
-normalColor = Color(0.117647, 0.737255, 0.45098, 1)
-pauseColor = Color(0.666667, 0.666667, 0.666667, 1)
+normalColor = Color(0.1184, 0.74, 0.44992, 0.745098)
+pauseColor = Color(0.67, 0.67, 0.67, 0.745098)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

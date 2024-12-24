@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIconPool.cs" id="4_q8w2x"]
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -36,6 +36,10 @@ productParent = NodePath("VBoxContainer/ProductHBox")
 productIcon = NodePath("VBoxContainer/ProductHBox/ItemIcon")
 produceCostTimeParent = NodePath("VBoxContainer/ProductTimeHBox")
 produceCostTimeLabel = NodePath("VBoxContainer/ProductTimeHBox/TimeLabel")
+accelerationParent = NodePath("VBoxContainer/AccelerationHBox")
+accelerationLabel = NodePath("VBoxContainer/AccelerationHBox/AccelerationLabel")
+maxSpeedParent = NodePath("VBoxContainer/MaxSpeedHBox")
+maxSpeedLabel = NodePath("VBoxContainer/MaxSpeedHBox/SpeedLabel")
 buttonsParent = NodePath("VBoxContainer/ButtonParent")
 produceStartButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StartProduceButton")
 produceStopButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/StopProduceButton")
@@ -153,6 +157,30 @@ backup = NodePath("../Backup")
 [node name="Backup" type="Control" parent="VBoxContainer/MaterialHBox"]
 visible = false
 layout_mode = 2
+
+[node name="AccelerationHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/AccelerationHBox"]
+layout_mode = 2
+text = "加速度:"
+
+[node name="AccelerationLabel" type="Label" parent="VBoxContainer/AccelerationHBox"]
+layout_mode = 2
+text = "加速度:"
+
+[node name="MaxSpeedHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MaxSpeedHBox"]
+layout_mode = 2
+text = "最高速度:"
+
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/MaxSpeedHBox"]
+layout_mode = 2
+text = "加速度:"
 
 [node name="ProductHBox" type="HBoxContainer" parent="VBoxContainer"]
 visible = false

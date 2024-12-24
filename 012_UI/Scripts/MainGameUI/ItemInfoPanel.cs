@@ -22,6 +22,10 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private ItemIcon productIcon;
     [Export] private Control produceCostTimeParent;
     [Export] private Label produceCostTimeLabel;
+    [Export] private Control accelerationParent;
+    [Export] private Label accelerationLabel;
+    [Export] private Control maxSpeedParent;
+    [Export] private Label maxSpeedLabel;
     [Export] private Control buttonsParent;
     [Export] private Button produceStartButton;
     [Export] private Button produceStopButton;
@@ -86,6 +90,8 @@ public partial class ItemInfoPanel : PanelContainer
         SetMaterial();
         SetProduct();
         SetProduceCostTime();
+        SetAcceleration();
+        SetMaxSpeed();
         SetButtons();
     }
 
@@ -198,7 +204,35 @@ public partial class ItemInfoPanel : PanelContainer
         }
     }
 
-	private void SetButtons() 
+    private void SetAcceleration() 
+    {
+        if(item is ICore core) 
+        {
+            accelerationParent.Visible = true;
+            accelerationLabel.Text = $"{core.acceleration}";
+        }
+        else 
+        {
+            accelerationParent.Visible = false;
+        }
+    }
+
+    private void SetMaxSpeed()
+    {
+        if (item is ICore core)
+        {
+            maxSpeedParent.Visible = true;
+            maxSpeedLabel.Text = $"{core.maxSpeed}";
+        }
+        else
+        {
+            maxSpeedParent.Visible = false;
+        }
+    }
+
+
+
+    private void SetButtons() 
 	{
 		if(item is IProduce produce) 
 		{

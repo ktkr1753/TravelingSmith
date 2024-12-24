@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://dimdru6yldldb" path="res://017_File/Resources/LocalSettingResource.tres" id="2_usnjq"]
 [ext_resource type="PackedScene" uid="uid://ckvurhmd2s468" path="res://016_Sound/Prefabs/SoundManager.tscn" id="3_c2m3b"]
 [ext_resource type="Resource" uid="uid://dt5urqic1wy0p" path="res://019_Monster/Resources/MonsterConfigResource.tres" id="3_f0kso"]
-[ext_resource type="Resource" path="res://012_UI/Resources/UICommonSetting.tres" id="3_nf7bt"]
+[ext_resource type="Resource" uid="uid://bhy4va3n31ken" path="res://012_UI/Resources/UICommonSetting.tres" id="3_nf7bt"]
 [ext_resource type="Resource" uid="uid://c6557ptd7inj" path="res://022_Area/Resources/AreaConfigResource.tres" id="3_qyoid"]
 [ext_resource type="Resource" uid="uid://dfdg3vdi43fdo" path="res://005_Battle/Resources/ExpConfigResource.tres" id="4_0usut"]
 [ext_resource type="PackedScene" uid="uid://qomsu7k6xmeo" path="res://007_Map/Prefabs/MapManager.tscn" id="6_d2loq"]

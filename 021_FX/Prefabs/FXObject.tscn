@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://brtkpepoe2erq"]
+[gd_scene load_steps=16 format=3 uid="uid://brtkpepoe2erq"]
 
 [ext_resource type="Script" path="res://021_FX/Scripts/FXObject.cs" id="1_06rwk"]
 [ext_resource type="Texture2D" uid="uid://sos3fuc2h3q5" path="res://021_FX/Images/Fire Effect and Bullet 16x16.png" id="2_2p1q2"]
@@ -20,6 +20,125 @@ tracks/0/keys = {
 "values": [Rect2(160, 96, 16, 16), Rect2(176, 96, 16, 16), Rect2(192, 96, 16, 16)]
 }
 
+[sub_resource type="Animation" id="Animation_t8ol4"]
+resource_name = "FX2"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(160, 80, 16, 16), Rect2(176, 80, 16, 16), Rect2(192, 80, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_dk5vr"]
+resource_name = "FX3"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(224, 80, 16, 16), Rect2(240, 80, 16, 16), Rect2(256, 80, 16, 16), Rect2(272, 80, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_gqlhi"]
+resource_name = "FX4"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(160, 0, 16, 16), Rect2(176, 0, 16, 16), Rect2(192, 0, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_vsd17"]
+resource_name = "FX5"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(224, 96, 16, 16), Rect2(240, 96, 16, 16), Rect2(256, 96, 16, 16), Rect2(272, 96, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_c4wj8"]
+resource_name = "FX6"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(384, 48, 16, 16), Rect2(400, 48, 16, 16), Rect2(416, 48, 16, 16), Rect2(432, 48, 16, 16), Rect2(448, 48, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_4b2fg"]
+resource_name = "FX7"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(384, 32, 16, 16), Rect2(400, 32, 16, 16), Rect2(416, 32, 16, 16), Rect2(432, 32, 16, 16), Rect2(448, 32, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_lmp5p"]
+resource_name = "FX8"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(480, 48, 16, 16), Rect2(496, 48, 16, 16), Rect2(512, 48, 16, 16), Rect2(528, 48, 16, 16), Rect2(544, 48, 16, 16), Rect2(560, 48, 16, 16)]
+}
+
 [sub_resource type="Animation" id="Animation_tt72r"]
 length = 0.001
 tracks/0/type = "value"
@@ -35,9 +154,52 @@ tracks/0/keys = {
 "values": [Rect2(0, -16, 16, 16)]
 }
 
+[sub_resource type="Animation" id="Animation_1k52j"]
+resource_name = "FX9"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(224, 16, 16, 16), Rect2(240, 16, 16, 16), Rect2(256, 16, 16, 16), Rect2(272, 16, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_yi3xt"]
+resource_name = "FX10"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(384, 80, 16, 16), Rect2(400, 80, 16, 16), Rect2(416, 80, 16, 16), Rect2(432, 80, 16, 16), Rect2(448, 80, 16, 16)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hwtyw"]
 _data = {
 "FX1": SubResource("Animation_n8cy1"),
+"FX10": SubResource("Animation_yi3xt"),
+"FX2": SubResource("Animation_t8ol4"),
+"FX3": SubResource("Animation_dk5vr"),
+"FX4": SubResource("Animation_gqlhi"),
+"FX5": SubResource("Animation_vsd17"),
+"FX6": SubResource("Animation_c4wj8"),
+"FX7": SubResource("Animation_4b2fg"),
+"FX8": SubResource("Animation_lmp5p"),
+"FX9": SubResource("Animation_1k52j"),
 "RESET": SubResource("Animation_tt72r")
 }
 

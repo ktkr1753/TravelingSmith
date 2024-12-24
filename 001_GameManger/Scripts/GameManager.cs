@@ -106,7 +106,7 @@ public partial class GameManager : Node2D
         uiManager.Init();
         itemManager.Init();
         battleManager.Init();
-
+        mapManager.Init();
 
         uiManager.OpenUI(UIIndex.MainGameUI);
         uiManager.OpenUI(UIIndex.MapElementUI);

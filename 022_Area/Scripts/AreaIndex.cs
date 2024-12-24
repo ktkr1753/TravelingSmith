@@ -7,4 +7,5 @@ public enum AreaIndex
     Normal = 1,
     Produce = 2,
     Useable = 3,
+    Core = 4,
 }

@@ -18,7 +18,37 @@ public partial class ItemManager : Node
         }
     }
 
-	private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
+    private double _moveAcceleration = 0;
+    [Export] public double moveAcceleration
+    {
+        get { return _moveAcceleration; }
+        set
+        {
+            if (_moveAcceleration != value)
+            {
+                _moveAcceleration = value;
+                onMoveAccelerationChange?.Invoke(_moveAcceleration);
+            }
+        }
+    }
+
+    public const double brakeAcceleration = -10;
+
+    private double _moveSpeed = 0;
+    [Export] public double moveSpeed 
+    {
+        get { return _moveSpeed; }
+        set
+        {
+            if (_moveSpeed != value)
+            {
+                _moveSpeed = value;
+                onMoveSpeedChange?.Invoke(_moveSpeed);
+            }
+        }
+    }
+
+    private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
     [Export] public Godot.Collections.Array<ItemBaseResource> heldItems 
 	{
 		get { return _heldItems; }
@@ -34,7 +64,6 @@ public partial class ItemManager : Node
         get { return _areas; }
         private set { _areas = value; }
     }
-
 
     public bool isHeldItemFull 
     {
@@ -56,8 +85,11 @@ public partial class ItemManager : Node
     HashSet<ItemBaseResource> producingItems = new HashSet<ItemBaseResource>();
     HashSet<ItemBaseResource> attackingItems = new HashSet<ItemBaseResource>();
     HashSet<ItemBaseResource> repairingItems = new HashSet<ItemBaseResource>();
+    HashSet<ItemBaseResource> coreingItems = new HashSet<ItemBaseResource>();
 
     public event Action<int> onMoneyChange;
+    public event Action<double> onMoveAccelerationChange;
+    public event Action<double> onMoveSpeedChange;
     public event Action<int> onHeldItemChange;
     public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
     public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
@@ -76,6 +108,10 @@ public partial class ItemManager : Node
             else if(i == 1) 
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
+            }
+            else if (i == 2)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
 
             heldItems.Add(item);
@@ -135,6 +171,7 @@ public partial class ItemManager : Node
         ProcessProducingItems(delta);
         ProcessAttackingItems(delta);
         ProcessRepairingItems(delta);
+        ProcessCoreingItems(delta);
     }
 
     public ItemBaseResource CreateItem(ItemIndex index) 
@@ -503,6 +540,67 @@ public partial class ItemManager : Node
         }
 
         return isSuccess;
+    }
+
+    public void AddCoreingItem(ItemBaseResource item) 
+    {
+        if (item is ICore && !coreingItems.Contains(item))
+        {
+            coreingItems.Add(item);
+        }
+    }
+    public void RemoveCoreingItem(ItemBaseResource item)
+    {
+        if (coreingItems.Contains(item))
+        {
+            coreingItems.Remove(item);
+        }
+    }
+
+    private void ProcessCoreingItems(double deltaTime) 
+    {
+        double addTime = deltaTime * GameManager.instance.gameSpeed;
+        if (addTime == 0)
+        {
+            return;
+        }
+        List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
+
+        double maxSpeed = 10000;
+        double tempAcceleration = 0;
+        foreach (var coreingItem in coreingItems)
+        {
+            if (coreingItem is ICore core)
+            {
+                tempAcceleration += core.acceleration;
+
+                if(core.maxSpeed < maxSpeed) 
+                {
+                    maxSpeed = core.maxSpeed;
+                }
+            }
+            else
+            {
+                Debug.PrintErr($"不是ICore, coreItems index:{coreingItem.index}");
+                needRemoves.Add(coreingItem);
+            }
+        }
+
+        if(tempAcceleration != 0) 
+        {
+            moveAcceleration = tempAcceleration;
+        }
+        else 
+        {
+            moveAcceleration = brakeAcceleration;
+        }
+
+        moveSpeed = Math.Clamp(addTime * moveAcceleration + moveSpeed, 0, maxSpeed);
+
+        for (int i = 0; i < needRemoves.Count; i++)
+        {
+            coreingItems.Remove(needRemoves[i]);
+        }
     }
 
     public List<ItemBaseResource> GetPickItems(int itemNum) 

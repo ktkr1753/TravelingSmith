@@ -8,6 +8,11 @@ public partial class MapManager : Node
     [Export] public Map nowMap;
     [Export] public FXObjectPool fxPool;
 
+    public void Init() 
+    {
+        nowMap.Init();
+    }
+
     public async Task PlayFX(FXEnum fxEnum, Vector2 position) 
     {
         FXObject fx = fxPool.GetElement();

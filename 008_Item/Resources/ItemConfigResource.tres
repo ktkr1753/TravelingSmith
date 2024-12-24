@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=34 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=38 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -33,6 +33,10 @@
 [ext_resource type="Resource" uid="uid://bq7sgloi1ijkx" path="res://008_Item/Resources/FlareGemstoneOre.tres" id="30_xskuo"]
 [ext_resource type="Resource" uid="uid://bp5qsi4pdubf6" path="res://008_Item/Resources/FlareGemstone.tres" id="31_kt1t2"]
 [ext_resource type="Resource" uid="uid://grkn101rkbdm" path="res://008_Item/Resources/FlareGemstoneBurin.tres" id="32_j0wyx"]
+[ext_resource type="Resource" uid="uid://c5i7tkjerdlxg" path="res://008_Item/Resources/RecipeWoodenWheel.tres" id="33_md86w"]
+[ext_resource type="Resource" uid="uid://16dpjmjc7fth" path="res://008_Item/Resources/RecipeIronWheel.tres" id="34_ccdxg"]
+[ext_resource type="Resource" uid="uid://dmgcmc4wo682r" path="res://008_Item/Resources/WoodenWheel.tres" id="35_64jq0"]
+[ext_resource type="Resource" uid="uid://d4agk6rac80wg" path="res://008_Item/Resources/IronWheel.tres" id="36_ndv5l"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -56,9 +60,13 @@ config = {
 210: ExtResource("26_1om0w"),
 211: ExtResource("27_5b5n0"),
 212: ExtResource("32_j0wyx"),
+213: ExtResource("33_md86w"),
+214: ExtResource("34_ccdxg"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 303: ExtResource("28_hkpuh"),
+401: ExtResource("35_64jq0"),
+402: ExtResource("36_ndv5l"),
 501: ExtResource("19_b6wg4"),
 502: ExtResource("22_v4ph0"),
 601: ExtResource("1_0c7qs"),

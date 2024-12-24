@@ -208,6 +208,10 @@ public partial class MainGameUI : UIBase
                         {
                             useable.StopUsing();
                         }
+                        else if (item is ICore core && core.isUsing) 
+                        {
+                            core.StopCore();
+                        }
                     }
                     break;
                 case AreaIndex.Produce:
@@ -229,6 +233,10 @@ public partial class MainGameUI : UIBase
                         {
                             useable.StopUsing();
                         }
+                        else if (item is ICore core && core.isUsing)
+                        {
+                            core.StopCore();
+                        }
                     }
                     break;
                 case AreaIndex.Useable:
@@ -240,6 +248,26 @@ public partial class MainGameUI : UIBase
                         else if (item is IUseable useable && !useable.isUsing)
                         {
                             useable.StartUsing();
+                        }
+                        else if (item is ICore core && core.isUsing)
+                        {
+                            core.StopCore();
+                        }
+                    }
+                    break;
+                case AreaIndex.Core: 
+                    {
+                        if (item is IProduce produce && produce.isProducing)
+                        {
+                            produce.StopProduce();
+                        }
+                        else if (item is IUseable useable && useable.isUsing)
+                        {
+                            useable.StopUsing();
+                        }
+                        else if (item is ICore core && !core.isUsing)
+                        {
+                            core.StartCore();
                         }
                     }
                     break;
@@ -531,7 +559,7 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private void OnHpChange(int nowHP) 
+    private void OnHpChange(int preHP,int nowHP) 
     {
         SetHp();
     }

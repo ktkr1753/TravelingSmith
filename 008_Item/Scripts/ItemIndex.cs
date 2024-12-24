@@ -26,12 +26,15 @@ public enum ItemIndex
     RecipeMatchStaff = 210,
     RecipeCeremonialStaff = 211,
     FlareGemstoneBurin = 212,
+    RecipeWoodenWheel = 213,
+    RecipeIronWheel = 214,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
     FlareGemstonePickaxe = 303,
     //引擎 401~500
-
+    WoodenWheel = 401,
+    IronWheel = 402,
     //換金道具 501~600
     PearlNecklace = 501,
     IronRing = 502,

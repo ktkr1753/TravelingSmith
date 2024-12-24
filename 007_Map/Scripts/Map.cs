@@ -35,7 +35,7 @@ public partial class Map : Node2D
         }
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
-    private float targetMoveSpeed = 50;
+    //private float targetMoveSpeed = 50;
     private int nowCreateRoadIndex = -1;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
@@ -54,6 +54,18 @@ public partial class Map : Node2D
         base._Ready();
 
         CheckRoad();
+    }
+
+    public void Init() 
+    {
+        GameManager.instance.battleManager.onHPChange += OnHPChange;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        GameManager.instance.battleManager.onHPChange -= OnHPChange;
     }
 
     public override void _Process(double delta)
@@ -109,7 +121,19 @@ public partial class Map : Node2D
         {
             double addTime = delta * GameManager.instance.gameSpeed;
             Vector2 moveNormal = new Vector2(1, 0);
-            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(targetMoveSpeed * addTime));
+            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
+        }
+        else 
+        {
+            int damage = (int)Math.Floor(GameManager.instance.itemManager.moveSpeed / 10);
+            //Debug.Print($"TargetMove GameManager.instance.itemManager.moveSpeed:{GameManager.instance.itemManager.moveSpeed},damage:{damage}");
+            if(damage > 0) 
+            {
+                monsters[0].Value.data.Damage(damage);
+                GameManager.instance.mapManager.PlayFX(FXEnum.FX1, monsters[0].Value.GlobalPosition);
+            }
+
+            GameManager.instance.itemManager.moveSpeed = 0;
         }
     }
 
@@ -207,6 +231,17 @@ public partial class Map : Node2D
         }
     }
 
+    private void ShowBattleHPInfo(int hpChange)
+    {
+        BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
+
+        if (hpChange < 0)
+        {
+            Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.mapManager.nowMap.camera.GlobalPosition);
+            Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
+            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
+        }
+    }
 
     private void CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
     {
@@ -255,5 +290,10 @@ public partial class Map : Node2D
     {
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         OnMapItemNeedReturn(mapItem);
+    }
+
+    private void OnHPChange(int preHP, int nowHP) 
+    {
+        ShowBattleHPInfo(nowHP - preHP);
     }
 }

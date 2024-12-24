@@ -4,7 +4,26 @@ using System;
 public partial class BattleManager : Node
 {
 	[Export] public int maxHP;
-	[Export] public int nowHP;
+    private int _nowHP;
+	[Export] public int nowHP 
+    {
+        get { return _nowHP; }
+        set 
+        { 
+            if (_nowHP != value) 
+            {
+                int preHP = _nowHP;
+                _nowHP = value;
+                onHPChange?.Invoke(preHP, _nowHP);
+                if (nowHP == 0)
+                {
+                    isGameOver = true;
+                    GameManager.instance.uiManager.OpenUI(UIIndex.GameOverUI);
+                }
+            }
+        }
+    }
+    public event Action<int, int> onHPChange;
 
     private int _nowExp = 0;
     [Export] public int nowExp 
@@ -95,7 +114,6 @@ public partial class BattleManager : Node
 
     public bool isGameOver = false;
 
-	public event Action<int> onHPChange;
 
     public void Init() 
 	{
@@ -108,14 +126,6 @@ public partial class BattleManager : Node
 		if(damage > 0) 
 		{
 			nowHP = Math.Max(0, nowHP - damage);
-			//後續處理
-			onHPChange?.Invoke(nowHP);
-
-			if(nowHP == 0) 
-			{
-				isGameOver = true;
-				GameManager.instance.uiManager.OpenUI(UIIndex.GameOverUI);
-			}
         }
 	}
 
@@ -124,8 +134,6 @@ public partial class BattleManager : Node
         if (repairPoint > 0) 
         {
             nowHP = Math.Min(maxHP, nowHP + repairPoint);
-
-            onHPChange?.Invoke(nowHP);
         }
     }
 }

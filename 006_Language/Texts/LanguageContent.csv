@@ -27,9 +27,13 @@ ts_itemName_GoldForge,Gold Forge,金鍛造爐
 ts_itemName_RecipeMatchStaff,Recipe Match Staff,打火仗配方
 ts_itemName_RecipeCeremonialStaff,Recipe Ceremonial Staff,儀式權杖配方
 ts_itemName_FlareGemstoneBurin,Flare Gemstone Burin,焰火石雕刻刀
+ts_itemName_RecipeWoodenWheel,Recipe Wooden Wheel,木製車輪配方
+ts_itemName_RecipeIronWheel,Recipe Iron Wheel,鐵製車輪配方
 ts_itemName_Pickaxe,Pickaxe,礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
 ts_itemName_FlareGemstonePickaxe,Flare Gemstone Pickaxe,焰火石礦鎬
+ts_itemName_WoodenWheel,Wooden Wheel,木製車輪
+ts_itemName_IronWheel,Iron Wheel,鐵製車輪
 ts_itemName_PearlNecklace,Pearl Necklace,珍珠項鍊
 ts_itemName_IronRing,Iron Ring,鐵戒指
 ts_itemName_Iron,Iron,鐵
