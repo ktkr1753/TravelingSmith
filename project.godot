@@ -32,6 +32,13 @@ project/assembly_name="TravelingSmith"
 theme/custom="res://012_UI/Themes/NormalUITheme.tres"
 theme/custom_font="res://999_Other/Fonts/Cubic_11_1.300_R.ttf"
 
+[input]
+
+shake={
+"deadzone": 0.5,
+"events": []
+}
+
 [internationalization]
 
 locale/translations=PackedStringArray("res://006_Language/Texts/LanguageContent.en.translation", "res://006_Language/Texts/LanguageContent.zh_TW.translation")

@@ -30,6 +30,8 @@ public partial class MainGameUI : UIBase
     [Export] private Label nowExpLabel;
     [Export] private Label maxExpLabel;
     [Export] private Label moneyLabel;
+    [Export] private Label accelerationLabel;
+    [Export] private Label speedLabel;
 
     private PositionState _positionState = PositionState.Out;
     public PositionState positionState
@@ -135,6 +137,8 @@ public partial class MainGameUI : UIBase
     {
         base.Init();
         GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
+        GameManager.instance.itemManager.onMoveAccelerationChange += OnAccelerationChange;
+        GameManager.instance.itemManager.onMoveSpeedChange += OnSpeedChange;
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
@@ -149,6 +153,8 @@ public partial class MainGameUI : UIBase
     {
         base._ExitTree();
         GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
+        GameManager.instance.itemManager.onMoveAccelerationChange -= OnAccelerationChange;
+        GameManager.instance.itemManager.onMoveSpeedChange -= OnSpeedChange;
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
@@ -357,6 +363,16 @@ public partial class MainGameUI : UIBase
     private void SetMoney() 
     {
         moneyLabel.Text = $"{GameManager.instance.itemManager.money}";
+    }
+
+    private void SetAcceleration() 
+    {
+        accelerationLabel.Text = $"{Math.Max(0, GameManager.instance.itemManager.moveAcceleration)}";
+    }
+
+    private void SetSpeed() 
+    {
+        speedLabel.Text = $"{ Math.Floor(GameManager.instance.itemManager.moveSpeed)}";
     }
 
     private void SetItemSelectedState(int nowEnterElementIndex, int nowSelectedElementIndex)
@@ -609,9 +625,19 @@ public partial class MainGameUI : UIBase
         }
     }
 
+
     private void OnMoneyChange(int money) 
     {
         SetMoney();
+    }
+    private void OnAccelerationChange(double acceleration) 
+    {
+        SetAcceleration();
+    }
+
+    private void OnSpeedChange(double speed) 
+    {
+        SetSpeed();
     }
 
     private void OnLevelChange(int preLevel, int nextLevel) 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bklwemc72tlym"]
+[gd_scene load_steps=14 format=3 uid="uid://bklwemc72tlym"]
 
 [ext_resource type="Script" path="res://001_GameManger/Scripts/GameManager.cs" id="1_g60x2"]
 [ext_resource type="Resource" uid="uid://dkr82wb8aifgn" path="res://008_Item/Resources/ItemConfigResource.tres" id="2_ka38w"]
@@ -12,14 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://qomsu7k6xmeo" path="res://007_Map/Prefabs/MapManager.tscn" id="6_d2loq"]
 [ext_resource type="PackedScene" uid="uid://kdruv63w5u5v" path="res://008_Item/Prefabs/ItemManager.tscn" id="7_1qxjk"]
 [ext_resource type="PackedScene" uid="uid://yw0tcnylx0t0" path="res://005_Battle/Prefabs/BattleManager.tscn" id="8_bb6xn"]
+[ext_resource type="PackedScene" uid="uid://bys6shx0x1cpk" path="res://004_Camera/Prefabs/CameraManager.tscn" id="13_ip25f"]
 
-[node name="GameManager" type="Node2D" node_paths=PackedStringArray("mapManager", "uiManager", "soundManager", "itemManager", "battleManager")]
+[node name="GameManager" type="Node2D" node_paths=PackedStringArray("mapManager", "uiManager", "soundManager", "itemManager", "battleManager", "cameraManager")]
 script = ExtResource("1_g60x2")
 mapManager = NodePath("MapManager")
 uiManager = NodePath("UIManager")
 soundManager = NodePath("SoundManager")
 itemManager = NodePath("ItemManager")
 battleManager = NodePath("BattleManager")
+cameraManager = NodePath("CameraManager")
 itemConfig = ExtResource("2_ka38w")
 areaConfig = ExtResource("3_qyoid")
 monsterConfig = ExtResource("3_f0kso")
@@ -36,3 +38,5 @@ uiCommonSetting = ExtResource("3_nf7bt")
 [node name="ItemManager" parent="." instance=ExtResource("7_1qxjk")]
 
 [node name="BattleManager" parent="." instance=ExtResource("8_bb6xn")]
+
+[node name="CameraManager" parent="." instance=ExtResource("13_ip25f")]

@@ -14,6 +14,7 @@ public partial class GameManager : Node2D
     [Export] public SoundManager soundManager;
     [Export] public ItemManager itemManager;
     [Export] public BattleManager battleManager;
+    [Export] public CameraManager cameraManager;
 
     public RandomManager randomManager = new RandomManager();
 
@@ -107,11 +108,19 @@ public partial class GameManager : Node2D
         itemManager.Init();
         battleManager.Init();
         mapManager.Init();
+        cameraManager.Init();
+        InitCamera();
 
         uiManager.OpenUI(UIIndex.MainGameUI);
         uiManager.OpenUI(UIIndex.MapElementUI);
         uiManager.OpenUI(UIIndex.BattleInfoUI);
         //uiManager.OpenUI(UIIndex.ShopUI);
+    }
+
+    private void InitCamera() 
+    {
+        Rect2 viewportRect = GetViewportRect();
+        cameraManager.camera.follow = mapManager.nowMap.targetPoint;
     }
 
     public async Task<Variant[]> Wait(float seconds)

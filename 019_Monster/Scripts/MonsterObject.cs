@@ -68,7 +68,7 @@ public partial class MonsterObject : Node2D
 
         if(hpChange < 0) 
         {
-            Vector2 viewPos = (GetViewportRect().Size / 2) + (GlobalPosition - GameManager.instance.mapManager.nowMap.camera.GlobalPosition);
+            Vector2 viewPos = (GetViewportRect().Size / 2) + (GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
             battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
         }

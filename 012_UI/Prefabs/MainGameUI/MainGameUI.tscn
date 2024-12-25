@@ -81,7 +81,7 @@ _data = {
 "moveOut": SubResource("Animation_0nl35")
 }
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "moveButtonImage", "arrorImage", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "moveButtonImage", "arrorImage", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -116,6 +116,8 @@ expLabelParent = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer")
 nowExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/NowHPLabel")
 maxExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/MaxHPLabel")
 moneyLabel = NodePath("MarginContainer/VBox/Control/MoneyPanel/HBoxContainer/MoneyLabel")
+accelerationLabel = NodePath("MarginContainer/VBox/AccelerationPanel/HBoxContainer/AccelerationLabel")
+speedLabel = NodePath("MarginContainer/VBox/SpeedPanel/HBoxContainer/SpeedLabel")
 isBackGround = false
 uIType = 1
 
@@ -438,6 +440,36 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "1"
 horizontal_alignment = 2
+
+[node name="AccelerationPanel" type="PanelContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/AccelerationPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBox/AccelerationPanel/HBoxContainer"]
+layout_mode = 2
+text = "加速度:"
+
+[node name="AccelerationLabel" type="Label" parent="MarginContainer/VBox/AccelerationPanel/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="SpeedPanel" type="PanelContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/SpeedPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBox/SpeedPanel/HBoxContainer"]
+layout_mode = 2
+text = "速度:"
+
+[node name="SpeedLabel" type="Label" parent="MarginContainer/VBox/SpeedPanel/HBoxContainer"]
+layout_mode = 2
+text = "0"
 
 [node name="GameSpeedControl" type="Control" parent="." node_paths=PackedStringArray("pauseButton", "playButton", "fastForwardButton")]
 layout_mode = 1

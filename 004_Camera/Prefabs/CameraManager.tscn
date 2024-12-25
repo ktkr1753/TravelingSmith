@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bys6shx0x1cpk"]
+
+[ext_resource type="Script" path="res://004_Camera/Scripts/Camera2DEX.cs" id="1_fq2pk"]
+[ext_resource type="Script" path="res://004_Camera/Scripts/CameraManager.cs" id="1_hfr25"]
+
+[node name="CameraManager" type="Node2D" node_paths=PackedStringArray("cameraControlNode", "camera")]
+script = ExtResource("1_hfr25")
+cameraControlNode = NodePath("CameraControlNode")
+camera = NodePath("CameraControlNode/Camera2DEX")
+
+[node name="CameraControlNode" type="Node2D" parent="."]
+
+[node name="Camera2DEX" type="Camera2D" parent="CameraControlNode"]
+position = Vector2(320, 180)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+script = ExtResource("1_fq2pk")
+followType = 1

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 public partial class Map : Node2D
 {
     [Export] Node2D monsterParent;
-    [Export] public Camera2D camera;
     [Export] public Node2D targetPoint;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
@@ -131,6 +130,8 @@ public partial class Map : Node2D
             {
                 monsters[0].Value.data.Damage(damage);
                 GameManager.instance.mapManager.PlayFX(FXEnum.FX1, monsters[0].Value.GlobalPosition);
+                GameManager.instance.cameraManager.ShakeCamera();
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit);
             }
 
             GameManager.instance.itemManager.moveSpeed = 0;
@@ -237,7 +238,7 @@ public partial class Map : Node2D
 
         if (hpChange < 0)
         {
-            Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.mapManager.nowMap.camera.GlobalPosition);
+            Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
             battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
         }
