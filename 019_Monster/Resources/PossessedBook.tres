@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://bflwgudrmoaws"]
+
+[ext_resource type="PackedScene" uid="uid://b1yiy57vkes84" path="res://019_Monster/Prefabs/PossessedBook.tscn" id="1_qd048"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_sk8uj"]
+
+[resource]
+script = ExtResource("1_sk8uj")
+index = 3
+prefab = ExtResource("1_qd048")
+maxHp = 6
+nowHp = 0
+attackPoint = 2
+attackNeedTime = 1.0
+attackNowTime = 0.0
+attackFX = 6
+moveSpeed = 30.0
+exp = 3
+drops = []

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1yiy57vkes84"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_6acka"]
+[ext_resource type="Texture2D" uid="uid://s056174ox5g2" path="res://019_Monster/Images/TS_monster_PossessedBook-idle.png" id="2_8p04n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7f65d"]
+atlas = ExtResource("2_8p04n")
+region = Rect2(0, 0, 48, 48)
+
+[node name="PossessedBook" instance=ExtResource("1_6acka")]
+
+[node name="ProgressBar" parent="." index="1"]
+offset_top = -48.0
+offset_bottom = -43.0
+
+[node name="Image" parent="." index="2"]
+position = Vector2(0, -24)
+texture = SubResource("AtlasTexture_7f65d")

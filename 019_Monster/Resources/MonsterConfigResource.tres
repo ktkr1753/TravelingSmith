@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="MonsterConfigResource" load_steps=4 format=3 uid="uid://dt5urqic1wy0p"]
+[gd_resource type="Resource" script_class="MonsterConfigResource" load_steps=5 format=3 uid="uid://dt5urqic1wy0p"]
 
 [ext_resource type="Resource" uid="uid://d1r8hovdgunom" path="res://019_Monster/Resources/Slime.tres" id="1_578kj"]
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterConfigResource.cs" id="1_l3kun"]
 [ext_resource type="Resource" uid="uid://dktr3x6d7llnr" path="res://019_Monster/Resources/Beholder.tres" id="2_3prqr"]
+[ext_resource type="Resource" uid="uid://bflwgudrmoaws" path="res://019_Monster/Resources/PossessedBook.tres" id="3_uxuhu"]
 
 [resource]
 script = ExtResource("1_l3kun")
 config = {
 1: ExtResource("1_578kj"),
-2: ExtResource("2_3prqr")
+2: ExtResource("2_3prqr"),
+3: ExtResource("3_uxuhu")
 }

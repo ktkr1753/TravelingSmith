@@ -113,10 +113,6 @@ public partial class ItemManager : Node
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
-            else if (i == 3)
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.IronWheel);
-            }
 
             heldItems.Add(item);
         }

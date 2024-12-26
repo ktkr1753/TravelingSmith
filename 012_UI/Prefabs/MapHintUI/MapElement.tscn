@@ -37,8 +37,10 @@ show_percentage = false
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
-stretch_mode = 3
+expand_mode = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(33, 0)
