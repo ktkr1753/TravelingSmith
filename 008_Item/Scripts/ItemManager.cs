@@ -113,6 +113,10 @@ public partial class ItemManager : Node
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
+            else if (i == 3)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.IronWheel);
+            }
 
             heldItems.Add(item);
         }
@@ -566,17 +570,19 @@ public partial class ItemManager : Node
         }
         List<ItemBaseResource> needRemoves = new List<ItemBaseResource>();
 
-        double maxSpeed = 10000;
+        double maxSpeed = 0;
         double tempAcceleration = 0;
+        bool isFindMaxSpeed = false;
         foreach (var coreingItem in coreingItems)
         {
             if (coreingItem is ICore core)
             {
                 tempAcceleration += core.acceleration;
 
-                if(core.maxSpeed < maxSpeed) 
+                if (!isFindMaxSpeed || core.maxSpeed < maxSpeed) 
                 {
                     maxSpeed = core.maxSpeed;
+                    isFindMaxSpeed = true;
                 }
             }
             else
@@ -595,7 +601,18 @@ public partial class ItemManager : Node
             moveAcceleration = brakeAcceleration;
         }
 
-        moveSpeed = Math.Clamp(addTime * moveAcceleration + moveSpeed, 0, maxSpeed);
+
+        if (moveSpeed < maxSpeed) 
+        {
+            moveSpeed = Math.Clamp(addTime * moveAcceleration + moveSpeed, 0, maxSpeed);
+        }
+        else 
+        {
+            moveSpeed = Math.Max(addTime * brakeAcceleration + moveSpeed, maxSpeed);
+        }
+
+        //Debug.Print($"moveAcceleration:{moveAcceleration}, maxSpeed:{maxSpeed}, moveSpeed:{moveSpeed}");
+
 
         for (int i = 0; i < needRemoves.Count; i++)
         {

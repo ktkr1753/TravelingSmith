@@ -26,7 +26,7 @@ itemPool = NodePath("Items")
 [node name="ShopParent" type="Node2D" parent="."]
 
 [node name="Target" type="Node2D" parent="."]
-position = Vector2(320, 40)
+position = Vector2(320, 72)
 
 [node name="Sprite2D" type="Sprite2D" parent="Target"]
 position = Vector2(0, -8)
