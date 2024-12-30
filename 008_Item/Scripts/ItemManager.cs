@@ -211,6 +211,51 @@ public partial class ItemManager : Node
         return isSuccess;
     }
 
+    public bool RefreshItem(ItemBaseResource item, int refreshCost) 
+    {
+        bool isSuccess = false;
+
+        for (int i = 0; i < heldItems.Count; i++)
+        {
+            if (heldItems[i] == item)
+            {
+                isSuccess = RefreshItem(i, refreshCost);
+                break;
+            }
+        }
+
+        return isSuccess;
+    }
+
+    public bool RefreshItem(int index, int refreshCost) 
+    {
+        bool isSuccess = false;
+        if (GameManager.instance.itemManager.money >= refreshCost)
+        {
+            if (index >= 0 && index < heldItems.Count && heldItems[index] != null && 
+                (heldItems[index] is MaterialResource || heldItems[index] is RecipeResource))
+            {
+                List<ItemBaseResource> canBeRandomItems = new List<ItemBaseResource>();
+                foreach(var KV in GameManager.instance.itemConfig.config) 
+                {
+                    if(KV.Value.GetType() == heldItems[index].GetType()) 
+                    {
+                        canBeRandomItems.Add(KV.Value);
+                    }
+                }
+
+                int rnd = GameManager.instance.randomManager.GetRange(RandomType.RandomItem, 0, canBeRandomItems.Count);
+                ItemBaseResource randomItem = canBeRandomItems[rnd].Clone();
+                GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - refreshCost);
+                GameManager.instance.itemManager.RemoveItem(index);
+                GameManager.instance.itemManager.SetHeldItem(index, randomItem);
+                isSuccess = true;
+            }
+        }
+
+        return isSuccess;
+    }
+
     public bool TryMake(IMake make) 
     {
         return TryMake(make, out HashSet<int> usedItemsIndex);

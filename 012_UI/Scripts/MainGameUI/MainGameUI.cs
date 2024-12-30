@@ -489,12 +489,32 @@ public partial class MainGameUI : UIBase
                 ShopUI shopUI = GameManager.instance.uiManager.GetOpenedUI<ShopUI>(UIIndex.ShopUI);
                 if(shopUI != null) 
                 {
-                    if (shopUI.IsInSellRect(GetViewport().GetMousePosition())) 
+                    Vector2 mousePos = GetViewport().GetMousePosition();
+                    if (shopUI.IsInSellRect(mousePos)) 
                     {
                         bool isSuccess = GameManager.instance.itemManager.SellItem(nowPickElementIndex);
                         //Debug.Print($"Sell Shop, isSuccess:{isSuccess}");
                         if (isSuccess) 
                         {
+                            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
+                        }
+                    }
+                    else if (shopUI.IsInRefreshRect(mousePos)) 
+                    {
+                        bool isSuccess = shopUI.RefreshHeldItem(nowPickElementIndex);
+                        if (isSuccess)
+                        {
+                            //飛行演出
+                            putItem = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
+                            Vector2 point1 = mousePos;
+                            Vector2 point2 = elements[nowPickElementIndex].GlobalPosition;
+                            //被替換的飛行
+                            elements[nowPickElementIndex].isFlying = true;
+                            int tempNowPickElementIndex = nowPickElementIndex;
+                            GameManager.instance.uiManager.StartFlyItem(putItem, point1, point2, flyTime, () =>
+                            {
+                                elements[tempNowPickElementIndex].isFlying = false;
+                            });
                             GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
                         }
                     }

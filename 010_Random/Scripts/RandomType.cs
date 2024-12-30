@@ -7,5 +7,6 @@ public enum RandomType
     SpawnMonster = 1,
     PickItem = 2,
     DropItem = 3,
+    RandomItem = 4,
     Other = 999,
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bk0clgpkqunl2"]
+[gd_scene load_steps=20 format=3 uid="uid://bk0clgpkqunl2"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopUI.cs" id="1_cg8mc"]
 [ext_resource type="PackedScene" uid="uid://cc8o4nxp4cvmf" path="res://012_UI/Prefabs/ShopUI/ShopItemElement.tscn" id="2_2q00o"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="11_jrt03"]
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="12_chkuv"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="13_ulo8e"]
+[ext_resource type="Texture2D" uid="uid://cj0p3itjrc6ci" path="res://012_UI/Images/changeItem.png" id="15_y8kpw"]
 
 [sub_resource type="Animation" id="Animation_8diqq"]
 length = 0.001
@@ -71,7 +72,7 @@ _data = {
 "moveOut": SubResource("Animation_5hd6s")
 }
 
-[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "sellPanel")]
+[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "sellPanel", "refreshHeldPanel", "refreshHeldCostLabel")]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -94,7 +95,9 @@ arrorTextures = {
 4: ExtResource("3_mje0c")
 }
 itemPool = NodePath("HBoxContainer/PanelContainer")
-sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/SellPanel")
+sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel")
+refreshHeldPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel")
+refreshHeldCostLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer/Label")
 uIType = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -244,25 +247,72 @@ visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="SellPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SellPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"WhitePanelContainer"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel/VBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("8_3dgtg")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/SellPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 layout_mode = 2
 text = "回收"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RefreshHeldPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"WhitePanelContainer"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("9_1prah")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+text = "1"
+horizontal_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("15_y8kpw")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+layout_mode = 2
+text = "隨機鍊金"
 horizontal_alignment = 1
 vertical_alignment = 1
 

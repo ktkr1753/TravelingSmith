@@ -97,7 +97,7 @@ public partial class Map : Node2D
     {
         if(nowWave < 10) 
         {
-            await CreateMonster(MonsterIndex.PossessedBook, 1);
+            await CreateMonster(MonsterIndex.Slime, 1);
         }
         else if (nowWave < 20)
         {

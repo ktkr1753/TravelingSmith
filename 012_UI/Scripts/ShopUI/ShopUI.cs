@@ -22,6 +22,8 @@ public partial class ShopUI : UIBase
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> arrorTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private ShopItemElementPool itemPool;
     [Export] private Control sellPanel;
+    [Export] private Control refreshHeldPanel;
+    [Export] private Label refreshHeldCostLabel;
 
     private PositionState _positionState = PositionState.Out;
     public PositionState positionState 
@@ -80,6 +82,18 @@ public partial class ShopUI : UIBase
             int result = 0;
             result = GameManager.instance.mapManager.nowMap.visitedShopIndex + 1 + (int)Math.Ceiling(refreshCount * 1.5);
 
+            return result;
+        }
+    }
+
+    private int refreshHeldCount = 0;
+
+    public int refreshHeldCost 
+    {
+        get
+        {
+            int result = 0;
+            result = GameManager.instance.mapManager.nowMap.visitedShopIndex + 1 + (int)Math.Ceiling(refreshHeldCount * 2.0);
             return result;
         }
     }
@@ -147,7 +161,6 @@ public partial class ShopUI : UIBase
         SetShopItemElements();
 
         refreshCount++;
-        SetRefreshCost();
         SetRefreshButton();
     }
 
@@ -156,8 +169,8 @@ public partial class ShopUI : UIBase
         SetMoveButtonImage();
         SetArrowImage();
         SetShopItemElements();
-        SetRefreshCost();
         SetRefreshButton();
+        SetRefreshHeldCost();
     }
 
     private void SetMoveButtonImage() 
@@ -204,11 +217,6 @@ public partial class ShopUI : UIBase
         itemPool.ReturnAllElement();
     }
 
-    private void SetRefreshCost()
-    {
-        refreshCostLabel.Text = $"{refreshCost}";
-    }
-
     private void ClearShopItemElementData(ShopItemElement element) 
     {
         element.SetData(-1, null);
@@ -226,6 +234,18 @@ public partial class ShopUI : UIBase
         }
 
         return  result;
+    }
+
+    public bool IsInRefreshRect(Vector2 globalPosition) 
+    {
+        bool result = false;
+        Rect2 refreshRect = new Rect2(refreshHeldPanel.GlobalPosition, sellPanel.Size);
+        if (refreshRect.HasPoint(globalPosition))
+        {
+            result = true;
+        }
+
+        return result;
     }
 
     private void OnShopItemButtonDown(int index) 
@@ -332,11 +352,40 @@ public partial class ShopUI : UIBase
         if (GameManager.instance.itemManager.money >= refreshCost)
         {
             refreshButton.Disabled = false;
+            refreshCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
         }
         else
         {
             refreshButton.Disabled = true;
+            refreshCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
         }
+        refreshCostLabel.Text = $"{refreshCost}";
+    }
+
+    private void SetRefreshHeldCost() 
+    {
+        if (GameManager.instance.itemManager.money >= refreshHeldCost)
+        {
+            refreshHeldCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+        }
+        else
+        {
+            refreshHeldCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+        }
+        refreshHeldCostLabel.Text = $"{refreshHeldCost}";
+    }
+
+    public bool RefreshHeldItem(int nowPickElementIndex) 
+    {
+        bool isSuccess = false;
+
+        isSuccess = GameManager.instance.itemManager.RefreshItem(nowPickElementIndex, refreshHeldCost);
+        if (isSuccess) 
+        {
+            refreshHeldCount++;
+            SetRefreshHeldCost();
+        }
+        return isSuccess;
     }
 
 
@@ -368,6 +417,7 @@ public partial class ShopUI : UIBase
     private void OnMoneyChange(int money) 
     {
         SetRefreshButton();
+        SetRefreshHeldCost();
     }
 
 
