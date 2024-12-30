@@ -20,6 +20,23 @@ tracks/0/keys = {
 "values": [Rect2(160, 96, 16, 16), Rect2(176, 96, 16, 16), Rect2(192, 96, 16, 16)]
 }
 
+[sub_resource type="Animation" id="Animation_yi3xt"]
+resource_name = "FX10"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [Rect2(384, 80, 16, 16), Rect2(400, 80, 16, 16), Rect2(416, 80, 16, 16), Rect2(432, 80, 16, 16), Rect2(448, 80, 16, 16)]
+}
+
 [sub_resource type="Animation" id="Animation_t8ol4"]
 resource_name = "FX2"
 length = 0.3
@@ -139,21 +156,6 @@ tracks/0/keys = {
 "values": [Rect2(480, 48, 16, 16), Rect2(496, 48, 16, 16), Rect2(512, 48, 16, 16), Rect2(528, 48, 16, 16), Rect2(544, 48, 16, 16), Rect2(560, 48, 16, 16)]
 }
 
-[sub_resource type="Animation" id="Animation_tt72r"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, -16, 16, 16)]
-}
-
 [sub_resource type="Animation" id="Animation_1k52j"]
 resource_name = "FX9"
 length = 0.4
@@ -171,10 +173,8 @@ tracks/0/keys = {
 "values": [Rect2(224, 16, 16, 16), Rect2(240, 16, 16, 16), Rect2(256, 16, 16, 16), Rect2(272, 16, 16, 16)]
 }
 
-[sub_resource type="Animation" id="Animation_yi3xt"]
-resource_name = "FX10"
-length = 0.5
-step = 0.1
+[sub_resource type="Animation" id="Animation_tt72r"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -182,10 +182,10 @@ tracks/0/path = NodePath("Sprite2D:texture:region")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [Rect2(384, 80, 16, 16), Rect2(400, 80, 16, 16), Rect2(416, 80, 16, 16), Rect2(432, 80, 16, 16), Rect2(448, 80, 16, 16)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, -16, 16, 16)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hwtyw"]

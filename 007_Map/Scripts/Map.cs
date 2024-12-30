@@ -14,6 +14,7 @@ public partial class Map : Node2D
     [Export] public double nowTime = -30;
     [Export] public MapItemObjectPool itemPool;
     public List<MonsterObject> monsters = new List<MonsterObject>();
+    public List<MonsterObject> waitRemoveMonsters = new List<MonsterObject>();
 
     public const int spawnDistance = 1000;
 
@@ -204,6 +205,7 @@ public partial class Map : Node2D
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
                 monster.onDestroy += OnMonsterDestory;
+                monster.onDie += OnMonsterDie;
 
                 monsters.Add(monster);
 
@@ -259,6 +261,18 @@ public partial class Map : Node2D
         }
     }
 
+    private void OnMonsterDie(MonsterObject monster) 
+    {
+        monster.onDie -= OnMonsterDie;
+        if (this == null || !this.IsExist())
+        {
+            return;
+        }
+        DropMonsterItem(monster);
+        monsters.Remove(monster);
+        waitRemoveMonsters.Add(monster);
+    }
+
     private void OnMonsterDestory(MonsterObject monster) 
     {
         monster.onDestroy -= OnMonsterDestory;
@@ -266,8 +280,7 @@ public partial class Map : Node2D
         {
             return;
         }
-        DropMonsterItem(monster);
-        monsters.Remove(monster);
+        waitRemoveMonsters.Remove(monster);
     }
 
     private void OnMapItemNeedReturn(MapItemObject mapItem) 
@@ -279,18 +292,28 @@ public partial class Map : Node2D
 
     private void OnMapItemTouchDeadLine(Area2D area) 
     {
+        //要等到ProcessFrame時才能處理，不然會報錯
         if (area.Owner is MapItemObject mapItem) 
         {
-            //要等到ProcessFrame時才能處理，不然會報錯
             WaitReturnMapItem(mapItem);
+        }
+        else if(area.Owner is MonsterObject monster) 
+        {
+            WaitQueueFreeMonster(monster);
         }
     }
 
     
-    private async Task WaitReturnMapItem(MapItemObject mapItem) 
+    private async void WaitReturnMapItem(MapItemObject mapItem) 
     {
         await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
         OnMapItemNeedReturn(mapItem);
+    }
+
+    private async void WaitQueueFreeMonster(MonsterObject monster)
+    {
+        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
+        monster.QueueFree();
     }
 
     private void OnHPChange(int preHP, int nowHP) 

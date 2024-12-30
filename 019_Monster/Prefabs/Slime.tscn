@@ -1,10 +1,73 @@
-[gd_scene load_steps=3 format=3 uid="uid://cs0ourwq1chej"]
+[gd_scene load_steps=8 format=3 uid="uid://cs0ourwq1chej"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_vkl70"]
 [ext_resource type="Texture2D" uid="uid://cruhe16njfeej" path="res://019_Monster/Images/TS_monster_slime-idle.png" id="2_xpn0y"]
 
+[sub_resource type="Animation" id="Animation_008qb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 24, 24)]
+}
+
+[sub_resource type="Animation" id="Animation_r6bio"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(24, 0, 24, 24)]
+}
+
+[sub_resource type="Animation" id="Animation_eu2kv"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 24, 24)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8hltc"]
+_data = {
+"RESET": SubResource("Animation_008qb"),
+"die": SubResource("Animation_r6bio"),
+"idle": SubResource("Animation_eu2kv")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pey0i"]
+resource_local_to_scene = true
+atlas = ExtResource("2_xpn0y")
+region = Rect2(0, 0, 24, 24)
+
 [node name="Slime" instance=ExtResource("1_vkl70")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_8hltc")
+}
 
 [node name="Image" parent="." index="2"]
 position = Vector2(0, -8)
-texture = ExtResource("2_xpn0y")
+texture = SubResource("AtlasTexture_pey0i")

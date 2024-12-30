@@ -20,12 +20,6 @@ public partial class MapHintUI : UIBase
     }
 
 
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-    }
-
-
 
     private void OnCreateMonster(MonsterObject monsterObject) 
     {

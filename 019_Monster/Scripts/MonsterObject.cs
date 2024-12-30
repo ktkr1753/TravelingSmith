@@ -8,16 +8,21 @@ public partial class MonsterObject : Node2D
     [Export] public AnimationPlayer anim;
 
     public MonsterResource data;
+    private bool isDie = false;
 
+    public event Action<MonsterObject> onDie;
     public event Action<MonsterObject> onDestroy;
 
     public const double closeDistance = 15;
 
+    public const string clip_idle = "idle";
+    public const string clip_die = "die";
 
     public void SetData(MonsterResource data) 
     {
         UnregisterEvent(this.data);
         this.data = data;
+        isDie = false;
         RegisterEvent(this.data);
 
         SetView();
@@ -28,7 +33,7 @@ public partial class MonsterObject : Node2D
         if (data != null)
         {
             data.onHPChange += OnHpChange;
-            data.onDie += Destroy;
+            data.onDie += OnDie;
         }
     }
     private void UnregisterEvent(MonsterResource data)
@@ -36,20 +41,21 @@ public partial class MonsterObject : Node2D
         if(data != null) 
         {
             data.onHPChange -= OnHpChange;
-            data.onDie -= Destroy;
+            data.onDie -= OnDie;
         }
     }
 
     private void SetView() 
     {
         SetHpProgressbar();
+        SetIdle();
     }
 
     private void SetHpProgressbar() 
     {
         if(data != null) 
         {
-            if (data.maxHp == data.nowHp)
+            if (data.maxHp == data.nowHp || data.nowHp == 0)
             {
                 hpProgressBar.Visible = false;
             }
@@ -60,6 +66,11 @@ public partial class MonsterObject : Node2D
                 hpProgressBar.Value = data.nowHp;
             }
         }
+    }
+
+    private void SetIdle() 
+    {
+        anim.Play(clip_idle);
     }
 
     private void ShowBattleHPInfo(int hpChange) 
@@ -91,7 +102,7 @@ public partial class MonsterObject : Node2D
 
     public void BehaviorMachine(double delta) 
     {
-        if(data == null) 
+        if(data == null || isDie) 
         {
             return;
         }
@@ -176,8 +187,11 @@ public partial class MonsterObject : Node2D
         ShowBattleHPInfo(nowHp - preHP);
     }
 
-    public void Destroy()
+    public void OnDie()
     {
-        QueueFree();
+        //QueueFree();
+        isDie = true;
+        anim.Play(clip_die);
+        onDie?.Invoke(this);
     }
 }

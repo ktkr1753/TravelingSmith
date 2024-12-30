@@ -25,6 +25,8 @@ itemPool = NodePath("Items")
 
 [node name="ShopParent" type="Node2D" parent="."]
 
+[node name="Monsters" type="Node2D" parent="."]
+
 [node name="Target" type="Node2D" parent="."]
 position = Vector2(320, 72)
 
@@ -41,8 +43,6 @@ position = Vector2(-400, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Target/DeadLine"]
 shape = SubResource("RectangleShape2D_n1gu1")
-
-[node name="Monsters" type="Node2D" parent="."]
 
 [node name="Items" type="Node2D" parent="." node_paths=PackedStringArray("parent", "backup")]
 script = ExtResource("6_d7nto")

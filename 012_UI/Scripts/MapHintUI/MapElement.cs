@@ -84,7 +84,8 @@ public partial class MapElement : Control
 	private void SetMonsterView() 
 	{
 		SetMonsterImage();
-		InitMonsterHPBar();
+        SetMonsterDistance();
+        InitMonsterHPBar();
     }
 
 	private void SetMonsterImage() 
@@ -118,6 +119,7 @@ public partial class MapElement : Control
 	{
 		monsterObjectData.data.onHPChange += OnHPChange;
 		monsterObjectData.onDestroy += OnMonsterDestroy;
+        monsterObjectData.onDie += OnMonsterDie;
     }
 
     private void UnregisterMonsterEvent()
@@ -126,7 +128,8 @@ public partial class MapElement : Control
 		{
 			monsterObjectData.data.onHPChange -= OnHPChange;
 			monsterObjectData.onDestroy -= OnMonsterDestroy;
-		}
+            monsterObjectData.onDie -= OnMonsterDie;
+        }
     }
 
 	private void OnHPChange(int preHP,int nowHP) 
@@ -137,5 +140,10 @@ public partial class MapElement : Control
 	private void OnMonsterDestroy(MonsterObject monsterObject) 
 	{
 		onDestroy?.Invoke(this);
+    }
+
+	private void OnMonsterDie(MonsterObject monsterObject) 
+	{
+        onDestroy?.Invoke(this);
     }
 }

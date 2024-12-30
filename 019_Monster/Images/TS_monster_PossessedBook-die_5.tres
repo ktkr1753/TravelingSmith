@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://rldtqgl8q4us"]
+
+[ext_resource type="Texture2D" uid="uid://bbaomxtshystd" path="res://019_Monster/Images/TS_monster_PossessedBook-die.png" id="1_hbdp1"]
+
+[resource]
+atlas = ExtResource("1_hbdp1")
+region = Rect2(192, 0, 48, 48)

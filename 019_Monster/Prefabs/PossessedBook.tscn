@@ -1,13 +1,85 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1yiy57vkes84"]
+[gd_scene load_steps=21 format=3 uid="uid://b1yiy57vkes84"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_6acka"]
-[ext_resource type="Texture2D" uid="uid://s056174ox5g2" path="res://019_Monster/Images/TS_monster_PossessedBook-idle.png" id="2_8p04n"]
+[ext_resource type="Texture2D" uid="uid://b8b5v0q873i6x" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_1.tres" id="2_rljpy"]
+[ext_resource type="Texture2D" uid="uid://ca4jq7rvivb5y" path="res://019_Monster/Images/TS_monster_PossessedBook-die_1.tres" id="3_f07x1"]
+[ext_resource type="Texture2D" uid="uid://bcegosjc1p6lj" path="res://019_Monster/Images/TS_monster_PossessedBook-die_2.tres" id="4_bixqm"]
+[ext_resource type="Texture2D" uid="uid://bm3t5ukc1s3v3" path="res://019_Monster/Images/TS_monster_PossessedBook-die_3.tres" id="5_eam6o"]
+[ext_resource type="Texture2D" uid="uid://vs15r8opth15" path="res://019_Monster/Images/TS_monster_PossessedBook-die_4.tres" id="6_fnac2"]
+[ext_resource type="Texture2D" uid="uid://rldtqgl8q4us" path="res://019_Monster/Images/TS_monster_PossessedBook-die_5.tres" id="7_7t7oa"]
+[ext_resource type="Texture2D" uid="uid://b378d0x0sdism" path="res://019_Monster/Images/TS_monster_PossessedBook-die_6.tres" id="8_s6y0y"]
+[ext_resource type="Texture2D" uid="uid://k2ew74kx7v0h" path="res://019_Monster/Images/TS_monster_PossessedBook-die_7.tres" id="9_8h8wo"]
+[ext_resource type="Texture2D" uid="uid://bsy34ydd3q826" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_2.tres" id="10_m3vmd"]
+[ext_resource type="Texture2D" uid="uid://6bhe7i4bf76n" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_3.tres" id="11_fvmht"]
+[ext_resource type="Texture2D" uid="uid://clmqt5ts67obi" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_4.tres" id="12_2doci"]
+[ext_resource type="Texture2D" uid="uid://ds072vvuh2imt" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_5.tres" id="13_ykbxe"]
+[ext_resource type="Texture2D" uid="uid://cosdohc3tyv8c" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_6.tres" id="14_6db40"]
+[ext_resource type="Texture2D" uid="uid://cvu7bwhddnbpu" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_7.tres" id="15_v2xhb"]
+[ext_resource type="Texture2D" uid="uid://blxywvymj6fap" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_8.tres" id="16_y5rr0"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7f65d"]
-atlas = ExtResource("2_8p04n")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="Animation" id="Animation_mgfrf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_rljpy")]
+}
+
+[sub_resource type="Animation" id="Animation_h00o6"]
+resource_name = "die"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_f07x1"), ExtResource("4_bixqm"), ExtResource("5_eam6o"), ExtResource("6_fnac2"), ExtResource("7_7t7oa"), ExtResource("8_s6y0y"), ExtResource("9_8h8wo")]
+}
+
+[sub_resource type="Animation" id="Animation_vb8ap"]
+resource_name = "idle"
+length = 1.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_rljpy"), ExtResource("10_m3vmd"), ExtResource("11_fvmht"), ExtResource("12_2doci"), ExtResource("13_ykbxe"), ExtResource("14_6db40"), ExtResource("15_v2xhb"), ExtResource("16_y5rr0")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qchpa"]
+_data = {
+"RESET": SubResource("Animation_mgfrf"),
+"die": SubResource("Animation_h00o6"),
+"idle": SubResource("Animation_vb8ap")
+}
 
 [node name="PossessedBook" instance=ExtResource("1_6acka")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_qchpa")
+}
 
 [node name="ProgressBar" parent="." index="1"]
 offset_top = -48.0
@@ -15,4 +87,4 @@ offset_bottom = -43.0
 
 [node name="Image" parent="." index="2"]
 position = Vector2(0, -24)
-texture = SubResource("AtlasTexture_7f65d")
+texture = ExtResource("2_rljpy")
