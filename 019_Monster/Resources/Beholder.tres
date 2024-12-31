@@ -13,6 +13,7 @@ attackPoint = 2
 attackNeedTime = 1.0
 attackNowTime = 0.0
 attackFX = 1
+sound = "sound_hit.mp3"
 moveSpeed = 30.0
 exp = 2
 drops = []

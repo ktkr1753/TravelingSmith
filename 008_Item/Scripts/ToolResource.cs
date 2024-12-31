@@ -23,6 +23,20 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         set { _nowTime = value; }
     }
 
+    private int _durability = -1;
+    [Export] public int durability 
+    {
+        get { return _durability; }
+        set 
+        {
+            if (_durability != value) 
+            {
+                _durability = value;
+                onDurabilityChange?.Invoke(_durability);
+            }
+        }
+    }
+
     public bool isKeepProduce { get { return true; } }
 
     private bool _isProducing = false;
@@ -37,6 +51,7 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
     }
 
     public event Action<bool> onIsProducingChange;
+    public event Action<int> onDurabilityChange;
 
     public void StartProduce()
     {
@@ -55,6 +70,7 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         result.productItem = productItem;
         result.needTime = needTime;
         result.nowTime = nowTime;
+        result.durability = durability;
         result.isProducing = isProducing;
         return result;
     }

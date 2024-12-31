@@ -12,6 +12,7 @@ script = ExtResource("1_kjliw")
 attackPoint = 1
 range = 150.0
 fx = 1
+sound = "sound_sword2.mp3"
 durability = 4
 needTime = 1.0
 nowTime = 0.0

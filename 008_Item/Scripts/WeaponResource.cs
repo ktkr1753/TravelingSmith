@@ -26,9 +26,15 @@ public partial class WeaponResource : ItemBaseResource, IClone<WeaponResource>, 
         private set { _fx = value; }
     }
 
+    private string _sound;
+    [Export] public string sound
+    {
+        get { return _sound; }
+        private set { _sound = value; }
+    }
+
     private int _durability = 0;
-    [Export]
-    public int durability
+    [Export] public int durability
     {
         get { return _durability; }
         set 
@@ -93,6 +99,7 @@ public partial class WeaponResource : ItemBaseResource, IClone<WeaponResource>, 
         result.attackPoint = attackPoint;
         result.range = range;
         result.fx = fx;
+        result.sound = sound;
         result.durability = durability;
         result.needTime = needTime;
         result.nowTime = nowTime;

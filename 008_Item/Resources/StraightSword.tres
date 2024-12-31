@@ -12,6 +12,7 @@ script = ExtResource("1_o11tb")
 attackPoint = 4
 range = 50.0
 fx = 1
+sound = "sound_sword_to_sword1.mp3"
 durability = 8
 needTime = 0.5
 nowTime = 0.0

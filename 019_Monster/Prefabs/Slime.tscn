@@ -1,52 +1,68 @@
-[gd_scene load_steps=8 format=3 uid="uid://cs0ourwq1chej"]
+[gd_scene load_steps=20 format=3 uid="uid://cs0ourwq1chej"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_vkl70"]
-[ext_resource type="Texture2D" uid="uid://cruhe16njfeej" path="res://019_Monster/Images/TS_monster_slime-idle.png" id="2_xpn0y"]
+[ext_resource type="Texture2D" uid="uid://de7nlqordmupj" path="res://019_Monster/Images/TS_monster_slime-idle_1.tres" id="2_waclk"]
+[ext_resource type="Texture2D" uid="uid://po3dq27clt78" path="res://019_Monster/Images/TS_monster_slime-die_1.tres" id="3_nyq6x"]
+[ext_resource type="Texture2D" uid="uid://byjhfwfjae025" path="res://019_Monster/Images/TS_monster_slime-die_2.tres" id="4_xkwww"]
+[ext_resource type="Texture2D" uid="uid://c1bt32e82tjdp" path="res://019_Monster/Images/TS_monster_slime-die_3.tres" id="5_fj225"]
+[ext_resource type="Texture2D" uid="uid://b0y7bthmw27if" path="res://019_Monster/Images/TS_monster_slime-die_4.tres" id="6_454q7"]
+[ext_resource type="Texture2D" uid="uid://b2metplud253r" path="res://019_Monster/Images/TS_monster_slime-die_5.tres" id="7_yje4o"]
+[ext_resource type="Texture2D" uid="uid://p1220k7e6v1j" path="res://019_Monster/Images/TS_monster_slime-die_6.tres" id="8_wa62o"]
+[ext_resource type="Texture2D" uid="uid://sxgpv5dwvr8s" path="res://019_Monster/Images/TS_monster_slime-die_7.tres" id="9_5u4na"]
+[ext_resource type="Texture2D" uid="uid://btxmt2uv0pmgs" path="res://019_Monster/Images/TS_monster_slime-die_8.tres" id="10_na7f8"]
+[ext_resource type="Texture2D" uid="uid://m1misob0r2wj" path="res://019_Monster/Images/TS_monster_slime-idle_2.tres" id="11_k28jh"]
+[ext_resource type="Texture2D" uid="uid://b2k3eoaojvkxa" path="res://019_Monster/Images/TS_monster_slime-idle_3.tres" id="12_4x5ja"]
+[ext_resource type="Texture2D" uid="uid://bpf4cduee4id2" path="res://019_Monster/Images/TS_monster_slime-idle_4.tres" id="13_7cprk"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="14_lnukd"]
 
 [sub_resource type="Animation" id="Animation_008qb"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Image:texture:region")
+tracks/0/path = NodePath("Image:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, 0, 24, 24)]
+"update": 1,
+"values": [ExtResource("2_waclk")]
 }
 
 [sub_resource type="Animation" id="Animation_r6bio"]
 resource_name = "die"
+length = 0.8
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Image:texture:region")
+tracks/0/path = NodePath("Image:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(24, 0, 24, 24)]
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_nyq6x"), ExtResource("4_xkwww"), ExtResource("5_fj225"), ExtResource("6_454q7"), ExtResource("7_yje4o"), ExtResource("8_wa62o"), ExtResource("9_5u4na"), ExtResource("10_na7f8")]
 }
 
 [sub_resource type="Animation" id="Animation_eu2kv"]
 resource_name = "idle"
+length = 0.8
 loop_mode = 1
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Image:texture:region")
+tracks/0/path = NodePath("Image:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(0, 0, 24, 24)]
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_waclk"), ExtResource("11_k28jh"), ExtResource("12_4x5ja"), ExtResource("13_7cprk")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8hltc"]
@@ -56,10 +72,11 @@ _data = {
 "idle": SubResource("Animation_eu2kv")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pey0i"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1t8gn"]
 resource_local_to_scene = true
-atlas = ExtResource("2_xpn0y")
-region = Rect2(0, 0, 24, 24)
+shader = ExtResource("14_lnukd")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
 
 [node name="Slime" instance=ExtResource("1_vkl70")]
 
@@ -69,5 +86,6 @@ libraries = {
 }
 
 [node name="Image" parent="." index="2"]
+material = SubResource("ShaderMaterial_1t8gn")
 position = Vector2(0, -8)
-texture = SubResource("AtlasTexture_pey0i")
+texture = ExtResource("2_waclk")

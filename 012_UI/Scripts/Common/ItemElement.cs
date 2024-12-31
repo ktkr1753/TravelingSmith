@@ -231,6 +231,7 @@ public partial class ItemElement : Control
 		if(item is IProduce produce) 
 		{
 			produce.onIsProducingChange += OnProducingChange;
+            produce.onDurabilityChange += OnDurabilityChange;
         }
         else if (item is IUseable useable)
         {
@@ -245,6 +246,7 @@ public partial class ItemElement : Control
         if (item is IProduce produce)
         {
             produce.onIsProducingChange -= OnProducingChange;
+            produce.onDurabilityChange -= OnDurabilityChange;
         }
         else if (item is IUseable useable) 
 		{
@@ -364,6 +366,18 @@ public partial class ItemElement : Control
             durabilityLabel.Visible = true;
             durabilityLabel.Text = $"{useable.durability}";
 		}
+		else if (item is IProduce produce) 
+		{
+			if(produce.durability > 0) 
+			{
+				durabilityLabel.Visible = true;
+				durabilityLabel.Text = $"{produce.durability}";
+			}
+			else 
+			{
+                durabilityLabel.Visible = false;
+            }
+        }
 		else 
 		{
 			durabilityLabel.Visible = false;

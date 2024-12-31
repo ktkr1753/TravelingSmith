@@ -361,6 +361,25 @@ public partial class ItemManager : Node
                         {
                             make.isCostMaterial = false;
                         }
+
+                        //有使用次數限制
+                        if (produce.durability  > 0) 
+                        {
+                            produce.durability = Math.Max(0, produce.durability - 1);
+                        }
+
+                        if (produce.durability == 0) 
+                        {
+                            for (int i = 0; i < heldItems.Count; i++)
+                            {
+                                if (heldItems[i] == produce) 
+                                {
+                                    produce.StopProduce();
+                                    RemoveItem(i);
+                                    break;
+                                }
+                            }
+                        }
                     }
                     else //物品太多生產失敗，不做事 
                     {
@@ -491,6 +510,10 @@ public partial class ItemManager : Node
                     monsters[0].Value.data.Damage(attcker.attackPoint);
                     attcker.durability = Math.Max(0, attcker.durability - 1);
                     GameManager.instance.mapManager.PlayFX(attcker.fx, monsters[0].Value.GlobalPosition);
+                    if(attcker.sound != null && attcker.sound != "" ) 
+                    {
+                        GameManager.instance.soundManager.PlaySound(attcker.sound);
+                    }
                     isAttack = true;
                     break;
                 }

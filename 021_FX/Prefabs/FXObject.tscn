@@ -204,6 +204,7 @@ _data = {
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_flauy"]
+resource_local_to_scene = true
 atlas = ExtResource("2_2p1q2")
 region = Rect2(0, -16, 16, 16)
 

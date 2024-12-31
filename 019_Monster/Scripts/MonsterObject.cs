@@ -15,6 +15,9 @@ public partial class MonsterObject : Node2D
 
     public const double closeDistance = 15;
 
+    public const string material_rate = "rate";
+    public const string material_finalColor = "finalColor";
+
     public const string clip_idle = "idle";
     public const string clip_die = "die";
 
@@ -165,6 +168,12 @@ public partial class MonsterObject : Node2D
             Vector2 targetPos = GameManager.instance.mapManager.nowMap.targetPoint.Position;
             Vector2 position = new Vector2(targetPos.X + rndX, targetPos.Y + rndY);
             GameManager.instance.mapManager.PlayFX(data.attackFX, position);
+
+            if(data.sound != null && data.sound != "") 
+            {
+                GameManager.instance.soundManager.PlaySound(data.sound);
+            }
+
         }
         else 
         {
@@ -181,10 +190,28 @@ public partial class MonsterObject : Node2D
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));
     }
 
+    private async void HurtShine() 
+    {
+        ShaderMaterial shineMaterial = mainImage.Material as ShaderMaterial;
+
+        shineMaterial.SetShaderParameter(material_rate, 1.0);
+        await GameManager.instance.Wait(0.2f);
+        if(shineMaterial == null) 
+        {
+            return;
+        }
+        shineMaterial.SetShaderParameter(material_rate, 0.0);
+    }
+
     private void OnHpChange(int preHP,int nowHp) 
     {
         SetHpProgressbar();
         ShowBattleHPInfo(nowHp - preHP);
+
+        if(nowHp < preHP) 
+        {
+            HurtShine();
+        }
     }
 
     public void OnDie()

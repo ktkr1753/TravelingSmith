@@ -38,6 +38,20 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         set { _nowTime = value; }
     }
 
+    private int _durability = -1;
+    [Export] public int durability 
+    {
+        get { return _durability; }
+        set 
+        {
+            if (_durability != value)
+            {
+                _durability = value;
+                onDurabilityChange?.Invoke(_durability);
+            }
+        }
+    }
+
     public bool isKeepProduce { get { return false; } }
 
     private bool _isProducing = false;
@@ -55,6 +69,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
     }
 
     public event Action<bool> onIsProducingChange;
+    public event Action<int> onDurabilityChange;
 
     public void StartProduce() 
     {
@@ -72,6 +87,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         RecipeResource result = base.Clone() as RecipeResource;
 
         result.materials = materials.Clone();
+        result.durability = durability;
         result.productItem = productItem;
         result.needTime = needTime;
         result.nowTime = nowTime;

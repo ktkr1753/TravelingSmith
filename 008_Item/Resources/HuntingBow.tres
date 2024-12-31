@@ -12,6 +12,7 @@ script = ExtResource("1_0ss3r")
 attackPoint = 2
 range = 200.0
 fx = 1
+sound = "sound_arrow_hit.mp3"
 durability = 4
 needTime = 2.0
 nowTime = 0.0

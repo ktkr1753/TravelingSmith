@@ -16,6 +16,7 @@ public partial class SoundEnum
     public const string bgm_10 = "bgm_10.mp3";      //回想
     public const string bgm_11 = "bgm_11.mp3";      //街景
     //Sound
+    public const string sound_arrow_hit = "sound_arrow_hit.mp3";
     public const string sound_button2 = "sound_button2.mp3";        //用在OK上
     public const string sound_button19 = "sound_button19.mp3";      //穿裝備音效
     public const string sound_button32 = "sound_button32.mp3";
@@ -24,8 +25,12 @@ public partial class SoundEnum
     public const string sound_get_money = "sound_get_money.mp3";
     public const string sound_hit = "sound_hit.mp3";
     public const string sound_knock = "sound_knock.mp3";
+    public const string sound_magic_gravity1 = "sound_magic_gravity1.mp3";
+    public const string sound_magic_fire1 = "sound_magic_fire1.mp3";
     public const string sound_message = "sound_message.mp3";
     public const string sound_morning_bird = "sound_morning_bird.mp3";
     public const string sound_open_door = "sound_open_door.mp3";
     public const string sound_run = "sound_run.mp3";
+    public const string sound_sword2 = "sound_sword2.mp3";
+    public const string sound_sword_to_sword1 = "sound_sword_to_sword1.mp3";
 }

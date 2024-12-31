@@ -1,6 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0ygijw5g8dl2"]
+[gd_scene load_steps=5 format=3 uid="uid://d0ygijw5g8dl2"]
 
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterObject.cs" id="1_057hj"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="2_bl0gc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nly8a"]
+resource_local_to_scene = true
+shader = ExtResource("2_bl0gc")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ievuv"]
 size = Vector2(24, 24)
@@ -26,6 +33,7 @@ theme_type_variation = &"ProgressBar_RedSmall"
 show_percentage = false
 
 [node name="Image" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_nly8a")
 
 [node name="Area2D" type="Area2D" parent="."]
 

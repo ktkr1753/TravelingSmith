@@ -12,6 +12,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public double attackNeedTime;
     [Export] public double attackNowTime;
     [Export] public FXEnum attackFX;
+    [Export] public string sound;
     [Export] public double moveSpeed;
     [Export] public int exp;
     [Export] public Godot.Collections.Array<MonsterDropItemResource> drops = new Godot.Collections.Array<MonsterDropItemResource>();
@@ -52,6 +53,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
         result.attackNeedTime = attackNeedTime;
         result.attackNowTime = attackNowTime;
         result.attackFX = attackFX;
+        result.sound = sound;
         result.moveSpeed = moveSpeed;
         result.exp = exp;
         result.drops = drops;

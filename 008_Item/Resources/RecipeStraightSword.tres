@@ -14,6 +14,7 @@ isCostMaterial = false
 productItem = 2
 needTime = 15.0
 nowTime = 0.0
+durability = 5
 isProducing = false
 index = 202
 texture = SubResource("AtlasTexture_qw4jx")
