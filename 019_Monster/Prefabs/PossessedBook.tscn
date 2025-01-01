@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b1yiy57vkes84"]
+[gd_scene load_steps=23 format=3 uid="uid://b1yiy57vkes84"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_6acka"]
 [ext_resource type="Texture2D" uid="uid://b8b5v0q873i6x" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_1.tres" id="2_rljpy"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cosdohc3tyv8c" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_6.tres" id="14_6db40"]
 [ext_resource type="Texture2D" uid="uid://cvu7bwhddnbpu" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_7.tres" id="15_v2xhb"]
 [ext_resource type="Texture2D" uid="uid://blxywvymj6fap" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_8.tres" id="16_y5rr0"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="17_bh5bx"]
 
 [sub_resource type="Animation" id="Animation_mgfrf"]
 length = 0.001
@@ -74,6 +75,12 @@ _data = {
 "idle": SubResource("Animation_vb8ap")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qebn5"]
+resource_local_to_scene = true
+shader = ExtResource("17_bh5bx")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
+
 [node name="PossessedBook" instance=ExtResource("1_6acka")]
 
 [node name="AnimationPlayer" parent="." index="0"]
@@ -86,5 +93,6 @@ offset_top = -48.0
 offset_bottom = -43.0
 
 [node name="Image" parent="." index="2"]
+material = SubResource("ShaderMaterial_qebn5")
 position = Vector2(0, -24)
 texture = ExtResource("2_rljpy")

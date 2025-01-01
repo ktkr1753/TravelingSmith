@@ -8,6 +8,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
     [Export] public Texture2D texture;
     [Export] public int money = 0;
     [Export] public int rank = 0;
+    [Export] public bool isSellable = true;
 
     public virtual ItemBaseResource Clone() 
     {
@@ -16,6 +17,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
         result.texture = texture;
         result.money = money;
         result.rank = rank;
+        result.isSellable = isSellable;
 
         return result;
     }

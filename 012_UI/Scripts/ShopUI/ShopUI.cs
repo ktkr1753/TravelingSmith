@@ -137,7 +137,7 @@ public partial class ShopUI : UIBase
         {
             if(GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item)) 
             {
-                if(item is CommodityResource commodity) 
+                if(item is CommodityResource commodity || !item.isSellable) 
                 {
                     continue;
                 }

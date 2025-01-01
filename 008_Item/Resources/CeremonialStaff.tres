@@ -21,3 +21,4 @@ index = 6
 texture = SubResource("AtlasTexture_31hpb")
 money = 8
 rank = 0
+isSellable = false

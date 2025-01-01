@@ -9,6 +9,7 @@ public partial class Map : Node2D
     [Export] public Node2D targetPoint;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
+    [Export] public PackedScene roadShopPrefab;
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
     [Export] public double nowTime = -30;
@@ -146,19 +147,14 @@ public partial class Map : Node2D
         if(needRoadIndex > nowCreateRoadIndex) 
         {
             nowCreateRoadIndex++;
-            Node2D road = UtilityTool.CreateInstance<Node2D>(roadPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
-            roadObjs.Enqueue(road);
+            MapRoadObject road = null;
 
-            if (roadObjs.Count > 4) 
+            if (nowCreateRoadIndex % 5 == 4) //生成商店
             {
-                Node2D tempRoad = roadObjs.Dequeue();
-                tempRoad.QueueFree();
-            }
+                road = UtilityTool.CreateInstance<MapRoadObject>(roadShopPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
 
-            if(nowCreateRoadIndex % 5 == 4) 
-            {
                 nowCreateShopIndex++;
-                ShopObject shop = UtilityTool.CreateInstance<ShopObject>(shopPrefab, shopParent, new Vector2(nowCreateRoadIndex * viewPortSize.X + viewPortSize.X / 2, 140));
+                ShopObject shop = UtilityTool.CreateInstance<ShopObject>(shopPrefab, shopParent, new Vector2(road.shopNode.GlobalPosition.X, road.shopNode.GlobalPosition.Y));
                 shop.SetIndex(nowCreateShopIndex);
                 shopObjs.Enqueue(shop);
 
@@ -167,6 +163,17 @@ public partial class Map : Node2D
                     ShopObject tempshop = shopObjs.Dequeue();
                     tempshop.QueueFree();
                 }
+            }
+            else 
+            {
+                road = UtilityTool.CreateInstance<MapRoadObject>(roadPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
+            }
+
+            roadObjs.Enqueue(road);
+            if (roadObjs.Count > 4)
+            {
+                Node2D tempRoad = roadObjs.Dequeue();
+                tempRoad.QueueFree();
             }
         }
     }
