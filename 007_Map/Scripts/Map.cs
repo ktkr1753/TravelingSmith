@@ -235,7 +235,14 @@ public partial class Map : Node2D
             float rnd = GameManager.instance.randomManager.GetRange(RandomType.DropItem, 0f, 1f);
             if (rnd <= monster.data.drops[i].dropRate)
             {
-                CreateMapItem(monster.data.drops[i].itemIndex, monster.GlobalPosition);
+                MapItemObject itemObj = CreateMapItem(monster.data.drops[i].itemIndex, monster.GlobalPosition);
+                Tween tween = CreateTween();
+
+                float rndDis = 30 * GameManager.instance.randomManager.GetRange(RandomType.Other, 0.5f, 1);
+                float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.Other, -0.5f * Mathf.Pi, 0.5f * Mathf.Pi);
+                Vector2 rndMove = new Vector2(rndDis * (float)Math.Cos(rndAngle), rndDis * (float)Math.Sin(rndAngle));
+                tween.SetEase(Tween.EaseType.Out);
+                tween.TweenProperty(itemObj, "global_position", itemObj.GlobalPosition + rndMove, 0.2f) ;
                 break;
             }
         }
@@ -253,11 +260,12 @@ public partial class Map : Node2D
         }
     }
 
-    private void CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
+    private MapItemObject CreateMapItem(ItemIndex itemIndex, Vector2 globalPos)
     {
+        MapItemObject itemObject = null;
         if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item))
         {
-            MapItemObject itemObject = itemPool.GetElement();
+            itemObject = itemPool.GetElement();
             itemObject.OnNeedReturn += OnMapItemNeedReturn;
             itemObject.GlobalPosition = globalPos;
             itemObject.SetData(item);
@@ -266,6 +274,8 @@ public partial class Map : Node2D
         {
             Debug.PrintWarn($"未定義道具:{itemIndex}");
         }
+
+        return itemObject;
     }
 
     private void OnMonsterDie(MonsterObject monster) 
