@@ -5,10 +5,10 @@ public partial class CameraManager : Node2D
 {
 	[Export] private Node2D cameraControlNode;
     [Export] public Camera2DEX camera;
-    [Export] public float maxShakeStrength = 20f;
     [Export] float shakeFade = 10f;
     private float shakeStrength = 0;
 
+    private float defaultShakeStrength = 20f;
     public const double smoothingSpeed = 3;
 
     public void Init() 
@@ -33,7 +33,7 @@ public partial class CameraManager : Node2D
     public void ShakeCamera(float shakeStrength = 0) 
     {
         if(shakeStrength == 0) {
-            this.shakeStrength = maxShakeStrength;    
+            this.shakeStrength = defaultShakeStrength;    
         }
         else 
         {

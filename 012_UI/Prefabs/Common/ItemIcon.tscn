@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://5qah1s74j6mg"]
+[gd_scene load_steps=3 format=3 uid="uid://5qah1s74j6mg"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemIcon.cs" id="1_hghdf"]
+[ext_resource type="Material" uid="uid://cyfh6sc6u24je" path="res://007_Map/Material/OutLineMaterial.tres" id="2_arm5f"]
 
 [node name="ItemIcon" type="PanelContainer" node_paths=PackedStringArray("itemImage")]
 offset_right = 8.0
@@ -9,6 +10,7 @@ mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("1_hghdf")
 itemImage = NodePath("TextureRect")
+outLineMaterial = ExtResource("2_arm5f")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(24, 24)
@@ -19,4 +21,6 @@ mouse_filter = 2
 layout_mode = 2
 theme_type_variation = &"EmptyButton"
 
+[connection signal="mouse_entered" from="Button" to="." method="OnMouseEnter"]
+[connection signal="mouse_exited" from="Button" to="." method="OnMouseExit"]
 [connection signal="pressed" from="Button" to="." method="OnMainButtonClick"]

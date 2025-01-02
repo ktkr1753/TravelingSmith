@@ -1,25 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6ylnogsow47o"]
+[gd_scene load_steps=10 format=3 uid="uid://b6ylnogsow47o"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanel.cs" id="1_jhhof"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_15mni"]
+[ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="2_kpmw6"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="3_1e10j"]
+[ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="3_faln3"]
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemIconPool.cs" id="4_q8w2x"]
+[ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="4_s6mg5"]
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
+[ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="5_3daka"]
 
 [node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "buttonsParent", "produceStartButton", "produceStopButton", "startUseButton", "stopUseButton", "discardButton")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -100.0
-offset_right = -26.0
-offset_bottom = -30.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 72.0
+offset_bottom = 70.0
 script = ExtResource("1_jhhof")
-itemElement = NodePath("VBoxContainer/MainGameItemElement")
+itemElement = NodePath("VBoxContainer/HBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
 useTimeParent = NodePath("VBoxContainer/UseTimeHBox")
@@ -50,11 +45,35 @@ discardButton = NodePath("VBoxContainer/ButtonParent/HBoxContainer/DiscardButton
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="MainGameItemElement" parent="VBoxContainer" instance=ExtResource("2_15mni")]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MainGameItemElement" parent="VBoxContainer/HBoxContainer" instance=ExtResource("2_15mni")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 showProcess = false
+
+[node name="Control" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/Control"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture_normal = ExtResource("2_kpmw6")
+texture_pressed = ExtResource("3_faln3")
+texture_hover = ExtResource("4_s6mg5")
+texture_disabled = ExtResource("5_3daka")
 
 [node name="NameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -260,6 +279,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "丟棄"
 
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Control/TextureButton" to="." method="OnCloseClick"]
 [connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StartProduceButton" to="." method="OnStartProduceClick"]
 [connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StopProduceButton" to="." method="OnStopProduceClick"]
 [connection signal="pressed" from="VBoxContainer/ButtonParent/HBoxContainer/StartUseButton" to="." method="OnStartUseClick"]

@@ -74,6 +74,7 @@ public partial class SoundManager : Node
 
     public void PlaySound(string soundName, PlayAgainStrategy playAgainStrategy = PlayAgainStrategy.PlayOneNew)
     {
+        //Debug.Print($"PlaySound soundName:{soundName}, playAgainStrategy:{playAgainStrategy}");
         int findPlayingSameIndex = -1;
         string fileName = $"{soundName}";
         for (int i = 0; i < soundPlayers.Count; i++)

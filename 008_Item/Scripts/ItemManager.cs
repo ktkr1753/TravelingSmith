@@ -510,7 +510,8 @@ public partial class ItemManager : Node
                     monsters[0].Value.data.Damage(attcker.attackPoint);
                     attcker.durability = Math.Max(0, attcker.durability - 1);
                     GameManager.instance.mapManager.PlayFX(attcker.fx, monsters[0].Value.GlobalPosition);
-                    if(attcker.sound != null && attcker.sound != "" ) 
+                    GameManager.instance.cameraManager.ShakeCamera(3);
+                    if (attcker.sound != null && attcker.sound != "" ) 
                     {
                         GameManager.instance.soundManager.PlaySound(attcker.sound);
                     }

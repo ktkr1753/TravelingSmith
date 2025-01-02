@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 public partial class PickUI : UIBase
 {
-    [Export] ItemElementPool itemElementPool;
-    [Export] ItemInfoPanel itemInfoPanel;
-    [Export] Button confirmButton;
+    [Export] private ItemElementPool itemElementPool;
+    [Export] private ItemInfoPanel itemInfoPanel;
+    [Export] private ItemInfoPanelPool infoPanelPool;
+    [Export] private Button confirmButton;
     private List<ItemBaseResource> items = new List<ItemBaseResource>();
     private Action pauseFinishCallback;
 
@@ -35,11 +36,13 @@ public partial class PickUI : UIBase
         if(nextState >= 0 && nextState < itemElementPool.inuses.Count) 
         {
             itemElementPool.inuses[nextState].nowSelectedState = ItemElement.SelectedState.Selected;
-            SetInfoPanel(itemElementPool.inuses[nextState].item);
+            Vector2 globalPos = new Vector2();
+            globalPos = GetInfoPanelPos(0);
+            SetInfoPanel(0, itemElementPool.inuses[nextState].item, globalPos);
         }
         else 
         {
-            SetInfoPanel(null);
+            SetInfoPanel(0, null);
         }
         SetConfirmButton();
     }
@@ -128,6 +131,7 @@ public partial class PickUI : UIBase
         itemElementPool.ReturnAllElement();
     }
 
+    /*
     private void SetInfoPanel(ItemBaseResource item)
     {
         if (item != null)
@@ -139,6 +143,67 @@ public partial class PickUI : UIBase
         {
             itemInfoPanel.Visible = false;
         }
+    }
+    */
+
+    private void SetInfoPanel(int index, ItemBaseResource newItem, Vector2? globalPos = null)
+    {
+        if (infoPanelPool.inuses.Count > index)
+        {
+            if (newItem != null)
+            {
+                infoPanelPool.inuses[index].SetData(newItem);
+                if (globalPos != null)
+                {
+                    infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
+                }
+                ReturnInfoPanelElement(index + 1);
+            }
+            else
+            {
+                ReturnInfoPanelElement(index);
+            }
+        }
+        else if (globalPos != null)
+        {
+            if (newItem != null)
+            {
+                int newIndex = infoPanelPool.inuses.Count;
+                ItemInfoPanel infoPanel = infoPanelPool.GetElement();
+                infoPanel.onDetailClick += OnInfoDetailClick;
+                infoPanel.onCloseClick += OnInfoCloseClick;
+                infoPanel.SetData(newItem);
+                infoPanel.SetIndex(newIndex);
+                if (globalPos != null)
+                {
+                    infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
+                }
+            }
+            else
+            {
+                ReturnInfoPanelElement(index);
+            }
+        }
+        else
+        {
+            ReturnInfoPanelElement(index);
+        }
+    }
+    private void ReturnInfoPanelElement(int index)
+    {
+        for (int i = infoPanelPool.inuses.Count - 1; i >= index; i--)
+        {
+            infoPanelPool.inuses[i].onDetailClick -= OnInfoDetailClick;
+            infoPanelPool.inuses[i].onCloseClick -= OnInfoCloseClick;
+            infoPanelPool.ReturnElement(infoPanelPool.inuses[i]);
+        }
+    }
+
+
+    public Vector2 GetInfoPanelPos(int index)
+    {
+        Vector2 result = new Vector2(396 + index * 25, 137 + index * 25);
+        return result;
     }
 
     private void SetConfirmButton() 
@@ -271,5 +336,19 @@ public partial class PickUI : UIBase
     public void OnCancelClick() 
     {
         GameManager.instance.uiManager.CloseUI(this);
+    }
+
+    public void OnInfoDetailClick(int index, ItemBaseResource item)
+    {
+        int newIndex = index + 1;
+        Vector2 globalPos = GetInfoPanelPos(newIndex);
+        SetInfoPanel(newIndex, item, globalPos);
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
+    }
+
+    public void OnInfoCloseClick(int index)
+    {
+        ReturnInfoPanelElement(index);
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_cancel4);
     }
 }

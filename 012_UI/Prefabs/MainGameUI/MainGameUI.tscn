@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=30 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_c7qgf"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/GameSpeedControl.cs" id="8_h57qy"]
 [ext_resource type="Texture2D" uid="uid://bc0uwytnx6uxe" path="res://012_UI/Images/button_speed-pause_normal.png" id="8_mr6r2"]
 [ext_resource type="Texture2D" uid="uid://daoqg7p6bujk2" path="res://012_UI/Images/button_speed-pause_pressed.png" id="9_m08o6"]
+[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanelPool.cs" id="9_qwr5s"]
 [ext_resource type="Texture2D" uid="uid://cnbf276j708uv" path="res://012_UI/Images/button_speed-pause_hover.png" id="10_qdasa"]
 [ext_resource type="Texture2D" uid="uid://5h4uu3vljmd1" path="res://012_UI/Images/button_speed-pause_disabled.png" id="11_7trvp"]
 [ext_resource type="Texture2D" uid="uid://pp38tqdywnwy" path="res://012_UI/Images/button_speed-play_normal.png" id="12_0g43e"]
@@ -81,7 +82,7 @@ _data = {
 "moveOut": SubResource("Animation_0nl35")
 }
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "moveButtonImage", "arrorImage", "itemsPanel", "infoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "moveButtonImage", "arrorImage", "itemsPanel", "infoPanelPool", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,7 +108,7 @@ arrorTextures = {
 4: ExtResource("4_s72yp")
 }
 itemsPanel = NodePath("HBoxContainer/PanelContainer")
-infoPanel = NodePath("ItemInfoPanel")
+infoPanelPool = NodePath("ItemInfoPanelParent")
 hpProgressBar = NodePath("MarginContainer/VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/NowHPLabel")
 maxHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/MaxHPLabel")
@@ -271,20 +272,34 @@ layout_mode = 0
 normalColor = Color(0, 0, 0, 0)
 pauseColor = Color(0, 0, 0, 0)
 
-[node name="ItemInfoPanel" parent="." instance=ExtResource("3_uculn")]
+[node name="ItemInfoPanelParent" type="Control" parent="." node_paths=PackedStringArray("parent", "backup")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("9_qwr5s")
+prefab = ExtResource("3_uculn")
+parent = NodePath("Inuse")
+backup = NodePath("Backup")
+
+[node name="Inuse" type="Control" parent="ItemInfoPanelParent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Backup" type="Control" parent="ItemInfoPanelParent"]
 visible = false
-layout_mode = 0
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 169.0
-offset_top = 86.0
-offset_right = 218.0
-offset_bottom = 156.0
-grow_horizontal = 1
-grow_vertical = 1
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="ItemFXPool" type="Control" parent="." node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 1

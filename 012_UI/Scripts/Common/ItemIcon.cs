@@ -4,14 +4,16 @@ using System;
 public partial class ItemIcon : Control
 {
 	[Export] private TextureRect itemImage;
-
-	private ItemBaseResource _data;
+    [Export] public Material outLineMaterial;
+    private ItemBaseResource _data;
 
 	public ItemBaseResource data 
 	{
 		get { return _data; }
 		private set { _data = value; }
 	}
+
+	public event Action<ItemIcon> onMainClick;
 
 	public void SetData(ItemBaseResource item) 
 	{
@@ -32,6 +34,16 @@ public partial class ItemIcon : Control
 
 	public void OnMainButtonClick()
 	{
+		onMainClick?.Invoke(this);
+    }
 
-	}
+    public void OnMouseEnter()
+    {
+        itemImage.Material = outLineMaterial;
+    }
+
+    public void OnMouseExit()
+    {
+        itemImage.Material = null;
+    }
 }

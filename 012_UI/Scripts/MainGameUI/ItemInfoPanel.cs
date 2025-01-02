@@ -33,7 +33,23 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private Button stopUseButton;
     [Export] private Button discardButton;
 
-    private ItemBaseResource item;
+    private ItemBaseResource _item;
+    public ItemBaseResource item 
+    {
+        get { return _item; }
+        private set { _item = value; }
+    }
+
+    private int _index = -1;
+
+    public int index 
+    {
+        get { return _index; }
+        private set { _index = value; }
+    }
+
+    public event Action<int, ItemBaseResource> onDetailClick;   // <index, item>
+    public event Action<int> onCloseClick;  //<index>
 
     public override void _Ready()
     {
@@ -47,6 +63,11 @@ public partial class ItemInfoPanel : PanelContainer
         base._ExitTree();
 
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
+    }
+
+    public void SetIndex(int index) 
+    {
+        this.index = index;
     }
 
     public void SetData(ItemBaseResource item) 
@@ -93,6 +114,7 @@ public partial class ItemInfoPanel : PanelContainer
         SetAcceleration();
         SetMaxSpeed();
         SetButtons();
+        RefreshContainerSize();
     }
 
 	private void SetName() 
@@ -159,7 +181,13 @@ public partial class ItemInfoPanel : PanelContainer
 
     private void SetMaterial() 
     {
+        for(int i = 0; i < materialPool.inuses.Count; i++) 
+        {
+            ItemIcon element = materialPool.inuses[i];
+            element.onMainClick -= OnItemDetailClick;
+        }
         materialPool.ReturnAllElement();
+
         if (item is IMake make)
         {
             materialParent.Visible = true;
@@ -168,6 +196,7 @@ public partial class ItemInfoPanel : PanelContainer
                 if (GameManager.instance.itemConfig.config.TryGetValue(make.materials[i], out ItemBaseResource item)) 
                 {
                     ItemIcon element = materialPool.GetElement();
+                    element.onMainClick += OnItemDetailClick;
                     element.SetData(item);
                 }
             }
@@ -183,11 +212,14 @@ public partial class ItemInfoPanel : PanelContainer
         if (item is IProduce produce && GameManager.instance.itemConfig.config.TryGetValue(produce.productItem, out ItemBaseResource productItem)) 
         {
             productParent.Visible = true;
+            productIcon.onMainClick -= OnItemDetailClick;
+            productIcon.onMainClick += OnItemDetailClick;
             productIcon.SetData(productItem);
         }
         else 
         {
             productParent.Visible = false;
+            productIcon.onMainClick -= OnItemDetailClick;
         }
     }
 
@@ -311,6 +343,11 @@ public partial class ItemInfoPanel : PanelContainer
         }
 	}
 
+    private void RefreshContainerSize() 
+    {
+        Size = CustomMinimumSize;
+    }
+
 	private void OnIsProducingChange(bool isProducing) 
 	{
         SetButtons();
@@ -383,5 +420,15 @@ public partial class ItemInfoPanel : PanelContainer
                 }
             }
         }
+    }
+
+    public void OnItemDetailClick(ItemIcon itemIcon) 
+    {
+        onDetailClick?.Invoke(index, itemIcon.data);
+    }
+
+    public void OnCloseClick() 
+    {
+        onCloseClick?.Invoke(index);
     }
 }
