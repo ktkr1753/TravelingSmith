@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MapAttackObjectConfigResource" load_steps=5 format=3 uid="uid://bo3f23f60077i"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/MapAttackObjectConfigResource.cs" id="1_7vf5q"]
+[ext_resource type="PackedScene" uid="uid://def3rkxqqteda" path="res://007_Map/Prefabs/AttackObject/Dart.tscn" id="1_hoitp"]
+[ext_resource type="PackedScene" uid="uid://bfk0jme03ao0e" path="res://007_Map/Prefabs/AttackObject/StraightSword.tscn" id="2_ho6pn"]
+[ext_resource type="PackedScene" uid="uid://ceyewsli1br50" path="res://007_Map/Prefabs/AttackObject/MatchStaff.tscn" id="3_q206m"]
+
+[resource]
+script = ExtResource("1_7vf5q")
+config = {
+1: ExtResource("1_hoitp"),
+2: ExtResource("2_ho6pn"),
+3: ExtResource("1_hoitp"),
+4: ExtResource("2_ho6pn"),
+5: ExtResource("3_q206m"),
+6: ExtResource("3_q206m")
+}

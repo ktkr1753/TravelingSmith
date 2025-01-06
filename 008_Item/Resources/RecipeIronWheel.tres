@@ -20,3 +20,4 @@ index = 214
 texture = SubResource("AtlasTexture_h4mic")
 money = 2
 rank = 0
+isSellable = true

@@ -18,3 +18,4 @@ index = 101
 texture = SubResource("AtlasTexture_wukd7")
 money = 1
 rank = 0
+isSellable = true

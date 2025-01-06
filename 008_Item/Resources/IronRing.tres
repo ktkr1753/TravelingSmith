@@ -13,3 +13,4 @@ index = 502
 texture = SubResource("AtlasTexture_u5sfe")
 money = 5
 rank = 0
+isSellable = true

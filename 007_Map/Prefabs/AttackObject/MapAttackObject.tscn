@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdgmdwrmqca3a"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/MapAttackObject.cs" id="1_tqmk0"]
+
+[node name="MapAttackObject" type="Node2D" node_paths=PackedStringArray("animation", "image", "area")]
+script = ExtResource("1_tqmk0")
+animation = NodePath("AnimationPlayer")
+image = NodePath("Sprite2D")
+area = NodePath("Area2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+[connection signal="area_entered" from="Area2D" to="." method="OnTouchMonster"]

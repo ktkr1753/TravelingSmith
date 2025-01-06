@@ -13,3 +13,4 @@ index = 602
 texture = SubResource("AtlasTexture_nvgma")
 money = 3
 rank = 0
+isSellable = true

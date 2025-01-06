@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://bfk0jme03ao0e"]
+
+[ext_resource type="PackedScene" uid="uid://bdgmdwrmqca3a" path="res://007_Map/Prefabs/AttackObject/MapAttackObject.tscn" id="1_14d7p"]
+[ext_resource type="Texture2D" uid="uid://cy5mgwj4j32ol" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle.png" id="3_p3cgm"]
+
+[sub_resource type="Animation" id="Animation_gcj4q"]
+resource_name = "idle"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_p3cgm")]
+}
+
+[sub_resource type="Animation" id="Animation_3dw4e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_p3cgm")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gdt6a"]
+_data = {
+"RESET": SubResource("Animation_3dw4e"),
+"idle": SubResource("Animation_gcj4q")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_msk2a"]
+size = Vector2(14, 25)
+
+[node name="StraightSword" instance=ExtResource("1_14d7p")]
+isNear = true
+dieTime = 1.0
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_gdt6a")
+}
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_p3cgm")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource("RectangleShape2D_msk2a")

@@ -12,7 +12,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
 size = Vector2(100, 900)
 
-[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent", "itemPool")]
+[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent", "attackersParent", "itemPool")]
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
 targetPoint = NodePath("Target")
@@ -21,6 +21,7 @@ roadPrefab = ExtResource("2_ndk6r")
 roadShopPrefab = ExtResource("3_sulsd")
 shopParent = NodePath("ShopParent")
 shopPrefab = ExtResource("3_re5r2")
+attackersParent = NodePath("Attacks")
 itemPool = NodePath("Items")
 
 [node name="RoadParent" type="Node2D" parent="."]
@@ -45,6 +46,8 @@ position = Vector2(-400, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Target/DeadLine"]
 shape = SubResource("RectangleShape2D_n1gu1")
+
+[node name="Attacks" type="Node2D" parent="."]
 
 [node name="Items" type="Node2D" parent="." node_paths=PackedStringArray("parent", "backup")]
 script = ExtResource("6_d7nto")

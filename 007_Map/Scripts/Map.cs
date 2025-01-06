@@ -13,6 +13,7 @@ public partial class Map : Node2D
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
     [Export] public double nowTime = -30;
+    [Export] public Node2D attackersParent;
     [Export] public MapItemObjectPool itemPool;
     public List<MonsterObject> monsters = new List<MonsterObject>();
     public List<MonsterObject> waitRemoveMonsters = new List<MonsterObject>();
@@ -107,11 +108,11 @@ public partial class Map : Node2D
         else if(nowWave < 30) 
         {
             await CreateMonster(MonsterIndex.Slime, 1);
-            await CreateMonster(MonsterIndex.Beholder, 1);
+            await CreateMonster(MonsterIndex.PossessedBook, 1);
         }
         else 
         {
-            await CreateMonster(MonsterIndex.Beholder, 2);
+            await CreateMonster(MonsterIndex.PossessedBook, 2);
         }
     }
 
@@ -277,6 +278,32 @@ public partial class Map : Node2D
 
         return itemObject;
     }
+
+    public MapAttackObject CreateMapAttack(ItemIndex itemIndex, Vector2 globalPos)
+    {
+        MapAttackObject attackObject = null;
+
+        if(GameManager.instance.mapAttackConfig.config.TryGetValue(itemIndex, out PackedScene mapAttackPrefab)) 
+        {
+            attackObject = UtilityTool.CreateInstance<MapAttackObject>(mapAttackPrefab, attackersParent);
+
+            if(attackObject.isNear) 
+            {
+                attackObject.GlobalPosition = globalPos + new Vector2(0, -8);
+            }
+            else 
+            {
+                attackObject.GlobalPosition = targetPoint.GlobalPosition + new Vector2(0,-8);
+            }
+        }
+        else 
+        {
+            Debug.PrintWarn($"未定義攻擊物件");
+        }
+
+        return attackObject;
+    }
+    
 
     private void OnMonsterDie(MonsterObject monster) 
     {

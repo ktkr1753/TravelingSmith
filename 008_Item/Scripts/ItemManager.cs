@@ -495,16 +495,17 @@ public partial class ItemManager : Node
         }
     }
 
-    public bool AttackSomething(IAttack attcker)
+    public bool AttackSomething(IAttack attacker)
     {
         bool isAttack = false;
 
-        List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(attcker.range);
+        List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(attacker.range);
 
-        if(attcker.durability > 0 && monsters.Count > 0) 
+        if(attacker.durability > 0 && monsters.Count > 0) 
         {
             for(int i = 0; i < monsters.Count; i++) 
             {
+                /*
                 if (monsters[0].Value.data.nowHp > 0) 
                 {
                     monsters[0].Value.data.Damage(attcker.attackPoint);
@@ -518,9 +519,23 @@ public partial class ItemManager : Node
                     isAttack = true;
                     break;
                 }
+                */
+                if (monsters[0].Value.data.nowHp > 0) 
+                {
+                    if (attacker is ItemBaseResource item) 
+                    {
+                        MapAttackObject attackObj = GameManager.instance.mapManager.nowMap.CreateMapAttack(item.index, monsters[0].Value.GlobalPosition);
+                        attackObj.SetData(item);
+                        if (attackObj != null) 
+                        {
+                            attacker.durability = Math.Max(0, attacker.durability - 1);
+                            isAttack = true;
+                        }
+                        break;
+                    }
+                }
             }
         }
-
         return isAttack;
     }
 
