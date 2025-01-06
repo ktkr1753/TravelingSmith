@@ -1,11 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bfk0jme03ao0e"]
+[gd_scene load_steps=9 format=3 uid="uid://bfk0jme03ao0e"]
 
 [ext_resource type="PackedScene" uid="uid://bdgmdwrmqca3a" path="res://007_Map/Prefabs/AttackObject/MapAttackObject.tscn" id="1_14d7p"]
-[ext_resource type="Texture2D" uid="uid://cy5mgwj4j32ol" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle.png" id="3_p3cgm"]
+[ext_resource type="Texture2D" uid="uid://fxh5li6rtetq" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle_1.tres" id="2_7fl5t"]
+[ext_resource type="Texture2D" uid="uid://dtutd0jqruwkg" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle_2.tres" id="3_0o3fy"]
+[ext_resource type="Texture2D" uid="uid://ie60tr4so55b" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle_3.tres" id="4_oogu5"]
 
 [sub_resource type="Animation" id="Animation_gcj4q"]
 resource_name = "idle"
-step = 0.1
+length = 0.2
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -13,10 +16,10 @@ tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("3_p3cgm")]
+"values": [ExtResource("2_7fl5t"), ExtResource("3_0o3fy"), ExtResource("4_oogu5"), null]
 }
 
 [sub_resource type="Animation" id="Animation_3dw4e"]
@@ -31,7 +34,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_p3cgm")]
+"values": [ExtResource("2_7fl5t")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gdt6a"]
@@ -41,11 +44,11 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_msk2a"]
-size = Vector2(14, 25)
+size = Vector2(24, 25)
 
 [node name="StraightSword" instance=ExtResource("1_14d7p")]
 isNear = true
-dieTime = 1.0
+dieTime = 0.3
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {
@@ -53,7 +56,8 @@ libraries = {
 }
 
 [node name="Sprite2D" parent="." index="1"]
-texture = ExtResource("3_p3cgm")
+position = Vector2(-10, 0)
+texture = ExtResource("2_7fl5t")
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("RectangleShape2D_msk2a")

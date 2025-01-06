@@ -22,9 +22,17 @@ public partial class MapAttackObject : Node2D
         } 
     }
 
+    public const string clip_idle = "idle";
+
     public void SetData(ItemBaseResource item) 
     {
         this.item = item;
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+        animation.Play(clip_idle);
     }
 
     public override void _Process(double delta)

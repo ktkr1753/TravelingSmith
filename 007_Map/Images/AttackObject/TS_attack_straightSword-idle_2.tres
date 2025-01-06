@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dtutd0jqruwkg"]
+
+[ext_resource type="Texture2D" uid="uid://uytpydeevts0" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle.png" id="1_wqiyb"]
+
+[resource]
+atlas = ExtResource("1_wqiyb")
+region = Rect2(24, 0, 24, 24)
