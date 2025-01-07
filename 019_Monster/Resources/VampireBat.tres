@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://jyo51waqnggt"]
+
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_d0ph6"]
+[ext_resource type="PackedScene" uid="uid://drj7ar4jtigyi" path="res://019_Monster/Prefabs/VampireBat.tscn" id="1_hyego"]
+
+[resource]
+script = ExtResource("1_d0ph6")
+index = 4
+prefab = ExtResource("1_hyego")
+maxHp = 3
+nowHp = 0
+attackPoint = 2
+attackNeedTime = 1.5
+attackNowTime = 0.0
+attackFX = 1
+sound = "sound_hit.mp3"
+moveSpeed = 20.0
+exp = 1
+drops = []

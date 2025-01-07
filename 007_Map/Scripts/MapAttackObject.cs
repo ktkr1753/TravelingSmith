@@ -6,7 +6,8 @@ public partial class MapAttackObject : Node2D
     [Export] public AnimationPlayer animation;
     [Export] public Sprite2D image;
     [Export] public Area2D area;
-    [Export] public Vector2 velocity;
+    [Export] public double speed;
+    private double angle;
     [Export] public bool isNear = false;
     public double nowTime = 0;
     [Export] public double dieTime = 20;
@@ -29,6 +30,12 @@ public partial class MapAttackObject : Node2D
         this.item = item;
     }
 
+    public void SetAngle(double angle) 
+    {
+        this.angle = angle;
+        image.Rotate((float)angle); 
+    }
+
     public override void _Ready()
     {
         base._Ready();
@@ -46,7 +53,10 @@ public partial class MapAttackObject : Node2D
 
     public void Move(double delta)
     {
-        GlobalPosition = new Vector2(GlobalPosition.X + velocity.X * (float)delta, GlobalPosition.Y + velocity.Y * (float)delta);
+        //GlobalPosition = new Vector2(GlobalPosition.X + velocity.X * (float)delta, GlobalPosition.Y + velocity.Y * (float)delta);
+        double addTime = delta * GameManager.instance.gameSpeed;
+        GlobalPosition = new Vector2(GlobalPosition.X + (float)(speed * Math.Cos(angle) * addTime), GlobalPosition.Y + (float)(speed * Math.Sin(angle) * addTime));
+
     }
 
     public void CheckDie() 

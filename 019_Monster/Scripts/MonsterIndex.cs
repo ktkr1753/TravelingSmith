@@ -7,4 +7,5 @@ public enum MonsterIndex
 	Slime = 1,
 	Beholder = 2,
 	PossessedBook = 3,
+	VampireBat = 4,
 }

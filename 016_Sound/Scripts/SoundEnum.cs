@@ -17,6 +17,7 @@ public partial class SoundEnum
     public const string bgm_11 = "bgm_11.mp3";      //街景
     //Sound
     public const string sound_arrow_hit = "sound_arrow_hit.mp3";
+    public const string sound_attack_slime = "sound_attack_slime.mp3";
     public const string sound_button2 = "sound_button2.mp3";        //用在OK上
     public const string sound_button19 = "sound_button19.mp3";      //穿裝備音效
     public const string sound_button32 = "sound_button32.mp3";

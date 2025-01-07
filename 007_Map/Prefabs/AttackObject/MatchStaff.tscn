@@ -3,9 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bdgmdwrmqca3a" path="res://007_Map/Prefabs/AttackObject/MapAttackObject.tscn" id="1_jaw3w"]
 [ext_resource type="Texture2D" uid="uid://dwwwdhl1oeowf" path="res://007_Map/Images/AttackObject/TS_attack_matchStaff-idle.png" id="2_xpsc4"]
 
-[sub_resource type="Animation" id="Animation_4l8vi"]
-resource_name = "idle"
-step = 0.1
+[sub_resource type="Animation" id="Animation_pilrp"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -19,8 +18,9 @@ tracks/0/keys = {
 "values": [ExtResource("2_xpsc4")]
 }
 
-[sub_resource type="Animation" id="Animation_pilrp"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_4l8vi"]
+resource_name = "idle"
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -44,7 +44,7 @@ _data = {
 radius = 9.0
 
 [node name="MatchStaff" instance=ExtResource("1_jaw3w")]
-velocity = Vector2(150, 0)
+speed = 150.0
 
 [node name="AnimationPlayer" parent="." index="0"]
 libraries = {

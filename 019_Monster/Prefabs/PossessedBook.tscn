@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b1yiy57vkes84"]
+[gd_scene load_steps=24 format=3 uid="uid://b1yiy57vkes84"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_6acka"]
 [ext_resource type="Texture2D" uid="uid://b8b5v0q873i6x" path="res://019_Monster/Images/TS_monster_PossessedBook-idle_1.tres" id="2_rljpy"]
@@ -81,6 +81,9 @@ shader = ExtResource("17_bh5bx")
 shader_parameter/rate = 0.0
 shader_parameter/finalColor = Color(1, 1, 1, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsgyn"]
+size = Vector2(40, 42)
+
 [node name="PossessedBook" instance=ExtResource("1_6acka")]
 
 [node name="AnimationPlayer" parent="." index="0"]
@@ -96,3 +99,7 @@ offset_bottom = -43.0
 material = SubResource("ShaderMaterial_qebn5")
 position = Vector2(0, -24)
 texture = ExtResource("2_rljpy")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -21)
+shape = SubResource("RectangleShape2D_xsgyn")

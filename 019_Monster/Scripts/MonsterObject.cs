@@ -130,7 +130,8 @@ public partial class MonsterObject : Node2D
 
         if(GameManager.instance.mapManager.nowMap?.targetPoint != null)
         {
-            if(GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < closeDistance) 
+            //if(GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < closeDistance) 
+            if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < closeDistance)
             {
                 result = true;
             }
@@ -145,7 +146,8 @@ public partial class MonsterObject : Node2D
 
         if (GameManager.instance.mapManager.nowMap?.targetPoint != null)
         {
-            if (GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < (closeDistance / 2))
+            //if (GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < (closeDistance / 2))
+            if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < (closeDistance / 2))
             {
                 result = true;
             }
@@ -185,7 +187,8 @@ public partial class MonsterObject : Node2D
     public void Move(double delta) 
     {
         double addTime = delta * GameManager.instance.gameSpeed;
-        Vector2 moveNormal = (GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition - GlobalPosition).Normalized();
+        //Vector2 moveNormal = (GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition - GlobalPosition).Normalized();
+        Vector2 moveNormal = new Vector2(-1, 0);
 
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));
     }

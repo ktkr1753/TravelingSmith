@@ -1,0 +1,102 @@
+[gd_scene load_steps=21 format=3 uid="uid://drj7ar4jtigyi"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_xjj3k"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="2_fuuvc"]
+[ext_resource type="Texture2D" uid="uid://3bvegpaw0o0o" path="res://019_Monster/Images/TS_monster_vampireBat-idle_1.tres" id="3_0bru8"]
+[ext_resource type="Texture2D" uid="uid://cvxeto1ep4h6" path="res://019_Monster/Images/TS_monster_vampireBat-idle_2.tres" id="3_rhoxa"]
+[ext_resource type="Texture2D" uid="uid://hyt7n5c7uwyo" path="res://019_Monster/Images/TS_monster_vampireBat-idle_3.tres" id="4_5vj7o"]
+[ext_resource type="Texture2D" uid="uid://b7eyf4q2t4c1i" path="res://019_Monster/Images/TS_monster_vampireBat-idle_4.tres" id="5_kqamm"]
+[ext_resource type="Texture2D" uid="uid://s0k53a5itcmx" path="res://019_Monster/Images/TS_monster_vampireBat-idle_5.tres" id="6_4t3nn"]
+[ext_resource type="Texture2D" uid="uid://c3o3737abwgl1" path="res://019_Monster/Images/TS_monster_vampireBat-idle_6.tres" id="7_8b03f"]
+[ext_resource type="Texture2D" uid="uid://70y72krql2" path="res://019_Monster/Images/TS_monster_vampireBat-die_1.tres" id="8_ygi8u"]
+[ext_resource type="Texture2D" uid="uid://b4ss3c174u7x5" path="res://019_Monster/Images/TS_monster_vampireBat-die_2.tres" id="9_2hfm5"]
+[ext_resource type="Texture2D" uid="uid://cqwu6eqq4wufu" path="res://019_Monster/Images/TS_monster_vampireBat-die_3.tres" id="10_pscoc"]
+[ext_resource type="Texture2D" uid="uid://b8sdqouct2csu" path="res://019_Monster/Images/TS_monster_vampireBat-die_4.tres" id="11_x6xmu"]
+[ext_resource type="Texture2D" uid="uid://bh1kgo3l81u7e" path="res://019_Monster/Images/TS_monster_vampireBat-die_5.tres" id="12_rik5j"]
+[ext_resource type="Texture2D" uid="uid://csbwlfeudc5yv" path="res://019_Monster/Images/TS_monster_vampireBat-die_6.tres" id="13_jl61u"]
+
+[sub_resource type="Animation" id="Animation_t8b5w"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_0bru8"), ExtResource("3_rhoxa"), ExtResource("4_5vj7o"), ExtResource("5_kqamm"), ExtResource("6_4t3nn"), ExtResource("7_8b03f")]
+}
+
+[sub_resource type="Animation" id="Animation_8vm2c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_0bru8")]
+}
+
+[sub_resource type="Animation" id="Animation_72jx2"]
+resource_name = "die"
+length = 0.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("8_ygi8u"), ExtResource("9_2hfm5"), ExtResource("10_pscoc"), ExtResource("11_x6xmu"), ExtResource("12_rik5j"), ExtResource("13_jl61u")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ca8h"]
+_data = {
+"RESET": SubResource("Animation_8vm2c"),
+"die": SubResource("Animation_72jx2"),
+"idle": SubResource("Animation_t8b5w")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ich75"]
+resource_local_to_scene = true
+shader = ExtResource("2_fuuvc")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2iqau"]
+size = Vector2(24, 26)
+
+[node name="VampireBat" instance=ExtResource("1_xjj3k")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_0ca8h")
+}
+
+[node name="ProgressBar" parent="." index="1"]
+offset_top = -27.0
+offset_bottom = -22.0
+
+[node name="Image" parent="." index="2"]
+material = SubResource("ShaderMaterial_ich75")
+position = Vector2(0, -7)
+texture = ExtResource("3_0bru8")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_2iqau")

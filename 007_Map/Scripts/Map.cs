@@ -205,10 +205,8 @@ public partial class Map : Node2D
                 MonsterResource monsterData = tempMonster.Clone();
                 monsterData.nowHp = monsterData.maxHp;
 
-                //float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-1/2 * Math.PI), (float)(1/2 * Math.PI));
-                //float rndAngle = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, (float)(-Math.PI), (float)(Math.PI));
-                float rndAngle = 0;
-                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance * Mathf.Cos(rndAngle), targetPoint.GlobalPosition.Y + spawnDistance * Mathf.Sin(rndAngle));
+                float rndFixedY = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, -16, 17);
+                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance, targetPoint.GlobalPosition.Y + rndFixedY);
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
@@ -293,7 +291,11 @@ public partial class Map : Node2D
             }
             else 
             {
-                attackObject.GlobalPosition = targetPoint.GlobalPosition + new Vector2(0,-8);
+                attackObject.GlobalPosition = targetPoint.GlobalPosition + new Vector2(0, -8);
+
+                double angle = Math.Atan2(globalPos.Y - attackObject.GlobalPosition.Y, globalPos.X - attackObject.GlobalPosition.X);
+                //Debug.Print($"CreateMapAttack angle:{angle}");
+                attackObject.SetAngle(angle);
             }
         }
         else 

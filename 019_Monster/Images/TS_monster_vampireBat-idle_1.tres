@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://3bvegpaw0o0o"]
+
+[ext_resource type="Texture2D" uid="uid://ca1tbnp2wjwka" path="res://019_Monster/Images/TS_monster_vampireBat-idle.png" id="1_utijp"]
+
+[resource]
+atlas = ExtResource("1_utijp")
+region = Rect2(0, 0, 32, 32)

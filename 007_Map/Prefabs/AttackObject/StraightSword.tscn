@@ -5,6 +5,21 @@
 [ext_resource type="Texture2D" uid="uid://dtutd0jqruwkg" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle_2.tres" id="3_0o3fy"]
 [ext_resource type="Texture2D" uid="uid://ie60tr4so55b" path="res://007_Map/Images/AttackObject/TS_attack_straightSword-idle_3.tres" id="4_oogu5"]
 
+[sub_resource type="Animation" id="Animation_3dw4e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_7fl5t")]
+}
+
 [sub_resource type="Animation" id="Animation_gcj4q"]
 resource_name = "idle"
 length = 0.2
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("2_7fl5t"), ExtResource("3_0o3fy"), ExtResource("4_oogu5"), null]
-}
-
-[sub_resource type="Animation" id="Animation_3dw4e"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("2_7fl5t")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gdt6a"]

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://b4ss3c174u7x5"]
+
+[ext_resource type="Texture2D" uid="uid://dfcyer4qth0tb" path="res://019_Monster/Images/TS_monster_vampireBat-die.png" id="1_bw8fc"]
+
+[resource]
+atlas = ExtResource("1_bw8fc")
+region = Rect2(32, 0, 32, 32)

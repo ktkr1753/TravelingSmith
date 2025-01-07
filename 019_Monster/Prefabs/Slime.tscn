@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cs0ourwq1chej"]
+[gd_scene load_steps=21 format=3 uid="uid://cs0ourwq1chej"]
 
 [ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_vkl70"]
 [ext_resource type="Texture2D" uid="uid://de7nlqordmupj" path="res://019_Monster/Images/TS_monster_slime-idle_1.tres" id="2_waclk"]
@@ -78,6 +78,9 @@ shader = ExtResource("14_lnukd")
 shader_parameter/rate = 0.0
 shader_parameter/finalColor = Color(1, 1, 1, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xdc17"]
+size = Vector2(14, 14)
+
 [node name="Slime" instance=ExtResource("1_vkl70")]
 
 [node name="AnimationPlayer" parent="." index="0"]
@@ -89,3 +92,7 @@ libraries = {
 material = SubResource("ShaderMaterial_1t8gn")
 position = Vector2(0, -8)
 texture = ExtResource("2_waclk")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_xdc17")
