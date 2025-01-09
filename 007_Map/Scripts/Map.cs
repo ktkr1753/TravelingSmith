@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 public partial class Map : Node2D
 {
-    [Export] Node2D monsterParent;
+    [Export] public Node2D monsterParent;
     [Export] public Node2D targetPoint;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
     [Export] public PackedScene roadShopPrefab;
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
-    [Export] public double nowTime = -30;
     [Export] public Node2D attackersParent;
     [Export] public MapItemObjectPool itemPool;
+    [Export] public Godot.Collections.Array<DropItemResource> mapDropItems = new Godot.Collections.Array<DropItemResource>();
     public List<MonsterObject> monsters = new List<MonsterObject>();
     public List<MonsterObject> waitRemoveMonsters = new List<MonsterObject>();
 
+    public double nowTime = -50;
+    public double waveTime = 50;
     public const int spawnDistance = 1000;
-
     public int nowWave = 0;
-
 
     private Vector2 _viewPortSize = Vector2.Zero;
     public Vector2 viewPortSize 
@@ -37,7 +37,6 @@ public partial class Map : Node2D
         }
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
-    //private float targetMoveSpeed = 50;
     private int nowCreateRoadIndex = -1;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
@@ -48,6 +47,10 @@ public partial class Map : Node2D
         get { return _visitedShopIndex; }
         private set { _visitedShopIndex = value; }
     }
+
+    private double createItemMinDistance = 320;
+    private double createItemDistance = 100;
+    private double createItemCount = 0;
 
     public event Action<MonsterObject> onCreateMonster;
 
@@ -78,6 +81,7 @@ public partial class Map : Node2D
         TargetMove(delta);
         CheckRoad();
         CheckInShop();
+        CheckCreateRandomMapItem();
     }
 
 
@@ -87,7 +91,6 @@ public partial class Map : Node2D
         nowTime = nowTime + addTime;
 
         //測試
-        int waveTime = 10;
         if(nowTime / waveTime > nowWave) 
         {
             CreateWaveMonster();
@@ -256,6 +259,27 @@ public partial class Map : Node2D
             Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
             battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
+        }
+    }
+
+    private void CheckCreateRandomMapItem() 
+    {
+        while(((nowCreateRoadIndex + 1) * 640 - createItemMinDistance) / createItemDistance > createItemCount)
+        {
+            List<int> rndYFixGrid = GameManager.instance.randomManager.GetNotRepeatList(RandomType.Other, -1, 4);
+            for (int i = 0; i < mapDropItems.Count; i++) 
+            {
+                float rnd = GameManager.instance.randomManager.GetRange(RandomType.DropItem, 0f, 1f);
+                if (rnd <= mapDropItems[i].dropRate && rndYFixGrid.Count > 0) 
+                {
+                    int rndYFix = rndYFixGrid[0] * 16;
+                    Vector2 itemGlobalPos = new Vector2((float)(createItemMinDistance + createItemDistance * (createItemCount + 1)), targetPoint.GlobalPosition.Y + rndYFix);
+                    MapItemObject itemObj = CreateMapItem(mapDropItems[i].itemIndex, itemGlobalPos);
+                    //Debug.Print($"CreateRandomMapItem itemGlobalPos:{itemGlobalPos}");
+                    rndYFixGrid.RemoveAt(0);
+                }
+            }
+            createItemCount++;
         }
     }
 

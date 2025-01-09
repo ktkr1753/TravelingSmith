@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_2dq7h"]
 [ext_resource type="PackedScene" uid="uid://cs0ourwq1chej" path="res://019_Monster/Prefabs/Slime.tscn" id="1_tl0x8"]
-[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterDropItemResource.cs" id="1_y7g5l"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="1_y7g5l"]
 
 [sub_resource type="Resource" id="Resource_tmbni"]
 script = ExtResource("1_y7g5l")

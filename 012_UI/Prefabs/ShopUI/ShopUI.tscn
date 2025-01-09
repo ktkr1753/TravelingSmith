@@ -312,7 +312,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
 layout_mode = 2
-text = "隨機鍊金"
+text = "研究配方"
 horizontal_alignment = 1
 vertical_alignment = 1
 

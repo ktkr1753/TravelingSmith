@@ -15,7 +15,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
     [Export] public string sound;
     [Export] public double moveSpeed;
     [Export] public int exp;
-    [Export] public Godot.Collections.Array<MonsterDropItemResource> drops = new Godot.Collections.Array<MonsterDropItemResource>();
+    [Export] public Godot.Collections.Array<DropItemResource> drops = new Godot.Collections.Array<DropItemResource>();
 
     public event Action<int, int> onHPChange;
     public event Action onDie;

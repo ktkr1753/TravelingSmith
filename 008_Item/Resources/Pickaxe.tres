@@ -9,13 +9,13 @@ region = Rect2(0, 48, 24, 24)
 
 [resource]
 script = ExtResource("1_j4yna")
-productItem = 601
-needTime = 10.0
+productItem = 610
+needTime = 20.0
 nowTime = 0.0
 durability = -1
 isProducing = false
 index = 301
 texture = SubResource("AtlasTexture_1frpg")
-money = 1
+money = 2
 rank = 0
 isSellable = true

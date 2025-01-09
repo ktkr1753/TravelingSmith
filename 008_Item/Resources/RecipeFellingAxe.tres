@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="RecipeResource" load_steps=4 format=3 uid="uid://b7agebv63f8g1"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/RecipeResource.cs" id="1_ioiab"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_l326f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o55te"]
+atlas = ExtResource("2_l326f")
+region = Rect2(0, 72, 24, 24)
+
+[resource]
+script = ExtResource("1_ioiab")
+type = 1
+materials = [609, 603]
+isCostMaterial = false
+productItem = 302
+needTime = 15.0
+nowTime = 0.0
+durability = 1
+isProducing = false
+index = 217
+texture = SubResource("AtlasTexture_o55te")
+money = 3
+rank = 0
+isSellable = true

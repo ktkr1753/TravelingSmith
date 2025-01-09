@@ -9,7 +9,8 @@ region = Rect2(0, 72, 24, 24)
 
 [resource]
 script = ExtResource("1_maq6h")
-materials = [601, 601]
+type = 1
+materials = [601, 603]
 isCostMaterial = false
 productItem = 2
 needTime = 15.0
@@ -18,6 +19,6 @@ durability = 5
 isProducing = false
 index = 202
 texture = SubResource("AtlasTexture_qw4jx")
-money = 3
+money = 4
 rank = 0
 isSellable = true

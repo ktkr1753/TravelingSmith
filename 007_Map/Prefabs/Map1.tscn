@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://04nj0wollggp"]
+[gd_scene load_steps=13 format=3 uid="uid://04nj0wollggp"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/Map.cs" id="1_8cs5l"]
 [ext_resource type="PackedScene" uid="uid://defkma7jjqr47" path="res://007_Map/Prefabs/Road1.tscn" id="2_ndk6r"]
@@ -6,8 +6,19 @@
 [ext_resource type="PackedScene" uid="uid://b31ks470twpcf" path="res://007_Map/Prefabs/Shop.tscn" id="3_re5r2"]
 [ext_resource type="PackedScene" uid="uid://y0qyomt17ius" path="res://007_Map/Prefabs/Road2.tscn" id="3_sulsd"]
 [ext_resource type="Texture2D" uid="uid://ca1cta7gpfk0f" path="res://007_Map/Images/Carriage.png" id="4_ut38t"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="5_cqsd8"]
 [ext_resource type="Script" path="res://007_Map/Scripts/MapItemObjectPool.cs" id="6_d7nto"]
 [ext_resource type="PackedScene" uid="uid://ca0mlaowat46f" path="res://007_Map/Prefabs/MapItemObject.tscn" id="7_t7xnu"]
+
+[sub_resource type="Resource" id="Resource_xrax0"]
+script = ExtResource("5_cqsd8")
+itemIndex = 609
+dropRate = 0.2
+
+[sub_resource type="Resource" id="Resource_w5brl"]
+script = ExtResource("5_cqsd8")
+itemIndex = 603
+dropRate = 0.2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
 size = Vector2(100, 900)
@@ -23,6 +34,7 @@ shopParent = NodePath("ShopParent")
 shopPrefab = ExtResource("3_re5r2")
 attackersParent = NodePath("Attacks")
 itemPool = NodePath("Items")
+mapDropItems = [SubResource("Resource_xrax0"), SubResource("Resource_w5brl")]
 
 [node name="RoadParent" type="Node2D" parent="."]
 

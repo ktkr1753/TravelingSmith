@@ -9,6 +9,7 @@ region = Rect2(0, 72, 24, 24)
 
 [resource]
 script = ExtResource("1_p2pku")
+type = 1
 materials = [601, 601]
 isCostMaterial = false
 productItem = 502
@@ -18,6 +19,6 @@ durability = -1
 isProducing = false
 index = 208
 texture = SubResource("AtlasTexture_qbtu7")
-money = 1
+money = 4
 rank = 0
 isSellable = true

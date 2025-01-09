@@ -13,5 +13,6 @@ config = {
 3: ExtResource("1_hoitp"),
 4: ExtResource("2_ho6pn"),
 5: ExtResource("3_q206m"),
-6: ExtResource("3_q206m")
+6: ExtResource("3_q206m"),
+7: ExtResource("2_ho6pn")
 }

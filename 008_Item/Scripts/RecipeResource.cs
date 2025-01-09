@@ -4,6 +4,14 @@ using System;
 [GlobalClass]
 public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, IMake
 {
+    private MakeType _type;
+    [Export] public MakeType type 
+    {
+        get { return _type; }
+        set { _type = value; }
+    }
+
+
     private Godot.Collections.Array<ItemIndex> _materials = new Godot.Collections.Array<ItemIndex>();
 
     [Export] public Godot.Collections.Array<ItemIndex> materials 
@@ -85,7 +93,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
     public override RecipeResource Clone()
     {
         RecipeResource result = base.Clone() as RecipeResource;
-
+        result.type = type;
         result.materials = materials.Clone();
         result.durability = durability;
         result.productItem = productItem;

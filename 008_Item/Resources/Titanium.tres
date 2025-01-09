@@ -11,6 +11,6 @@ region = Rect2(72, 0, 24, 24)
 script = ExtResource("1_kum46")
 index = 604
 texture = SubResource("AtlasTexture_7r5v2")
-money = 2
+money = 4
 rank = 0
 isSellable = true

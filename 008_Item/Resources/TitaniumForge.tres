@@ -9,7 +9,8 @@ region = Rect2(24, 72, 24, 24)
 
 [resource]
 script = ExtResource("1_mvtr0")
-materials = [601, 601]
+type = 2
+materials = [610, 606]
 isCostMaterial = false
 productItem = 604
 needTime = 15.0

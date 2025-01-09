@@ -19,6 +19,6 @@ nowTime = 0.0
 isUsing = false
 index = 4
 texture = SubResource("AtlasTexture_nbl6o")
-money = 5
+money = 12
 rank = 0
 isSellable = false

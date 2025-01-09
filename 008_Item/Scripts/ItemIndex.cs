@@ -11,6 +11,7 @@ public enum ItemIndex
     KnightsSword = 4,
     MatchStaff = 5,
     CeremonialStaff = 6,
+    StoneKnife = 7,
     //回復 101~200
     Board = 101,
     //配方 201~300
@@ -28,6 +29,13 @@ public enum ItemIndex
     FlareGemstoneBurin = 212,
     RecipeWoodenWheel = 213,
     RecipeIronWheel = 214,
+    IronForge = 215,
+    RecipePickaxe = 216,
+    RecipeFellingAxe = 217,
+    RecipeFlareGemstonePickaxe = 218,
+    RecipeIronForge = 219,
+    RecipeGoldForge = 220,
+    RecipeTitaniumForge = 221,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
@@ -47,4 +55,7 @@ public enum ItemIndex
     GoldOre = 606,
     FlareGemstoneOre = 607,
     FlareGemstone = 608,
+    Stone = 609,
+    IronOre = 610,
+    Paper = 611,
 }

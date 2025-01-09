@@ -9,6 +9,7 @@ region = Rect2(0, 72, 24, 24)
 
 [resource]
 script = ExtResource("1_3ecdu")
+type = 1
 materials = [601]
 isCostMaterial = false
 productItem = 402
@@ -18,6 +19,6 @@ durability = 1
 isProducing = false
 index = 214
 texture = SubResource("AtlasTexture_h4mic")
-money = 2
+money = 4
 rank = 0
 isSellable = true

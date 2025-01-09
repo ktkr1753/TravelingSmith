@@ -103,14 +103,6 @@ public partial class ItemManager : Node
 
             if (i == 0)
             {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.Pickaxe);
-            }
-            else if(i == 1) 
-            {
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeDart);
-            }
-            else if (i == 2)
-            {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
 
@@ -232,13 +224,13 @@ public partial class ItemManager : Node
         bool isSuccess = false;
         if (GameManager.instance.itemManager.money >= refreshCost)
         {
-            if (index >= 0 && index < heldItems.Count && heldItems[index] != null && 
-                (heldItems[index] is MaterialResource || heldItems[index] is RecipeResource))
+            if (index >= 0 && index < heldItems.Count && heldItems[index] != null &&
+                heldItems[index].index == ItemIndex.Paper)
             {
                 List<ItemBaseResource> canBeRandomItems = new List<ItemBaseResource>();
                 foreach(var KV in GameManager.instance.itemConfig.config) 
                 {
-                    if(KV.Value.GetType() == heldItems[index].GetType()) 
+                    if(KV.Value is RecipeResource recipe && recipe.type == MakeType.Paper) 
                     {
                         canBeRandomItems.Add(KV.Value);
                     }
