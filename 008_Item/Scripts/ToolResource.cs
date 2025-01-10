@@ -37,7 +37,7 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         }
     }
 
-    public bool isKeepProduce { get { return true; } }
+    public virtual bool isKeepProduce { get { return true; } }
 
     private bool _isProducing = false;
     [Export] public bool isProducing

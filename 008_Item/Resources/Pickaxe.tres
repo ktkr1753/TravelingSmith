@@ -16,6 +16,6 @@ durability = -1
 isProducing = false
 index = 301
 texture = SubResource("AtlasTexture_1frpg")
-money = 2
+money = 4
 rank = 0
 isSellable = true

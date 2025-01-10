@@ -9,9 +9,9 @@ region = Rect2(0, 96, 24, 24)
 
 [resource]
 script = ExtResource("1_0dp47")
-repairPoint = 1
+repairPoint = 10
 durability = 2
-needTime = 2.0
+needTime = 20.0
 nowTime = 0.0
 isUsing = false
 index = 101

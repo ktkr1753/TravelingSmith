@@ -10,7 +10,7 @@ region = Rect2(0, 72, 24, 24)
 [resource]
 script = ExtResource("1_ioiab")
 type = 1
-materials = [609, 603]
+materials = [601, 603]
 isCostMaterial = false
 productItem = 302
 needTime = 15.0

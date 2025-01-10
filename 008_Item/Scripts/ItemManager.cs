@@ -144,6 +144,10 @@ public partial class ItemManager : Node
             {
                 repairingItems.Remove(item);
             }
+            if (coreingItems.Contains(item))
+            {
+                coreingItems.Remove(item);
+            }
             SetHeldItem(index, null);
         }
     }
@@ -225,19 +229,68 @@ public partial class ItemManager : Node
         if (GameManager.instance.itemManager.money >= refreshCost)
         {
             if (index >= 0 && index < heldItems.Count && heldItems[index] != null &&
-                heldItems[index].index == ItemIndex.Paper)
+                heldItems[index].index == ItemIndex.Paper || heldItems[index] is RecipeResource heldRecipe && heldRecipe.type == MakeType.Paper)
             {
                 List<ItemBaseResource> canBeRandomItems = new List<ItemBaseResource>();
-                foreach(var KV in GameManager.instance.itemConfig.config) 
+                HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
+                HashSet<ItemIndex> unlockedRecipe = GameManager.instance.unlockRecipe.GetUnlockedRecipe();
+
+                Action getWaitUnlockRandom = () =>
                 {
-                    if(KV.Value is RecipeResource recipe && recipe.type == MakeType.Paper) 
+                    foreach (var KV in GameManager.instance.itemConfig.config)
                     {
-                        canBeRandomItems.Add(KV.Value);
+                        if (waitUnlockRecipe.Contains(KV.Value.index))
+                        {
+                            canBeRandomItems.Add(KV.Value);
+                        }
+                    }
+                };
+                Action getUnlockedRandom = () =>
+                {
+                    foreach (var KV in GameManager.instance.itemConfig.config)
+                    {
+                        if (unlockedRecipe.Contains(KV.Value.index))
+                        {
+                            canBeRandomItems.Add(KV.Value);
+                        }
+                    }
+                };
+
+                if(waitUnlockRecipe.Count > 0 && unlockedRecipe.Count > 0) 
+                {
+                    float rndUnlock = GameManager.instance.randomManager.GetRange(RandomType.RandomItem, 0f, 1f);
+                    if (rndUnlock < 0.7)
+                    {
+                        getWaitUnlockRandom();
+                        //Debug.Print("1");
+                    }
+                    else
+                    {
+                        getUnlockedRandom();
+                        //Debug.Print("2");
+                    }
+                }
+                else 
+                {
+                    if(waitUnlockRecipe.Count > 0) 
+                    {
+                        getWaitUnlockRandom();
+                        //Debug.Print("3");
+                    }
+                    else if(unlockedRecipe.Count > 0) 
+                    {
+                        getUnlockedRandom();
+                        //Debug.Print("4");
+                    }
+                    else 
+                    {
+                        Debug.PrintErr($"未有任何可用配方");
                     }
                 }
 
                 int rnd = GameManager.instance.randomManager.GetRange(RandomType.RandomItem, 0, canBeRandomItems.Count);
                 ItemBaseResource randomItem = canBeRandomItems[rnd].Clone();
+                GameManager.instance.unlockRecipe.AddUnlockRecipe(randomItem.index);
                 GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - refreshCost);
                 GameManager.instance.itemManager.RemoveItem(index);
                 GameManager.instance.itemManager.SetHeldItem(index, randomItem);
@@ -353,25 +406,6 @@ public partial class ItemManager : Node
                         {
                             make.isCostMaterial = false;
                         }
-
-                        //有使用次數限制
-                        if (produce.durability  > 0) 
-                        {
-                            produce.durability = Math.Max(0, produce.durability - 1);
-                        }
-
-                        if (produce.durability == 0) 
-                        {
-                            for (int i = 0; i < heldItems.Count; i++)
-                            {
-                                if (heldItems[i] == produce) 
-                                {
-                                    produce.StopProduce();
-                                    RemoveItem(i);
-                                    break;
-                                }
-                            }
-                        }
                     }
                     else //物品太多生產失敗，不做事 
                     {
@@ -401,15 +435,39 @@ public partial class ItemManager : Node
         bool isSuccess = false;
         for (int i = 0; i < heldItems.Count; i++)
         {
-            if (heldItems[i] == null)
+            if (heldItems[i] == null || (heldItems[i] == produce && produce.durability == 1))
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
                 SetHeldItem(i, item);
                 isSuccess = true;
+
+                //有使用次數限制
+                if (produce.durability > 0)
+                {
+                    produce.durability = Math.Max(0, produce.durability - 1);
+                    if(produce.durability <= 0) 
+                    {
+                        produce.StopProduce();
+                    }
+                }
                 onCreateProduct?.Invoke(produce, i, item);
                 break;
             }
         }
+
+        if (produce.durability == 0)
+        {
+            for (int i = 0; i < heldItems.Count; i++)
+            {
+                if (heldItems[i] == produce)
+                {
+                    produce.StopProduce();
+                    RemoveItem(i);
+                    break;
+                }
+            }
+        }
+
         return isSuccess;
     }
 

@@ -49,7 +49,7 @@ public partial class Map : Node2D
     }
 
     private double createItemMinDistance = 320;
-    private double createItemDistance = 100;
+    private double createItemDistance = 64;
     private double createItemCount = 0;
 
     public event Action<MonsterObject> onCreateMonster;
@@ -130,7 +130,7 @@ public partial class Map : Node2D
         }
         else 
         {
-            int damage = (int)Math.Floor(GameManager.instance.itemManager.moveSpeed / 10);
+            int damage = (int)Math.Floor((GameManager.instance.itemManager.moveSpeed - 10) / 20);
             //Debug.Print($"TargetMove GameManager.instance.itemManager.moveSpeed:{GameManager.instance.itemManager.moveSpeed},damage:{damage}");
             if(damage > 0) 
             {
