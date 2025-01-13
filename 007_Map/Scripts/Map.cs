@@ -102,7 +102,7 @@ public partial class Map : Node2D
     {
         if(nowWave < 10) 
         {
-            await CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.SlimeKing, 1);
         }
         else if (nowWave < 20)
         {
@@ -221,6 +221,10 @@ public partial class Map : Node2D
                 onCreateMonster?.Invoke(monster);
 
                 await GameManager.instance.Wait(1);
+            }
+            else 
+            {
+                Debug.PrintWarn($"未找到該怪物,index:{index}");
             }
         }
     }

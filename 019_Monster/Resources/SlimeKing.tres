@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://biuh6i3122jp5"]
+
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_cx0kn"]
+[ext_resource type="PackedScene" uid="uid://b4swmqn1ixvxl" path="res://019_Monster/Prefabs/SlimeKing.tscn" id="1_fq4l2"]
+
+[resource]
+script = ExtResource("1_cx0kn")
+index = 201
+prefab = ExtResource("1_fq4l2")
+maxHp = 50
+nowHp = 0
+attackPoint = 2
+attackNeedTime = 1.0
+attackNowTime = 0.0
+attackFX = 1
+sound = "sound_attack_slime.mp3"
+moveSpeed = 20.0
+exp = 1
+drops = []

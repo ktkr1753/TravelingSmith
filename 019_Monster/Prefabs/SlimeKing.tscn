@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4swmqn1ixvxl"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_bier4"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="2_mdfte"]
+[ext_resource type="Texture2D" uid="uid://cyt0275heer0p" path="res://019_Monster/Images/TS_monster_slimeKing-idle.png" id="3_y43wp"]
+
+[sub_resource type="Animation" id="Animation_fksit"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_0oip1"]
+resource_name = "die"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bya31"]
+_data = {
+"die": SubResource("Animation_0oip1"),
+"idle": SubResource("Animation_fksit")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a7glf"]
+resource_local_to_scene = true
+shader = ExtResource("2_mdfte")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_la8wx"]
+radius = 20.0
+
+[node name="MonsterTemp" instance=ExtResource("1_bier4")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_bya31")
+}
+
+[node name="ProgressBar" parent="." index="1"]
+offset_left = -16.0
+offset_top = -43.0
+offset_right = 16.0
+offset_bottom = -38.0
+
+[node name="Image" parent="." index="2"]
+material = SubResource("ShaderMaterial_a7glf")
+position = Vector2(0, -20)
+texture = ExtResource("3_y43wp")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -18)
+shape = SubResource("CircleShape2D_la8wx")
