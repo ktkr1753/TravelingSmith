@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 [GlobalClass]
 public partial class ItemElement : Control
@@ -21,8 +22,8 @@ public partial class ItemElement : Control
 		set { _showProcess = value; }
 	}
 	[Export] private AnimationPlayer animation;
-	[Export] private TextureRect areaImage;
-	[Export] private TextureRect image;
+    [Export] private ItemElementAreaPool areaPool;
+    [Export] private TextureRect image;
 	[Export] private TextureRect productImage;
 	[Export] private Label durabilityLabel;
 	[Export] private NinePatchRect selectedHint;
@@ -40,7 +41,7 @@ public partial class ItemElement : Control
 		private set { _item = value; }
 	}
 
-	private AreaResource area;
+	private List<AreaResource> areas = new List<AreaResource>();
 
 	private SelectedState _nowSelectedState = SelectedState.None;
 	public SelectedState nowSelectedState 
@@ -203,10 +204,35 @@ public partial class ItemElement : Control
         SetView();
     }
 
-    public void SetArea(AreaResource area)
+    public void SetArea(AreaIndex areaIndex)
     {
-		this.area = area;
-		SetAreaView();
+		//Debug.Print($"index:{index}, SetArea areaIndex:{areaIndex}");
+
+		areas.Clear();
+
+        for (int i = 0; i < 31; i++) 
+		{
+			int bit = 0;
+			if(i > 0) 
+			{
+				bit = 1 << (i - 1);
+			}
+
+
+            if ((bit & (int)areaIndex) == bit) 
+			{
+	            //Debug.Print($"bit:{bit}, areaIndex:{areaIndex}, (bit & (int)areaIndex) == 1 << i:{true}");
+				if(GameManager.instance.areaConfig.config.TryGetValue((AreaIndex)bit, out AreaResource area)) 
+				{
+					areas.Add(area);
+					SetAreaView();
+				}
+				else 
+				{
+					Debug.PrintErr($"未定義該AreaIndex:{areaIndex}");
+				}
+			}
+		}
     }
 
     private void SetView() 
@@ -220,10 +246,15 @@ public partial class ItemElement : Control
 
 	private void SetAreaView() 
 	{
-		if(area != null) 
+		areaPool.ReturnAllElement();
+        for (int i = 0; i < areas.Count; i++) 
 		{
-			areaImage.Texture = area.texture;
-		}
+			if (areas[i].index != AreaIndex.None) 
+			{
+				ItemElementArea areaElemment = areaPool.GetElement();
+				areaElemment.SetData(areas[i].index);
+			}
+        }
 	}
 
 	private void RegisterEvent(ItemBaseResource item) 
@@ -276,7 +307,6 @@ public partial class ItemElement : Control
 		if(item == null) 
 		{
 			image.Texture = null;
-
         }
 		else 
 		{

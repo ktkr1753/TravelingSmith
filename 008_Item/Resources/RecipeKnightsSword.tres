@@ -19,6 +19,7 @@ durability = 2
 isProducing = false
 index = 206
 texture = SubResource("AtlasTexture_7nwfy")
+effectRanges = []
 money = 6
 rank = 0
 isSellable = true

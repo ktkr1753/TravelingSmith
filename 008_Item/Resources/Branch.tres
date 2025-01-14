@@ -16,6 +16,7 @@ durability = 1
 isProducing = false
 index = 603
 texture = SubResource("AtlasTexture_npcus")
+effectRanges = []
 money = 1
 rank = 0
 isSellable = true

@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Resource_lwy24"]
 script = ExtResource("2_tx4sd")
-data = [216]
+data = [216, 223]
 
 [sub_resource type="Resource" id="Resource_fdkej"]
 script = ExtResource("2_tx4sd")

@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="RangeResource" load_steps=13 format=3 uid="uid://pmwn5fs4lndf"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/ItemEffect.cs" id="1_cg1io"]
+[ext_resource type="Script" path="res://008_Item/Scripts/RangeResource.cs" id="1_xp3sh"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_fl0ai"]
+
+[sub_resource type="Resource" id="Resource_hlymj"]
+script = ExtResource("1_cg1io")
+position = Vector2i(1, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_1e6pd"]
+script = ExtResource("1_cg1io")
+position = Vector2i(1, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_e2u2v"]
+script = ExtResource("1_cg1io")
+position = Vector2i(0, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_1bfc5"]
+script = ExtResource("1_cg1io")
+position = Vector2i(-1, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_ecx00"]
+script = ExtResource("1_cg1io")
+position = Vector2i(-1, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_nvjwj"]
+script = ExtResource("1_cg1io")
+position = Vector2i(-1, -1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_bvvm7"]
+script = ExtResource("1_cg1io")
+position = Vector2i(0, -1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_0dk11"]
+script = ExtResource("1_cg1io")
+position = Vector2i(1, -1)
+type = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_faq77"]
+atlas = ExtResource("2_fl0ai")
+region = Rect2(0, 168, 24, 24)
+
+[resource]
+script = ExtResource("1_xp3sh")
+index = 701
+texture = SubResource("AtlasTexture_faq77")
+effectRanges = [SubResource("Resource_hlymj"), SubResource("Resource_1e6pd"), SubResource("Resource_e2u2v"), SubResource("Resource_1bfc5"), SubResource("Resource_ecx00"), SubResource("Resource_nvjwj"), SubResource("Resource_bvvm7"), SubResource("Resource_0dk11")]
+money = 6
+rank = 0
+isSellable = true

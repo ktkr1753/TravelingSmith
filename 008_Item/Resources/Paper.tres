@@ -11,6 +11,7 @@ region = Rect2(0, 72, 24, 24)
 script = ExtResource("1_q2tk2")
 index = 611
 texture = SubResource("AtlasTexture_q03sn")
+effectRanges = []
 money = 2
 rank = 0
 isSellable = true

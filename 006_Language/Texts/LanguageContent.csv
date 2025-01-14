@@ -38,6 +38,7 @@ ts_itemName_RecipeIronForge,Recipe Iron Forge,鐵鍛造爐配方
 ts_itemName_RecipeGoldForge,Recipe Gold Forge,金鍛造爐配方
 ts_itemName_RecipeTitaniumForge,Recipe Titanium Forge,鈦金鍛造爐配方
 ts_itemName_RecipeFlareGemstoneBurin,Recipe Flare Gemstone Burin,焰火石雕刻刀配方
+ts_itemName_RecipeWoodenChest,Recipe Wooden Chest,木箱配方
 ts_itemName_Pickaxe,Iron Pickaxe,鐵礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
 ts_itemName_FlareGemstonePickaxe,Flare Gemstone Pickaxe,焰火石礦鎬
@@ -56,6 +57,7 @@ ts_itemName_FlareGemstone,Flare Gemstone,焰火石
 ts_itemName_Stone,Stone,石頭
 ts_itemName_IronOre,Iron Ore,鐵礦石
 ts_itemName_Paper,Paper,紙
+ts_itemName_WoodenChest,Wooden Chest,木箱
 
 ts_monsterName_Slime,Slime,史萊姆
 ts_monsterName_Beholder,Beholder,眼魔

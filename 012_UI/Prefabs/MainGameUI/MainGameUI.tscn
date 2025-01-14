@@ -38,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 142)]
+"values": [Vector2(13, 153)]
 }
 
 [sub_resource type="Animation" id="Animation_jpk2g"]
@@ -91,7 +91,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_2jxto")
-elements = [NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement2"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement3"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement4"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement5"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement6"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement7"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement8"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement9"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement10"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement11"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement12"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement13"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement14"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement15"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement16"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement17"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement18"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement19"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement20"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement21"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement22"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement23"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement24"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement25")]
+elements = [NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement2"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement3"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement4"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement5"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement6"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement7"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement8"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement9"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement10"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement11"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement12"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement13"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement14"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement15"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement16"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement17"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement18"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement19"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement20"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement21"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement22"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement23"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement24"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement25"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement26"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement27"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement28"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement29"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement30"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement31"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement32"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement33"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement34"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement35"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement36"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement37"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement38"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement39"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement40"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement41"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement42"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement43"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement44"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement45"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement46"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement47"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement48"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement49"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement50"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement51"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement52"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement53"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement54"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement55"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement56"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement57"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement58"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement59"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement60"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement61"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement62"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement63"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement64"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement65"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement66"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement67"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement68"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement69"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement70"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement71"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement72"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement73"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement74"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement75"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement76"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement77"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement78"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement79"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement80"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement81"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement82"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement83"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement84")]
 animation = NodePath("AnimationPlayer")
 moveButtonImage = NodePath("HBoxContainer/NinePatchRect")
 arrorImage = NodePath("HBoxContainer/NinePatchRect/TextureRect")
@@ -142,17 +142,19 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -218.0
-offset_right = 184.0
-offset_bottom = -50.0
+offset_left = 13.0
+offset_top = -207.0
+offset_right = 461.0
+offset_bottom = -15.0
 grow_vertical = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
-columns = 5
+columns = 14
 
 [node name="ItemElement" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
@@ -229,7 +231,185 @@ layout_mode = 2
 [node name="ItemElement25" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
 layout_mode = 2
 
+[node name="ItemElement26" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement27" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement28" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement29" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement30" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement31" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement32" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement33" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement34" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement35" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement36" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement37" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement38" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement39" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement40" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement41" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement42" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement43" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement44" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement45" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement46" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement47" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement48" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement49" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement50" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement51" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement52" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement53" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement54" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement55" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement56" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement57" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement58" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement59" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement60" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement61" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement62" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement63" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement64" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement65" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement66" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement67" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement68" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement69" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement70" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement71" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement72" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement73" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement74" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement75" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement76" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement77" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement78" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement79" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement80" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement81" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement82" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement83" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
+[node name="ItemElement84" parent="HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("2_c7qgf")]
+layout_mode = 2
+
 [node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 texture = ExtResource("3_qk5px")
@@ -502,10 +682,10 @@ text = "0"
 
 [node name="GameSpeedControl" type="Control" parent="." node_paths=PackedStringArray("pauseButton", "playButton", "fastForwardButton")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
 mouse_filter = 2
 script = ExtResource("8_h57qy")
 pauseButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/PauseButton")
@@ -514,12 +694,12 @@ fastForwardButton = NodePath("PanelContainer/MarginContainer/HBoxContainer/FastF
 
 [node name="PanelContainer" type="PanelContainer" parent="GameSpeedControl"]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -27.0
-offset_right = 59.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -59.0
+offset_bottom = 27.0
+grow_horizontal = 0
 mouse_filter = 2
 theme_type_variation = &"PanelContainer_Brown"
 

@@ -57,11 +57,40 @@ public partial class ItemManager : Node
 
     public ItemBaseResource waitAddItem = null;
 
-    private Godot.Collections.Array<AreaResource> _areas = new Godot.Collections.Array<AreaResource>();
-
-    [Export] public Godot.Collections.Array<AreaResource> areas 
+    private Godot.Collections.Array<AreaIndex> _defaultAreas = new Godot.Collections.Array<AreaIndex>();
+    [Export] public Godot.Collections.Array<AreaIndex> defaultAreas
     {
+        get { return _defaultAreas; }
+        private set { _defaultAreas = value; }
+    }
+
+    private Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> _itemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
+
+    [Export] public Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> itemEffects 
+    {
+        get { return _itemEffects; }
+        private set { _itemEffects = value; }
+    }
+
+    private bool isAreasDirt = false;
+
+    private Godot.Collections.Array<AreaIndex> _areas = new Godot.Collections.Array<AreaIndex>();
+
+    [Export] public Godot.Collections.Array<AreaIndex> areas 
+    {
+        /*
         get { return _areas; }
+        private set { _areas = value; }
+        */
+
+        get {
+            if (isAreasDirt) 
+            {
+                RefreshAreas(_areas, itemEffects);
+                isAreasDirt = false;
+            }
+            return _areas;
+        }
         private set { _areas = value; }
     }
 
@@ -73,7 +102,7 @@ public partial class ItemManager : Node
 
             for(int i = 0; i < _heldItems.Count; i++) 
             {
-                if (_heldItems[i] == null) 
+                if (_heldItems[i] == null && IsAreaEffect(areas, i, AreaIndex.Normal)) 
                 {
                     isAnyEmpty = true;
                 }
@@ -91,22 +120,33 @@ public partial class ItemManager : Node
     public event Action<double> onMoveAccelerationChange;
     public event Action<double> onMoveSpeedChange;
     public event Action<int> onHeldItemChange;
+    public event Action<int> onItemEffectsChange;
     public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
     public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
 
+
+    public const int itemNum = 84;
+    public const int itemColumnNum = 14;
+
     public void Init() 
 	{
+        RefreshAreas(_areas, itemEffects);
+        isAreasDirt = false;
+        for (int i = 0; i < itemNum; i++) 
+        {
+            heldItems.Add(null);
+        }
+
 		//測試用道具
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < itemNum; i++)
         {
             ItemBaseResource item = null;
-
-            if (i == 0)
+            if (i == 34)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
-
-            heldItems.Add(item);
+            SetHeldItem(i, item);
+            //heldItems.Add(item);
         }
     }
 
@@ -115,7 +155,7 @@ public partial class ItemManager : Node
         int index = -1;
         for (int i = 0; i < heldItems.Count; i++)
         {
-            if (heldItems[i] == null)
+            if (heldItems[i] == null && IsAreaEffect(areas, i, AreaIndex.Normal))
             {
                 ItemBaseResource item = CreateItem(itemIndex);
                 SetHeldItem(i, item);
@@ -156,8 +196,25 @@ public partial class ItemManager : Node
 	{
         if (index >= 0 && index < heldItems.Count) 
 		{
+            HashSet<int> itemEffectRangeChanges = new HashSet<int>();
+            if (heldItems[index] != null) 
+            {
+                RemoveItemEffects(itemEffects, index, heldItems[index].effectRanges);
+                GetItemEffectRangePositions(index, ref itemEffectRangeChanges);
+            }
             heldItems[index] = item;
+            if (item != null)
+            {
+                AddItemEffects(itemEffects, index, item.effectRanges);
+                GetItemEffectRangePositions(index, ref itemEffectRangeChanges);
+            }
 			onHeldItemChange?.Invoke(index);
+            
+
+            foreach(int effectChangeIndex in itemEffectRangeChanges) 
+            {
+                onItemEffectsChange?.Invoke(effectChangeIndex);
+            }
         }
     }
 
@@ -435,7 +492,7 @@ public partial class ItemManager : Node
         bool isSuccess = false;
         for (int i = 0; i < heldItems.Count; i++)
         {
-            if (heldItems[i] == null || (heldItems[i] == produce && produce.durability == 1))
+            if ((heldItems[i] == null || (heldItems[i] == produce && produce.durability == 1)) && IsAreaEffect(areas, i, AreaIndex.Normal))
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
                 SetHeldItem(i, item);
@@ -555,21 +612,6 @@ public partial class ItemManager : Node
         {
             for(int i = 0; i < monsters.Count; i++) 
             {
-                /*
-                if (monsters[0].Value.data.nowHp > 0) 
-                {
-                    monsters[0].Value.data.Damage(attcker.attackPoint);
-                    attcker.durability = Math.Max(0, attcker.durability - 1);
-                    GameManager.instance.mapManager.PlayFX(attcker.fx, monsters[0].Value.GlobalPosition);
-                    GameManager.instance.cameraManager.ShakeCamera(3);
-                    if (attcker.sound != null && attcker.sound != "" ) 
-                    {
-                        GameManager.instance.soundManager.PlaySound(attcker.sound);
-                    }
-                    isAttack = true;
-                    break;
-                }
-                */
                 if (monsters[0].Value.data.nowHp > 0) 
                 {
                     if (attacker is ItemBaseResource item) 
@@ -824,4 +866,218 @@ public partial class ItemManager : Node
         return result;
     }
 
+
+    public void RefreshAreas(Godot.Collections.Array<AreaIndex> targetArea, Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> useUtemEffects) 
+    {
+        //Debug.Print("RefreshAreas");
+        ClearArea(targetArea);
+        for (int i = 0; i < itemNum; i++)
+        {
+            if(useUtemEffects.TryGetValue(i, out Godot.Collections.Array<ItemEffect> records)) 
+            {
+                for(int j = 0; j < records.Count; j++) 
+                {
+                    AddAreaEffect(targetArea, i, records[j].type);
+                }
+            }
+        }
+    }
+
+    public int GetEffectPosition(int itemPosition, Vector2I effectPosition)
+    {
+        return itemPosition + effectPosition.X + effectPosition.Y * itemColumnNum;
+    }
+
+    private void ClearArea(Godot.Collections.Array<AreaIndex> target) 
+    {
+        target.Clear();
+        for (int i = 0; i < itemNum; i++) 
+        {
+            if (i < defaultAreas.Count && defaultAreas != null) 
+            {
+                target.Add(defaultAreas[i]);
+            }
+            else 
+            {
+                target.Add(AreaIndex.None);
+            }
+        }
+    }
+
+    private void AddAreaEffect(Godot.Collections.Array<AreaIndex> targetArea, int position, AreaIndex effect) 
+    {
+        targetArea[position] = targetArea[position] | effect;
+    }
+
+    private void RemoveAreaEffect(Godot.Collections.Array<AreaIndex> targetArea, int position, AreaIndex effect) 
+    {
+        targetArea[position] = ~(targetArea[position] | effect);
+    }
+
+    public bool IsCanPut(int position, ItemBaseResource item = null) 
+    {
+        bool result = false;
+        int index = -1;
+
+        for(int i = 0; i < heldItems.Count; i++) 
+        {
+            if (item != null && heldItems[i] == item) 
+            {
+                index = i;
+                break;
+            }
+        }
+
+        Godot.Collections.Array<AreaIndex> tempArea = new Godot.Collections.Array<AreaIndex>();
+        Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> tempItemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
+        foreach(var KV in itemEffects) 
+        {
+            tempItemEffects.Add(KV.Key, new Godot.Collections.Array<ItemEffect>(KV.Value));
+        }
+
+        if (index != -1)
+        {
+            RemoveItemEffects(tempItemEffects, index, item.effectRanges);
+        }
+        RefreshAreas(tempArea, tempItemEffects);
+
+        bool isTargetNormal = false;
+
+        if(IsAreaEffect(tempArea, position, AreaIndex.Normal)) 
+        {
+            isTargetNormal = true;
+        }
+
+        if (!isTargetNormal) 
+        {
+            //Debug.Print($"IsCanPut isTargetNormal false");
+            return result;
+        }
+
+        AddItemEffects(tempItemEffects, position, item.effectRanges);
+        RefreshAreas(tempArea, tempItemEffects);
+        bool isFindError = false;
+        for(int i = 0; i < heldItems.Count; i++)
+        {
+            if (heldItems[i] != null && !IsAreaEffect(tempArea, i, AreaIndex.Normal)) 
+            {
+                isFindError = true;
+                //Debug.Print($"IsCanPut FindError i:{i}");
+                break;
+            }
+        }
+
+        if (isTargetNormal && !isFindError) 
+        {
+            result = true;
+        }
+        //Debug.Print($"IsCanPut result:{result}");
+        return result;
+    }
+
+    public bool IsAreaEffect(Godot.Collections.Array<AreaIndex> targetArea, int position, AreaIndex effect) 
+    {
+        AreaIndex testAreaIndex = AreaIndex.None;
+        if (position > 0 && position < targetArea.Count)
+        {
+            testAreaIndex = targetArea[position];
+        }
+
+        return (testAreaIndex & effect) == effect;
+    }
+
+    private void AddItemEffects(Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> target, int position, Godot.Collections.Array<ItemEffect> itemEffects) 
+    {
+        for(int i = 0; i < itemEffects.Count; i++) 
+        {
+            int effectPosition = GetEffectPosition(position, itemEffects[i].position);
+            if (effectPosition > 0 && effectPosition < itemNum) 
+            {
+                AddItemEffect(target, effectPosition, itemEffects[i]);
+            }
+        }
+    }
+
+    private void AddItemEffect(Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> target, int position, ItemEffect itemEffect) 
+    {
+        if (!target.ContainsKey(position)) 
+        {
+            target.Add(position, new Godot.Collections.Array<ItemEffect>());
+        }
+
+        Godot.Collections.Array<ItemEffect> effects = target[position];
+        if(FindItemEffect(effects, itemEffect) == -1) 
+        {
+            effects.Add(itemEffect);
+            isAreasDirt = true;
+        }
+    }
+
+    private void RemoveItemEffects(Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> target, int position, Godot.Collections.Array<ItemEffect> itemEffects)
+    {
+        for (int i = 0; i < itemEffects.Count; i++)
+        {
+            int effectPosition = GetEffectPosition(position, itemEffects[i].position);
+            if (effectPosition > 0 && effectPosition < itemNum)
+            {
+                RemoveItemEffect(target,effectPosition, itemEffects[i]);
+            }
+        }
+    }
+
+    private void RemoveItemEffect(Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> target, int position, ItemEffect itemEffect) 
+    {
+        if (target.TryGetValue(position, out Godot.Collections.Array<ItemEffect> recordEffects))
+        {
+            int recordPos = FindItemEffect(recordEffects, itemEffect);
+            if (recordPos != -1)
+            {
+                //Debug.Print($"RemoveItemEffect itemEffect:{itemEffect}");
+                recordEffects.RemoveAt(recordPos);
+                isAreasDirt = true;
+                if(recordEffects.Count == 0) 
+                {
+                    target.Remove(position);
+                }
+            }
+            else 
+            {
+                Debug.PrintWarn($"RemoveItemEffect itemEffect 紀錄不存在 itemEffect:{itemEffect}");
+            }
+        }
+        else 
+        {
+            Debug.PrintWarn($"RemoveItemEffect position 紀錄不存在 position:{position}");
+        }
+    }
+
+    private int FindItemEffect(Godot.Collections.Array<ItemEffect> effects, ItemEffect effect) 
+    {
+        int result = -1;
+        for(int i = 0; i < effects.Count; i++) 
+        {
+            if (effects[i].IsSame(effect)) 
+            {
+                result = i;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private void GetItemEffectRangePositions(int index, ref HashSet<int> result) 
+    {
+        for(int i = 0; i < heldItems[index].effectRanges.Count; i++) 
+        {
+            int effectPosition = GetEffectPosition(index, heldItems[index].effectRanges[i].position);
+            if (effectPosition > 0 && effectPosition < itemNum)
+            {
+                if (!result.Contains(effectPosition)) 
+                {
+                    result.Add(effectPosition);
+                }
+            }
+        }
+    }
 }

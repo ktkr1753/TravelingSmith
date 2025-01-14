@@ -28,7 +28,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(457, 80.5)]
+"values": [Vector2(473, 142)]
 }
 
 [sub_resource type="Animation" id="Animation_1avap"]
@@ -45,7 +45,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(457, 80.5), Vector2(624, 80.5)]
+"values": [Vector2(473, 142), Vector2(640, 142)]
 }
 
 [sub_resource type="Animation" id="Animation_5hd6s"]
@@ -62,7 +62,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(624, 80.5), Vector2(457, 80.5)]
+"values": [Vector2(640, 142), Vector2(473, 142)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pmymt"]
@@ -112,14 +112,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 457.0
-offset_top = 80.5
+offset_left = 473.0
+offset_top = 142.0
 offset_right = 640.0
-offset_bottom = 336.5
+offset_bottom = 354.0
 grow_horizontal = 0
 grow_vertical = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 texture = ExtResource("2_va0fp")
@@ -238,7 +239,7 @@ texture_disabled = ExtResource("13_ulo8e")
 stretch_mode = 4
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(160, 144)
+custom_minimum_size = Vector2(160, 100)
 layout_mode = 2
 columns = 4
 

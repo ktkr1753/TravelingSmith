@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://drmvjph2hilb8"]
+
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementArea.cs" id="1_b4t7b"]
+
+[node name="ItemElementArea" type="PanelContainer" node_paths=PackedStringArray("image")]
+offset_right = 2.0
+offset_bottom = 2.0
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("1_b4t7b")
+image = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+expand_mode = 1

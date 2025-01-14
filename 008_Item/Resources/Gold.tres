@@ -11,6 +11,7 @@ region = Rect2(120, 0, 24, 24)
 script = ExtResource("1_roho5")
 index = 602
 texture = SubResource("AtlasTexture_nvgma")
+effectRanges = []
 money = 4
 rank = 0
 isSellable = true

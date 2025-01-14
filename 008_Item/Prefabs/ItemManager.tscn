@@ -1,11 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://kdruv63w5u5v"]
+[gd_scene load_steps=2 format=3 uid="uid://kdruv63w5u5v"]
 
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemManager.cs" id="1_uxduj"]
-[ext_resource type="Resource" uid="uid://ci0dwfoesff3x" path="res://022_Area/Resources/Normal.tres" id="2_hu3m5"]
-[ext_resource type="Resource" uid="uid://lk3tba7pttru" path="res://022_Area/Resources/Core.tres" id="3_5cel0"]
-[ext_resource type="Resource" uid="uid://36i6legdrwls" path="res://022_Area/Resources/Produce.tres" id="3_8plqd"]
-[ext_resource type="Resource" uid="uid://cgnk5gqxw0ik5" path="res://022_Area/Resources/Useable.tres" id="4_gk4s8"]
 
 [node name="ItemManager" type="Node2D"]
 script = ExtResource("1_uxduj")
-areas = [ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("2_hu3m5"), ExtResource("3_5cel0"), ExtResource("3_8plqd"), ExtResource("3_8plqd"), ExtResource("3_8plqd"), ExtResource("4_gk4s8")]
+defaultAreas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

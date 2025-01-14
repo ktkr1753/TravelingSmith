@@ -6,6 +6,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
 {
     [Export] public ItemIndex index;
     [Export] public Texture2D texture;
+    [Export] public Godot.Collections.Array<ItemEffect> effectRanges = new Godot.Collections.Array<ItemEffect>();
     [Export] public int money = 0;
     [Export] public int rank = 0;
     [Export] public bool isSellable = true;
@@ -15,6 +16,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
         ItemBaseResource result = CreateInstanceForClone();
         result.index = index;
         result.texture = texture;
+        result.effectRanges = effectRanges.Clone();
         result.money = money;
         result.rank = rank;
         result.isSellable = isSellable;

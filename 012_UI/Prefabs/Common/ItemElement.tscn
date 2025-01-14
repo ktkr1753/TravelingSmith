@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5x05yhvprj4w"]
+[gd_scene load_steps=16 format=3 uid="uid://b5x05yhvprj4w"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
 [ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_h72xt"]
 [ext_resource type="Texture2D" uid="uid://dk7nuokvm64vb" path="res://012_UI/Images/circleProgress.png" id="3_mmttk"]
+[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementAreaPool.cs" id="3_yi2pd"]
 [ext_resource type="Script" path="res://002_Tools/Scripts/MultiButton.cs" id="4_lbqt4"]
+[ext_resource type="PackedScene" uid="uid://drmvjph2hilb8" path="res://012_UI/Prefabs/Common/ItemElementArea.tscn" id="4_sbhrf"]
 [ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="5_rc377"]
 [ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="6_upqt5"]
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="7_fw5hp"]
@@ -65,14 +67,14 @@ _data = {
 "shine": SubResource("Animation_kqq2o")
 }
 
-[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "areaImage", "image", "productImage", "durabilityLabel", "selectedHint", "mainButton", "dropButton", "circleProgressImage")]
+[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "areaPool", "image", "productImage", "durabilityLabel", "selectedHint", "mainButton", "dropButton", "circleProgressImage")]
 offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("1_nckdc")
 animation = NodePath("AnimationPlayer")
-areaImage = NodePath("MarginContainer/PanelContainer/AreaImage")
+areaPool = NodePath("MarginContainer/PanelContainer")
 image = NodePath("MarginContainer/PanelContainer/ItemImage")
 productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")
 durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
@@ -97,16 +99,23 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 2
 mouse_filter = 2
 theme_type_variation = &"PanelContainer_Clear"
+script = ExtResource("3_yi2pd")
+prefab = ExtResource("4_sbhrf")
+parent = NodePath("AreaGrid")
+backup = NodePath("BackupArea")
 
-[node name="AreaImage" type="TextureRect" parent="MarginContainer/PanelContainer"]
-custom_minimum_size = Vector2(24, 24)
+[node name="AreaGrid" type="GridContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
-expand_mode = 1
+columns = 7
+
+[node name="BackupArea" type="Control" parent="MarginContainer/PanelContainer"]
+visible = false
+layout_mode = 2
 
 [node name="ItemImage" type="TextureRect" parent="MarginContainer/PanelContainer"]
 custom_minimum_size = Vector2(24, 24)

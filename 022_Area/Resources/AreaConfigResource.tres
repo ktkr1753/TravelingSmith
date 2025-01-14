@@ -1,16 +1,18 @@
-[gd_resource type="Resource" script_class="AreaConfigResource" load_steps=6 format=3 uid="uid://c6557ptd7inj"]
+[gd_resource type="Resource" script_class="AreaConfigResource" load_steps=7 format=3 uid="uid://c6557ptd7inj"]
 
 [ext_resource type="Script" path="res://022_Area/Scripts/AreaConfigResource.cs" id="1_7j0dm"]
 [ext_resource type="Resource" uid="uid://ci0dwfoesff3x" path="res://022_Area/Resources/Normal.tres" id="1_a0y8x"]
 [ext_resource type="Resource" uid="uid://36i6legdrwls" path="res://022_Area/Resources/Produce.tres" id="2_45yqq"]
 [ext_resource type="Resource" uid="uid://cgnk5gqxw0ik5" path="res://022_Area/Resources/Useable.tres" id="3_ea4d4"]
 [ext_resource type="Resource" uid="uid://lk3tba7pttru" path="res://022_Area/Resources/Core.tres" id="4_0ej3i"]
+[ext_resource type="Resource" uid="uid://gdr3napktc7k" path="res://022_Area/Resources/None.tres" id="5_1ge1r"]
 
 [resource]
 script = ExtResource("1_7j0dm")
 config = {
+0: ExtResource("5_1ge1r"),
 1: ExtResource("1_a0y8x"),
 2: ExtResource("2_45yqq"),
-3: ExtResource("3_ea4d4"),
-4: ExtResource("4_0ej3i")
+4: ExtResource("3_ea4d4"),
+8: ExtResource("4_0ej3i")
 }

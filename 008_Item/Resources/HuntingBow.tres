@@ -19,6 +19,7 @@ nowTime = 0.0
 isUsing = false
 index = 3
 texture = SubResource("AtlasTexture_vojc8")
+effectRanges = []
 money = 3
 rank = 0
 isSellable = true

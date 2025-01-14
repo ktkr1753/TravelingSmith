@@ -37,6 +37,7 @@ public enum ItemIndex
     RecipeGoldForge = 220,
     RecipeTitaniumForge = 221,
     RecipeFlareGemstoneBurin = 222,
+    RecipeWoodenChest = 223,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
@@ -59,4 +60,6 @@ public enum ItemIndex
     Stone = 609,
     IronOre = 610,
     Paper = 611,
+    //場域 701~800
+    WoodenChest = 701,
 }

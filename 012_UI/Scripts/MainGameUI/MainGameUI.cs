@@ -143,6 +143,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onMoveAccelerationChange += OnAccelerationChange;
         GameManager.instance.itemManager.onMoveSpeedChange += OnSpeedChange;
         GameManager.instance.itemManager.onHeldItemChange += OnHeldItemChange;
+        GameManager.instance.itemManager.onItemEffectsChange += OnItemEffectChange;
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
         GameManager.instance.battleManager.onHPChange += OnHpChange;
@@ -159,6 +160,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onMoveAccelerationChange -= OnAccelerationChange;
         GameManager.instance.itemManager.onMoveSpeedChange -= OnSpeedChange;
         GameManager.instance.itemManager.onHeldItemChange -= OnHeldItemChange;
+        GameManager.instance.itemManager.onItemEffectsChange -= OnItemEffectChange;
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
         GameManager.instance.battleManager.onHPChange -= OnHpChange;
@@ -211,82 +213,65 @@ public partial class MainGameUI : UIBase
     {
         for(int i = 0; i < GameManager.instance.itemManager.heldItems.Count && i < GameManager.instance.itemManager.areas.Count; i++) 
         {
-            ItemBaseResource item = GameManager.instance.itemManager.heldItems[i];
-            switch (GameManager.instance.itemManager.areas[i].index)
-            {
-                case AreaIndex.Normal:
-                    {
-                        if (item is IProduce produce && produce.isProducing)
-                        {
-                            produce.StopProduce();
-                        }
-                        else if (item is IUseable useable && useable.isUsing)
-                        {
-                            useable.StopUsing();
-                        }
-                        else if (item is ICore core && core.isUsing) 
-                        {
-                            core.StopCore();
-                        }
-                    }
-                    break;
-                case AreaIndex.Produce:
-                    {
-                        if (item is IProduce produce && !produce.isProducing)
-                        {
-                            bool isFail = false;
-                            if (item is IMake make && !make.isCostMaterial)
-                            {
-                                isFail = !GameManager.instance.itemManager.Make(make, elements);
-                            }
+            bool isProduce = false;
+            bool isUsing = false;
+            bool isCore = false;
 
-                            if (!isFail)
-                            {
-                                produce.StartProduce();
-                            }
-                        }
-                        else if (item is IUseable useable && useable.isUsing)
-                        {
-                            useable.StopUsing();
-                        }
-                        else if (item is ICore core && core.isUsing)
-                        {
-                            core.StopCore();
-                        }
-                    }
-                    break;
-                case AreaIndex.Useable:
+            ItemBaseResource item = GameManager.instance.itemManager.heldItems[i];
+            if (GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, i, AreaIndex.Produce))
+            {
+                isProduce = true;
+            }
+            if (GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, i, AreaIndex.Useable))
+            {
+                isUsing = true;
+            }
+            if (GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, i, AreaIndex.Core))
+            {
+                isCore = true;
+            }
+
+            if (item is IProduce produce)
+            {
+                if(isProduce && !produce.isProducing) 
+                {
+                    bool isFail = false;
+                    if (item is IMake make && !make.isCostMaterial)
                     {
-                        if (item is IProduce produce && produce.isProducing)
-                        {
-                            produce.StopProduce();
-                        }
-                        else if (item is IUseable useable && !useable.isUsing)
-                        {
-                            useable.StartUsing();
-                        }
-                        else if (item is ICore core && core.isUsing)
-                        {
-                            core.StopCore();
-                        }
+                        isFail = !GameManager.instance.itemManager.Make(make, elements);
                     }
-                    break;
-                case AreaIndex.Core: 
+
+                    if (!isFail)
                     {
-                        if (item is IProduce produce && produce.isProducing)
-                        {
-                            produce.StopProduce();
-                        }
-                        else if (item is IUseable useable && useable.isUsing)
-                        {
-                            useable.StopUsing();
-                        }
-                        else if (item is ICore core && !core.isUsing)
-                        {
-                            core.StartCore();
-                        }
+                        produce.StartProduce();
                     }
-                    break;
+                }
+                else if (!isProduce && produce.isProducing) 
+                {
+                    produce.StopProduce();
+                }
+            }
+            else if (item is IUseable useable) 
+            {
+                if (isUsing && !useable.isUsing)
+                {
+                    useable.StartUsing();
+                }
+                else if(!isUsing && useable.isUsing)
+                {
+                    useable.StopUsing();
+                }
+            }
+            else if(item is ICore core) 
+            {
+                if (isCore && !core.isUsing) 
+                {
+                    core.StartCore();
+                }
+                else if (!isCore && core.isUsing) 
+                {
+                    core.StopCore();
+                }
             }
         }
     }
@@ -310,6 +295,11 @@ public partial class MainGameUI : UIBase
     public void RefreshItemElement(int index, ItemBaseResource item)
     {
 		elements[index].SetData(index, item);
+    }
+
+    private void RefreshItemEffect(int index) 
+    {
+        elements[index].SetArea(GameManager.instance.itemManager.areas[index]);
     }
 
     private void SetMoveButtonImage()
@@ -482,7 +472,7 @@ public partial class MainGameUI : UIBase
 
     public Vector2 GetInfoPanelPos(int index) 
     {
-        Vector2 result = new Vector2(190 + index * 25, 143 + index * 25);
+        Vector2 result = new Vector2(30 + (nowSelectedElementIndex % ItemManager.itemColumnNum) * 32 + index * 25, 170 + (nowSelectedElementIndex / ItemManager.itemColumnNum) * 32  + index * 25);
         return result;
     }
 
@@ -524,7 +514,8 @@ public partial class MainGameUI : UIBase
 
         if (pickedItem != null)
         {
-            if(nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex) 
+            if(nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex
+                && GameManager.instance.itemManager.IsCanPut(nowEnterElementIndex, pickedItem)) 
             {
                 putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
                 GameManager.instance.itemManager.SetHeldItem(nowPickElementIndex, putItem);
@@ -639,8 +630,8 @@ public partial class MainGameUI : UIBase
     private void OnHeldItemChange(int index) 
     {
         RefreshItemElement(index, GameManager.instance.itemManager.heldItems[index]);
-        
-        if(index == nowPickElementIndex) 
+
+        if (index == nowPickElementIndex) 
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
             SetPickedItemElement(item);
@@ -651,6 +642,11 @@ public partial class MainGameUI : UIBase
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowSelectedElementIndex];
             SetInfoPanel(0, item);
         }
+    }
+
+    private void OnItemEffectChange(int index) 
+    {
+        RefreshItemEffect(index);
     }
 
     private void OnHpChange(int preHP,int nowHP) 
