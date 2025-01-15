@@ -297,9 +297,9 @@ public partial class MainGameUI : UIBase
 		elements[index].SetData(index, item);
     }
 
-    private void RefreshItemEffect(int index) 
+    private void RefreshItemEffect(int index, AreaIndex area) 
     {
-        elements[index].SetArea(GameManager.instance.itemManager.areas[index]);
+        elements[index].SetArea(area);
     }
 
     private void SetMoveButtonImage()
@@ -482,6 +482,27 @@ public partial class MainGameUI : UIBase
         {
             nowEnterElementIndex = index;
             //Debug.Print($"OnElementMouseEnter index:{nowEnterElementIndex}");
+
+            if (nowPickElementIndex != -1)
+            {
+                Godot.Collections.Array<AreaIndex> tempAreas = GameManager.instance.itemManager.TempAreaChange(GameManager.instance.itemManager.heldItems[nowPickElementIndex], _nowEnterElementIndex, nowPickElementIndex);
+                for(int i = 0; i < tempAreas.Count; i++) 
+                {
+                    RefreshItemEffect(i, tempAreas[i]);
+                }
+            }
+            else 
+            {
+                ShopUI shopUI = GameManager.instance.uiManager.GetOpenedUI<ShopUI>(UIIndex.ShopUI);
+                if (shopUI != null && shopUI.nowPickElementIndex != -1)
+                {
+                    Godot.Collections.Array<AreaIndex> tempAreas = GameManager.instance.itemManager.TempAreaChange(shopUI.sellItems[nowPickElementIndex], _nowEnterElementIndex);
+                    for (int i = 0; i < tempAreas.Count; i++)
+                    {
+                        RefreshItemEffect(i, tempAreas[i]);
+                    }
+                }
+            }
         }
     }
 
@@ -491,6 +512,10 @@ public partial class MainGameUI : UIBase
         {
             nowEnterElementIndex = -1;
             //Debug.Print($"OnElementMouseExit index:{nowEnterElementIndex}");
+            for (int i = 0; i < GameManager.instance.itemManager.areas.Count; i++)
+            {
+                RefreshItemEffect(i, GameManager.instance.itemManager.areas[i]);
+            }
         }
     }
 
@@ -514,7 +539,12 @@ public partial class MainGameUI : UIBase
 
         if (pickedItem != null)
         {
-            if(nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex
+            for (int i = 0; i < GameManager.instance.itemManager.areas.Count; i++)
+            {
+                RefreshItemEffect(i, GameManager.instance.itemManager.areas[i]);
+            }
+
+            if (nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex
                 && GameManager.instance.itemManager.IsCanPut(nowEnterElementIndex, pickedItem)) 
             {
                 putItem = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
@@ -646,7 +676,7 @@ public partial class MainGameUI : UIBase
 
     private void OnItemEffectChange(int index) 
     {
-        RefreshItemEffect(index);
+        RefreshItemEffect(index, GameManager.instance.itemManager.areas[index]);
     }
 
     private void OnHpChange(int preHP,int nowHP) 

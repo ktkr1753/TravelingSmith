@@ -6,12 +6,24 @@ public partial class MapItemObject : Node2D
     [Export] public Sprite2D image;
     [Export] public Area2D area;
     [Export] public Material outLineMaterial;
-    private ItemBaseResource item;
+    private ItemBaseResource _item;
+    public ItemBaseResource item 
+    {
+        get { return _item; }
+        private set { _item = value; }
+    }
 
     private bool _isPicked = false;
     public bool isPicked
     {
         get { return _isPicked; }
+    }
+
+    public bool _isTouched = false;
+    public bool isTouched 
+    {
+        get { return _isTouched; }
+        set { _isTouched = value; }
     }
 
     public event Action<MapItemObject> OnNeedReturn;
@@ -21,8 +33,17 @@ public partial class MapItemObject : Node2D
     public void SetData(ItemBaseResource item)
     {
         this.item = item;
+        ResetSetIsTouched();
         SetArea();
         SetView();
+    }
+
+    private void ResetSetIsTouched() 
+    {
+        if(item != null) 
+        {
+            isTouched = false;
+        }
     }
 
     public void SetView()

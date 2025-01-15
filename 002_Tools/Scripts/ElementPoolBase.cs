@@ -43,6 +43,9 @@ public partial class ElementPoolBase<T2> : Node where T2 : Node
     {
         element.SetParent(backup);
         inuses.Remove(element);
-        unuses.Enqueue(element);
+        if (!unuses.Contains(element)) //避免多次return導致問題
+        {
+            unuses.Enqueue(element);
+        }
     }
 }

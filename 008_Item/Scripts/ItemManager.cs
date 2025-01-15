@@ -78,11 +78,6 @@ public partial class ItemManager : Node
 
     [Export] public Godot.Collections.Array<AreaIndex> areas 
     {
-        /*
-        get { return _areas; }
-        private set { _areas = value; }
-        */
-
         get {
             if (isAreasDirt) 
             {
@@ -853,16 +848,7 @@ public partial class ItemManager : Node
     public int GetBuyMoney(ItemBaseResource item) 
     {
         int result = 0;
-
-        if(item is IProduce) 
-        {
-            result = item.money * 5;
-        }
-        else 
-        {
-            result = item.money * 2;
-        }
-
+        result = item.money * 2;
         return result;
     }
 
@@ -885,7 +871,22 @@ public partial class ItemManager : Node
 
     public int GetEffectPosition(int itemPosition, Vector2I effectPosition)
     {
-        return itemPosition + effectPosition.X + effectPosition.Y * itemColumnNum;
+        int result = -1;
+        Vector2I itemVector2 = new Vector2I(itemPosition % itemColumnNum, itemPosition / itemColumnNum);
+        
+        int x = itemVector2.X + effectPosition.X;
+        int y = itemVector2.Y + effectPosition.Y;
+        if ((x < itemColumnNum && x >= 0) && 
+            (y < itemColumnNum && y >= 0)) 
+        {
+            result = y * itemColumnNum + x;
+            if(result >= itemNum) 
+            {
+                result = -1;
+            }
+        }
+
+        return result;
     }
 
     private void ClearArea(Godot.Collections.Array<AreaIndex> target) 
@@ -1079,5 +1080,25 @@ public partial class ItemManager : Node
                 }
             }
         }
+    }
+
+    //依據新增1個道具(並且可減少1個道具)的變化得出變化後的Areas
+    public Godot.Collections.Array<AreaIndex> TempAreaChange(ItemBaseResource item, int itemPosition, int removeItemPosition = -1) 
+    {
+        Godot.Collections.Array<AreaIndex> tempArea = new Godot.Collections.Array<AreaIndex>();
+        Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> tempItemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
+        foreach (var KV in itemEffects)
+        {
+            tempItemEffects.Add(KV.Key, new Godot.Collections.Array<ItemEffect>(KV.Value));
+        }
+
+        if(removeItemPosition != -1) 
+        {
+            RemoveItemEffects(tempItemEffects, removeItemPosition, heldItems[removeItemPosition].effectRanges);
+        }
+        AddItemEffects(tempItemEffects, itemPosition, item.effectRanges);
+        RefreshAreas(tempArea, tempItemEffects);
+
+        return tempArea;
     }
 }

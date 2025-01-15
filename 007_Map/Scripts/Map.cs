@@ -270,17 +270,15 @@ public partial class Map : Node2D
     {
         while(((nowCreateRoadIndex + 1) * 640 - createItemMinDistance) / createItemDistance > createItemCount)
         {
-            List<int> rndYFixGrid = GameManager.instance.randomManager.GetNotRepeatList(RandomType.Other, -1, 4);
+            Queue<int> rndYFixGrid = new Queue<int>(GameManager.instance.randomManager.GetNotRepeatList(RandomType.Other, -1, 4));
             for (int i = 0; i < mapDropItems.Count; i++) 
             {
                 float rnd = GameManager.instance.randomManager.GetRange(RandomType.DropItem, 0f, 1f);
                 if (rnd <= mapDropItems[i].dropRate && rndYFixGrid.Count > 0) 
                 {
-                    int rndYFix = rndYFixGrid[0] * 16;
+                    int rndYFix = rndYFixGrid.Dequeue() * 16;
                     Vector2 itemGlobalPos = new Vector2((float)(createItemMinDistance + createItemDistance * (createItemCount + 1)), targetPoint.GlobalPosition.Y + rndYFix);
                     MapItemObject itemObj = CreateMapItem(mapDropItems[i].itemIndex, itemGlobalPos);
-                    //Debug.Print($"CreateRandomMapItem itemGlobalPos:{itemGlobalPos}");
-                    rndYFixGrid.RemoveAt(0);
                 }
             }
             createItemCount++;
@@ -293,6 +291,7 @@ public partial class Map : Node2D
         if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item))
         {
             itemObject = itemPool.GetElement();
+            itemObject.OnNeedReturn -= OnMapItemNeedReturn;
             itemObject.OnNeedReturn += OnMapItemNeedReturn;
             itemObject.GlobalPosition = globalPos;
             itemObject.SetData(item);
@@ -359,6 +358,7 @@ public partial class Map : Node2D
 
     private void OnMapItemNeedReturn(MapItemObject mapItem) 
     {
+        //Debug.Print($"OnMapItemNeedReturn mapItem:{mapItem.item.index}, itemGlobalPos:{mapItem.GlobalPosition}");
         mapItem.OnNeedReturn -= OnMapItemNeedReturn;
         mapItem.SetData(null);
         itemPool.ReturnElement(mapItem);
@@ -367,8 +367,9 @@ public partial class Map : Node2D
     private void OnMapItemTouchDeadLine(Area2D area) 
     {
         //要等到ProcessFrame時才能處理，不然會報錯
-        if (area.Owner is MapItemObject mapItem) 
+        if (area.Owner is MapItemObject mapItem && !mapItem.isTouched) 
         {
+            mapItem.isTouched = true;
             WaitReturnMapItem(mapItem);
         }
         else if(area.Owner is MonsterObject monster) 

@@ -135,20 +135,73 @@ public partial class ShopUI : UIBase
         List<ItemIndex> indexs = new List<ItemIndex>();
         foreach (ItemIndex itemIndex in GameManager.instance.itemConfig.config.Keys) 
         {
-            if(GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item)) 
+            if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item)) 
             {
-                /*
-                if(item is CommodityResource commodity || !item.isSellable) 
-                {
-                    continue;
-                }
-                */
                 if(item is MaterialResource && item.isSellable) 
                 {
-                    indexs.Add(itemIndex);
+                    switch (itemIndex) 
+                    {
+                        case ItemIndex.Iron:
+                            {
+                                if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeIronForge)) 
+                                {
+                                    indexs.Add(itemIndex);
+                                }
+                            }
+                            continue;
+                        case ItemIndex.Titanium:
+                            {
+                                if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeTitaniumForge))
+                                {
+                                    indexs.Add(itemIndex);
+                                }
+                            }
+                            continue;
+                        case ItemIndex.FlareGemstoneOre:
+                            {
+                                if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeFlareGemstonePickaxe))
+                                {
+                                    indexs.Add(itemIndex);
+                                }
+                            }
+                            continue;
+                        case ItemIndex.FlareGemstone: 
+                            {
+                                if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeFlareGemstoneBurin))
+                                {
+                                    indexs.Add(itemIndex);
+                                }
+                            }
+                            break;
+                        case ItemIndex.IronOre:  
+                            {
+                                if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipePickaxe))
+                                {
+                                    indexs.Add(itemIndex);
+                                }
+                            }
+                            continue;
+                        case ItemIndex.Stone:
+                        case ItemIndex.GoldOre:
+                        case ItemIndex.Branch:
+                            {
+                                indexs.Add(itemIndex);
+                            }
+                            continue;
+                    }
+                }
+                else if(item is RecipeResource recipe && recipe.type == MakeType.Paper && recipe.isSellable) 
+                {
+                    HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
+                    if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(recipe.index) || waitUnlockRecipe.Contains(recipe.index)) 
+                    {
+                        indexs.Add(itemIndex);
+                    }
                 }
             }
         }
+
+        Debug.Print($"indexs:{indexs.ToStringExtended()}");
 
         for(int i = 0; i < 5; i++) 
         {
@@ -324,6 +377,11 @@ public partial class ShopUI : UIBase
                         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
                         ClearShopItemElementData(element);
                         itemPool.ReturnElement(element);
+
+                        if(pickedItem is RecipeResource recipe && recipe.type == MakeType.Paper) 
+                        {
+                            GameManager.instance.unlockRecipe.AddUnlockRecipe(recipe.index);
+                        }
                     }
                 }
             }

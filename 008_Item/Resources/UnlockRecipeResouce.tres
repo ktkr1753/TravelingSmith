@@ -26,4 +26,4 @@ data = [211]
 [resource]
 script = ExtResource("1_qqwbv")
 unlockRecipeOrder = [SubResource("Resource_lwy24"), SubResource("Resource_fdkej"), SubResource("Resource_n3g72"), SubResource("Resource_pl2qv"), SubResource("Resource_tvh1k")]
-unlockedRecipes = null
+unlockedRecipes = Array[int]([])
