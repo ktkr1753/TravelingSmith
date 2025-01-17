@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=52 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=56 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -51,6 +51,10 @@
 [ext_resource type="Resource" uid="uid://cpnumwyr1ebn" path="res://008_Item/Resources/RecipeFlareGemstoneBurin.tres" id="48_bj6fe"]
 [ext_resource type="Resource" uid="uid://dg7oq4qenuodn" path="res://008_Item/Resources/RecipeWoodenChest.tres" id="49_unrnx"]
 [ext_resource type="Resource" uid="uid://pmwn5fs4lndf" path="res://008_Item/Resources/WoodenChest.tres" id="50_tml0n"]
+[ext_resource type="Resource" uid="uid://t5dwn7bpeqtd" path="res://008_Item/Resources/Torch.tres" id="51_504qk"]
+[ext_resource type="Resource" uid="uid://cfb70myxtd070" path="res://008_Item/Resources/RecipeTorch.tres" id="52_jsxlf"]
+[ext_resource type="Resource" uid="uid://dtn8i8nfsdujf" path="res://008_Item/Resources/IronChest.tres" id="53_0hx04"]
+[ext_resource type="Resource" uid="uid://v413bwrljua8" path="res://008_Item/Resources/RecipeIronChest.tres" id="54_w28f2"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -86,6 +90,8 @@ config = {
 221: ExtResource("46_3noxr"),
 222: ExtResource("48_bj6fe"),
 223: ExtResource("49_unrnx"),
+224: ExtResource("52_jsxlf"),
+225: ExtResource("54_w28f2"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 303: ExtResource("28_hkpuh"),
@@ -104,5 +110,7 @@ config = {
 609: ExtResource("38_7ivvn"),
 610: ExtResource("40_0ki3g"),
 611: ExtResource("47_0xt5w"),
-701: ExtResource("50_tml0n")
+701: ExtResource("50_tml0n"),
+702: ExtResource("51_504qk"),
+703: ExtResource("53_0hx04")
 }

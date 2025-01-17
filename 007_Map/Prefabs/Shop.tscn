@@ -1,8 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://b31ks470twpcf"]
+[gd_scene load_steps=3 format=3 uid="uid://b31ks470twpcf"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/ShopObject.cs" id="1_6b2mc"]
+[ext_resource type="PackedScene" uid="uid://drqowwe4xo0sr" path="res://007_Map/Prefabs/MapCharacter_02.tscn" id="2_yopc7"]
 
-[node name="Shop" type="Node2D"]
+[node name="Shop" type="Node2D" node_paths=PackedStringArray("character", "enterShopNode", "exitShopNode")]
 script = ExtResource("1_6b2mc")
+character = NodePath("MapCharacter_02")
+enterShopNode = NodePath("EnterShopNode")
+exitShopNode = NodePath("ExitShopNode")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="MapCharacter_02" parent="." instance=ExtResource("2_yopc7")]
+position = Vector2(0, -96)
+
+[node name="EnterShopNode" type="Node2D" parent="."]
+position = Vector2(-128, 0)
+
+[node name="ExitShopNode" type="Node2D" parent="."]
+position = Vector2(32, 0)

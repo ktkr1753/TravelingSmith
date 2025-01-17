@@ -120,8 +120,8 @@ public partial class ItemManager : Node
     public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
 
 
-    public const int itemNum = 84;
-    public const int itemColumnNum = 14;
+    public const int itemNum = 105;
+    public const int itemColumnNum = 15;
 
     public void Init() 
 	{
@@ -136,18 +136,18 @@ public partial class ItemManager : Node
         for (int i = 0; i < itemNum; i++)
         {
             ItemBaseResource item = null;
-            if (i == 34)
+            if (i == 52)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
             SetHeldItem(i, item);
-            //heldItems.Add(item);
         }
     }
 
     public int AddHeldItem(ItemIndex itemIndex) 
     {
         int index = -1;
+
         for (int i = 0; i < heldItems.Count; i++)
         {
             if (heldItems[i] == null && IsAreaEffect(areas, i, AreaIndex.Normal))
@@ -158,7 +158,6 @@ public partial class ItemManager : Node
                 break;
             }
         }
-
         return index;
     }
 
@@ -311,12 +310,12 @@ public partial class ItemManager : Node
                 if(waitUnlockRecipe.Count > 0 && unlockedRecipe.Count > 0) 
                 {
                     float rndUnlock = GameManager.instance.randomManager.GetRange(RandomType.RandomItem, 0f, 1f);
-                    if (rndUnlock < 0.7)
+                    if (rndUnlock < 2)
                     {
                         getWaitUnlockRandom();
                         //Debug.Print("1");
                     }
-                    else
+                    else //暫時不刷出已解鎖
                     {
                         getUnlockedRandom();
                         //Debug.Print("2");
@@ -485,12 +484,29 @@ public partial class ItemManager : Node
     public bool CreateProduct(IProduce produce)
     {
         bool isSuccess = false;
-        for (int i = 0; i < heldItems.Count; i++)
+
+        int refPosition = -1;
+        for (int i = 0; i < heldItems.Count; i++) 
         {
-            if ((heldItems[i] == null || (heldItems[i] == produce && produce.durability == 1)) && IsAreaEffect(areas, i, AreaIndex.Normal))
+            if (heldItems[i] == produce) 
+            {
+                refPosition = i;
+            }
+        }
+
+        if(refPosition == -1) 
+        {
+            return isSuccess;
+        }
+
+        List<int> checkPoints = GetPointAroundPoints(refPosition);
+        for (int i = 0; i < checkPoints.Count; i++)
+        {
+            int checkPoint = checkPoints[i];
+            if ((heldItems[checkPoint] == null || (heldItems[checkPoint] == produce && produce.durability == 1)) && IsAreaEffect(areas, checkPoint, AreaIndex.Normal))
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
-                SetHeldItem(i, item);
+                SetHeldItem(checkPoint, item);
                 isSuccess = true;
 
                 //有使用次數限制
@@ -502,7 +518,7 @@ public partial class ItemManager : Node
                         produce.StopProduce();
                     }
                 }
-                onCreateProduct?.Invoke(produce, i, item);
+                onCreateProduct?.Invoke(produce, checkPoint, item);
                 break;
             }
         }
@@ -566,7 +582,7 @@ public partial class ItemManager : Node
                         attacker.nowTime = attacker.needTime;
                     }
 
-                    if(attacker.durability <= 0) 
+                    if(attacker.durability == 0) 
                     {
                         for(int i = 0; i < heldItems.Count; i++) 
                         {
@@ -603,7 +619,7 @@ public partial class ItemManager : Node
 
         List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(attacker.range);
 
-        if(attacker.durability > 0 && monsters.Count > 0) 
+        if((attacker.durability > 0 || attacker.durability == -1) && monsters.Count > 0) 
         {
             for(int i = 0; i < monsters.Count; i++) 
             {
@@ -615,8 +631,15 @@ public partial class ItemManager : Node
                         attackObj.SetData(item);
                         if (attackObj != null) 
                         {
-                            attacker.durability = Math.Max(0, attacker.durability - 1);
-                            isAttack = true;
+                            if (attacker.durability > 0) 
+                            {
+                                attacker.durability = Math.Max(0, attacker.durability - 1);
+                                isAttack = true;
+                            }
+                            else if (attacker.durability == -1) 
+                            {
+                                isAttack = true;
+                            }
                         }
                         break;
                     }
@@ -669,7 +692,7 @@ public partial class ItemManager : Node
                         repairing.nowTime = repairing.needTime;
                     }
 
-                    if (repairing.durability <= 0)
+                    if (repairing.durability == 0)
                     {
                         for (int i = 0; i < heldItems.Count; i++)
                         {
@@ -703,11 +726,19 @@ public partial class ItemManager : Node
     private bool Repair(IRepair repairing) 
     {
         bool isSuccess = false;
-        if(repairing.durability > 0 && GameManager.instance.battleManager.nowHP < GameManager.instance.battleManager.maxHP) 
+        if (GameManager.instance.battleManager.nowHP < GameManager.instance.battleManager.maxHP)
         {
-            repairing.durability = Math.Max(0, repairing.durability - 1);
-            GameManager.instance.battleManager.Repair(repairing.repairPoint);
-            isSuccess = true;
+            if(repairing.durability > 0) 
+            {
+                repairing.durability = Math.Max(0, repairing.durability - 1);
+                GameManager.instance.battleManager.Repair(repairing.repairPoint);
+                isSuccess = true;
+            }
+            else if (repairing.durability == -1) 
+            {
+                GameManager.instance.battleManager.Repair(repairing.repairPoint);
+                isSuccess = true;
+            }
         }
 
         return isSuccess;
@@ -1100,5 +1131,126 @@ public partial class ItemManager : Node
         RefreshAreas(tempArea, tempItemEffects);
 
         return tempArea;
+    }
+
+    //從參考點依順序取得周圍的位置, 順序大致如下
+    // 7,8,9
+    // 6,1,2
+    // 5,4,3
+    public List<int> GetPointAroundPoints(int position) 
+    {
+        List<int> result = new List<int>();
+
+        int maxDir = 0;
+        int addX = 0;
+        int addY = 0;
+
+        int type = 0;
+
+        Vector2I vectorPos = new Vector2I(position % itemColumnNum, position / itemColumnNum);
+        Action checkAndAddResult = () =>
+        {
+            Vector2I tempVectorPos = new Vector2I(vectorPos.X + addX, vectorPos.Y + addY);
+            if ((tempVectorPos.X < itemColumnNum && tempVectorPos.X >= 0) &&
+                (tempVectorPos.Y < itemColumnNum && tempVectorPos.Y >= 0))
+            {
+                result.Add(tempVectorPos.Y * itemColumnNum + tempVectorPos.X);
+            }
+        };
+
+        while (result.Count < itemNum) 
+        {
+            if(maxDir == 0) 
+            {
+                result.Add(position);
+                maxDir += 1;
+            }
+            else 
+            {
+                switch (type) 
+                {
+                    case 0:
+                        {
+                            addX = maxDir;
+                            checkAndAddResult();
+
+                            if (Math.Abs(addY + 1) <= maxDir) 
+                            {
+                                addY++;
+                            }
+                            else
+                            {
+                                type = 1;
+                                addX--;
+                            }
+                        }
+                        break;
+                    case 1:
+                        {
+                            checkAndAddResult();
+
+                            if (Math.Abs(addX - 1) <= maxDir) 
+                            {
+                                addX--;
+                            }
+                            else 
+                            {
+                                type = 2;
+                                addY--;
+                            }
+                        }
+                        break;
+                    case 2: 
+                        {
+                            checkAndAddResult();
+
+                            if (Math.Abs(addY - 1) <= maxDir)
+                            {
+                                addY--;
+                            }
+                            else
+                            {
+                                type = 3;
+                                addX++;
+                            }
+                        }
+                        break;
+                    case 3:
+                        {
+                            checkAndAddResult();
+
+                            if (Math.Abs(addX + 1) <= maxDir)
+                            {
+                                addX++;
+                            }
+                            else
+                            {
+                                type = 4;
+                                addY++;
+                            }
+                        }
+                        break;
+                    case 4: 
+                        {
+                            checkAndAddResult();
+
+                            if (addX == maxDir && addY == 0) 
+                            {
+                                type = 0;
+                                maxDir++;
+                            }
+                            else 
+                            {
+                                addY++;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        //Debug.Print($"GetPointAroundPoints position:{position}, result:{result.ToStringExtended()}");
+
+        return result;
     }
 }

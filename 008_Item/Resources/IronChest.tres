@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="RangeResource" load_steps=17 format=3 uid="uid://dtn8i8nfsdujf"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/ItemEffect.cs" id="1_ah60g"]
+[ext_resource type="Script" path="res://008_Item/Scripts/RangeResource.cs" id="1_rfctd"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="3_od18n"]
+
+[sub_resource type="Resource" id="Resource_ya7fc"]
+script = ExtResource("1_ah60g")
+position = Vector2i(1, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_s83lc"]
+script = ExtResource("1_ah60g")
+position = Vector2i(1, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_c18bf"]
+script = ExtResource("1_ah60g")
+position = Vector2i(0, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_ssd8a"]
+script = ExtResource("1_ah60g")
+position = Vector2i(-1, 1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_2al44"]
+script = ExtResource("1_ah60g")
+position = Vector2i(-1, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_j1js3"]
+script = ExtResource("1_ah60g")
+position = Vector2i(-1, -1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_fpmm8"]
+script = ExtResource("1_ah60g")
+position = Vector2i(0, -1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_apme7"]
+script = ExtResource("1_ah60g")
+position = Vector2i(1, -1)
+type = 1
+
+[sub_resource type="Resource" id="Resource_gymuh"]
+script = ExtResource("1_ah60g")
+position = Vector2i(2, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_hll2h"]
+script = ExtResource("1_ah60g")
+position = Vector2i(0, 2)
+type = 1
+
+[sub_resource type="Resource" id="Resource_br5be"]
+script = ExtResource("1_ah60g")
+position = Vector2i(-2, 0)
+type = 1
+
+[sub_resource type="Resource" id="Resource_h1tgp"]
+script = ExtResource("1_ah60g")
+position = Vector2i(0, -2)
+type = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2x8b"]
+atlas = ExtResource("3_od18n")
+region = Rect2(48, 168, 24, 24)
+
+[resource]
+script = ExtResource("1_rfctd")
+index = 702
+texture = SubResource("AtlasTexture_k2x8b")
+effectRanges = [SubResource("Resource_ya7fc"), SubResource("Resource_s83lc"), SubResource("Resource_c18bf"), SubResource("Resource_ssd8a"), SubResource("Resource_2al44"), SubResource("Resource_j1js3"), SubResource("Resource_fpmm8"), SubResource("Resource_apme7"), SubResource("Resource_gymuh"), SubResource("Resource_hll2h"), SubResource("Resource_br5be"), SubResource("Resource_h1tgp")]
+money = 8
+rank = 0
+isSellable = true

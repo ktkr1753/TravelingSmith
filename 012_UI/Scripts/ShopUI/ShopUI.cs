@@ -181,9 +181,7 @@ public partial class ShopUI : UIBase
                                 }
                             }
                             continue;
-                        case ItemIndex.Stone:
                         case ItemIndex.GoldOre:
-                        case ItemIndex.Branch:
                             {
                                 indexs.Add(itemIndex);
                             }
@@ -198,10 +196,14 @@ public partial class ShopUI : UIBase
                         indexs.Add(itemIndex);
                     }
                 }
+                else if(item is SelfToolResource selfTool && selfTool.isSellable) 
+                {
+                    indexs.Add(itemIndex);
+                }
             }
         }
 
-        Debug.Print($"indexs:{indexs.ToStringExtended()}");
+        //Debug.Print($"indexs:{indexs.ToStringExtended()}");
 
         for(int i = 0; i < 5; i++) 
         {

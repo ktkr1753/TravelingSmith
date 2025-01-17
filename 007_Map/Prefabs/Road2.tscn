@@ -16,4 +16,4 @@ tile_map_data = PackedByteArray("AAANAAkAAAAHAAoAAAAUAAcAAAALAAoAAAAXAAcAAAAEAAk
 tile_set = ExtResource("1_r25w3")
 
 [node name="ShopNode" type="Node2D" parent="."]
-position = Vector2(320, 32)
+position = Vector2(320, 48)

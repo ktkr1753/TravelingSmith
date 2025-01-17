@@ -393,8 +393,15 @@ public partial class ItemElement : Control
 
 		if(item is IUseable useable) 
 		{
-            durabilityLabel.Visible = true;
-            durabilityLabel.Text = $"{useable.durability}";
+			if(useable.durability > 0) 
+			{
+				durabilityLabel.Visible = true;
+				durabilityLabel.Text = $"{useable.durability}";
+			}
+			else 
+			{
+                durabilityLabel.Visible = false;
+            }
 		}
 		else if (item is IProduce produce) 
 		{

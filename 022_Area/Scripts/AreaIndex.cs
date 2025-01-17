@@ -9,4 +9,5 @@ public enum AreaIndex
     Produce = 1 << 1,   //2
     Useable = 1 << 2,   //4
     Core = 1 << 3,      //8
+    Fire = 1 << 4,      //16
 }

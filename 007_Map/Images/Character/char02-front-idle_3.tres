@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://x30jdoit3btq"]
+
+[ext_resource type="Texture2D" uid="uid://ektwobdqu447" path="res://007_Map/Images/Character/char02-front-idle.png" id="1_dnoec"]
+
+[resource]
+atlas = ExtResource("1_dnoec")
+region = Rect2(32, 0, 16, 16)

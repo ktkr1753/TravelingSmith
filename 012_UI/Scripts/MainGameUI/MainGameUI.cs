@@ -196,6 +196,7 @@ public partial class MainGameUI : UIBase
                 if(GameManager.instance.itemManager.heldItems[nowSelectedElementIndex] != null) 
                 {
                     nowPickElementIndex = nowSelectedElementIndex;
+                    ReturnInfoPanelElement(0);
                 }
                 else 
                 {
@@ -216,6 +217,7 @@ public partial class MainGameUI : UIBase
             bool isProduce = false;
             bool isUsing = false;
             bool isCore = false;
+            bool isFire = false;
 
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[i];
             if (GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, i, AreaIndex.Produce))
@@ -230,13 +232,77 @@ public partial class MainGameUI : UIBase
             {
                 isCore = true;
             }
+            if(GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, i, AreaIndex.Fire)) 
+            {
+                isFire = true;
+            }
 
             if (item is IProduce produce)
             {
+                if(item is IMake make) 
+                {
+                    switch (make.type) 
+                    {
+                        case MakeType.Paper:
+                            {
+                                if (isProduce && !produce.isProducing)
+                                {
+                                    bool isFail = false;
+                                    if (!make.isCostMaterial) 
+                                    {
+                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
+                                    }
+                                    if (!isFail)
+                                    {
+                                        produce.StartProduce();
+                                    }
+                                }
+                                else if (!isProduce && produce.isProducing)
+                                {
+                                    produce.StopProduce();
+                                }
+                            }
+                            break;
+                        case MakeType.Forge: 
+                            {
+                                if (isFire && !produce.isProducing)
+                                {
+                                    bool isFail = false;
+                                    if (!make.isCostMaterial)
+                                    {
+                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
+                                    }
+                                    if (!isFail)
+                                    {
+                                        produce.StartProduce();
+                                    }
+                                }
+                                else if (!isFire && produce.isProducing)
+                                {
+                                    produce.StopProduce();
+                                }
+                            }
+                            break;
+                    }
+                }
+                else 
+                {
+                    if(isProduce && !produce.isProducing) 
+                    {
+                        produce.StartProduce();
+                    }
+                    else if(!isProduce && produce.isProducing) 
+                    {
+                        produce.StopProduce();
+                    }
+                }
+
+
+                /*
                 if(isProduce && !produce.isProducing) 
                 {
                     bool isFail = false;
-                    if (item is IMake make && !make.isCostMaterial)
+                    if (item is IMake make && make.type == MakeType.Paper && !make.isCostMaterial)
                     {
                         isFail = !GameManager.instance.itemManager.Make(make, elements);
                     }
@@ -250,6 +316,7 @@ public partial class MainGameUI : UIBase
                 {
                     produce.StopProduce();
                 }
+                */
             }
             else if (item is IUseable useable) 
             {
@@ -472,7 +539,7 @@ public partial class MainGameUI : UIBase
 
     public Vector2 GetInfoPanelPos(int index) 
     {
-        Vector2 result = new Vector2(30 + (nowSelectedElementIndex % ItemManager.itemColumnNum) * 32 + index * 25, 170 + (nowSelectedElementIndex / ItemManager.itemColumnNum) * 32  + index * 25);
+        Vector2 result = new Vector2(30 + (nowSelectedElementIndex % ItemManager.itemColumnNum) * 28 + index * 25, 170 + (nowSelectedElementIndex / ItemManager.itemColumnNum) * 28  + index * 25);
         return result;
     }
 
@@ -496,7 +563,7 @@ public partial class MainGameUI : UIBase
                 ShopUI shopUI = GameManager.instance.uiManager.GetOpenedUI<ShopUI>(UIIndex.ShopUI);
                 if (shopUI != null && shopUI.nowPickElementIndex != -1)
                 {
-                    Godot.Collections.Array<AreaIndex> tempAreas = GameManager.instance.itemManager.TempAreaChange(shopUI.sellItems[nowPickElementIndex], _nowEnterElementIndex);
+                    Godot.Collections.Array<AreaIndex> tempAreas = GameManager.instance.itemManager.TempAreaChange(shopUI.sellItems[shopUI.nowPickElementIndex], _nowEnterElementIndex);
                     for (int i = 0; i < tempAreas.Count; i++)
                     {
                         RefreshItemEffect(i, tempAreas[i]);

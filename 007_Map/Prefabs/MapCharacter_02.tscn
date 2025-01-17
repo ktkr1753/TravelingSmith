@@ -1,0 +1,132 @@
+[gd_scene load_steps=28 format=3 uid="uid://drqowwe4xo0sr"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/MapCharacter.cs" id="1_vdwm8"]
+[ext_resource type="Texture2D" uid="uid://o16s68lqfmhj" path="res://007_Map/Images/Character/char02-front-idle_1.tres" id="2_tbpdf"]
+[ext_resource type="Texture2D" uid="uid://8uhc4wvrhc7t" path="res://007_Map/Images/Character/char02-front-idle_2.tres" id="3_0v5hw"]
+[ext_resource type="Texture2D" uid="uid://x30jdoit3btq" path="res://007_Map/Images/Character/char02-front-idle_3.tres" id="4_r457p"]
+[ext_resource type="Texture2D" uid="uid://bxpl3s2g6ai04" path="res://007_Map/Images/Character/char02-front-idle_4.tres" id="5_qnlls"]
+[ext_resource type="Texture2D" uid="uid://b35cjtalupq53" path="res://007_Map/Images/Character/char02-front-walk_1.tres" id="6_kepv8"]
+[ext_resource type="Texture2D" uid="uid://bbgdl27dmtfts" path="res://007_Map/Images/Character/char02-front-walk_2.tres" id="7_kly6d"]
+[ext_resource type="Texture2D" uid="uid://djxrktf3lcda6" path="res://007_Map/Images/Character/char02-front-walk_3.tres" id="8_00h5b"]
+[ext_resource type="Texture2D" uid="uid://bq7fy8hwfrrx6" path="res://007_Map/Images/Character/char02-front-walk_4.tres" id="9_lvih6"]
+[ext_resource type="Texture2D" uid="uid://b3rqqrmgdspp5" path="res://007_Map/Images/Character/char02-front-walk_5.tres" id="10_4251o"]
+[ext_resource type="Texture2D" uid="uid://n4ipkbpnn4kd" path="res://007_Map/Images/Character/char02-front-walk_6.tres" id="11_0alnx"]
+[ext_resource type="Texture2D" uid="uid://dc40cic4ickqv" path="res://007_Map/Images/Character/char02-back-idle_1.tres" id="12_07p7c"]
+[ext_resource type="Texture2D" uid="uid://bejkbv6tf7y3j" path="res://007_Map/Images/Character/char02-back-idle_2.tres" id="13_dp7be"]
+[ext_resource type="Texture2D" uid="uid://cxtn8rsj5cnvs" path="res://007_Map/Images/Character/char02-back-idle_3.tres" id="14_iccgo"]
+[ext_resource type="Texture2D" uid="uid://d1urfxgl2s3ab" path="res://007_Map/Images/Character/char02-back-idle_4.tres" id="15_thcml"]
+[ext_resource type="Texture2D" uid="uid://coddsdm3cy0jy" path="res://007_Map/Images/Character/char02-back-walk_1.tres" id="16_q25tl"]
+[ext_resource type="Texture2D" uid="uid://ccv4pqqgihji0" path="res://007_Map/Images/Character/char02-back-walk_2.tres" id="17_3wlsk"]
+[ext_resource type="Texture2D" uid="uid://d0eux600rgccd" path="res://007_Map/Images/Character/char02-back-walk_3.tres" id="18_ghq24"]
+[ext_resource type="Texture2D" uid="uid://dg5k4map6h2fg" path="res://007_Map/Images/Character/char02-back-walk_4.tres" id="19_erlbm"]
+[ext_resource type="Texture2D" uid="uid://c4pplmea3eone" path="res://007_Map/Images/Character/char02-back-walk_5.tres" id="20_dehv8"]
+[ext_resource type="Texture2D" uid="uid://bbbjcthmgdhdl" path="res://007_Map/Images/Character/char02-back-walk_6.tres" id="21_j0kxm"]
+
+[sub_resource type="Animation" id="Animation_qc01n"]
+resource_name = "front_idle"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_tbpdf"), ExtResource("3_0v5hw"), ExtResource("4_r457p"), ExtResource("5_qnlls")]
+}
+
+[sub_resource type="Animation" id="Animation_cisa8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_tbpdf")]
+}
+
+[sub_resource type="Animation" id="Animation_2cr8v"]
+resource_name = "front_walk"
+length = 1.2
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("6_kepv8"), ExtResource("7_kly6d"), ExtResource("8_00h5b"), ExtResource("9_lvih6"), ExtResource("10_4251o"), ExtResource("11_0alnx")]
+}
+
+[sub_resource type="Animation" id="Animation_k5dp3"]
+resource_name = "back_idle"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("12_07p7c"), ExtResource("13_dp7be"), ExtResource("14_iccgo"), ExtResource("15_thcml")]
+}
+
+[sub_resource type="Animation" id="Animation_qv4is"]
+resource_name = "back_walk"
+length = 1.2
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("16_q25tl"), ExtResource("17_3wlsk"), ExtResource("18_ghq24"), ExtResource("19_erlbm"), ExtResource("20_dehv8"), ExtResource("21_j0kxm")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f4ptx"]
+_data = {
+"RESET": SubResource("Animation_cisa8"),
+"back_idle": SubResource("Animation_k5dp3"),
+"back_walk": SubResource("Animation_qv4is"),
+"front_idle": SubResource("Animation_qc01n"),
+"front_walk": SubResource("Animation_2cr8v")
+}
+
+[node name="MapCharacter_02" type="Node2D" node_paths=PackedStringArray("animation")]
+script = ExtResource("1_vdwm8")
+animation = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f4ptx")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_tbpdf")

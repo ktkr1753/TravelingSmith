@@ -153,7 +153,7 @@ public partial class Map : Node2D
             nowCreateRoadIndex++;
             MapRoadObject road = null;
 
-            if (nowCreateRoadIndex % 5 == 4) //生成商店
+            if (nowCreateRoadIndex % 3 == 2) //生成商店
             {
                 road = UtilityTool.CreateInstance<MapRoadObject>(roadShopPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
 
@@ -188,11 +188,25 @@ public partial class Map : Node2D
         {
             foreach(ShopObject shop in shopObjs) 
             {
-                if(shop.index > visitedShopIndex && targetPoint.GlobalPosition.X >= shop.GlobalPosition.X) 
+                if(shop.index > visitedShopIndex)
                 {
-                    visitedShopIndex = shop.index;
-                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
-                    break;
+                    if (targetPoint.GlobalPosition.X >= shop.GlobalPosition.X)
+                    {
+                        visitedShopIndex = shop.index;
+                        GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
+                        break;
+                    }
+                    else if (targetPoint.GlobalPosition.X >= shop.enterShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.Out)
+                    {
+                        shop.nowCharacterState = ShopObject.CharacterState.In;
+                    }
+                }
+                else if(shop.index == visitedShopIndex) 
+                {
+                    if(targetPoint.GlobalPosition.X >= shop.exitShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.In)
+                    {
+                        shop.nowCharacterState = ShopObject.CharacterState.Out;
+                    }
                 }
             }
         }

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bbbjcthmgdhdl"]
+
+[ext_resource type="Texture2D" uid="uid://dxhgkqqpmur0r" path="res://007_Map/Images/Character/char02-back-walk.png" id="1_bv3qm"]
+
+[resource]
+atlas = ExtResource("1_bv3qm")
+region = Rect2(80, 0, 16, 16)

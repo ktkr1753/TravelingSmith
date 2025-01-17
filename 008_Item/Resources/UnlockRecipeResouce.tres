@@ -1,29 +1,37 @@
-[gd_resource type="Resource" script_class="UnlockRecipeResource" load_steps=8 format=3 uid="uid://bc3qo2s1ne0kn"]
+[gd_resource type="Resource" script_class="UnlockRecipeResource" load_steps=10 format=3 uid="uid://bc3qo2s1ne0kn"]
 
 [ext_resource type="Script" path="res://008_Item/Scripts/UnlockRecipeResource.cs" id="1_qqwbv"]
 [ext_resource type="Script" path="res://008_Item/Scripts/UnlockRecipeGroupResource.cs" id="2_tx4sd"]
 
 [sub_resource type="Resource" id="Resource_lwy24"]
 script = ExtResource("2_tx4sd")
-data = [216, 223]
+data = [223, 217]
 
 [sub_resource type="Resource" id="Resource_fdkej"]
 script = ExtResource("2_tx4sd")
-data = [219, 204, 203]
+data = [204, 203, 216]
+
+[sub_resource type="Resource" id="Resource_san2s"]
+script = ExtResource("2_tx4sd")
+data = [219, 220]
 
 [sub_resource type="Resource" id="Resource_n3g72"]
 script = ExtResource("2_tx4sd")
-data = [201, 202, 208, 217, 218, 220, 221, 214]
+data = [201, 202, 208, 218, 214, 224]
+
+[sub_resource type="Resource" id="Resource_v0pud"]
+script = ExtResource("2_tx4sd")
+data = [210]
+
+[sub_resource type="Resource" id="Resource_b8l16"]
+script = ExtResource("2_tx4sd")
+data = [221, 222]
 
 [sub_resource type="Resource" id="Resource_pl2qv"]
 script = ExtResource("2_tx4sd")
-data = [222, 210, 206]
-
-[sub_resource type="Resource" id="Resource_tvh1k"]
-script = ExtResource("2_tx4sd")
-data = [211]
+data = [206, 211]
 
 [resource]
 script = ExtResource("1_qqwbv")
-unlockRecipeOrder = [SubResource("Resource_lwy24"), SubResource("Resource_fdkej"), SubResource("Resource_n3g72"), SubResource("Resource_pl2qv"), SubResource("Resource_tvh1k")]
+unlockRecipeOrder = [SubResource("Resource_lwy24"), SubResource("Resource_fdkej"), SubResource("Resource_san2s"), SubResource("Resource_n3g72"), SubResource("Resource_v0pud"), SubResource("Resource_b8l16"), SubResource("Resource_pl2qv")]
 unlockedRecipes = Array[int]([])

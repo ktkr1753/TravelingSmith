@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bejkbv6tf7y3j"]
+
+[ext_resource type="Texture2D" uid="uid://d0ympo1ndbv3" path="res://007_Map/Images/Character/char02-back-idle.png" id="1_mhclv"]
+
+[resource]
+atlas = ExtResource("1_mhclv")
+region = Rect2(16, 0, 16, 16)
