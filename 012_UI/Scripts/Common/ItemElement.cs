@@ -33,6 +33,8 @@ public partial class ItemElement : Control
     [Export] private Shader clockMaskShader;
 	[Export] private Color normalColor;
     [Export] private Color pauseColor;
+	[Export] private Color showColor;
+	[Export] private Color hideColor;
 
     private ItemBaseResource _item;
 	public ItemBaseResource item
@@ -217,6 +219,19 @@ public partial class ItemElement : Control
 			{
 				bit = 1 << (i - 1);
 			}
+
+			if(bit == (int)AreaIndex.Normal) 
+			{
+				if((bit & (int)areaIndex) == bit) 
+				{
+					Modulate = showColor;
+                }
+				else 
+				{
+                    Modulate = hideColor;
+                }
+			}
+
 
 
             if ((bit & (int)areaIndex) == bit) 

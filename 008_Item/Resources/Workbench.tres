@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="RangeResource" load_steps=9 format=3 uid="uid://dkgh7hbs64eki"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/RangeResource.cs" id="1_iiixh"]
+[ext_resource type="Script" path="res://008_Item/Scripts/ItemEffect.cs" id="1_v3l78"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="3_bxapx"]
+
+[sub_resource type="Resource" id="Resource_w450p"]
+script = ExtResource("1_v3l78")
+position = Vector2i(1, 0)
+type = 2
+
+[sub_resource type="Resource" id="Resource_j8c2u"]
+script = ExtResource("1_v3l78")
+position = Vector2i(0, 1)
+type = 2
+
+[sub_resource type="Resource" id="Resource_y6pyo"]
+script = ExtResource("1_v3l78")
+position = Vector2i(-1, 0)
+type = 2
+
+[sub_resource type="Resource" id="Resource_ova20"]
+script = ExtResource("1_v3l78")
+position = Vector2i(0, -1)
+type = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkyil"]
+atlas = ExtResource("3_bxapx")
+region = Rect2(72, 168, 24, 24)
+
+[resource]
+script = ExtResource("1_iiixh")
+index = 704
+texture = SubResource("AtlasTexture_nkyil")
+effectRanges = [SubResource("Resource_w450p"), SubResource("Resource_j8c2u"), SubResource("Resource_y6pyo"), SubResource("Resource_ova20")]
+money = 6
+rank = 0
+isSellable = true

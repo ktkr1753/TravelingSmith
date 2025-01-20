@@ -40,6 +40,8 @@ public enum ItemIndex
     RecipeWoodenChest = 223,
     RecipeTorch = 224,
     RecipeIronChest = 225,
+    RecipeWorkbench = 226,
+    RecipeStoneGolem = 227,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
@@ -66,4 +68,6 @@ public enum ItemIndex
     WoodenChest = 701,
     Torch = 702,
     IronChest = 703,
+    Workbench = 704,
+    StoneGolem = 705,
 }

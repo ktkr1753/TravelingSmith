@@ -13,15 +13,15 @@ data = [204, 203, 216]
 
 [sub_resource type="Resource" id="Resource_san2s"]
 script = ExtResource("2_tx4sd")
-data = [219, 220]
+data = [219, 224]
 
 [sub_resource type="Resource" id="Resource_n3g72"]
 script = ExtResource("2_tx4sd")
-data = [201, 202, 208, 218, 214, 224]
+data = [201, 202, 208, 218, 214, 226, 220]
 
 [sub_resource type="Resource" id="Resource_v0pud"]
 script = ExtResource("2_tx4sd")
-data = [210]
+data = [210, 227]
 
 [sub_resource type="Resource" id="Resource_b8l16"]
 script = ExtResource("2_tx4sd")

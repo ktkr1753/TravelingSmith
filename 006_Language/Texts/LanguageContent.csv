@@ -41,6 +41,8 @@ ts_itemName_RecipeFlareGemstoneBurin,Recipe Flare Gemstone Burin,焰火石雕刻
 ts_itemName_RecipeWoodenChest,Recipe Wooden Chest,木箱配方
 ts_itemName_RecipeTorch,Recipe Torch,火炬配方
 ts_itemName_RecipeIronChest,Recipe Iron Chest,鐵箱配方
+ts_itemName_RecipeWorkbench,Recipe Workbench,工作臺配方
+ts_itemName_RecipeStoneGolem,Recipe Stone Golem,石魔像配方
 ts_itemName_Pickaxe,Iron Pickaxe,鐵礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
 ts_itemName_FlareGemstonePickaxe,Flare Gemstone Pickaxe,焰火石礦鎬
@@ -62,6 +64,8 @@ ts_itemName_Paper,Paper,紙
 ts_itemName_WoodenChest,Wooden Chest,木箱
 ts_itemName_Torch,Torch,火炬
 ts_itemName_IronChest,Iron Chest,鐵箱
+ts_itemName_Workbench,Workbench,工作臺
+ts_itemName_StoneGolem,Stone Golem,石魔像
 
 ts_monsterName_Slime,Slime,史萊姆
 ts_monsterName_Beholder,Beholder,眼魔

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="RangeResource" load_steps=6 format=3 uid="uid://bgqbi1ilhgbbs"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/RangeResource.cs" id="1_d1bkt"]
+[ext_resource type="Script" path="res://008_Item/Scripts/ItemEffect.cs" id="1_yeg6n"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="3_4v0se"]
+
+[sub_resource type="Resource" id="Resource_ayi6g"]
+script = ExtResource("1_yeg6n")
+position = Vector2i(0, 1)
+type = 4
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ne7c"]
+atlas = ExtResource("3_4v0se")
+region = Rect2(96, 168, 24, 24)
+
+[resource]
+script = ExtResource("1_d1bkt")
+index = 705
+texture = SubResource("AtlasTexture_5ne7c")
+effectRanges = [SubResource("Resource_ayi6g")]
+money = 6
+rank = 0
+isSellable = true

@@ -514,6 +514,8 @@ visible = false
 layout_mode = 0
 normalColor = Color(0, 0, 0, 0)
 pauseColor = Color(0, 0, 0, 0)
+showColor = Color(0, 0, 0, 0)
+hideColor = Color(0, 0, 0, 0)
 
 [node name="ItemInfoPanelParent" type="Control" parent="." node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 1

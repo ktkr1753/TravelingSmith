@@ -80,7 +80,7 @@ public partial class ShopUI : UIBase
         get 
         {
             int result = 0;
-            result = (int)Math.Ceiling(GameManager.instance.mapManager.nowMap.visitedShopIndex * 0.7) + 1 + (int)Math.Ceiling(refreshCount * 1.5);
+            result = (int)Math.Ceiling(GameManager.instance.mapManager.nowMap.visitedShopIndex * 0.3) + 1 + (int)Math.Ceiling(refreshCount * 1.5);
 
             return result;
         }
@@ -93,7 +93,7 @@ public partial class ShopUI : UIBase
         get
         {
             int result = 0;
-            result = GameManager.instance.mapManager.nowMap.visitedShopIndex + 1 + (int)Math.Ceiling(refreshHeldCount * 0.4);
+            result = (int)((Math.Ceiling(GameManager.instance.mapManager.nowMap.visitedShopIndex * 0.3 + 1) + Math.Ceiling(refreshHeldCount * 0.4)));
             return result;
         }
     }
