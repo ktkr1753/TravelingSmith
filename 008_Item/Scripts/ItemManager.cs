@@ -33,6 +33,25 @@ public partial class ItemManager : Node
     }
 
     public const double brakeAcceleration = -10;
+    public const double crashAcceleration = -50;
+    public const double crashMaxSpeed = 10;
+    public bool _isTouch = false;
+
+    public bool isTouch 
+    {
+        get { return _isTouch; }
+        set 
+        {
+            if( _isTouch != value) 
+            {
+                _isTouch = value;
+                if (_isTouch) 
+                {
+                    moveSpeed =  Math.Clamp(moveSpeed, 0, crashMaxSpeed);
+                }
+            }
+        }
+    }
 
     private double _moveSpeed = 0;
     [Export] public double moveSpeed 
@@ -803,8 +822,11 @@ public partial class ItemManager : Node
             moveAcceleration = brakeAcceleration;
         }
 
-
-        if (moveSpeed < maxSpeed) 
+        if (isTouch) 
+        {
+            moveSpeed = Math.Clamp(addTime * crashAcceleration + moveSpeed, 0, 20);
+        }
+        else if (moveSpeed < maxSpeed) 
         {
             moveSpeed = Math.Clamp(addTime * moveAcceleration + moveSpeed, 0, maxSpeed);
         }

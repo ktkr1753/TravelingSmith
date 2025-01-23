@@ -81,7 +81,7 @@ durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
 selectedHint = NodePath("SelectedHint")
 mainButton = NodePath("Button")
 dropButton = NodePath("Control/TextureButton")
-circleProgressImage = NodePath("MarginContainer/PanelContainer/CircleProgress")
+circleProgressImage = NodePath("MarginContainer/PanelContainer/Control2/CircleProgress")
 clockMaskShader = ExtResource("2_h72xt")
 normalColor = Color(0.1184, 0.74, 0.44992, 0.745098)
 pauseColor = Color(0.67, 0.67, 0.67, 0.745098)
@@ -144,12 +144,23 @@ pivot_offset = Vector2(12, 12)
 mouse_filter = 2
 stretch_mode = 4
 
-[node name="CircleProgress" type="TextureRect" parent="MarginContainer/PanelContainer"]
-visible = false
-self_modulate = Color(0.117647, 0.737255, 0.45098, 1)
+[node name="Control2" type="Control" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="CircleProgress" type="TextureRect" parent="MarginContainer/PanelContainer/Control2"]
+visible = false
+self_modulate = Color(0.117647, 0.737255, 0.45098, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -12.0
+offset_right = 12.0
+grow_vertical = 0
+mouse_filter = 2
 texture = ExtResource("3_mmttk")
+expand_mode = 1
 
 [node name="DurabilityLabel" type="Label" parent="MarginContainer/PanelContainer"]
 custom_minimum_size = Vector2(20, 0)

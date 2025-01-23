@@ -76,7 +76,7 @@ public partial class MonsterObject : Node2D
         anim.Play(clip_idle);
     }
 
-    private void ShowBattleHPInfo(int hpChange) 
+    private void ShowBattleHPInfo(int hpChange, HPChangeType type) 
     {
         BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
 
@@ -84,7 +84,7 @@ public partial class MonsterObject : Node2D
         {
             Vector2 viewPos = (GetViewportRect().Size / 2) + (GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
-            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
+            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos, type);
         }
     }
 
@@ -206,10 +206,10 @@ public partial class MonsterObject : Node2D
         shineMaterial.SetShaderParameter(material_rate, 0.0);
     }
 
-    private void OnHpChange(int preHP,int nowHp) 
+    private void OnHpChange(int preHP,int nowHp, HPChangeType type) 
     {
         SetHpProgressbar();
-        ShowBattleHPInfo(nowHp - preHP);
+        ShowBattleHPInfo(nowHp - preHP, type);
 
         if(nowHp < preHP) 
         {

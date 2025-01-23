@@ -256,8 +256,10 @@ public partial class ItemElement : Control
 		SetProductImage();
         SetDurabilityLabel();
         SetCircleColor();
-        SetCircleProgress(); 
-	}
+        SetCircleProgress();
+		SetNowPercent(0);
+
+    }
 
 	private void SetAreaView() 
 	{
@@ -418,7 +420,7 @@ public partial class ItemElement : Control
                 durabilityLabel.Visible = false;
             }
 		}
-		else if (item is IProduce produce) 
+		else if (item is IProduce produce && !(item is SelfToolResource)) 
 		{
 			if(produce.durability > 0) 
 			{

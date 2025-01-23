@@ -124,6 +124,7 @@ public partial class Map : Node2D
         List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(MonsterObject.closeDistance);
         if(monsters.Count == 0)     //附近有怪物不能動
         {
+            GameManager.instance.itemManager.isTouch = false;
             double addTime = delta * GameManager.instance.gameSpeed;
             Vector2 moveNormal = new Vector2(1, 0);
             targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
@@ -134,13 +135,18 @@ public partial class Map : Node2D
             //Debug.Print($"TargetMove GameManager.instance.itemManager.moveSpeed:{GameManager.instance.itemManager.moveSpeed},damage:{damage}");
             if(damage > 0) 
             {
-                monsters[0].Value.data.Damage(damage);
+                monsters[0].Value.data.Damage(damage, HPChangeType.Crash);
                 GameManager.instance.mapManager.PlayFX(FXEnum.FX1, monsters[0].Value.GlobalPosition);
                 GameManager.instance.cameraManager.ShakeCamera();
                 GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit);
             }
 
-            GameManager.instance.itemManager.moveSpeed = 0;
+            //GameManager.instance.itemManager.moveSpeed = 0;
+
+            GameManager.instance.itemManager.isTouch = true;
+            double addTime = delta * GameManager.instance.gameSpeed;
+            Vector2 moveNormal = new Vector2(1, 0);
+            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
         }
     }
 
@@ -268,7 +274,7 @@ public partial class Map : Node2D
         }
     }
 
-    private void ShowBattleHPInfo(int hpChange)
+    private void ShowBattleHPInfo(int hpChange, HPChangeType type)
     {
         BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
 
@@ -276,7 +282,7 @@ public partial class Map : Node2D
         {
             Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
-            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos);
+            battleInfoUI.ShowMinusHPInfo(-hpChange, showPos, type);
         }
     }
 
@@ -405,8 +411,8 @@ public partial class Map : Node2D
         monster.QueueFree();
     }
 
-    private void OnHPChange(int preHP, int nowHP) 
+    private void OnHPChange(int preHP, int nowHP, HPChangeType type) 
     {
-        ShowBattleHPInfo(nowHP - preHP);
+        ShowBattleHPInfo(nowHP - preHP, type);
     }
 }

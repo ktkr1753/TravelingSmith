@@ -93,7 +93,7 @@ public partial class ShopUI : UIBase
         get
         {
             int result = 0;
-            result = (int)(Math.Ceiling(refreshHeldCount * 0.6));
+            result = 1 + (int)(Math.Ceiling(refreshHeldCount * 0.6));
             return result;
         }
     }

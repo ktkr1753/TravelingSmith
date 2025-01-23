@@ -36,13 +36,9 @@ public partial class PickUpUI : UIBase
         SetView();
     }
 
-
     private void SetView() 
     {
         pickUpElement.SetData(item);
         UpdateSelectedItemImagePos();
     }
-
-
-
 }

@@ -31,7 +31,7 @@ ts_itemName_FlareGemstoneBurin,Flare Gemstone Burin,焰火石雕刻刀
 ts_itemName_RecipeWoodenWheel,Recipe Wooden Wheel,木製車輪配方
 ts_itemName_RecipeIronWheel,Recipe Iron Wheel,鐵製車輪配方
 ts_itemName_IronForge,Iron Forge,鐵鍛造爐
-ts_itemName_RecipePickaxe,Recipe Pickaxe,礦鎬配方
+ts_itemName_RecipePickaxe,Recipe Pickaxe,鐵礦鎬配方
 ts_itemName_RecipeFellingAxe,Recipe FellingAxe,伐木斧配方
 ts_itemName_RecipeFlareGemstonePickaxe,Recipe Flare Gemstone Pickaxe,焰火石礦鎬配方
 ts_itemName_RecipeIronForge,Recipe Iron Forge,鐵鍛造爐配方
@@ -72,3 +72,5 @@ ts_monsterName_Slime,Slime,史萊姆
 ts_monsterName_Beholder,Beholder,眼魔
 ts_monsterName_PossessedBook,PossessedBook,瘋狂之書
 ts_monsterName_VampireBat,VampireBat,吸血蝙蝠
+
+ts_hpChangeType_Crash,Crash,撞擊

@@ -12,10 +12,8 @@ public partial class BattleManager : Node
         { 
             if (_nowHP != value) 
             {
-                int preHP = _nowHP;
                 _nowHP = value;
-                onHPChange?.Invoke(preHP, _nowHP);
-                if (nowHP == 0)
+                if (_nowHP == 0)
                 {
                     isGameOver = true;
                     GameManager.instance.uiManager.OpenUI(UIIndex.GameOverUI);
@@ -23,7 +21,7 @@ public partial class BattleManager : Node
             }
         }
     }
-    public event Action<int, int> onHPChange;
+    public event Action<int, int, HPChangeType> onHPChange;
 
     private int _nowExp = 0;
     [Export] public int nowExp 
@@ -121,19 +119,23 @@ public partial class BattleManager : Node
         nowHP = maxHP;
     }
 
-	public void Damage(int damage) 
+	public void Damage(int damage, HPChangeType type = HPChangeType.Normal) 
 	{
 		if(damage > 0) 
 		{
+            int preHP = nowHP;
 			nowHP = Math.Max(0, nowHP - damage);
+            onHPChange?.Invoke(preHP, _nowHP, type);
         }
 	}
 
-    public void Repair(int repairPoint) 
+    public void Repair(int repairPoint, HPChangeType type = HPChangeType.Normal) 
     {
         if (repairPoint > 0) 
         {
+            int preHP = nowHP;
             nowHP = Math.Min(maxHP, nowHP + repairPoint);
+            onHPChange?.Invoke(preHP, _nowHP, type);
         }
     }
 }

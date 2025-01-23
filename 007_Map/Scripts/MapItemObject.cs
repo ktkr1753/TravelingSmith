@@ -100,7 +100,10 @@ public partial class MapItemObject : Node2D
                     mainGameUI.elements[addIndex].isFlying = false;
                 });
 
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble);
+
                 OnNeedReturn?.Invoke(this);
+                GetViewport().SetInputAsHandled();
             }
         }
     }
