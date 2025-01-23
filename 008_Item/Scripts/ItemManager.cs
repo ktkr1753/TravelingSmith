@@ -136,6 +136,10 @@ public partial class ItemManager : Node
         for (int i = 0; i < itemNum; i++)
         {
             ItemBaseResource item = null;
+            if (i == 22)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.StonePickaxe);
+            }
             if (i == 52)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
@@ -959,7 +963,7 @@ public partial class ItemManager : Node
                 break;
             }
         }
-
+        ItemBaseResource positionItem = heldItems[position];
         Godot.Collections.Array<AreaIndex> tempArea = new Godot.Collections.Array<AreaIndex>();
         Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> tempItemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
         foreach(var KV in itemEffects) 
@@ -971,10 +975,16 @@ public partial class ItemManager : Node
         {
             RemoveItemEffects(tempItemEffects, index, item.effectRanges);
         }
+        if(positionItem != null) 
+        {
+            RemoveItemEffects(tempItemEffects, position, positionItem.effectRanges);
+        }
+
         RefreshAreas(tempArea, tempItemEffects);
 
         bool isTargetNormal = false;
 
+        //若放置目標地是可放置
         if(IsAreaEffect(tempArea, position, AreaIndex.Normal)) 
         {
             isTargetNormal = true;
@@ -987,6 +997,11 @@ public partial class ItemManager : Node
         }
 
         AddItemEffects(tempItemEffects, position, item.effectRanges);
+        if(positionItem != null) 
+        {
+            AddItemEffects(tempItemEffects, index, positionItem.effectRanges);
+        }
+
         RefreshAreas(tempArea, tempItemEffects);
         bool isFindError = false;
         for(int i = 0; i < heldItems.Count; i++)
@@ -1010,7 +1025,7 @@ public partial class ItemManager : Node
     public bool IsAreaEffect(Godot.Collections.Array<AreaIndex> targetArea, int position, AreaIndex effect) 
     {
         AreaIndex testAreaIndex = AreaIndex.None;
-        if (position > 0 && position < targetArea.Count)
+        if (position >= 0 && position < targetArea.Count)
         {
             testAreaIndex = targetArea[position];
         }
@@ -1023,7 +1038,7 @@ public partial class ItemManager : Node
         for(int i = 0; i < itemEffects.Count; i++) 
         {
             int effectPosition = GetEffectPosition(position, itemEffects[i].position);
-            if (effectPosition > 0 && effectPosition < itemNum) 
+            if (effectPosition >= 0 && effectPosition < itemNum) 
             {
                 AddItemEffect(target, effectPosition, itemEffects[i]);
             }
@@ -1050,7 +1065,7 @@ public partial class ItemManager : Node
         for (int i = 0; i < itemEffects.Count; i++)
         {
             int effectPosition = GetEffectPosition(position, itemEffects[i].position);
-            if (effectPosition > 0 && effectPosition < itemNum)
+            if (effectPosition >= 0 && effectPosition < itemNum)
             {
                 RemoveItemEffect(target,effectPosition, itemEffects[i]);
             }
@@ -1103,7 +1118,7 @@ public partial class ItemManager : Node
         for(int i = 0; i < heldItems[index].effectRanges.Count; i++) 
         {
             int effectPosition = GetEffectPosition(index, heldItems[index].effectRanges[i].position);
-            if (effectPosition > 0 && effectPosition < itemNum)
+            if (effectPosition >= 0 && effectPosition < itemNum)
             {
                 if (!result.Contains(effectPosition)) 
                 {

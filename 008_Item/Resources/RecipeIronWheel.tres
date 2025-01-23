@@ -10,10 +10,10 @@ region = Rect2(0, 72, 24, 24)
 [resource]
 script = ExtResource("1_3ecdu")
 type = 1
-materials = [601, 101]
+materials = [601, 101, 401]
 isCostMaterial = false
 productItem = 402
-needTime = 0.5
+needTime = 10.0
 nowTime = 0.0
 durability = 1
 isProducing = false

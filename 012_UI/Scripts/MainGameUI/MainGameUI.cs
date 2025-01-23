@@ -244,6 +244,7 @@ public partial class MainGameUI : UIBase
                     switch (make.type) 
                     {
                         case MakeType.Paper:
+                        case MakeType.Tool:
                             {
                                 if (isProduce && !produce.isProducing)
                                 {

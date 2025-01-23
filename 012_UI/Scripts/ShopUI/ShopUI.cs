@@ -86,14 +86,14 @@ public partial class ShopUI : UIBase
         }
     }
 
-    private int refreshHeldCount = 0;
+    private static int refreshHeldCount = 0;
 
     public int refreshHeldCost 
     {
         get
         {
             int result = 0;
-            result = (int)((Math.Ceiling(GameManager.instance.mapManager.nowMap.visitedShopIndex * 0.3 + 1) + Math.Ceiling(refreshHeldCount * 0.4)));
+            result = (int)(Math.Ceiling(refreshHeldCount * 0.6));
             return result;
         }
     }

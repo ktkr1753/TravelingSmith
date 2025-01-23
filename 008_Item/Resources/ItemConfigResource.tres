@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=60 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=61 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -59,6 +59,7 @@
 [ext_resource type="Resource" uid="uid://dkgh7hbs64eki" path="res://008_Item/Resources/Workbench.tres" id="56_8ktnw"]
 [ext_resource type="Resource" uid="uid://idmldt4y7sio" path="res://008_Item/Resources/RecipeStoneGolem.tres" id="57_d1a0j"]
 [ext_resource type="Resource" uid="uid://bgqbi1ilhgbbs" path="res://008_Item/Resources/StoneGolem.tres" id="58_4yuv6"]
+[ext_resource type="Resource" uid="uid://gnfff2d0v42q" path="res://008_Item/Resources/StonePickaxe.tres" id="59_ch41s"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -101,6 +102,7 @@ config = {
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 303: ExtResource("28_hkpuh"),
+304: ExtResource("59_ch41s"),
 401: ExtResource("35_64jq0"),
 402: ExtResource("36_ndv5l"),
 501: ExtResource("19_b6wg4"),

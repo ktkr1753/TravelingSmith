@@ -46,6 +46,7 @@ public enum ItemIndex
     Pickaxe = 301,
     FellingAxe = 302,
     FlareGemstonePickaxe = 303,
+    StonePickaxe = 304,
     //引擎 401~500
     WoodenWheel = 401,
     IronWheel = 402,
