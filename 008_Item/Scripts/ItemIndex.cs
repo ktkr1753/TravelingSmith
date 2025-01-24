@@ -42,11 +42,13 @@ public enum ItemIndex
     RecipeIronChest = 225,
     RecipeWorkbench = 226,
     RecipeStoneGolem = 227,
+    RecipeButcherKnife = 228,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,
     FlareGemstonePickaxe = 303,
     StonePickaxe = 304,
+    ButcherKnife = 305,
     //引擎 401~500
     WoodenWheel = 401,
     IronWheel = 402,
@@ -65,6 +67,8 @@ public enum ItemIndex
     Stone = 609,
     IronOre = 610,
     Paper = 611,
+    Parchment = 612,
+    Fur = 613,
     //場域 701~800
     WoodenChest = 701,
     Torch = 702,

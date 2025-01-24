@@ -9,7 +9,7 @@ region = Rect2(72, 48, 24, 24)
 
 [resource]
 script = ExtResource("1_0mpta")
-type = 3
+type = 1
 materials = [607]
 isCostMaterial = false
 productItem = 608

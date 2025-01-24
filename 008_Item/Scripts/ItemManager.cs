@@ -303,7 +303,7 @@ public partial class ItemManager : Node
         if (GameManager.instance.itemManager.money >= refreshCost)
         {
             if (index >= 0 && index < heldItems.Count && heldItems[index] != null &&
-                heldItems[index].index == ItemIndex.Paper || heldItems[index] is RecipeResource heldRecipe && heldRecipe.type == MakeType.Paper)
+                heldItems[index].index == ItemIndex.Paper || heldItems[index].index == ItemIndex.Parchment)
             {
                 List<ItemBaseResource> canBeRandomItems = new List<ItemBaseResource>();
                 HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();

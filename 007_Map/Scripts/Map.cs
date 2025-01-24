@@ -100,21 +100,29 @@ public partial class Map : Node2D
 
     private async void CreateWaveMonster() 
     {
-        if(nowWave < 10) 
+        if(nowWave < 5) 
         {
             await CreateMonster(MonsterIndex.Slime, 1);
         }
-        else if (nowWave < 20)
-        {
-            await CreateMonster(MonsterIndex.Slime, 2);
-        }
-        else if(nowWave < 30) 
+        else if (nowWave < 10)
         {
             await CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.VampireBat, 1);
+        }
+        else if (nowWave < 15)
+        {
+            await CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.VampireBat, 2);
+        }
+        else if(nowWave < 20) 
+        {
+            await CreateMonster(MonsterIndex.Slime, 1);
+            await CreateMonster(MonsterIndex.VampireBat, 1);
             await CreateMonster(MonsterIndex.PossessedBook, 1);
         }
         else 
         {
+            await CreateMonster(MonsterIndex.VampireBat, 2);
             await CreateMonster(MonsterIndex.PossessedBook, 2);
         }
     }

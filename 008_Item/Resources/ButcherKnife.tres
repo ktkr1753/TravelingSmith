@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ToolResource" load_steps=4 format=3 uid="uid://b3ptnd7lj2elu"]
+
+[ext_resource type="Script" path="res://008_Item/Scripts/ToolResource.cs" id="1_73y6v"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_gdnox"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oi4k"]
+atlas = ExtResource("2_gdnox")
+region = Rect2(96, 48, 24, 24)
+
+[resource]
+script = ExtResource("1_73y6v")
+type = 1
+productItem = 613
+needTime = 20.0
+nowTime = 0.0
+durability = -1
+isProducing = false
+index = 305
+texture = SubResource("AtlasTexture_8oi4k")
+effectRanges = []
+money = 3
+rank = 0
+isSellable = true

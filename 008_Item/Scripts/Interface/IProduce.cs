@@ -3,6 +3,7 @@ using System;
 
 public partial interface IProduce
 {
+    public ProduceType type { get; set; }
     public ItemIndex productItem { get; set; }
     public double needTime { get; set; }
     public double nowTime { get; set; }

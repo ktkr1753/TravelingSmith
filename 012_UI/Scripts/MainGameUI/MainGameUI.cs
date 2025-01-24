@@ -201,34 +201,13 @@ public partial class MainGameUI : UIBase
 
             if (item is IProduce produce)
             {
-                if(item is IMake make) 
+                switch (produce.type) 
                 {
-                    switch (make.type) 
-                    {
-                        case MakeType.Paper:
-                        case MakeType.Tool:
+                    case ProduceType.Produce:
+                        {
+                            if (isProduce && !produce.isProducing) 
                             {
-                                if (isProduce && !produce.isProducing)
-                                {
-                                    bool isFail = false;
-                                    if (!make.isCostMaterial) 
-                                    {
-                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
-                                    }
-                                    if (!isFail)
-                                    {
-                                        produce.StartProduce();
-                                    }
-                                }
-                                else if (!isProduce && produce.isProducing)
-                                {
-                                    produce.StopProduce();
-                                }
-                            }
-                            break;
-                        case MakeType.Forge: 
-                            {
-                                if (isFire && !produce.isProducing)
+                                if (item is IMake make) 
                                 {
                                     bool isFail = false;
                                     if (!make.isCostMaterial)
@@ -240,46 +219,41 @@ public partial class MainGameUI : UIBase
                                         produce.StartProduce();
                                     }
                                 }
-                                else if (!isFire && produce.isProducing)
+                                else 
                                 {
-                                    produce.StopProduce();
+                                    produce.StartProduce();
                                 }
                             }
-                            break;
-                    }
+                            else if (!isProduce && produce.isProducing)
+                            {
+                                produce.StopProduce();
+                            }
+                        }
+                        break;
+                    case ProduceType.Fire: 
+                        {
+                            if (isFire && !produce.isProducing) 
+                            {
+                                if (item is IMake make)
+                                {
+                                    bool isFail = false;
+                                    if (!make.isCostMaterial)
+                                    {
+                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
+                                    }
+                                    if (!isFail)
+                                    {
+                                        produce.StartProduce();
+                                    }
+                                }
+                            }
+                            else if (!isFire && produce.isProducing)
+                            {
+                                produce.StopProduce();
+                            }
+                        }
+                        break;
                 }
-                else 
-                {
-                    if(isProduce && !produce.isProducing) 
-                    {
-                        produce.StartProduce();
-                    }
-                    else if(!isProduce && produce.isProducing) 
-                    {
-                        produce.StopProduce();
-                    }
-                }
-
-
-                /*
-                if(isProduce && !produce.isProducing) 
-                {
-                    bool isFail = false;
-                    if (item is IMake make && make.type == MakeType.Paper && !make.isCostMaterial)
-                    {
-                        isFail = !GameManager.instance.itemManager.Make(make, elements);
-                    }
-
-                    if (!isFail)
-                    {
-                        produce.StartProduce();
-                    }
-                }
-                else if (!isProduce && produce.isProducing) 
-                {
-                    produce.StopProduce();
-                }
-                */
             }
             else if (item is IUseable useable) 
             {

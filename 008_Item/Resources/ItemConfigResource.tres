@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=61 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=65 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -60,6 +60,10 @@
 [ext_resource type="Resource" uid="uid://idmldt4y7sio" path="res://008_Item/Resources/RecipeStoneGolem.tres" id="57_d1a0j"]
 [ext_resource type="Resource" uid="uid://bgqbi1ilhgbbs" path="res://008_Item/Resources/StoneGolem.tres" id="58_4yuv6"]
 [ext_resource type="Resource" uid="uid://gnfff2d0v42q" path="res://008_Item/Resources/StonePickaxe.tres" id="59_ch41s"]
+[ext_resource type="Resource" uid="uid://c144ksrgbnywp" path="res://008_Item/Resources/RecipeButcherKnife.tres" id="60_17u4w"]
+[ext_resource type="Resource" uid="uid://b3ptnd7lj2elu" path="res://008_Item/Resources/ButcherKnife.tres" id="61_eufum"]
+[ext_resource type="Resource" uid="uid://c35u4qbdnrhvf" path="res://008_Item/Resources/Parchment.tres" id="62_dpy64"]
+[ext_resource type="Resource" uid="uid://0dw8jyw34dgq" path="res://008_Item/Resources/Fur.tres" id="63_8ynx6"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -99,10 +103,12 @@ config = {
 225: ExtResource("54_w28f2"),
 226: ExtResource("55_rshnr"),
 227: ExtResource("57_d1a0j"),
+228: ExtResource("60_17u4w"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 303: ExtResource("28_hkpuh"),
 304: ExtResource("59_ch41s"),
+305: ExtResource("61_eufum"),
 401: ExtResource("35_64jq0"),
 402: ExtResource("36_ndv5l"),
 501: ExtResource("19_b6wg4"),
@@ -118,6 +124,8 @@ config = {
 609: ExtResource("38_7ivvn"),
 610: ExtResource("40_0ki3g"),
 611: ExtResource("47_0xt5w"),
+612: ExtResource("62_dpy64"),
+613: ExtResource("63_8ynx6"),
 701: ExtResource("50_tml0n"),
 702: ExtResource("51_504qk"),
 703: ExtResource("53_0hx04"),

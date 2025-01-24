@@ -9,6 +9,7 @@ region = Rect2(0, 48, 24, 24)
 
 [resource]
 script = ExtResource("1_u6nvb")
+type = 1
 productItem = 609
 needTime = 20.0
 nowTime = 0.0

@@ -4,6 +4,12 @@ using System;
 [GlobalClass]
 public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IProduce
 {
+    private ProduceType _type;
+    [Export] public ProduceType type
+    {
+        get { return _type; }
+        set { _type = value; }
+    }
     private ItemIndex _productItem = ItemIndex.None;
     [Export] public ItemIndex productItem 
     {
@@ -67,6 +73,7 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
     public override ToolResource Clone()
     {
         ToolResource result = base.Clone() as ToolResource;
+        result.type = type;
         result.productItem = productItem;
         result.needTime = needTime;
         result.nowTime = nowTime;

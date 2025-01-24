@@ -4,8 +4,8 @@ using System;
 [GlobalClass]
 public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, IMake
 {
-    private MakeType _type;
-    [Export] public MakeType type 
+    private ProduceType _type;
+    [Export] public ProduceType type 
     {
         get { return _type; }
         set { _type = value; }

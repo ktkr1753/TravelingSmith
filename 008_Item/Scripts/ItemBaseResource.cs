@@ -5,6 +5,7 @@ using System;
 public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResource>
 {
     [Export] public ItemIndex index;
+    [Export] public ItemDetailType detailType;
     [Export] public Texture2D texture;
     [Export] public Godot.Collections.Array<ItemEffect> effectRanges = new Godot.Collections.Array<ItemEffect>();
     [Export] public int money = 0;
@@ -15,6 +16,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
     {
         ItemBaseResource result = CreateInstanceForClone();
         result.index = index;
+        result.detailType = detailType;
         result.texture = texture;
         result.effectRanges = effectRanges.Clone();
         result.money = money;

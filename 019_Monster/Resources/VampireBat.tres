@@ -1,7 +1,13 @@
-[gd_resource type="Resource" script_class="MonsterResource" load_steps=3 format=3 uid="uid://jyo51waqnggt"]
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=5 format=3 uid="uid://jyo51waqnggt"]
 
+[ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="1_cgrds"]
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_d0ph6"]
 [ext_resource type="PackedScene" uid="uid://drj7ar4jtigyi" path="res://019_Monster/Prefabs/VampireBat.tscn" id="1_hyego"]
+
+[sub_resource type="Resource" id="Resource_k8dbk"]
+script = ExtResource("1_cgrds")
+itemIndex = 613
+dropRate = 0.5
 
 [resource]
 script = ExtResource("1_d0ph6")
@@ -16,4 +22,4 @@ attackFX = 1
 sound = "sound_hit.mp3"
 moveSpeed = 20.0
 exp = 1
-drops = []
+drops = [SubResource("Resource_k8dbk")]

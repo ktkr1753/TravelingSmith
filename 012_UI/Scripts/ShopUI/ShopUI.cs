@@ -188,7 +188,7 @@ public partial class ShopUI : UIBase
                             continue;
                     }
                 }
-                else if(item is RecipeResource recipe && recipe.type == MakeType.Paper && recipe.isSellable) 
+                else if(item is RecipeResource recipe && item.detailType == ItemDetailType.Paper && recipe.isSellable) 
                 {
                     HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
                     if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(recipe.index) || waitUnlockRecipe.Contains(recipe.index)) 
@@ -380,7 +380,7 @@ public partial class ShopUI : UIBase
                         ClearShopItemElementData(element);
                         itemPool.ReturnElement(element);
 
-                        if(pickedItem is RecipeResource recipe && recipe.type == MakeType.Paper) 
+                        if(pickedItem is RecipeResource recipe && pickedItem.detailType == ItemDetailType.Paper) 
                         {
                             GameManager.instance.unlockRecipe.AddUnlockRecipe(recipe.index);
                         }
