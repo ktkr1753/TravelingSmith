@@ -18,6 +18,7 @@ nowTime = 0.0
 durability = -1
 isProducing = false
 index = 212
+detailType = 3
 texture = SubResource("AtlasTexture_5g3f7")
 effectRanges = []
 money = 2

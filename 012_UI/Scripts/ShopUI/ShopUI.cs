@@ -132,7 +132,10 @@ public partial class ShopUI : UIBase
     private void TestRandomItem() 
     {
         sellItems.Clear();
-        List<ItemIndex> indexs = new List<ItemIndex>();
+        List<ItemIndex> materialIndexs = new List<ItemIndex>();
+        List<ItemIndex> recipeIndexs = new List<ItemIndex>();
+        HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
+        //Debug.Print($"waitUnlockRecipe:{waitUnlockRecipe.ToStringExtended()}");
         foreach (ItemIndex itemIndex in GameManager.instance.itemConfig.config.Keys) 
         {
             if (GameManager.instance.itemConfig.config.TryGetValue(itemIndex, out ItemBaseResource item)) 
@@ -145,7 +148,7 @@ public partial class ShopUI : UIBase
                             {
                                 if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeIronForge)) 
                                 {
-                                    indexs.Add(itemIndex);
+                                    materialIndexs.Add(itemIndex);
                                 }
                             }
                             continue;
@@ -153,7 +156,7 @@ public partial class ShopUI : UIBase
                             {
                                 if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeTitaniumForge))
                                 {
-                                    indexs.Add(itemIndex);
+                                    materialIndexs.Add(itemIndex);
                                 }
                             }
                             continue;
@@ -161,7 +164,7 @@ public partial class ShopUI : UIBase
                             {
                                 if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeFlareGemstonePickaxe))
                                 {
-                                    indexs.Add(itemIndex);
+                                    materialIndexs.Add(itemIndex);
                                 }
                             }
                             continue;
@@ -169,7 +172,7 @@ public partial class ShopUI : UIBase
                             {
                                 if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipeFlareGemstoneBurin))
                                 {
-                                    indexs.Add(itemIndex);
+                                    materialIndexs.Add(itemIndex);
                                 }
                             }
                             break;
@@ -177,39 +180,56 @@ public partial class ShopUI : UIBase
                             {
                                 if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(ItemIndex.RecipePickaxe))
                                 {
-                                    indexs.Add(itemIndex);
+                                    materialIndexs.Add(itemIndex);
                                 }
                             }
                             continue;
                         case ItemIndex.GoldOre:
                             {
-                                indexs.Add(itemIndex);
+                                materialIndexs.Add(itemIndex);
                             }
                             continue;
                     }
                 }
                 else if(item is RecipeResource recipe && item.detailType == ItemDetailType.Paper && recipe.isSellable) 
                 {
-                    HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
                     if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(recipe.index) || waitUnlockRecipe.Contains(recipe.index)) 
                     {
-                        indexs.Add(itemIndex);
+                        recipeIndexs.Add(itemIndex);
                     }
                 }
                 else if(item is SelfToolResource selfTool && selfTool.isSellable) 
                 {
-                    indexs.Add(itemIndex);
+                    materialIndexs.Add(itemIndex);
                 }
             }
         }
 
-        //Debug.Print($"indexs:{indexs.ToStringExtended()}");
+        //Debug.Print($"materialIndexs:{materialIndexs.ToStringExtended()}");
+        //Debug.Print($"recipeIndexs:{recipeIndexs.ToStringExtended()}");
 
-        for(int i = 0; i < 5; i++) 
+        for (int i = 0; i < 8; i++) 
         {
-            int rnd = GameManager.instance.randomManager.GetRange(RandomType.Other, 0, indexs.Count);
+            ItemIndex itemIndex = ItemIndex.None;
+            if (i < 4)
+            {
+                if(recipeIndexs.Count == 0) 
+                {
 
-            ItemBaseResource item = GameManager.instance.itemConfig.config[indexs[rnd]];
+                }
+                else 
+                {
+                    int rnd = GameManager.instance.randomManager.GetRange(RandomType.Other, 0, recipeIndexs.Count);
+                    itemIndex = recipeIndexs[rnd];
+                }
+            }
+            else 
+            {
+                int rnd = GameManager.instance.randomManager.GetRange(RandomType.Other, 0, materialIndexs.Count);
+                itemIndex = materialIndexs[rnd];
+            }
+
+            ItemBaseResource item = GameManager.instance.itemConfig.config[itemIndex];
             sellItems.Add(item);
         }
     }

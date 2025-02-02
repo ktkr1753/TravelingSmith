@@ -16,6 +16,7 @@ nowTime = 0.0
 durability = -1
 isProducing = false
 index = 303
+detailType = 3
 texture = SubResource("AtlasTexture_bspv7")
 effectRanges = []
 money = 4

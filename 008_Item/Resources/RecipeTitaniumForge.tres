@@ -18,6 +18,7 @@ nowTime = 0.0
 durability = 1
 isProducing = false
 index = 221
+detailType = 1
 texture = SubResource("AtlasTexture_h2ko2")
 effectRanges = []
 money = 5
