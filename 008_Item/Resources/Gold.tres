@@ -10,6 +10,7 @@ region = Rect2(120, 0, 24, 24)
 [resource]
 script = ExtResource("1_roho5")
 index = 602
+detailType = 0
 texture = SubResource("AtlasTexture_nvgma")
 effectRanges = []
 money = 4

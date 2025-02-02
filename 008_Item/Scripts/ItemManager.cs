@@ -274,7 +274,7 @@ public partial class ItemManager : Node
         bool isSuccess = false;
         if (index >= 0 && index < heldItems.Count && heldItems[index] != null) 
         {
-            money += heldItems[index].money;
+            money += GetSellMoney(heldItems[index]);
             GameManager.instance.itemManager.RemoveItem(index);
             isSuccess = true;
         }
@@ -611,8 +611,8 @@ public partial class ItemManager : Node
                         {
                             if (heldItems[i] == attacker) 
                             {
-                                attacker.StopUsing();
-                                RemoveItem(i);
+                                //attacker.StopUsing();
+                                //RemoveItem(i);
                                 break;
                             }
                         }
@@ -657,6 +657,10 @@ public partial class ItemManager : Node
                             if (attacker.durability > 0) 
                             {
                                 attacker.durability = Math.Max(0, attacker.durability - 1);
+                                isAttack = true;
+                            }
+                            else if(attacker.durability == 0) 
+                            {
                                 isAttack = true;
                             }
                             else if (attacker.durability == -1) 
@@ -909,6 +913,20 @@ public partial class ItemManager : Node
         return result;
     }
 
+    public int GetSellMoney(ItemBaseResource item) 
+    {
+        int result = item.money;
+
+        if(item is IAttack attacker) 
+        {
+            if(attacker.durability == 0) //磨損
+            {
+                result = (int)Math.Floor(item.money / 2.0);
+            }
+        }
+
+        return result;
+    }
 
     public void RefreshAreas(Godot.Collections.Array<AreaIndex> targetArea, Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> useUtemEffects) 
     {

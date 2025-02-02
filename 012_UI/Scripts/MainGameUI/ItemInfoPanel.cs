@@ -62,17 +62,36 @@ public partial class ItemInfoPanel : PanelContainer
 
     public void SetData(ItemBaseResource item) 
 	{
+        if(this.item != null) 
+        {
+            UnregisterEvent(this.item);
+        }
 		this.item = item;
 		if(item == null) 
 		{
 			return;
 		}
-
+        RegisterEvent(this.item);
         itemElement.SetData(item);
 		SetView();
     }
+    private void RegisterEvent(ItemBaseResource item) 
+    {
+        if (item is IAttack attacker)
+        {
+            attacker.onDurabilityChange += OnDurabilityChange;
+        }
+    }
 
-	private void SetView() 
+    private void UnregisterEvent(ItemBaseResource item) 
+    {
+        if (item is IAttack attacker)
+        {
+            attacker.onDurabilityChange -= OnDurabilityChange;
+        }
+    }
+
+    private void SetView() 
 	{
 		SetName();
 		SetMoney();
@@ -95,7 +114,17 @@ public partial class ItemInfoPanel : PanelContainer
 
 	private void SetMoney() 
 	{
-		moneyLabel.Text = $"{item.money}";
+        int sellMoney = GameManager.instance.itemManager.GetSellMoney(item);
+
+		moneyLabel.Text = $"{sellMoney}";
+        if(sellMoney < item.money) 
+        {
+            moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+        }
+        else 
+        {
+            moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+        }
     }
 
     private void SetUseTime() 
@@ -236,6 +265,11 @@ public partial class ItemInfoPanel : PanelContainer
     private void RefreshContainerSize() 
     {
         Size = CustomMinimumSize;
+    }
+
+    private void OnDurabilityChange(int durability) 
+    {
+        SetMoney();
     }
 
     public void OnItemDetailClick(ItemIcon itemIcon) 

@@ -10,6 +10,7 @@ region = Rect2(168, 0, 24, 24)
 [resource]
 script = ExtResource("1_k524t")
 index = 608
+detailType = 0
 texture = SubResource("AtlasTexture_gfybc")
 effectRanges = []
 money = 5

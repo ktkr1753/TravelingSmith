@@ -26,6 +26,7 @@ public partial class ItemElement : Control
     [Export] private TextureRect image;
 	[Export] private TextureRect productImage;
 	[Export] private Label durabilityLabel;
+	[Export] private Control breakHintNode;
 	[Export] private NinePatchRect selectedHint;
 	[Export] public Button mainButton;
 	[Export] public TextureButton dropButton;
@@ -298,7 +299,7 @@ public partial class ItemElement : Control
         }
         else if (item is IUseable useable) 
 		{
-			useable.onIsUsingChange -= OnUsingChange;
+            useable.onIsUsingChange -= OnUsingChange;
             useable.onDurabilityChange -= OnDurabilityChange;
             useable.onUseUp -= OnUseUp;
         }
@@ -410,15 +411,32 @@ public partial class ItemElement : Control
 
 		if(item is IUseable useable) 
 		{
-			if(useable.durability > 0) 
+			if(item is IAttack attack) 
 			{
-				durabilityLabel.Visible = true;
-				durabilityLabel.Text = $"{useable.durability}";
-			}
+                if (useable.durability > 0)
+                {
+                    breakHintNode.Visible = false;
+                    durabilityLabel.Visible = true;
+                    durabilityLabel.Text = $"{useable.durability}";
+                }
+                else
+                {
+                    durabilityLabel.Visible = false;
+					breakHintNode.Visible = true;
+                }
+            }
 			else 
 			{
-                durabilityLabel.Visible = false;
-            }
+				if(useable.durability > 0) 
+				{
+					durabilityLabel.Visible = true;
+					durabilityLabel.Text = $"{useable.durability}";
+				}
+				else 
+				{
+					durabilityLabel.Visible = false;
+				}
+			}
 		}
 		else if (item is IProduce produce && !(item is SelfToolResource)) 
 		{

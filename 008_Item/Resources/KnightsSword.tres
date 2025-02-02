@@ -18,6 +18,7 @@ needTime = 0.5
 nowTime = 0.0
 isUsing = false
 index = 4
+detailType = 0
 texture = SubResource("AtlasTexture_nbl6o")
 effectRanges = []
 money = 12

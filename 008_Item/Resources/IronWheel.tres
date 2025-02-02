@@ -13,6 +13,7 @@ _accelration = 10.0
 _maxSpeed = 50.0
 isUsing = false
 index = 402
+detailType = 0
 texture = SubResource("AtlasTexture_wvk8r")
 effectRanges = []
 money = 3

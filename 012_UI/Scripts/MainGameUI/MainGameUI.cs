@@ -246,6 +246,10 @@ public partial class MainGameUI : UIBase
                                         produce.StartProduce();
                                     }
                                 }
+                                else 
+                                {
+                                    produce.StartProduce();
+                                }
                             }
                             else if (!isFire && produce.isProducing)
                             {

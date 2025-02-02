@@ -15,6 +15,7 @@ needTime = 20.0
 nowTime = 0.0
 isUsing = false
 index = 101
+detailType = 0
 texture = SubResource("AtlasTexture_wukd7")
 effectRanges = []
 money = 3

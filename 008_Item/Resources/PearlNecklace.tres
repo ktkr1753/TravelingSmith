@@ -10,6 +10,7 @@ region = Rect2(0, 120, 24, 24)
 [resource]
 script = ExtResource("1_sytd2")
 index = 501
+detailType = 0
 texture = SubResource("AtlasTexture_m6mtd")
 effectRanges = []
 money = 15

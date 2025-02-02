@@ -27,7 +27,7 @@ public partial class MapAttackObject : Node2D
 
     public void SetData(ItemBaseResource item) 
     {
-        this.item = item;
+        this.item = item.Clone();
     }
 
     public void SetAngle(double angle) 
@@ -78,7 +78,13 @@ public partial class MapAttackObject : Node2D
 
     private void WaitToDamage(MonsterObject monsterObj) 
     {
-        monsterObj.data.Damage(attacker.attackPoint);
+        int attackPoint = attacker.attackPoint;
+        if (attacker.durability == 0) 
+        {
+            attackPoint = (int)Math.Floor(attacker.attackPoint / 2.0);
+        }
+
+        monsterObj.data.Damage(attackPoint);
         GameManager.instance.mapManager.PlayFX(attacker.fx, monsterObj.GlobalPosition);
         GameManager.instance.cameraManager.ShakeCamera(3);
         if (attacker.sound != null && attacker.sound != "")

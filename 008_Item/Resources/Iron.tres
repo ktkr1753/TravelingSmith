@@ -10,6 +10,7 @@ region = Rect2(0, 0, 24, 24)
 [resource]
 script = ExtResource("1_s2l50")
 index = 601
+detailType = 0
 texture = SubResource("AtlasTexture_nvhuv")
 effectRanges = []
 money = 3
