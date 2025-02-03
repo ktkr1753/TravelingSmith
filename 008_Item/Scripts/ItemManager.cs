@@ -537,6 +537,7 @@ public partial class ItemManager : Node
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
                 SetHeldItem(checkPoint, item);
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble);
                 isSuccess = true;
 
                 //有使用次數限制

@@ -132,7 +132,7 @@ public partial class MonsterObject : Node2D
                 if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < findDistance)
                 {
                     isFind = true;
-                    exclamationAnim.Play(clip_idle);
+                    PlayExclamation();
                 }
             }
         }
@@ -217,6 +217,12 @@ public partial class MonsterObject : Node2D
             return;
         }
         shineMaterial.SetShaderParameter(material_rate, 0.0);
+    }
+
+    private void PlayExclamation() 
+    {
+        exclamationAnim.Play(clip_idle);
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_beat_1);
     }
 
     private void OnHpChange(int preHP,int nowHp, HPChangeType type) 

@@ -268,7 +268,7 @@ public partial class ItemElement : Control
 		areaPool.ReturnAllElement();
         for (int i = 0; i < areas.Count; i++) 
 		{
-			if (areas[i].index != AreaIndex.None) 
+			if (areas[i].index != AreaIndex.None && areas[i].index != AreaIndex.Normal) 
 			{
 				ItemElementArea areaElemment = areaPool.GetElement();
 				areaElemment.SetData(areas[i].index);

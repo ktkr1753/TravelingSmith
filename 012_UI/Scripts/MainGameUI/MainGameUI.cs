@@ -218,11 +218,13 @@ public partial class MainGameUI : UIBase
                                     if (!isFail)
                                     {
                                         produce.StartProduce();
+                                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit_metal);
                                     }
                                 }
                                 else 
                                 {
                                     produce.StartProduce();
+                                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit_metal);
                                 }
                             }
                             else if (!isProduce && produce.isProducing)
@@ -245,11 +247,13 @@ public partial class MainGameUI : UIBase
                                     if (!isFail)
                                     {
                                         produce.StartProduce();
+                                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_fire);
                                     }
                                 }
                                 else 
                                 {
                                     produce.StartProduce();
+                                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_fire);
                                 }
                             }
                             else if (!isFire && produce.isProducing)
@@ -265,6 +269,7 @@ public partial class MainGameUI : UIBase
                 if (isUsing && !useable.isUsing)
                 {
                     useable.StartUsing();
+                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_draw_bow);
                 }
                 else if(!isUsing && useable.isUsing)
                 {

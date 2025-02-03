@@ -10,6 +10,6 @@ script = ExtResource("1_b4t7b")
 image = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(4, 4)
+custom_minimum_size = Vector2(8, 8)
 layout_mode = 2
 expand_mode = 1

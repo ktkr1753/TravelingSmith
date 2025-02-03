@@ -18,6 +18,7 @@ public partial class SoundEnum
     //Sound
     public const string sound_arrow_hit = "sound_arrow_hit.mp3";
     public const string sound_attack_slime = "sound_attack_slime.mp3";
+    public const string sound_beat_1 = "sound_beat_1.mp3";
     public const string sound_bubble = "sound_bubble.mp3";
     public const string sound_bubble_1 = "sound_bubble_1.mp3";
     public const string sound_bubble_2 = "sound_bubble_2.mp3";
@@ -25,9 +26,12 @@ public partial class SoundEnum
     public const string sound_button19 = "sound_button19.mp3";      //穿裝備音效
     public const string sound_button32 = "sound_button32.mp3";
     public const string sound_cancel4 = "sound_cancel4.mp3";        //取消4
+    public const string sound_draw_bow = "sound_draw_bow.mp3";
     public const string sound_drop_on_ground = "sound_drop_on_ground.mp3";
+    public const string sound_fire = "sound_fire.mp3";
     public const string sound_get_money = "sound_get_money.mp3";
     public const string sound_hit = "sound_hit.mp3";
+    public const string sound_hit_metal = "sound_hit_metal.mp3";
     public const string sound_knock = "sound_knock.mp3";
     public const string sound_magic_gravity1 = "sound_magic_gravity1.mp3";
     public const string sound_magic_fire1 = "sound_magic_fire1.mp3";
