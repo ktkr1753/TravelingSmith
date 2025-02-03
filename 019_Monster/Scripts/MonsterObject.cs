@@ -6,13 +6,16 @@ public partial class MonsterObject : Node2D
     [Export] public ProgressBar hpProgressBar;
 	[Export] public Sprite2D mainImage;
     [Export] public AnimationPlayer anim;
+    [Export] public AnimationPlayer exclamationAnim;
 
     public MonsterResource data;
+    private bool isFind = false;
     private bool isDie = false;
 
     public event Action<MonsterObject> onDie;
     public event Action<MonsterObject> onDestroy;
 
+    public const double findDistance = 200;
     public const double closeDistance = 15;
 
     public const string material_rate = "rate";
@@ -80,7 +83,7 @@ public partial class MonsterObject : Node2D
     {
         BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
 
-        if(hpChange < 0) 
+        if(hpChange <= 0) 
         {
             Vector2 viewPos = (GetViewportRect().Size / 2) + (GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
@@ -118,9 +121,20 @@ public partial class MonsterObject : Node2D
             }
             Attack(delta);
         }
-        else 
+        else if(isFind)
         {
             Move(delta);
+        }
+        else 
+        {
+            if (GameManager.instance.mapManager.nowMap?.targetPoint != null)
+            {
+                if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < findDistance)
+                {
+                    isFind = true;
+                    exclamationAnim.Play(clip_idle);
+                }
+            }
         }
     }
 
@@ -130,7 +144,6 @@ public partial class MonsterObject : Node2D
 
         if(GameManager.instance.mapManager.nowMap?.targetPoint != null)
         {
-            //if(GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < closeDistance) 
             if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < closeDistance)
             {
                 result = true;

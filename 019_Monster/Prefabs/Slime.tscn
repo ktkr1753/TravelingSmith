@@ -88,7 +88,7 @@ libraries = {
 "": SubResource("AnimationLibrary_8hltc")
 }
 
-[node name="Image" parent="." index="2"]
+[node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_1t8gn")
 position = Vector2(0, -8)
 texture = ExtResource("2_waclk")

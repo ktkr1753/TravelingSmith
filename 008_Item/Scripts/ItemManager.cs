@@ -141,6 +141,13 @@ public partial class ItemManager : Node
 
     public const int itemNum = 105;
     public const int itemColumnNum = 15;
+    public int itemLineNum 
+    {
+        get 
+        {
+            return itemNum / itemColumnNum;
+        }
+    }
 
     public void Init() 
 	{
@@ -642,7 +649,7 @@ public partial class ItemManager : Node
 
         List<KeyValuePair<double, MonsterObject>> monsters = GameManager.instance.mapManager.FindMonsterInRange(attacker.range);
 
-        if((attacker.durability > 0 || attacker.durability == -1) && monsters.Count > 0) 
+        if(monsters.Count > 0) 
         {
             for(int i = 0; i < monsters.Count; i++) 
             {
@@ -1207,7 +1214,7 @@ public partial class ItemManager : Node
         {
             Vector2I tempVectorPos = new Vector2I(vectorPos.X + addX, vectorPos.Y + addY);
             if ((tempVectorPos.X < itemColumnNum && tempVectorPos.X >= 0) &&
-                (tempVectorPos.Y < itemColumnNum && tempVectorPos.Y >= 0))
+                (tempVectorPos.Y < itemLineNum && tempVectorPos.Y >= 0))
             {
                 result.Add(tempVectorPos.Y * itemColumnNum + tempVectorPos.X);
             }

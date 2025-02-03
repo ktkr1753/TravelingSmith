@@ -177,6 +177,7 @@ text_overrun_behavior = 3
 [node name="Control3" type="Control" parent="MarginContainer/PanelContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Control3"]
 custom_minimum_size = Vector2(8, 8)
@@ -190,6 +191,7 @@ offset_left = -8.0
 offset_top = -8.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 texture = ExtResource("6_hrcjx")
 expand_mode = 1
 

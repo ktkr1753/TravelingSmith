@@ -22,7 +22,7 @@ public partial class MonsterResource : Resource, IClone<MonsterResource>
 
     public void Damage(int damage, HPChangeType type = HPChangeType.Normal)
     {
-        if (damage > 0)
+        if (damage >= 0)
         {
             int preHp = nowHp;
             nowHp = Math.Max(0, nowHp - damage);

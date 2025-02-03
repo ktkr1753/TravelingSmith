@@ -87,6 +87,7 @@ public partial class MainGameUI : UIBase
                 {
                     SetPickedItemElement(GameManager.instance.itemManager.heldItems[_nowPickElementIndex]);
                     elements[_nowPickElementIndex].isPicking = true;
+                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
                 }
                 else 
                 {
@@ -511,6 +512,7 @@ public partial class MainGameUI : UIBase
         recordClickPos = GetViewport().GetMousePosition();
 
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
+        //GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
     }
 
     private void OnElementButtonUp(int index) 
@@ -528,7 +530,7 @@ public partial class MainGameUI : UIBase
             {
                 RefreshItemEffect(i, GameManager.instance.itemManager.areas[i]);
             }
-
+           
             if (nowEnterElementIndex != -1 && nowEnterElementIndex != nowPickElementIndex
                 && GameManager.instance.itemManager.IsCanPut(nowEnterElementIndex, pickedItem)) 
             {
@@ -546,7 +548,7 @@ public partial class MainGameUI : UIBase
                 {
                     elements[tempNowPickElementIndex].isFlying = false;
                 });
-                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble);
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
             }
             else
             {

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dpngid5rio8n7"]
+
+[ext_resource type="Texture2D" uid="uid://b4i4pdkh1f56o" path="res://019_Monster/Images/exclamation-idle.png" id="1_p5iib"]
+
+[resource]
+atlas = ExtResource("1_p5iib")
+region = Rect2(48, 0, 16, 16)

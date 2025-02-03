@@ -117,6 +117,7 @@ public partial class GameManager : Node2D
         uiManager.OpenUI(UIIndex.MapElementUI);
         uiManager.OpenUI(UIIndex.BattleInfoUI);
         //uiManager.OpenUI(UIIndex.ShopUI);
+        soundManager.PlayBGM(SoundEnum.bgm_5);
     }
 
     private void InitCamera() 

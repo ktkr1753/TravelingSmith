@@ -77,11 +77,11 @@ libraries = {
 "": SubResource("AnimationLibrary_dc2vg")
 }
 
-[node name="ProgressBar" parent="." index="1"]
+[node name="ProgressBar" parent="." index="2"]
 offset_top = -28.0
 offset_bottom = -23.0
 
-[node name="Image" parent="." index="2"]
+[node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_0vktt")
 texture = SubResource("AtlasTexture_gaj8l")
 offset = Vector2(0, -12)
@@ -89,3 +89,6 @@ offset = Vector2(0, -12)
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_h7kkw")
+
+[node name="TextureRect" parent="." index="5"]
+position = Vector2(0, -36)

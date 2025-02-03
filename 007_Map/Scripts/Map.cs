@@ -20,7 +20,7 @@ public partial class Map : Node2D
 
     public double nowTime = -50;
     public double waveTime = 50;
-    public const int spawnDistance = 1000;
+    public const int spawnDistance = 500;
     public int nowWave = 0;
 
     private Vector2 _viewPortSize = Vector2.Zero;
@@ -77,7 +77,7 @@ public partial class Map : Node2D
     {
         base._Process(delta);
 
-        UpdateSpawn(delta);
+        //UpdateSpawn(delta);
         TargetMove(delta);
         CheckRoad();
         CheckInShop();
@@ -187,6 +187,13 @@ public partial class Map : Node2D
                 road = UtilityTool.CreateInstance<MapRoadObject>(roadPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
             }
 
+            if (nowCreateRoadIndex % 4 == 3)    //生成怪物
+            {
+                CreateWaveMonster();
+                nowWave++;
+            }
+
+
             roadObjs.Enqueue(road);
             if (roadObjs.Count > 4)
             {
@@ -236,8 +243,9 @@ public partial class Map : Node2D
                 MonsterResource monsterData = tempMonster.Clone();
                 monsterData.nowHp = monsterData.maxHp;
 
+                float rndFixedX = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, -16, 17);
                 float rndFixedY = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, -16, 17);
-                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance, targetPoint.GlobalPosition.Y + rndFixedY);
+                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance + rndFixedX, targetPoint.GlobalPosition.Y + rndFixedY);
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
@@ -248,7 +256,7 @@ public partial class Map : Node2D
 
                 onCreateMonster?.Invoke(monster);
 
-                await GameManager.instance.Wait(1);
+                //await GameManager.instance.Wait(0.5f);
             }
             else 
             {

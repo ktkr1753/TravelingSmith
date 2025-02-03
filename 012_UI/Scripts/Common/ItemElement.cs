@@ -148,6 +148,7 @@ public partial class ItemElement : Control
             image.Texture = null;
             productImage.Visible = false;
             durabilityLabel.Visible = false;
+			breakHintNode.Visible = false;
             circleProgressImage.Visible = false;
         }
 		else 
@@ -406,7 +407,8 @@ public partial class ItemElement : Control
 		if(isPicking || isFlying) 
 		{
             durabilityLabel.Visible = false;
-			return;
+            breakHintNode.Visible = false;
+            return;
         }
 
 		if(item is IUseable useable) 
@@ -431,11 +433,13 @@ public partial class ItemElement : Control
 				{
 					durabilityLabel.Visible = true;
 					durabilityLabel.Text = $"{useable.durability}";
-				}
+                    breakHintNode.Visible = false;
+                }
 				else 
 				{
 					durabilityLabel.Visible = false;
-				}
+                    breakHintNode.Visible = false;
+                }
 			}
 		}
 		else if (item is IProduce produce && !(item is SelfToolResource)) 
@@ -444,15 +448,18 @@ public partial class ItemElement : Control
 			{
 				durabilityLabel.Visible = true;
 				durabilityLabel.Text = $"{produce.durability}";
-			}
+                breakHintNode.Visible = false;
+            }
 			else 
 			{
                 durabilityLabel.Visible = false;
+                breakHintNode.Visible = false;
             }
         }
 		else 
 		{
 			durabilityLabel.Visible = false;
+            breakHintNode.Visible = false;
         }
 	}
 

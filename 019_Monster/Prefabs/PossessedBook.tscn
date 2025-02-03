@@ -91,11 +91,11 @@ libraries = {
 "": SubResource("AnimationLibrary_qchpa")
 }
 
-[node name="ProgressBar" parent="." index="1"]
+[node name="ProgressBar" parent="." index="2"]
 offset_top = -48.0
 offset_bottom = -43.0
 
-[node name="Image" parent="." index="2"]
+[node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_qebn5")
 position = Vector2(0, -24)
 texture = ExtResource("2_rljpy")
@@ -103,3 +103,6 @@ texture = ExtResource("2_rljpy")
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, -21)
 shape = SubResource("RectangleShape2D_xsgyn")
+
+[node name="TextureRect" parent="." index="5"]
+position = Vector2(0, -56)
