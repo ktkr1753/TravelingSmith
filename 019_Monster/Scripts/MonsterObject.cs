@@ -4,13 +4,32 @@ using System;
 public partial class MonsterObject : Node2D
 {
     [Export] public ProgressBar hpProgressBar;
+    [Export] public ProgressBar hpBackProgressBar;
 	[Export] public Sprite2D mainImage;
     [Export] public AnimationPlayer anim;
     [Export] public AnimationPlayer exclamationAnim;
 
     public MonsterResource data;
-    private bool isFind = false;
+    private bool _isFind = false;
+    public bool isFind 
+    {
+        get { return _isFind; }
+        set 
+        {
+            if(_isFind != value) 
+            {
+                _isFind = value;
+                if (_isFind) 
+                {
+                    PlayExclamation();
+                }
+            }
+        }
+    }
+
     private bool isDie = false;
+
+    private Tween hpTween = null;
 
     public event Action<MonsterObject> onDie;
     public event Action<MonsterObject> onDestroy;
@@ -53,8 +72,30 @@ public partial class MonsterObject : Node2D
 
     private void SetView() 
     {
-        SetHpProgressbar();
+        InitHpProgressbar();
         SetIdle();
+    }
+
+    private void InitHpProgressbar() 
+    {
+        if (data != null)
+        {
+            hpProgressBar.MaxValue = data.maxHp;
+            hpProgressBar.Value = data.nowHp;
+            hpBackProgressBar.MaxValue = data.maxHp;
+            hpBackProgressBar.Value = data.nowHp;
+
+            if (data.maxHp == data.nowHp || data.nowHp == 0)
+            {
+                hpProgressBar.Visible = false;
+                hpBackProgressBar.Visible = false;
+            }
+            else
+            {
+                hpProgressBar.Visible = true;
+                hpBackProgressBar.Visible = true;
+            }
+        }
     }
 
     private void SetHpProgressbar() 
@@ -64,12 +105,31 @@ public partial class MonsterObject : Node2D
             if (data.maxHp == data.nowHp || data.nowHp == 0)
             {
                 hpProgressBar.Visible = false;
+                hpBackProgressBar.Visible = false;
             }
             else 
             {
+
                 hpProgressBar.Visible = true;
-                hpProgressBar.MaxValue = data.maxHp;
                 hpProgressBar.Value = data.nowHp;
+                hpBackProgressBar.Visible = true;
+
+                int targetHP = data.nowHp;
+                if(hpTween != null) 
+                {
+                    hpTween.Stop();
+                    hpTween = null;
+                }
+                Debug.Print($"SetHpProgressbar data.maxHp:{data.maxHp},data.nowHp:{data.nowHp}, hpBackProgressBar.Value:{hpBackProgressBar.Value}");
+
+                hpTween = CreateTween();
+                hpTween.SetEase(Tween.EaseType.Out);
+                hpTween.TweenProperty(hpBackProgressBar, "value", targetHP, 1f);
+                hpTween.TweenCallback(Callable.From(() =>
+                {
+                    hpTween.Stop();
+                    hpTween = null;
+                }));
             }
         }
     }
@@ -132,7 +192,6 @@ public partial class MonsterObject : Node2D
                 if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < findDistance)
                 {
                     isFind = true;
-                    PlayExclamation();
                 }
             }
         }
@@ -233,6 +292,7 @@ public partial class MonsterObject : Node2D
         if(nowHp < preHP) 
         {
             HurtShine();
+            isFind = true;
         }
     }
 

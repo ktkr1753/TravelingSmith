@@ -60,7 +60,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         }
     }
 
-    public bool isKeepProduce { get { return false; } }
+    public bool isKeepProduce { get { return true; } }
 
     private bool _isProducing = false;
     [Export] public bool isProducing

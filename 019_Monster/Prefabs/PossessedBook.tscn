@@ -91,9 +91,9 @@ libraries = {
 "": SubResource("AnimationLibrary_qchpa")
 }
 
-[node name="ProgressBar" parent="." index="2"]
+[node name="HP" parent="." index="2"]
 offset_top = -48.0
-offset_bottom = -43.0
+offset_bottom = -48.0
 
 [node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_qebn5")

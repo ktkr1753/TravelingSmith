@@ -413,11 +413,11 @@ public partial class MainGameUI : UIBase
         {
             if(newItem != null) 
             {
-                infoPanelPool.inuses[index].SetData(newItem);
                 if(globalPos != null)
                 {
                     infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
                 }
+                infoPanelPool.inuses[index].SetData(newItem);
                 ReturnInfoPanelElement(index + 1);
             }
             else 
@@ -433,12 +433,12 @@ public partial class MainGameUI : UIBase
                 ItemInfoPanel infoPanel = infoPanelPool.GetElement();
                 infoPanel.onDetailClick += OnInfoDetailClick;
                 infoPanel.onCloseClick += OnInfoCloseClick;
-                infoPanel.SetData(newItem);
-                infoPanel.SetIndex(newIndex);
                 if (globalPos != null)
                 {
                     infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
                 }
+                infoPanel.SetData(newItem);
+                infoPanel.SetIndex(newIndex);
             }
             else
             {

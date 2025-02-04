@@ -77,9 +77,9 @@ libraries = {
 "": SubResource("AnimationLibrary_dc2vg")
 }
 
-[node name="ProgressBar" parent="." index="2"]
+[node name="HP" parent="." index="2"]
 offset_top = -28.0
-offset_bottom = -23.0
+offset_bottom = -28.0
 
 [node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_0vktt")

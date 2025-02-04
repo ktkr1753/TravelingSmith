@@ -32,11 +32,9 @@ libraries = {
 "": SubResource("AnimationLibrary_bya31")
 }
 
-[node name="ProgressBar" parent="." index="2"]
-offset_left = -16.0
+[node name="HP" parent="." index="2"]
 offset_top = -43.0
-offset_right = 16.0
-offset_bottom = -38.0
+offset_bottom = -43.0
 
 [node name="Image" parent="." index="3"]
 material = SubResource("ShaderMaterial_a7glf")

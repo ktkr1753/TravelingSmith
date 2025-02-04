@@ -26,6 +26,8 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private Label accelerationLabel;
     [Export] private Control maxSpeedParent;
     [Export] private Label maxSpeedLabel;
+    [Export] private Control needAreaParent;
+    [Export] private TextureRect needAreaImage;
 
     private ItemBaseResource _item;
     public ItemBaseResource item 
@@ -104,7 +106,9 @@ public partial class ItemInfoPanel : PanelContainer
         SetProduceCostTime();
         SetAcceleration();
         SetMaxSpeed();
+        SetNeedArea();
         RefreshContainerSize();
+        ResetContainerPos();
     }
 
 	private void SetName() 
@@ -262,9 +266,71 @@ public partial class ItemInfoPanel : PanelContainer
         }
     }
 
+    private void SetNeedArea() 
+    {
+        AreaIndex needShowArea = AreaIndex.None;
+
+        if (item is ICore core)
+        {
+            needShowArea = AreaIndex.Core;
+        }
+        else if(item is IUseable useable) 
+        {
+            needShowArea = AreaIndex.Useable;
+        }
+        else if(item is IProduce producer) 
+        {
+            switch (producer.type) 
+            {
+                case ProduceType.Fire:
+                    needShowArea = AreaIndex.Fire;
+                    break;
+                case ProduceType.Produce:
+                    needShowArea = AreaIndex.Produce;
+                    break;
+                case ProduceType.None:
+                    break;
+                default:
+                    Debug.PrintWarn($"producer.type未定義, producer.type:{producer.type}");
+                    break;
+            }
+        }
+
+
+        if(needShowArea != AreaIndex.None) 
+        {
+            if(GameManager.instance.areaConfig.config.TryGetValue(needShowArea, out AreaResource areaData)) 
+            {
+                needAreaParent.Visible = true;
+                needAreaImage.Texture = areaData.texture;
+            }
+            else 
+            {
+                needAreaParent.Visible = false;
+                Debug.PrintWarn($"雖然有需要顯示的區域圖但是該區域圖未定義, needShowArea:{needShowArea}");
+            }
+        }
+        else
+        {
+            needAreaParent.Visible = false;
+        }
+    }
+
     private void RefreshContainerSize() 
     {
         Size = CustomMinimumSize;
+    }
+
+    private void ResetContainerPos() 
+    {
+        //Vector2 orgin = GlobalPosition;
+        Vector2 rightDown = GlobalPosition + Size;
+
+        Rect2 viewRect = GetViewportRect();
+        Vector2 fix = new Vector2(Math.Max(rightDown.X - viewRect.Size.X, 0), Math.Max(rightDown.Y - viewRect.Size.Y, 0));
+        GlobalPosition = GlobalPosition - fix;
+
+        //Debug.Print($"rightDown:{rightDown}, viewRect Size:{viewRect.Size},fix:{fix}, orgin:{orgin}, GlobalPosition:{GlobalPosition}");
     }
 
     private void OnDurabilityChange(int durability) 
