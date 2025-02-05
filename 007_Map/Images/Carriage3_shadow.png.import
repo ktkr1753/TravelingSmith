@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca1cta7gpfk0f"
-path="res://.godot/imported/Carriage.png-faa12dc1b362b73d45282aeaaf1d9ca7.ctex"
+uid="uid://d2mxoyxabo07b"
+path="res://.godot/imported/Carriage3_shadow.png-aaade261bb0e2efdd415f6ae73f51072.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://007_Map/Images/Carriage.png"
-dest_files=["res://.godot/imported/Carriage.png-faa12dc1b362b73d45282aeaaf1d9ca7.ctex"]
+source_file="res://007_Map/Images/Carriage3_shadow.png"
+dest_files=["res://.godot/imported/Carriage3_shadow.png-aaade261bb0e2efdd415f6ae73f51072.ctex"]
 
 [params]
 

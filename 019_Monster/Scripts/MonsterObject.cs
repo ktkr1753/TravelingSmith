@@ -120,7 +120,7 @@ public partial class MonsterObject : Node2D
                     hpTween.Stop();
                     hpTween = null;
                 }
-                Debug.Print($"SetHpProgressbar data.maxHp:{data.maxHp},data.nowHp:{data.nowHp}, hpBackProgressBar.Value:{hpBackProgressBar.Value}");
+                //Debug.Print($"SetHpProgressbar data.maxHp:{data.maxHp},data.nowHp:{data.nowHp}, hpBackProgressBar.Value:{hpBackProgressBar.Value}");
 
                 hpTween = CreateTween();
                 hpTween.SetEase(Tween.EaseType.Out);
