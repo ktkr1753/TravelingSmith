@@ -13,6 +13,7 @@ public partial class CameraManager : Node2D
 
     public void Init() 
     {
+        GameManager.instance.onNeedPauseChange += OnGamePauseChnage;
         GameManager.instance.localSetting.onGameSpeedSettingChange += OnGameSpeedChange;
     }
 
@@ -20,6 +21,7 @@ public partial class CameraManager : Node2D
     {
         base._ExitTree();
 
+        GameManager.instance.onNeedPauseChange -= OnGamePauseChnage;
         GameManager.instance.localSetting.onGameSpeedSettingChange -= OnGameSpeedChange;
     }
 
@@ -59,6 +61,10 @@ public partial class CameraManager : Node2D
         camera.PositionSmoothingSpeed = (float)(smoothingSpeed * GameManager.instance.gameSpeed);
     }
 
+    private void OnGamePauseChnage(int needPauseNum) 
+    {
+        SetCameraPositionSmoothing();
+    }
     private void OnGameSpeedChange(double gameSpeed) 
     {
         SetCameraPositionSmoothing();

@@ -16,7 +16,8 @@ public partial class BattleManager : Node
                 if (_nowHP == 0)
                 {
                     isGameOver = true;
-                    GameManager.instance.uiManager.OpenUI(UIIndex.GameOverUI);
+                    Action finishPause = GameManager.instance.AddNeedPause();
+                    GameManager.instance.uiManager.OpenUI(UIIndex.GameOverUI, new System.Collections.Generic.List<object> { finishPause });
                 }
             }
         }

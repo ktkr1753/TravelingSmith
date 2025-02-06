@@ -26,7 +26,7 @@ public partial class MapManager : Node
     {
         List<KeyValuePair<double, MonsterObject>> result = new List<KeyValuePair<double, MonsterObject>>();
 
-        Vector2 targetPos = nowMap.targetPoint.GlobalPosition;
+        Vector2 targetPos = nowMap.main.GlobalPosition;
         for(int i = 0; i < nowMap.monsters.Count; i++) 
         {
             //float distance = targetPos.DistanceTo(nowMap.monsters[i].GlobalPosition);

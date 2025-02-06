@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 public partial class Map : Node2D
 {
     [Export] public Node2D monsterParent;
-    [Export] public Node2D targetPoint;
+    [Export] public MapMain main;
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
     [Export] public PackedScene roadShopPrefab;
@@ -135,7 +135,7 @@ public partial class Map : Node2D
             GameManager.instance.itemManager.isTouch = false;
             double addTime = delta * GameManager.instance.gameSpeed;
             Vector2 moveNormal = new Vector2(1, 0);
-            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
+            main.GlobalPosition = main.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
         }
         else 
         {
@@ -154,14 +154,14 @@ public partial class Map : Node2D
             GameManager.instance.itemManager.isTouch = true;
             double addTime = delta * GameManager.instance.gameSpeed;
             Vector2 moveNormal = new Vector2(1, 0);
-            targetPoint.GlobalPosition = targetPoint.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
+            main.GlobalPosition = main.GlobalPosition + (moveNormal * (float)(GameManager.instance.itemManager.moveSpeed * addTime));
         }
     }
 
 
     private void CheckRoad() 
     {
-        float needRoadIndex = ((targetPoint.GlobalPosition.X - viewPortSize.X / 2) / viewPortSize.X);
+        float needRoadIndex = ((main.GlobalPosition.X - viewPortSize.X / 2) / viewPortSize.X);
         if(needRoadIndex > nowCreateRoadIndex) 
         {
             nowCreateRoadIndex++;
@@ -211,20 +211,20 @@ public partial class Map : Node2D
             {
                 if(shop.index > visitedShopIndex)
                 {
-                    if (targetPoint.GlobalPosition.X >= shop.GlobalPosition.X)
+                    if (main.GlobalPosition.X >= shop.GlobalPosition.X)
                     {
                         visitedShopIndex = shop.index;
                         GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
                         break;
                     }
-                    else if (targetPoint.GlobalPosition.X >= shop.enterShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.Out)
+                    else if (main.GlobalPosition.X >= shop.enterShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.Out)
                     {
                         shop.nowCharacterState = ShopObject.CharacterState.In;
                     }
                 }
                 else if(shop.index == visitedShopIndex) 
                 {
-                    if(targetPoint.GlobalPosition.X >= shop.exitShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.In)
+                    if(main.GlobalPosition.X >= shop.exitShopNode.GlobalPosition.X && shop.nowCharacterState == ShopObject.CharacterState.In)
                     {
                         shop.nowCharacterState = ShopObject.CharacterState.Out;
                     }
@@ -245,7 +245,7 @@ public partial class Map : Node2D
 
                 float rndFixedX = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, -16, 17);
                 float rndFixedY = GameManager.instance.randomManager.GetRange(RandomType.SpawnMonster, -16, 17);
-                Vector2 spawnPoint = new Vector2(targetPoint.GlobalPosition.X + spawnDistance + rndFixedX, targetPoint.GlobalPosition.Y + rndFixedY);
+                Vector2 spawnPoint = new Vector2(main.GlobalPosition.X + spawnDistance + rndFixedX, main.GlobalPosition.Y + rndFixedY);
 
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
@@ -296,7 +296,7 @@ public partial class Map : Node2D
 
         if (hpChange < 0)
         {
-            Vector2 viewPos = (GetViewportRect().Size / 2) + (targetPoint.GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
+            Vector2 viewPos = (GetViewportRect().Size / 2) + (main.GlobalPosition - GameManager.instance.cameraManager.camera.GlobalPosition);
             Vector2 showPos = new Vector2(viewPos.X, viewPos.Y + -12);
             battleInfoUI.ShowMinusHPInfo(-hpChange, showPos, type);
         }
@@ -313,7 +313,7 @@ public partial class Map : Node2D
                 if (rnd <= mapDropItems[i].dropRate && rndYFixGrid.Count > 0) 
                 {
                     int rndYFix = rndYFixGrid.Dequeue() * 16;
-                    Vector2 itemGlobalPos = new Vector2((float)(createItemMinDistance + createItemDistance * (createItemCount + 1)), targetPoint.GlobalPosition.Y + rndYFix);
+                    Vector2 itemGlobalPos = new Vector2((float)(createItemMinDistance + createItemDistance * (createItemCount + 1)), main.GlobalPosition.Y + rndYFix);
                     MapItemObject itemObj = CreateMapItem(mapDropItems[i].itemIndex, itemGlobalPos);
                 }
             }
@@ -354,7 +354,7 @@ public partial class Map : Node2D
             }
             else 
             {
-                attackObject.GlobalPosition = targetPoint.GlobalPosition + new Vector2(0, -8);
+                attackObject.GlobalPosition = main.GlobalPosition + new Vector2(0, -8);
 
                 double angle = Math.Atan2(globalPos.Y - attackObject.GlobalPosition.Y, globalPos.X - attackObject.GlobalPosition.X);
                 //Debug.Print($"CreateMapAttack angle:{angle}");

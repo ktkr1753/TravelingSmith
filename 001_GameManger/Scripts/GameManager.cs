@@ -29,16 +29,6 @@ public partial class GameManager : Node2D
     [Export] public LocalSettingResource localSetting;
     [Export] public UICommonSettingResource uiCommonSetting;
 
-    public bool _isChoosePause = false;
-    public bool isChoosePause 
-    {
-        get { return _isChoosePause; } 
-        set 
-        {  
-            _isChoosePause = value; 
-        }
-    }
-
     private HashSet<int> _isNeedPause = new HashSet<int>();
     public Action AddNeedPause() 
     {
@@ -46,9 +36,14 @@ public partial class GameManager : Node2D
         int rndCode = randomManager.GetRange(RandomType.Other, int.MinValue, int.MaxValue);
         _isNeedPause.Add(rndCode);
         //Debug.Print($"AddNeedPause _isNeedPause count:{_isNeedPause.Count}");
+        onNeedPauseChange?.Invoke(_isNeedPause.Count);
         Action finishCallback = () =>
         {
-            RemoveNeedPause(rndCode);
+            bool isSuccess = RemoveNeedPause(rndCode);
+            if (isSuccess)
+            {
+                onNeedPauseChange?.Invoke(_isNeedPause.Count);
+            }
         };
 
         return finishCallback;
@@ -67,17 +62,23 @@ public partial class GameManager : Node2D
         }
     }
 
-    private void RemoveNeedPause(int code) 
+    public event Action<int> onNeedPauseChange;
+
+    private bool RemoveNeedPause(int code) 
     {
+        bool isSuccess = false;
         if (_isNeedPause.Contains(code))
         {
             _isNeedPause.Remove(code);
+            isSuccess = true;
             //Debug.Print($"AddNeedPause _isNeedPause count:{_isNeedPause.Count}");
         }
         else 
         {
             Debug.PrintWarn($"RemoveNeedPause 不存在code:{code}");
         }
+
+        return isSuccess;
     }
 
 
@@ -86,7 +87,7 @@ public partial class GameManager : Node2D
         get
         {
             double result = 1;
-            if (battleManager.isGameOver || isNeedPause)
+            if (isNeedPause)
             {
                 result = 0;
             }
@@ -98,13 +99,18 @@ public partial class GameManager : Node2D
         }
     }
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-	{
+    public override void _EnterTree()
+    {
+        base._EnterTree();
         if (instance == null)
         {
             instance = this;
         }
+    }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+	{
         soundManager.Init();
         uiManager.Init();
         itemManager.Init();
@@ -123,7 +129,7 @@ public partial class GameManager : Node2D
     private void InitCamera() 
     {
         Rect2 viewportRect = GetViewportRect();
-        cameraManager.camera.follow = mapManager.nowMap.targetPoint;
+        cameraManager.camera.follow = mapManager.nowMap.main;
     }
 
     public async Task<Variant[]> Wait(float seconds)

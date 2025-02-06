@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cu3nwa507fgkt"
-path="res://.godot/imported/test.png-99e03916381b345556be13a5e85cf22f.ctex"
+uid="uid://d11phwd8hsaju"
+path="res://.godot/imported/Carriage3-car_idle.png-5665c41a93fbdae5e7f9b0b38f2b66b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://007_Map/Images/test.png"
-dest_files=["res://.godot/imported/test.png-99e03916381b345556be13a5e85cf22f.ctex"]
+source_file="res://007_Map/Images/Car/Carriage3-car_idle.png"
+dest_files=["res://.godot/imported/Carriage3-car_idle.png-5665c41a93fbdae5e7f9b0b38f2b66b7.ctex"]
 
 [params]
 

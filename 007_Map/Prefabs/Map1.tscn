@@ -1,14 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://04nj0wollggp"]
+[gd_scene load_steps=11 format=3 uid="uid://04nj0wollggp"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/Map.cs" id="1_8cs5l"]
 [ext_resource type="PackedScene" uid="uid://defkma7jjqr47" path="res://007_Map/Prefabs/Road1.tscn" id="2_ndk6r"]
-[ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="3_fvelh"]
 [ext_resource type="PackedScene" uid="uid://b31ks470twpcf" path="res://007_Map/Prefabs/Shop.tscn" id="3_re5r2"]
 [ext_resource type="PackedScene" uid="uid://y0qyomt17ius" path="res://007_Map/Prefabs/Road2.tscn" id="3_sulsd"]
 [ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="5_cqsd8"]
 [ext_resource type="Script" path="res://007_Map/Scripts/MapItemObjectPool.cs" id="6_d7nto"]
-[ext_resource type="Texture2D" uid="uid://d2mxoyxabo07b" path="res://007_Map/Images/Carriage3_shadow.png" id="7_jdarr"]
-[ext_resource type="Texture2D" uid="uid://cuc31i3a3ub3f" path="res://007_Map/Images/Carriage3.png" id="7_nqw0i"]
+[ext_resource type="PackedScene" uid="uid://43wjbxmo7g" path="res://007_Map/Prefabs/MapMain.tscn" id="6_lkfa8"]
 [ext_resource type="PackedScene" uid="uid://ca0mlaowat46f" path="res://007_Map/Prefabs/MapItemObject.tscn" id="7_t7xnu"]
 
 [sub_resource type="Resource" id="Resource_xrax0"]
@@ -21,13 +19,10 @@ script = ExtResource("5_cqsd8")
 itemIndex = 603
 dropRate = 0.1
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
-size = Vector2(100, 900)
-
-[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "targetPoint", "roadParent", "shopParent", "attackersParent", "itemPool")]
+[node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "main", "roadParent", "shopParent", "attackersParent", "itemPool")]
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
-targetPoint = NodePath("Target")
+main = NodePath("Main")
 roadParent = NodePath("RoadParent")
 roadPrefab = ExtResource("2_ndk6r")
 roadShopPrefab = ExtResource("3_sulsd")
@@ -43,29 +38,6 @@ mapDropItems = [SubResource("Resource_xrax0"), SubResource("Resource_w5brl")]
 
 [node name="Monsters" type="Node2D" parent="."]
 
-[node name="Target" type="Node2D" parent="."]
-position = Vector2(320, 72)
-
-[node name="Sprite2D" type="Sprite2D" parent="Target"]
-visible = false
-position = Vector2(0, -8)
-texture = ExtResource("3_fvelh")
-
-[node name="shadow" type="Sprite2D" parent="Target"]
-self_modulate = Color(1, 1, 1, 0.501961)
-position = Vector2(-26, 7)
-texture = ExtResource("7_jdarr")
-
-[node name="image" type="Sprite2D" parent="Target"]
-position = Vector2(-26, -7)
-texture = ExtResource("7_nqw0i")
-
-[node name="DeadLine" type="Area2D" parent="Target"]
-position = Vector2(-400, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Target/DeadLine"]
-shape = SubResource("RectangleShape2D_n1gu1")
-
 [node name="Attacks" type="Node2D" parent="."]
 
 [node name="Items" type="Node2D" parent="." node_paths=PackedStringArray("parent", "backup")]
@@ -77,4 +49,4 @@ backup = NodePath("backup")
 [node name="backup" type="Node2D" parent="Items"]
 visible = false
 
-[connection signal="area_entered" from="Target/DeadLine" to="." method="OnMapItemTouchDeadLine"]
+[node name="Main" parent="." instance=ExtResource("6_lkfa8")]

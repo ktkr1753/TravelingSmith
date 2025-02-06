@@ -59,6 +59,9 @@ public partial class MonsterObject : Node2D
         {
             data.onHPChange += OnHpChange;
             data.onDie += OnDie;
+
+            GameManager.instance.onNeedPauseChange += OnGamePauseChange;
+            GameManager.instance.localSetting.onGameSpeedSettingChange += OnGameSpeedChange;
         }
     }
     private void UnregisterEvent(MonsterResource data)
@@ -67,6 +70,9 @@ public partial class MonsterObject : Node2D
         {
             data.onHPChange -= OnHpChange;
             data.onDie -= OnDie;
+
+            GameManager.instance.onNeedPauseChange -= OnGamePauseChange;
+            GameManager.instance.localSetting.onGameSpeedSettingChange -= OnGameSpeedChange;
         }
     }
 
@@ -187,9 +193,9 @@ public partial class MonsterObject : Node2D
         }
         else 
         {
-            if (GameManager.instance.mapManager.nowMap?.targetPoint != null)
+            if (GameManager.instance.mapManager.nowMap?.main != null)
             {
-                if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < findDistance)
+                if (Math.Abs(GameManager.instance.mapManager.nowMap.main.GlobalPosition.X - GlobalPosition.X) < findDistance)
                 {
                     isFind = true;
                 }
@@ -201,9 +207,9 @@ public partial class MonsterObject : Node2D
     {
         bool result = false;
 
-        if(GameManager.instance.mapManager.nowMap?.targetPoint != null)
+        if(GameManager.instance.mapManager.nowMap?.main != null)
         {
-            if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < closeDistance)
+            if (Math.Abs(GameManager.instance.mapManager.nowMap.main.GlobalPosition.X - GlobalPosition.X) < closeDistance)
             {
                 result = true;
             }
@@ -216,10 +222,10 @@ public partial class MonsterObject : Node2D
     {
         bool result = false;
 
-        if (GameManager.instance.mapManager.nowMap?.targetPoint != null)
+        if (GameManager.instance.mapManager.nowMap?.main != null)
         {
             //if (GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition) < (closeDistance / 2))
-            if (Math.Abs(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition.X - GlobalPosition.X) < (closeDistance / 2))
+            if (Math.Abs(GameManager.instance.mapManager.nowMap.main.GlobalPosition.X - GlobalPosition.X) < (closeDistance / 2))
             {
                 result = true;
             }
@@ -239,7 +245,7 @@ public partial class MonsterObject : Node2D
 
             int rndX = GameManager.instance.randomManager.GetRange(RandomType.Other, -5, 5);
             int rndY = GameManager.instance.randomManager.GetRange(RandomType.Other, -5, 5);
-            Vector2 targetPos = GameManager.instance.mapManager.nowMap.targetPoint.Position;
+            Vector2 targetPos = GameManager.instance.mapManager.nowMap.main.Position;
             Vector2 position = new Vector2(targetPos.X + rndX, targetPos.Y + rndY);
             GameManager.instance.mapManager.PlayFX(data.attackFX, position);
 
@@ -284,6 +290,12 @@ public partial class MonsterObject : Node2D
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_beat_1);
     }
 
+    private void ResetAnimationSpeed() 
+    {
+        anim.SpeedScale = (float)GameManager.instance.gameSpeed;
+        exclamationAnim.SpeedScale = (float)GameManager.instance.gameSpeed;
+    }
+
     private void OnHpChange(int preHP,int nowHp, HPChangeType type) 
     {
         SetHpProgressbar();
@@ -302,5 +314,15 @@ public partial class MonsterObject : Node2D
         isDie = true;
         anim.Play(clip_die);
         onDie?.Invoke(this);
+    }
+
+    private void OnGamePauseChange(int needPause) 
+    {
+        ResetAnimationSpeed();
+    }
+
+    private void OnGameSpeedChange(double gameSpeed) 
+    {
+        ResetAnimationSpeed();
     }
 }

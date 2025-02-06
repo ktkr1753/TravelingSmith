@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c67vq35x84wd5"]
+
+[ext_resource type="Texture2D" uid="uid://bi7tmlnym0aht" path="res://007_Map/Images/Car/Carriage3-crystal_shine.png" id="1_0437t"]
+
+[resource]
+atlas = ExtResource("1_0437t")
+region = Rect2(384, 0, 64, 32)

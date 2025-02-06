@@ -101,7 +101,7 @@ public partial class MapElement : Control
 
 	private void SetMonsterDistance() 
 	{
-		float distance = Mathf.Abs(monsterObjectData.GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.targetPoint.GlobalPosition));
+		float distance = Mathf.Abs(monsterObjectData.GlobalPosition.DistanceTo(GameManager.instance.mapManager.nowMap.main.GlobalPosition));
 		int showDistance = (int)distance;
 
 		if(showDistance <= showDis) 

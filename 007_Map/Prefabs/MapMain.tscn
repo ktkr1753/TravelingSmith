@@ -1,0 +1,173 @@
+[gd_scene load_steps=27 format=3 uid="uid://43wjbxmo7g"]
+
+[ext_resource type="Script" path="res://007_Map/Scripts/MapMain.cs" id="1_ytylw"]
+[ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="2_mygln"]
+[ext_resource type="Texture2D" uid="uid://d11phwd8hsaju" path="res://007_Map/Images/Car/Carriage3-car_idle.png" id="2_y241n"]
+[ext_resource type="Texture2D" uid="uid://cuwd8qbkdavqi" path="res://007_Map/Images/Car/Carriage3-car_move_1.tres" id="3_qs1jp"]
+[ext_resource type="Texture2D" uid="uid://d2mxoyxabo07b" path="res://007_Map/Images/Car/Carriage3_shadow.png" id="3_qxyda"]
+[ext_resource type="Texture2D" uid="uid://b1manqbvvwn0n" path="res://007_Map/Images/Car/Carriage3-car_move_2.tres" id="4_antrm"]
+[ext_resource type="Texture2D" uid="uid://wlg4sianrvvc" path="res://007_Map/Images/Car/Carriage3-crystal_shine_1.tres" id="6_6v6wd"]
+[ext_resource type="Texture2D" uid="uid://gdy0vd8erge" path="res://007_Map/Images/Car/Carriage3-crystal_shine_2.tres" id="7_npob2"]
+[ext_resource type="Texture2D" uid="uid://dhcmpkkbcusr" path="res://007_Map/Images/Car/Carriage3-crystal_shine_3.tres" id="8_bcpvn"]
+[ext_resource type="Texture2D" uid="uid://biedquyndhcbh" path="res://007_Map/Images/Car/Carriage3-crystal_shine_4.tres" id="9_7i3iv"]
+[ext_resource type="Texture2D" uid="uid://cjja3eae2fjg0" path="res://007_Map/Images/Car/Carriage3-crystal_shine_5.tres" id="10_avi2g"]
+[ext_resource type="Texture2D" uid="uid://w3pltqs7h2hx" path="res://007_Map/Images/Car/Carriage3-crystal_shine_6.tres" id="11_leh4r"]
+[ext_resource type="Texture2D" uid="uid://c67vq35x84wd5" path="res://007_Map/Images/Car/Carriage3-crystal_shine_7.tres" id="12_pya4d"]
+[ext_resource type="Texture2D" uid="uid://c4ojfprvyaghg" path="res://007_Map/Images/Car/Carriage3-crystal_shine_8.tres" id="13_45djn"]
+[ext_resource type="Texture2D" uid="uid://di3lfenjyfwg4" path="res://007_Map/Images/Car/Carriage3-crystal_shine_9.tres" id="14_01w2f"]
+[ext_resource type="Texture2D" uid="uid://cv434kt6uo44f" path="res://007_Map/Images/Car/Carriage3-crystal_idle.png" id="15_5dqra"]
+[ext_resource type="Texture2D" uid="uid://dyopmkmb43us3" path="res://007_Map/Images/Car/Carriage3-crystal_shine_10.tres" id="15_miscj"]
+
+[sub_resource type="Animation" id="Animation_fjndw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("carImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_y241n")]
+}
+
+[sub_resource type="Animation" id="Animation_0oap8"]
+resource_name = "move"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("carImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_qs1jp"), ExtResource("4_antrm")]
+}
+
+[sub_resource type="Animation" id="Animation_ji7w3"]
+resource_name = "idle"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("carImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_y241n")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmx7k"]
+_data = {
+"RESET": SubResource("Animation_fjndw"),
+"idle": SubResource("Animation_ji7w3"),
+"move": SubResource("Animation_0oap8")
+}
+
+[sub_resource type="Animation" id="Animation_mdqk8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("crystalImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_5dqra")]
+}
+
+[sub_resource type="Animation" id="Animation_o4ed2"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("crystalImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_5dqra")]
+}
+
+[sub_resource type="Animation" id="Animation_qylrp"]
+resource_name = "shine"
+length = 2.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("crystalImage:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("6_6v6wd"), ExtResource("7_npob2"), ExtResource("8_bcpvn"), ExtResource("9_7i3iv"), ExtResource("10_avi2g"), ExtResource("11_leh4r"), ExtResource("12_pya4d"), ExtResource("13_45djn"), ExtResource("14_01w2f"), ExtResource("15_miscj")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4shnv"]
+_data = {
+"RESET": SubResource("Animation_mdqk8"),
+"idle": SubResource("Animation_o4ed2"),
+"shine": SubResource("Animation_qylrp")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
+size = Vector2(100, 900)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainAnim", "crystalAnim")]
+position = Vector2(320, 72)
+script = ExtResource("1_ytylw")
+mainAnim = NodePath("MainAnimationPlayer")
+crystalAnim = NodePath("CrystalAnimationPlayer")
+
+[node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pmx7k")
+}
+
+[node name="CrystalAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4shnv")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -8)
+texture = ExtResource("2_mygln")
+
+[node name="shadow" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.501961)
+position = Vector2(-26, 7)
+texture = ExtResource("3_qxyda")
+
+[node name="carImage" type="Sprite2D" parent="."]
+position = Vector2(-26, -5)
+texture = ExtResource("2_y241n")
+
+[node name="crystalImage" type="Sprite2D" parent="."]
+position = Vector2(-26, -5)
+texture = ExtResource("15_5dqra")
+
+[node name="DeadLine" type="Area2D" parent="."]
+position = Vector2(-400, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadLine"]
+shape = SubResource("RectangleShape2D_n1gu1")

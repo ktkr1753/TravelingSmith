@@ -12,6 +12,24 @@ public partial class MapCharacter : Node2D
 
     public const float moveSpeed = 32.0f;
 
+    Tween moveTween;
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+
+        GameManager.instance.onNeedPauseChange += OnGamePause;
+        GameManager.instance.localSetting.onGameSpeedSettingChange += OnGameSpeedChange;
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        GameManager.instance.onNeedPauseChange -= OnGamePause;
+        GameManager.instance.localSetting.onGameSpeedSettingChange -= OnGameSpeedChange;
+    }
+
     public void Init(Vector2 startPoint) 
     {
         GlobalPosition = startPoint;
@@ -27,10 +45,11 @@ public partial class MapCharacter : Node2D
 
         float duration = dis / moveSpeed;
 
-        Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "global_position", endPoint, duration);
-        tween.TweenCallback(Callable.From(() =>
+        moveTween = GetTree().CreateTween();
+        moveTween.TweenProperty(this, "global_position", endPoint, duration);
+        moveTween.TweenCallback(Callable.From(() =>
         {
+            moveTween = null;
             animation.Play(clip_front_idle);
         }));
     }
@@ -44,11 +63,31 @@ public partial class MapCharacter : Node2D
 
         float duration = dis / moveSpeed;
 
-        Tween tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "global_position", endPoint, duration);
-        tween.TweenCallback(Callable.From(() =>
+        moveTween = GetTree().CreateTween();
+        moveTween.TweenProperty(this, "global_position", endPoint, duration);
+        moveTween.TweenCallback(Callable.From(() =>
         {
+            moveTween = null;
             animation.Play(clip_back_idle);
         }));
+    }
+
+    public void OnGamePause(int needPause)
+    {
+        ResetAnimationSpeed();
+    }
+
+    public void OnGameSpeedChange(double gameSpeed)
+    {
+        ResetAnimationSpeed();
+    }
+
+    private void ResetAnimationSpeed()
+    {
+        if(moveTween != null) 
+        {
+            moveTween.SetSpeedScale((float)GameManager.instance.gameSpeed);
+        }
+        animation.SpeedScale = (float)GameManager.instance.gameSpeed;
     }
 }

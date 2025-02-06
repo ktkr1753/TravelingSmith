@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuc31i3a3ub3f"
-path="res://.godot/imported/Carriage3.png-beb9f2abf05beea858aa8b5df1308ea1.ctex"
+uid="uid://bi7tmlnym0aht"
+path="res://.godot/imported/Carriage3-crystal_shine.png-0d314395f0914fe0501ef8afef44cd81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://007_Map/Images/Carriage3.png"
-dest_files=["res://.godot/imported/Carriage3.png-beb9f2abf05beea858aa8b5df1308ea1.ctex"]
+source_file="res://007_Map/Images/Car/Carriage3-crystal_shine.png"
+dest_files=["res://.godot/imported/Carriage3-crystal_shine.png-0d314395f0914fe0501ef8afef44cd81.ctex"]
 
 [params]
 
