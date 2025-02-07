@@ -28,6 +28,9 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private Label maxSpeedLabel;
     [Export] private Control needAreaParent;
     [Export] private TextureRect needAreaImage;
+    [Export] private Control makeAreaParent;
+    [Export] private TextureRect makeAreaImage;
+
 
     private ItemBaseResource _item;
     public ItemBaseResource item 
@@ -107,6 +110,7 @@ public partial class ItemInfoPanel : PanelContainer
         SetAcceleration();
         SetMaxSpeed();
         SetNeedArea();
+        SetMakeArea();
         RefreshContainerSize();
         ResetContainerPos();
     }
@@ -149,7 +153,18 @@ public partial class ItemInfoPanel : PanelContainer
         if (item is IAttack attacker)
         {
             attackPointParent.Visible = true;
-            attackPointLabel.Text = $"{attacker.attackPoint}";
+
+            int attackPoint = GameManager.instance.battleManager.GetAttackerPoint(attacker);
+            attackPointLabel.Text = $"{attackPoint}";
+
+            if(attackPoint < attacker.attackPoint) 
+            {
+                attackPointLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+            }
+            else 
+            {
+                attackPointLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+            }
         }
         else
         {
@@ -269,7 +284,6 @@ public partial class ItemInfoPanel : PanelContainer
     private void SetNeedArea() 
     {
         AreaIndex needShowArea = AreaIndex.None;
-
         if (item is ICore core)
         {
             needShowArea = AreaIndex.Core;
@@ -313,6 +327,27 @@ public partial class ItemInfoPanel : PanelContainer
         else
         {
             needAreaParent.Visible = false;
+        }
+    }
+
+    private void SetMakeArea() 
+    {
+        if(item.effectRanges.Count > 0 && item.effectRanges[0] != null) 
+        {
+            if (GameManager.instance.areaConfig.config.TryGetValue(item.effectRanges[0].type, out AreaResource areaData))
+            {
+                makeAreaParent.Visible = true;
+                makeAreaImage.Texture = areaData.texture;
+            }
+            else
+            {
+                makeAreaParent.Visible = false;
+                Debug.PrintWarn($"雖然有需要顯示的區域圖但是該區域圖未定義, item.effectRanges[0].type:{item.effectRanges[0].type}");
+            }
+        }
+        else 
+        {
+            makeAreaParent.Visible = false;
         }
     }
 

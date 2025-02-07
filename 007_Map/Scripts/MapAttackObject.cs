@@ -78,12 +78,7 @@ public partial class MapAttackObject : Node2D
 
     private void WaitToDamage(MonsterObject monsterObj) 
     {
-        int attackPoint = attacker.attackPoint;
-        if (attacker.durability == 0) 
-        {
-            attackPoint = (int)Math.Floor(attacker.attackPoint / 2.0);
-        }
-
+        int attackPoint = GameManager.instance.battleManager.GetAttackerPoint(attacker);
         monsterObj.data.Damage(attackPoint);
         GameManager.instance.mapManager.PlayFX(attacker.fx, monsterObj.GlobalPosition);
         GameManager.instance.cameraManager.ShakeCamera(3);

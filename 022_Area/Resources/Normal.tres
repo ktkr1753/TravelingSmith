@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="AreaResource" load_steps=3 format=3 uid="uid://ci0dwfoesff3x"]
 
 [ext_resource type="Script" path="res://022_Area/Scripts/AreaResource.cs" id="1_7pcvb"]
-[ext_resource type="Texture2D" uid="uid://c3jdlmk4exaqj" path="res://012_UI/Images/white.png" id="2_4gecy"]
+[ext_resource type="Texture2D" uid="uid://bi0y5yidvx4un" path="res://012_UI/Images/Icon8x8-normal.png" id="2_4q1f5"]
 
 [resource]
 script = ExtResource("1_7pcvb")
 index = 1
-texture = ExtResource("2_4gecy")
+texture = ExtResource("2_4q1f5")

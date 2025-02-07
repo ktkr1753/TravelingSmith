@@ -120,6 +120,17 @@ public partial class BattleManager : Node
         nowHP = maxHP;
     }
 
+    public int GetAttackerPoint(IAttack attacker) 
+    {
+        int attackPoint = attacker.attackPoint;
+        if (attacker.durability == 0)
+        {
+            attackPoint = (int)Math.Floor(attacker.attackPoint / 2.0);
+        }
+
+        return attackPoint;
+    }
+
 	public void Damage(int damage, HPChangeType type = HPChangeType.Normal) 
 	{
 		if(damage > 0) 

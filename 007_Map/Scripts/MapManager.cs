@@ -29,8 +29,10 @@ public partial class MapManager : Node
         Vector2 targetPos = nowMap.main.GlobalPosition;
         for(int i = 0; i < nowMap.monsters.Count; i++) 
         {
-            //float distance = targetPos.DistanceTo(nowMap.monsters[i].GlobalPosition);
-            float distance = Math.Abs(nowMap.monsters[i].GlobalPosition.X - targetPos.X);
+
+            //float distance = Math.Abs(nowMap.monsters[i].GlobalPosition.X - targetPos.X);
+            float distance = nowMap.monsters[i].GlobalPosition.X - targetPos.X;
+
             if (distance <= range) 
             {
                 result.Add(new KeyValuePair<double, MonsterObject>(distance, nowMap.monsters[i]));

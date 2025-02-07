@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="5_3daka"]
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
 offset_right = 72.0
 offset_bottom = 70.0
 script = ExtResource("1_jhhof")
@@ -37,6 +37,8 @@ maxSpeedParent = NodePath("VBoxContainer/MaxSpeedHBox")
 maxSpeedLabel = NodePath("VBoxContainer/MaxSpeedHBox/SpeedLabel")
 needAreaParent = NodePath("VBoxContainer/NeedAreaHBox")
 needAreaImage = NodePath("VBoxContainer/NeedAreaHBox/TextureRect")
+makeAreaParent = NodePath("VBoxContainer/MakeAreaHBox")
+makeAreaImage = NodePath("VBoxContainer/MakeAreaHBox/TextureRect")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -100,6 +102,19 @@ layout_mode = 2
 text = "需求區域:"
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/NeedAreaHBox"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+expand_mode = 1
+
+[node name="MakeAreaHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MakeAreaHBox"]
+layout_mode = 2
+text = "產生區域:"
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MakeAreaHBox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 expand_mode = 1

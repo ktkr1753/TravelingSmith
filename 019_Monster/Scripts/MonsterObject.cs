@@ -35,7 +35,7 @@ public partial class MonsterObject : Node2D
     public event Action<MonsterObject> onDestroy;
 
     public const double findDistance = 200;
-    public const double closeDistance = 15;
+    public const double closeDistance = 3;
 
     public const string material_rate = "rate";
     public const string material_finalColor = "finalColor";
