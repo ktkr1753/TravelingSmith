@@ -561,7 +561,7 @@ public partial class MainGameUI : UIBase
                 if(shopUI != null) 
                 {
                     Vector2 mousePos = GetViewport().GetMousePosition();
-                    if (shopUI.IsInSellRect(mousePos)) 
+                    if (shopUI.IsInSellRect(mousePos) && GameManager.instance.itemManager.IsCanRemove(pickedItem)) 
                     {
                         bool isSuccess = GameManager.instance.itemManager.SellItem(nowPickElementIndex);
                         //Debug.Print($"Sell Shop, isSuccess:{isSuccess}");
@@ -616,7 +616,7 @@ public partial class MainGameUI : UIBase
     private void OnElementDropButtonPressed(int index) 
     {
         if (index >= 0 && index < GameManager.instance.itemManager.heldItems.Count
-            && GameManager.instance.itemManager.heldItems[index] != null)
+            && GameManager.instance.itemManager.heldItems[index] != null && GameManager.instance.itemManager.IsCanRemove(GameManager.instance.itemManager.heldItems[index]))
         {
             if(GameManager.instance.itemManager.waitAddItem != null) 
             {

@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=7 format=3 uid="uid://d0aghhvkq6qgy"]
+
+[ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="1_hulph"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_yrfv1"]
+[ext_resource type="PackedScene" uid="uid://1crwafpktbta" path="res://019_Monster/Prefabs/BoarKing.tscn" id="2_4oiv5"]
+
+[sub_resource type="Resource" id="Resource_qxprh"]
+script = ExtResource("1_hulph")
+itemIndex = 613
+dropRate = 0.8
+
+[sub_resource type="Resource" id="Resource_4q6oy"]
+script = ExtResource("1_hulph")
+itemIndex = 613
+dropRate = 0.8
+
+[sub_resource type="Resource" id="Resource_h1k1i"]
+script = ExtResource("1_hulph")
+itemIndex = 613
+dropRate = 0.8
+
+[resource]
+script = ExtResource("1_yrfv1")
+index = 202
+prefab = ExtResource("2_4oiv5")
+maxHp = 50
+nowHp = 0
+attackPoint = 10
+attackNeedTime = 3.0
+attackNowTime = 0.0
+attackFX = 9
+sound = "sound_hit.mp3"
+moveSpeed = 40.0
+exp = 10
+drops = [SubResource("Resource_qxprh"), SubResource("Resource_4q6oy"), SubResource("Resource_h1k1i")]

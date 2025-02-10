@@ -166,10 +166,15 @@ public partial class ItemManager : Node
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.StonePickaxe);
             }
+            if (i == 51)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenChest);
+            }
             if (i == 52)
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
+
             SetHeldItem(i, item);
         }
     }
@@ -998,6 +1003,53 @@ public partial class ItemManager : Node
         targetArea[position] = ~(targetArea[position] | effect);
     }
 
+    public bool IsCanRemove(ItemBaseResource item)
+    {
+        bool result = false;
+        int index = -1;
+
+        for (int i = 0; i < heldItems.Count; i++)
+        {
+            if (item != null && heldItems[i] == item)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        Godot.Collections.Array<AreaIndex> tempArea = new Godot.Collections.Array<AreaIndex>();
+        Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> tempItemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
+        foreach (var KV in itemEffects)
+        {
+            tempItemEffects.Add(KV.Key, new Godot.Collections.Array<ItemEffect>(KV.Value));
+        }
+
+        if (index != -1)
+        {
+            RemoveItemEffects(tempItemEffects, index, item.effectRanges);
+        }
+
+        RefreshAreas(tempArea, tempItemEffects);
+
+        bool isFindError = false;
+        for (int i = 0; i < heldItems.Count; i++)
+        {
+            if (heldItems[i] != null && !IsAreaEffect(tempArea, i, AreaIndex.Normal))
+            {
+                isFindError = true;
+                //Debug.Print($"IsCanRemove FindError i:{i}");
+                break;
+            }
+        }
+
+        if (!isFindError)
+        {
+            result = true;
+        }
+        //Debug.Print($"IsCanRemove result:{result}");
+        return result;
+    }
+
     public bool IsCanPut(int position, ItemBaseResource item = null) 
     {
         bool result = false;
@@ -1011,7 +1063,12 @@ public partial class ItemManager : Node
                 break;
             }
         }
-        ItemBaseResource positionItem = heldItems[position];
+
+        ItemBaseResource positionItem = null;
+        if (position >= 0 && position < heldItems.Count) 
+        {
+            positionItem = heldItems[position];
+        }
         Godot.Collections.Array<AreaIndex> tempArea = new Godot.Collections.Array<AreaIndex>();
         Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> tempItemEffects = new Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>>();
         foreach(var KV in itemEffects) 

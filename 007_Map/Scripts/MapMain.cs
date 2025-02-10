@@ -13,6 +13,7 @@ public partial class MapMain : Node2D
 
 	[Export] AnimationPlayer mainAnim;
     [Export] AnimationPlayer crystalAnim;
+    [Export] public Node2D attackNode;
 
     private CarState _nowCarState = CarState.Idle;
     public CarState nowCarState 

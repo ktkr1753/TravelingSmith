@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MonsterConfigResource" load_steps=7 format=3 uid="uid://dt5urqic1wy0p"]
+[gd_resource type="Resource" script_class="MonsterConfigResource" load_steps=9 format=3 uid="uid://dt5urqic1wy0p"]
 
 [ext_resource type="Resource" uid="uid://d1r8hovdgunom" path="res://019_Monster/Resources/Slime.tres" id="1_578kj"]
 [ext_resource type="Script" path="res://019_Monster/Scripts/MonsterConfigResource.cs" id="1_l3kun"]
@@ -6,6 +6,8 @@
 [ext_resource type="Resource" uid="uid://bflwgudrmoaws" path="res://019_Monster/Resources/PossessedBook.tres" id="3_uxuhu"]
 [ext_resource type="Resource" uid="uid://jyo51waqnggt" path="res://019_Monster/Resources/VampireBat.tres" id="4_57xko"]
 [ext_resource type="Resource" uid="uid://biuh6i3122jp5" path="res://019_Monster/Resources/SlimeKing.tres" id="5_lflhv"]
+[ext_resource type="Resource" uid="uid://brcxyexyrr7y5" path="res://019_Monster/Resources/StoneSpider.tres" id="6_n6p48"]
+[ext_resource type="Resource" uid="uid://d0aghhvkq6qgy" path="res://019_Monster/Resources/BoarKing.tres" id="7_ct66q"]
 
 [resource]
 script = ExtResource("1_l3kun")
@@ -14,5 +16,7 @@ config = {
 2: ExtResource("2_3prqr"),
 3: ExtResource("3_uxuhu"),
 4: ExtResource("4_57xko"),
-201: ExtResource("5_lflhv")
+5: ExtResource("6_n6p48"),
+201: ExtResource("5_lflhv"),
+202: ExtResource("7_ct66q")
 }

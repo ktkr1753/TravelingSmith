@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="MonsterResource" load_steps=6 format=3 uid="uid://brcxyexyrr7y5"]
+
+[ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="1_2twxo"]
+[ext_resource type="Script" path="res://019_Monster/Scripts/MonsterResource.cs" id="1_5kx6a"]
+[ext_resource type="PackedScene" uid="uid://phpcon58nwnl" path="res://019_Monster/Prefabs/StoneSpider.tscn" id="1_8vw12"]
+
+[sub_resource type="Resource" id="Resource_k2c2n"]
+script = ExtResource("1_2twxo")
+itemIndex = 610
+dropRate = 0.5
+
+[sub_resource type="Resource" id="Resource_t0j2o"]
+script = ExtResource("1_2twxo")
+itemIndex = 609
+dropRate = 0.8
+
+[resource]
+script = ExtResource("1_5kx6a")
+index = 5
+prefab = ExtResource("1_8vw12")
+maxHp = 12
+nowHp = 0
+attackPoint = 5
+attackNeedTime = 2.0
+attackNowTime = 0.0
+attackFX = 6
+sound = "sound_hit.mp3"
+moveSpeed = 20.0
+exp = 3
+drops = [SubResource("Resource_k2c2n"), SubResource("Resource_t0j2o")]

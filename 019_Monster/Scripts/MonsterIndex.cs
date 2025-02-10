@@ -9,7 +9,9 @@ public enum MonsterIndex
 	Beholder = 2,
 	PossessedBook = 3,
 	VampireBat = 4,
+	StoneSpider = 5,
 
 	//Boss 201~
 	SlimeKing = 201,
+	BoarKing = 202,
 }

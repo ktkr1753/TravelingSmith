@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://comi4y8km5i5w"]
+
+[ext_resource type="Texture2D" uid="uid://b30gis8cl76ap" path="res://019_Monster/Images/TS_monster_BoarKing-idle.png" id="1_iyril"]
+
+[resource]
+atlas = ExtResource("1_iyril")
+region = Rect2(0, 0, 48, 48)

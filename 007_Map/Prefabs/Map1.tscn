@@ -20,6 +20,7 @@ itemIndex = 603
 dropRate = 0.1
 
 [node name="Map1" type="Node2D" node_paths=PackedStringArray("monsterParent", "main", "roadParent", "shopParent", "attackersParent", "itemPool")]
+y_sort_enabled = true
 script = ExtResource("1_8cs5l")
 monsterParent = NodePath("Monsters")
 main = NodePath("Main")
@@ -37,6 +38,7 @@ mapDropItems = [SubResource("Resource_xrax0"), SubResource("Resource_w5brl")]
 [node name="ShopParent" type="Node2D" parent="."]
 
 [node name="Monsters" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="Attacks" type="Node2D" parent="."]
 
@@ -50,3 +52,4 @@ backup = NodePath("backup")
 visible = false
 
 [node name="Main" parent="." instance=ExtResource("6_lkfa8")]
+position = Vector2(320, 80)

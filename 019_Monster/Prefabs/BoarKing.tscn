@@ -1,0 +1,128 @@
+[gd_scene load_steps=22 format=3 uid="uid://1crwafpktbta"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_juc2d"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="2_iu2pw"]
+[ext_resource type="Texture2D" uid="uid://comi4y8km5i5w" path="res://019_Monster/Images/TS_monster_BoarKing-idle_1.tres" id="3_5hmsw"]
+[ext_resource type="Texture2D" uid="uid://deae4f7t6x1u6" path="res://019_Monster/Images/TS_monster_BoarKing-idle_2.tres" id="3_ssxkq"]
+[ext_resource type="Texture2D" uid="uid://c57r2iot2maua" path="res://019_Monster/Images/TS_monster_BoarKing-move_1.tres" id="4_glhu7"]
+[ext_resource type="Texture2D" uid="uid://cjb843b8f04e" path="res://019_Monster/Images/TS_monster_BoarKing-move_2.tres" id="5_pepx7"]
+[ext_resource type="Texture2D" uid="uid://fnyk8d43l6y0" path="res://019_Monster/Images/TS_monster_BoarKing-move_3.tres" id="6_67uco"]
+[ext_resource type="Texture2D" uid="uid://djnnfq48wl50w" path="res://019_Monster/Images/TS_monster_BoarKing-move_4.tres" id="7_8osbs"]
+[ext_resource type="Texture2D" uid="uid://bpdrlxvpurqy6" path="res://019_Monster/Images/TS_monster_BoarKing-move_5.tres" id="8_nl05g"]
+[ext_resource type="Texture2D" uid="uid://bhhkrq7rad1vi" path="res://019_Monster/Images/TS_monster_BoarKing-move_6.tres" id="9_wdeki"]
+[ext_resource type="Texture2D" uid="uid://b6xeba8mlhcsj" path="res://019_Monster/Images/TS_monster_BoarKing-die_1.tres" id="10_d8vlq"]
+[ext_resource type="Texture2D" uid="uid://do3ab2ghsc5no" path="res://019_Monster/Images/TS_monster_BoarKing-die_2.tres" id="11_rkfw8"]
+[ext_resource type="Texture2D" uid="uid://b14eiggrcidth" path="res://019_Monster/Images/TS_monster_BoarKing-die_3.tres" id="12_vh535"]
+[ext_resource type="Texture2D" uid="uid://dw0ll8nj105pb" path="res://019_Monster/Images/TS_monster_BoarKing-die_4.tres" id="13_mehvc"]
+
+[sub_resource type="Animation" id="Animation_ylfuc"]
+resource_name = "idle"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_5hmsw"), ExtResource("3_ssxkq")]
+}
+
+[sub_resource type="Animation" id="Animation_s7885"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_5hmsw")]
+}
+
+[sub_resource type="Animation" id="Animation_jhb4g"]
+resource_name = "move"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_glhu7"), ExtResource("5_pepx7"), ExtResource("6_67uco"), ExtResource("7_8osbs"), ExtResource("8_nl05g"), ExtResource("9_wdeki")]
+}
+
+[sub_resource type="Animation" id="Animation_2ptcg"]
+resource_name = "die"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_d8vlq"), ExtResource("11_rkfw8"), ExtResource("12_vh535"), ExtResource("13_mehvc")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlq0g"]
+_data = {
+"RESET": SubResource("Animation_s7885"),
+"die": SubResource("Animation_2ptcg"),
+"idle": SubResource("Animation_ylfuc"),
+"move": SubResource("Animation_jhb4g")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ij436"]
+resource_local_to_scene = true
+shader = ExtResource("2_iu2pw")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iel3h"]
+size = Vector2(48, 30)
+
+[node name="BoarKing" instance=ExtResource("1_juc2d")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_tlq0g")
+}
+
+[node name="HP" parent="." index="2"]
+offset_left = 11.0
+offset_top = -35.0
+offset_right = 11.0
+offset_bottom = -35.0
+
+[node name="Image" parent="." index="3"]
+material = SubResource("ShaderMaterial_ij436")
+position = Vector2(19, -16)
+texture = ExtResource("3_5hmsw")
+
+[node name="Area2D" parent="." index="4"]
+position = Vector2(19, 0)
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_iel3h")
+
+[node name="TextureRect" parent="." index="5"]
+position = Vector2(19, -43)

@@ -1,0 +1,124 @@
+[gd_scene load_steps=23 format=3 uid="uid://phpcon58nwnl"]
+
+[ext_resource type="PackedScene" uid="uid://d0ygijw5g8dl2" path="res://019_Monster/Prefabs/MonsterTemp.tscn" id="1_3swg0"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/SpriteShine.gdshader" id="2_l4jim"]
+[ext_resource type="Texture2D" uid="uid://bo5p1bivpvkf7" path="res://019_Monster/Images/TS_monster_stoneSpider-idle_2.tres" id="3_5qwv1"]
+[ext_resource type="Texture2D" uid="uid://dpxm21f3vaekq" path="res://019_Monster/Images/TS_monster_stoneSpider-die_1.tres" id="3_i8cq3"]
+[ext_resource type="Texture2D" uid="uid://5tu8ahhuvtpl" path="res://019_Monster/Images/TS_monster_stoneSpider-idle_3.tres" id="4_dvud6"]
+[ext_resource type="Texture2D" uid="uid://b2ox2suy7vqhl" path="res://019_Monster/Images/TS_monster_stoneSpider-idle_4.tres" id="5_gky1u"]
+[ext_resource type="Texture2D" uid="uid://bcrfp5l77f4d8" path="res://019_Monster/Images/TS_monster_stoneSpider-idle_5.tres" id="6_lx6ab"]
+[ext_resource type="Texture2D" uid="uid://0spcv5qbquds" path="res://019_Monster/Images/TS_monster_stoneSpider-die_2.tres" id="7_e6rrm"]
+[ext_resource type="Texture2D" uid="uid://do2hh2altf33x" path="res://019_Monster/Images/TS_monster_stoneSpider-die_3.tres" id="8_fel2k"]
+[ext_resource type="Texture2D" uid="uid://cyhxbsrcryuso" path="res://019_Monster/Images/TS_monster_stoneSpider-die_4.tres" id="9_7xegl"]
+[ext_resource type="Texture2D" uid="uid://uay3jl4axjag" path="res://019_Monster/Images/TS_monster_stoneSpider-die_5.tres" id="10_lj3es"]
+[ext_resource type="Texture2D" uid="uid://o7j5t6fxn5tt" path="res://019_Monster/Images/TS_monster_stoneSpider-move_1.tres" id="11_11fq7"]
+[ext_resource type="Texture2D" uid="uid://cl1tklhk1qxs6" path="res://019_Monster/Images/TS_monster_stoneSpider-move_2.tres" id="12_hi4f3"]
+[ext_resource type="Texture2D" uid="uid://c0ak686y65xks" path="res://019_Monster/Images/TS_monster_stoneSpider-move_3.tres" id="13_c0xwe"]
+[ext_resource type="Texture2D" uid="uid://beucneporg5lx" path="res://019_Monster/Images/TS_monster_stoneSpider-move_4.tres" id="14_4s8rr"]
+
+[sub_resource type="Animation" id="Animation_nvkgb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_i8cq3")]
+}
+
+[sub_resource type="Animation" id="Animation_86ha8"]
+resource_name = "die"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_i8cq3"), ExtResource("7_e6rrm"), ExtResource("8_fel2k"), ExtResource("9_7xegl"), ExtResource("10_lj3es")]
+}
+
+[sub_resource type="Animation" id="Animation_p1h8n"]
+resource_name = "idle"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_i8cq3"), ExtResource("3_5qwv1"), ExtResource("4_dvud6"), ExtResource("5_gky1u"), ExtResource("6_lx6ab")]
+}
+
+[sub_resource type="Animation" id="Animation_mfhvy"]
+resource_name = "move"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Image:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("11_11fq7"), ExtResource("12_hi4f3"), ExtResource("13_c0xwe"), ExtResource("14_4s8rr")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_evoc8"]
+_data = {
+"RESET": SubResource("Animation_nvkgb"),
+"die": SubResource("Animation_86ha8"),
+"idle": SubResource("Animation_p1h8n"),
+"move": SubResource("Animation_mfhvy")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5x2go"]
+resource_local_to_scene = true
+shader = ExtResource("2_l4jim")
+shader_parameter/rate = 0.0
+shader_parameter/finalColor = Color(1, 1, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jnur"]
+size = Vector2(28, 20)
+
+[node name="StoneSpider" instance=ExtResource("1_3swg0")]
+
+[node name="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_evoc8")
+}
+
+[node name="HP" parent="." index="2"]
+offset_top = -27.0
+offset_bottom = -27.0
+
+[node name="Image" parent="." index="3"]
+material = SubResource("ShaderMaterial_5x2go")
+position = Vector2(0, -16)
+texture = ExtResource("3_i8cq3")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_5jnur")
+
+[node name="TextureRect" parent="." index="5"]
+position = Vector2(0, -35)

@@ -3,6 +3,14 @@ using System;
 
 public partial class MonsterObject : Node2D
 {
+    public enum AnimState 
+    {
+        None = 0,
+        Idle = 1,
+        Move = 2,
+        Die = 3,
+    }
+
     [Export] public ProgressBar hpProgressBar;
     [Export] public ProgressBar hpBackProgressBar;
 	[Export] public Sprite2D mainImage;
@@ -27,6 +35,38 @@ public partial class MonsterObject : Node2D
         }
     }
 
+    private AnimState _nowAnimState = AnimState.None;
+    public AnimState nowAnimState 
+    {
+        get { return _nowAnimState; }
+        set
+        {
+            if (_nowAnimState != value)
+            {
+                AnimState preState = _nowAnimState;
+                _nowAnimState = value;
+                OnAnimStateChange(preState, _nowAnimState);
+            }
+        }
+    }
+
+    private void OnAnimStateChange(AnimState preState, AnimState nextState) 
+    {
+        switch (nextState) 
+        {
+            case AnimState.Idle:
+                anim.Play(clip_idle);
+                break;
+            case AnimState.Move:
+                anim.Play(clip_move);
+                break;
+            case AnimState.Die:
+                anim.Play(clip_die);
+                break;
+        }
+    }
+
+
     private bool isDie = false;
 
     private Tween hpTween = null;
@@ -41,6 +81,7 @@ public partial class MonsterObject : Node2D
     public const string material_finalColor = "finalColor";
 
     public const string clip_idle = "idle";
+    public const string clip_move = "move";
     public const string clip_die = "die";
 
     public void SetData(MonsterResource data) 
@@ -79,7 +120,7 @@ public partial class MonsterObject : Node2D
     private void SetView() 
     {
         InitHpProgressbar();
-        SetIdle();
+        nowAnimState = AnimState.Idle;
     }
 
     private void InitHpProgressbar() 
@@ -140,11 +181,6 @@ public partial class MonsterObject : Node2D
         }
     }
 
-    private void SetIdle() 
-    {
-        anim.Play(clip_idle);
-    }
-
     private void ShowBattleHPInfo(int hpChange, HPChangeType type) 
     {
         BattleInfoUI battleInfoUI = GameManager.instance.uiManager.GetOpenedUI<BattleInfoUI>(UIIndex.BattleInfoUI);
@@ -184,6 +220,10 @@ public partial class MonsterObject : Node2D
             if (!IsTooCloseTarget()) 
             {
                 Move(delta);
+            }
+            else 
+            {
+                nowAnimState = AnimState.Idle;
             }
             Attack(delta);
         }
@@ -269,6 +309,8 @@ public partial class MonsterObject : Node2D
         Vector2 moveNormal = new Vector2(-1, 0);
 
         GlobalPosition = GlobalPosition + (moveNormal * (float)(data.moveSpeed * addTime));
+
+        nowAnimState = AnimState.Move;
     }
 
     private async void HurtShine() 
@@ -312,7 +354,7 @@ public partial class MonsterObject : Node2D
     {
         //QueueFree();
         isDie = true;
-        anim.Play(clip_die);
+        nowAnimState = AnimState.Die;
         onDie?.Invoke(this);
     }
 

@@ -181,11 +181,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n1gu1"]
 size = Vector2(100, 900)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("mainAnim", "crystalAnim")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("mainAnim", "crystalAnim", "attackNode")]
 position = Vector2(320, 72)
 script = ExtResource("1_ytylw")
 mainAnim = NodePath("MainAnimationPlayer")
 crystalAnim = NodePath("CrystalAnimationPlayer")
+attackNode = NodePath("AttackNode2D")
 
 [node name="MainAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -198,7 +199,7 @@ libraries = {
 }
 
 [node name="Sprites" type="Node2D" parent="."]
-position = Vector2(-26, -5)
+position = Vector2(-26, -13)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites"]
 visible = false
@@ -215,6 +216,9 @@ texture = ExtResource("2_y241n")
 
 [node name="crystalImage" type="Sprite2D" parent="Sprites"]
 texture = ExtResource("15_5dqra")
+
+[node name="AttackNode2D" type="Node2D" parent="."]
+position = Vector2(-25, 0)
 
 [node name="DeadLine" type="Area2D" parent="."]
 position = Vector2(-400, 0)

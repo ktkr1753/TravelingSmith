@@ -111,19 +111,25 @@ public partial class Map : Node2D
         }
         else if (nowWave < 15)
         {
-            await CreateMonster(MonsterIndex.Slime, 1);
-            await CreateMonster(MonsterIndex.VampireBat, 2);
-        }
-        else if(nowWave < 20) 
-        {
-            await CreateMonster(MonsterIndex.Slime, 1);
             await CreateMonster(MonsterIndex.VampireBat, 1);
             await CreateMonster(MonsterIndex.PossessedBook, 1);
         }
-        else 
+        else if(nowWave < 20) 
         {
-            await CreateMonster(MonsterIndex.VampireBat, 2);
-            await CreateMonster(MonsterIndex.PossessedBook, 2);
+            await CreateMonster(MonsterIndex.Slime, 3);
+            await CreateMonster(MonsterIndex.VampireBat, 1);
+            await CreateMonster(MonsterIndex.PossessedBook, 1);
+        }
+        else if (nowWave < 25)
+        {
+            await CreateMonster(MonsterIndex.VampireBat, 1);
+            await CreateMonster(MonsterIndex.PossessedBook, 1);
+            await CreateMonster(MonsterIndex.StoneSpider, 1);
+        }
+        else
+        {
+            await CreateMonster(MonsterIndex.VampireBat, 3);
+            await CreateMonster(MonsterIndex.BoarKing, 1);
         }
     }
 
@@ -354,7 +360,7 @@ public partial class Map : Node2D
             }
             else 
             {
-                attackObject.GlobalPosition = main.GlobalPosition + new Vector2(0, -8);
+                attackObject.GlobalPosition = main.attackNode.GlobalPosition + new Vector2(0, -8);
 
                 double angle = Math.Atan2(globalPos.Y - attackObject.GlobalPosition.Y, globalPos.X - attackObject.GlobalPosition.X);
                 //Debug.Print($"CreateMapAttack angle:{angle}");

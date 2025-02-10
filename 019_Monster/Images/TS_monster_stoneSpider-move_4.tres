@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://beucneporg5lx"]
+
+[ext_resource type="Texture2D" uid="uid://c5jejdv3qrowo" path="res://019_Monster/Images/TS_monster_stoneSpider-move.png" id="1_dkvd1"]
+
+[resource]
+atlas = ExtResource("1_dkvd1")
+region = Rect2(96, 0, 32, 32)
