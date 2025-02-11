@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://04nj0wollggp"]
+[gd_scene load_steps=12 format=3 uid="uid://04nj0wollggp"]
 
 [ext_resource type="Script" path="res://007_Map/Scripts/Map.cs" id="1_8cs5l"]
 [ext_resource type="PackedScene" uid="uid://defkma7jjqr47" path="res://007_Map/Prefabs/Road1.tscn" id="2_ndk6r"]
 [ext_resource type="PackedScene" uid="uid://b31ks470twpcf" path="res://007_Map/Prefabs/Shop.tscn" id="3_re5r2"]
 [ext_resource type="PackedScene" uid="uid://y0qyomt17ius" path="res://007_Map/Prefabs/Road2.tscn" id="3_sulsd"]
+[ext_resource type="PackedScene" uid="uid://beijbf7oqhw3g" path="res://007_Map/Prefabs/Road3.tscn" id="4_2sd7g"]
 [ext_resource type="Script" path="res://019_Monster/Scripts/DropItemResource.cs" id="5_cqsd8"]
 [ext_resource type="Script" path="res://007_Map/Scripts/MapItemObjectPool.cs" id="6_d7nto"]
 [ext_resource type="PackedScene" uid="uid://43wjbxmo7g" path="res://007_Map/Prefabs/MapMain.tscn" id="6_lkfa8"]
@@ -27,6 +28,7 @@ main = NodePath("Main")
 roadParent = NodePath("RoadParent")
 roadPrefab = ExtResource("2_ndk6r")
 roadShopPrefab = ExtResource("3_sulsd")
+lastRoadPrefab = ExtResource("4_2sd7g")
 shopParent = NodePath("ShopParent")
 shopPrefab = ExtResource("3_re5r2")
 attackersParent = NodePath("Attacks")

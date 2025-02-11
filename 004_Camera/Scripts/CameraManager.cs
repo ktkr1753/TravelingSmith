@@ -61,6 +61,14 @@ public partial class CameraManager : Node2D
         camera.PositionSmoothingSpeed = (float)(smoothingSpeed * GameManager.instance.gameSpeed);
     }
 
+    public void SetLimit(Rect2I limitRect) 
+    {
+        camera.LimitLeft = limitRect.Position.X;
+        camera.LimitRight = limitRect.Size.X;
+        camera.LimitTop = limitRect.Position.Y;
+        camera.LimitBottom = limitRect.Size.Y;
+    }
+
     private void OnGamePauseChnage(int needPauseNum) 
     {
         SetCameraPositionSmoothing();

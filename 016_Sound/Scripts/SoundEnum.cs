@@ -16,6 +16,8 @@ public partial class SoundEnum
     public const string bgm_10 = "bgm_10.mp3";      //回想
     public const string bgm_11 = "bgm_11.mp3";      //街景
     public const string bgm_12 = "bgm_12.ogg";      //列車
+    public const string bgm_13 = "bgm_13.ogg";      //對峙
+    public const string bgm_14 = "bgm_14.ogg";      //絕景
     //Sound
     public const string sound_arrow_hit = "sound_arrow_hit.mp3";
     public const string sound_attack_slime = "sound_attack_slime.mp3";

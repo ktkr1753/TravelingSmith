@@ -10,6 +10,7 @@ public partial class Map : Node2D
     [Export] public Node2D roadParent;
     [Export] public PackedScene roadPrefab;
     [Export] public PackedScene roadShopPrefab;
+    [Export] public PackedScene lastRoadPrefab;
     [Export] public Node2D shopParent;
     [Export] public PackedScene shopPrefab;
     [Export] public Node2D attackersParent;
@@ -38,6 +39,7 @@ public partial class Map : Node2D
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
     private int nowCreateRoadIndex = -1;
+    public int maxCreateRoadIndex = 103;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
     private int nowCreateShopIndex = -1;
@@ -129,8 +131,12 @@ public partial class Map : Node2D
         else
         {
             await CreateMonster(MonsterIndex.VampireBat, 3);
-            await CreateMonster(MonsterIndex.BoarKing, 1);
         }
+    }
+
+    private async void CreateBossMonster()
+    {
+        await CreateMonster(MonsterIndex.BoarKing, 1, true);
     }
 
     private void TargetMove(double delta) 
@@ -173,7 +179,27 @@ public partial class Map : Node2D
             nowCreateRoadIndex++;
             MapRoadObject road = null;
 
-            if (nowCreateRoadIndex % 3 == 2) //生成商店
+            if (nowCreateRoadIndex >= maxCreateRoadIndex) {
+
+                if(nowCreateRoadIndex == maxCreateRoadIndex)
+                {
+                    road = UtilityTool.CreateInstance<MapRoadObject>(lastRoadPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
+
+                    Rect2I limit = new Rect2I(0, 0, (int)((nowCreateRoadIndex + 1) * viewPortSize.X), (int)viewPortSize.Y);
+                    //Debug.Print($"CheckRoad limit:{limit}");
+                    GameManager.instance.cameraManager.SetLimit(limit);
+                    nowCreateRoadIndex++;
+
+                    CreateBossMonster();
+
+                    GameManager.instance.soundManager.PlayBGM(SoundEnum.bgm_13);
+                }
+                else 
+                {
+                    return;
+                }
+            }
+            else if (nowCreateRoadIndex % 3 == 2) //生成商店
             {
                 road = UtilityTool.CreateInstance<MapRoadObject>(roadShopPrefab, roadParent, new Vector2(nowCreateRoadIndex * viewPortSize.X, 0));
 
@@ -240,7 +266,7 @@ public partial class Map : Node2D
     }
 
 
-    public async Task CreateMonster(MonsterIndex index, int num = 1)
+    public async Task CreateMonster(MonsterIndex index, int num = 1, bool isBoss = false)
     {
         for(int i = 0; i < num; i++) 
         {
@@ -256,7 +282,14 @@ public partial class Map : Node2D
                 MonsterObject monster = UtilityTool.CreateInstance<MonsterObject>(monsterData.prefab, monsterParent, spawnPoint);
                 monster.SetData(monsterData);
                 monster.onDestroy += OnMonsterDestory;
-                monster.onDie += OnMonsterDie;
+                if (isBoss) 
+                {
+                    monster.onDie += OnBossMonsterDie;
+                }
+                else 
+                {
+                    monster.onDie += OnMonsterDie;
+                }
 
                 monsters.Add(monster);
 
@@ -310,7 +343,7 @@ public partial class Map : Node2D
 
     private void CheckCreateRandomMapItem() 
     {
-        while(((nowCreateRoadIndex + 1) * 640 - createItemMinDistance) / createItemDistance > createItemCount)
+        while(nowCreateRoadIndex < maxCreateRoadIndex && ((nowCreateRoadIndex + 1) * 640 - createItemMinDistance) / createItemDistance > createItemCount)
         {
             Queue<int> rndYFixGrid = new Queue<int>(GameManager.instance.randomManager.GetNotRepeatList(RandomType.Other, -1, 4));
             for (int i = 0; i < mapDropItems.Count; i++) 
@@ -386,6 +419,12 @@ public partial class Map : Node2D
         DropMonsterItem(monster);
         monsters.Remove(monster);
         waitRemoveMonsters.Add(monster);
+    }
+
+    private void OnBossMonsterDie(MonsterObject monster) 
+    {
+        GameManager.instance.soundManager.PlayBGM(SoundEnum.bgm_14);
+        OnMonsterDie(monster);
     }
 
     private void OnMonsterDestory(MonsterObject monster) 
