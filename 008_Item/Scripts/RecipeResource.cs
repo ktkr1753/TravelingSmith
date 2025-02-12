@@ -24,7 +24,10 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
     [Export] public bool isCostMaterial 
     {
         get { return _isCostMaterial; }
-        set { _isCostMaterial = value; }
+        set 
+        {
+            _isCostMaterial = value; 
+        }
     }
 
     private ItemIndex _productItem = ItemIndex.None;
@@ -60,7 +63,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         }
     }
 
-    public bool isKeepProduce { get { return true; } }
+    public bool isKeepProduce { get { return false; } }
 
     private bool _isProducing = false;
     [Export] public bool isProducing

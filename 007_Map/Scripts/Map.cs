@@ -39,7 +39,7 @@ public partial class Map : Node2D
     }
     private Queue<Node2D> roadObjs = new Queue<Node2D>();
     private int nowCreateRoadIndex = -1;
-    public int maxCreateRoadIndex = 103;
+    public int maxCreateRoadIndex = 43;
 
     private Queue<ShopObject> shopObjs = new Queue<ShopObject>();
     private int nowCreateShopIndex = -1;
@@ -102,27 +102,27 @@ public partial class Map : Node2D
 
     private async void CreateWaveMonster() 
     {
-        if(nowWave < 5) 
+        if(nowWave < 2) 
         {
             await CreateMonster(MonsterIndex.Slime, 1);
         }
-        else if (nowWave < 10)
+        else if (nowWave < 4)
         {
             await CreateMonster(MonsterIndex.Slime, 1);
             await CreateMonster(MonsterIndex.VampireBat, 1);
         }
-        else if (nowWave < 15)
+        else if (nowWave < 6)
         {
             await CreateMonster(MonsterIndex.VampireBat, 1);
             await CreateMonster(MonsterIndex.PossessedBook, 1);
         }
-        else if(nowWave < 20) 
+        else if(nowWave < 8) 
         {
             await CreateMonster(MonsterIndex.Slime, 3);
             await CreateMonster(MonsterIndex.VampireBat, 1);
             await CreateMonster(MonsterIndex.PossessedBook, 1);
         }
-        else if (nowWave < 25)
+        else if (nowWave < 10)
         {
             await CreateMonster(MonsterIndex.VampireBat, 1);
             await CreateMonster(MonsterIndex.PossessedBook, 1);

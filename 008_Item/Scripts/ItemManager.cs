@@ -164,8 +164,7 @@ public partial class ItemManager : Node
             ItemBaseResource item = null;
             if (i == 22)
             {
-                //item = GameManager.instance.itemManager.CreateItem(ItemIndex.StonePickaxe);
-                item = GameManager.instance.itemManager.CreateItem(ItemIndex.KnightsSword);
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.StonePickaxe);
             }
             if (i == 52)
             {
