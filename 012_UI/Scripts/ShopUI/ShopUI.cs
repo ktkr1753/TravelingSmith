@@ -21,6 +21,8 @@ public partial class ShopUI : UIBase
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> moveButtonTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> arrorTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private ShopItemElementPool itemPool;
+    [Export] private TextureRect assignMaterialImage;
+    [Export] private Label assignMaterialMoneyLabel;
     [Export] private Control sellPanel;
     [Export] private Control refreshHeldPanel;
     [Export] private Label refreshHeldCostLabel;
@@ -99,6 +101,37 @@ public partial class ShopUI : UIBase
     }
 
     public List<ItemBaseResource> sellItems = new List<ItemBaseResource>();
+
+    public List<ItemBaseResource> assignMaterialItems = new List<ItemBaseResource>();
+    private int _nowAssignMaterialIndex = -1;
+    public int nowAssignMaterialIndex 
+    {
+        get 
+        {
+            return _nowAssignMaterialIndex;
+        }
+        set 
+        {
+            if (_nowAssignMaterialIndex != value) 
+            {
+                int preState = _nowAssignMaterialIndex;
+                _nowAssignMaterialIndex = value;
+                OnAssignMaterialChange(preState, _nowAssignMaterialIndex);
+            }
+        }
+    }
+
+    private ItemBaseResource pickAssignMaterialItem = null;
+
+    private void OnAssignMaterialChange(int preIndex, int nextIndex) 
+    {
+        if(nextIndex >= 0 && nextIndex < assignMaterialItems.Count) 
+        {
+            SetAssignMaterialImage();
+            SetAssignMaterialMoney();
+        }
+    }
+
     private Action pauseFinishCallback;
 
     public const double flyTime = 0.2;
@@ -208,7 +241,7 @@ public partial class ShopUI : UIBase
         //Debug.Print($"materialIndexs:{materialIndexs.ToStringExtended()}");
         //Debug.Print($"recipeIndexs:{recipeIndexs.ToStringExtended()}");
 
-        for (int i = 0; i < 8; i++) 
+        for (int i = 0; i < 4; i++) 
         {
             ItemIndex itemIndex = ItemIndex.None;
             if (i < 4)
@@ -249,6 +282,7 @@ public partial class ShopUI : UIBase
         SetMoveButtonImage();
         SetArrowImage();
         SetShopItemElements();
+        ResetAssignMaterial();
         SetRefreshButton();
         SetRefreshHeldCost();
     }
@@ -302,6 +336,46 @@ public partial class ShopUI : UIBase
         element.SetData(-1, null);
         element.itemElement.onMainButtonDown -= OnShopItemButtonDown;
         element.itemElement.onMainButtonUp -= OnShopItemButtonUp;
+    }
+
+    private void ResetAssignMaterial()
+    {
+        assignMaterialItems.Clear();
+        foreach (var KV in GameManager.instance.itemConfig.config)
+        {
+            if ((int)KV.Value.index > 600 && (int)KV.Value.index <= 700) //是素材
+            {
+                assignMaterialItems.Add(KV.Value);
+            }
+        }
+
+        assignMaterialItems.Sort((a, b) =>
+        {
+            return (int)(a.index - b.index);
+        });
+
+        nowAssignMaterialIndex = 0;
+    }
+
+    private void SetAssignMaterialImage()
+    {
+        ItemBaseResource item = assignMaterialItems[nowAssignMaterialIndex];
+        assignMaterialImage.Texture = item.texture;
+    }
+
+    private void SetAssignMaterialMoney()
+    {
+        ItemBaseResource item = assignMaterialItems[nowAssignMaterialIndex];
+        int buyMoney = GameManager.instance.itemManager.GetBuyMoney(item);
+        if (GameManager.instance.itemManager.money >= buyMoney)
+        {
+            assignMaterialMoneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+        }
+        else
+        {
+            assignMaterialMoneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+        }
+        assignMaterialMoneyLabel.Text = $"{buyMoney}";
     }
 
     public bool IsInSellRect(Vector2 globalPosition) 
@@ -371,7 +445,7 @@ public partial class ShopUI : UIBase
                 if (mainGameUI.nowEnterElementIndex >= 0)
                 {
                     int addIndex = -1;
-                    if (GameManager.instance.itemManager.heldItems[mainGameUI.nowEnterElementIndex] == null) 
+                    if (GameManager.instance.itemManager.heldItems[mainGameUI.nowEnterElementIndex] == null && GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, mainGameUI.nowEnterElementIndex, AreaIndex.Normal)) 
                     {
                         addIndex = mainGameUI.nowEnterElementIndex;
                         ItemBaseResource item = GameManager.instance.itemManager.CreateItem(pickedItem.index);
@@ -430,6 +504,71 @@ public partial class ShopUI : UIBase
         {
             GameManager.instance.uiManager.CloseUI(UIIndex.PickUpUI);
         }
+    }
+
+    private void OnAssignMaterialButtonDown() 
+    {
+        ItemBaseResource pickedItem = null;
+        if (nowAssignMaterialIndex >= 0 && nowAssignMaterialIndex < assignMaterialItems.Count)
+        {
+            pickedItem = assignMaterialItems[nowAssignMaterialIndex];
+        }
+
+        if (pickedItem != null) 
+        {
+            Debug.Print("OnAssignMaterialButtonDown 1");
+            int buyMoney = GameManager.instance.itemManager.GetBuyMoney(pickedItem);
+            if (GameManager.instance.itemManager.money >= buyMoney)
+            {
+                Debug.Print("OnAssignMaterialButtonDown 2");
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
+                SetPickedItemElement(assignMaterialItems[nowAssignMaterialIndex]);
+                assignMaterialImage.Visible = false;
+                pickAssignMaterialItem = pickedItem;
+            }
+            else 
+            {
+                Debug.Print("OnAssignMaterialButtonDown 3");
+            }
+        }
+
+    }
+
+    private void OnAssignMaterialButtonUp()
+    {
+        ItemBaseResource pickedItem = pickAssignMaterialItem;
+        if (pickedItem != null)
+        {
+            MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+            if (mainGameUI != null)
+            {
+                if (mainGameUI.nowEnterElementIndex >= 0)
+                {
+                    int addIndex = -1;
+                    if (GameManager.instance.itemManager.heldItems[mainGameUI.nowEnterElementIndex] == null && GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, mainGameUI.nowEnterElementIndex, AreaIndex.Normal))
+                    {
+                        addIndex = mainGameUI.nowEnterElementIndex;
+                        ItemBaseResource item = GameManager.instance.itemManager.CreateItem(pickedItem.index);
+                        GameManager.instance.itemManager.SetHeldItem(addIndex, item);
+                    }
+                    else
+                    {
+                        addIndex = GameManager.instance.itemManager.AddHeldItem(pickedItem.index);
+                    }
+
+                    if (addIndex != -1)
+                    {
+                        //資料
+                        GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - GameManager.instance.itemManager.GetBuyMoney(pickedItem));
+
+                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+                    }
+                }
+            }
+        }
+
+        assignMaterialImage.Visible = true;
+        SetPickedItemElement(null);
     }
 
     private void SetRefreshButton() 
@@ -503,6 +642,7 @@ public partial class ShopUI : UIBase
     {
         SetRefreshButton();
         SetRefreshHeldCost();
+        SetAssignMaterialMoney();
     }
 
 
@@ -516,5 +656,33 @@ public partial class ShopUI : UIBase
     {
         GameManager.instance.uiManager.CloseUI(this);
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_cancel4);
+    }
+
+    public void OnLeftMaterialClick() 
+    {
+        int result = -1;
+        if(nowAssignMaterialIndex - 1 >= 0 && nowAssignMaterialIndex -1 < assignMaterialItems.Count) 
+        {
+            result = nowAssignMaterialIndex - 1;
+        }
+        else if(assignMaterialItems.Count != 0)
+        {
+            result = assignMaterialItems.Count - 1;
+        }
+        nowAssignMaterialIndex = result;
+    }
+
+    public void OnRightMaterialClick() 
+    {
+        int result = -1;
+        if (nowAssignMaterialIndex + 1 >= 0 && nowAssignMaterialIndex + 1 < assignMaterialItems.Count)
+        {
+            result = nowAssignMaterialIndex + 1;
+        }
+        else if (assignMaterialItems.Count != 0)
+        {
+            result = 0;
+        }
+        nowAssignMaterialIndex = result;
     }
 }
