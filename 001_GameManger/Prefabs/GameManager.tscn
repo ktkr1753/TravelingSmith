@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bklwemc72tlym"]
+[gd_scene load_steps=17 format=3 uid="uid://bklwemc72tlym"]
 
 [ext_resource type="Script" path="res://001_GameManger/Scripts/GameManager.cs" id="1_g60x2"]
 [ext_resource type="Resource" uid="uid://dkr82wb8aifgn" path="res://008_Item/Resources/ItemConfigResource.tres" id="2_ka38w"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://kdruv63w5u5v" path="res://008_Item/Prefabs/ItemManager.tscn" id="7_1qxjk"]
 [ext_resource type="Resource" uid="uid://bc3qo2s1ne0kn" path="res://008_Item/Resources/UnlockRecipeResouce.tres" id="7_tynty"]
 [ext_resource type="PackedScene" uid="uid://yw0tcnylx0t0" path="res://005_Battle/Prefabs/BattleManager.tscn" id="8_bb6xn"]
+[ext_resource type="Resource" uid="uid://bvykcsetofwbm" path="res://023_Feature/Resources/FeatureConfigResource.tres" id="8_l6ixa"]
 [ext_resource type="PackedScene" uid="uid://bys6shx0x1cpk" path="res://004_Camera/Prefabs/CameraManager.tscn" id="13_ip25f"]
 
 [node name="GameManager" type="Node2D" node_paths=PackedStringArray("mapManager", "uiManager", "soundManager", "itemManager", "battleManager", "cameraManager")]
@@ -30,6 +31,7 @@ monsterConfig = ExtResource("3_f0kso")
 expConfig = ExtResource("4_0usut")
 mapAttackConfig = ExtResource("6_djhsh")
 unlockRecipe = ExtResource("7_tynty")
+featureConfig = ExtResource("8_l6ixa")
 localSetting = ExtResource("2_usnjq")
 uiCommonSetting = ExtResource("3_nf7bt")
 

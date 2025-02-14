@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FeatureConfigResource" load_steps=6 format=3 uid="uid://bvykcsetofwbm"]
+
+[ext_resource type="Script" path="res://023_Feature/Scripts/FeatureConfigResource.cs" id="1_1wxg6"]
+[ext_resource type="Resource" uid="uid://e4ts6ef0qttv" path="res://023_Feature/Resources/Feature_1.tres" id="1_t0e8u"]
+[ext_resource type="Resource" uid="uid://dwmkm7x0lgrdi" path="res://023_Feature/Resources/Feature_2.tres" id="2_lor2n"]
+[ext_resource type="Resource" uid="uid://va6opuudj23" path="res://023_Feature/Resources/Feature_3.tres" id="3_rkvmx"]
+[ext_resource type="Resource" uid="uid://dkb8ar7csj4w5" path="res://023_Feature/Resources/Feature_4.tres" id="4_e78ea"]
+
+[resource]
+script = ExtResource("1_1wxg6")
+config = {
+1: ExtResource("1_t0e8u"),
+2: ExtResource("2_lor2n"),
+3: ExtResource("3_rkvmx"),
+4: ExtResource("4_e78ea")
+}

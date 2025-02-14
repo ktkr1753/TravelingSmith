@@ -618,32 +618,7 @@ public partial class MainGameUI : UIBase
         if (index >= 0 && index < GameManager.instance.itemManager.heldItems.Count
             && GameManager.instance.itemManager.heldItems[index] != null && GameManager.instance.itemManager.IsCanRemove(GameManager.instance.itemManager.heldItems[index]))
         {
-            if(GameManager.instance.itemManager.waitAddItem != null) 
-            {
-                ItemBaseResource item = GameManager.instance.itemManager.CreateItem(GameManager.instance.itemManager.waitAddItem.index);
-                GameManager.instance.itemManager.SetHeldItem(index, item);
-                GameManager.instance.itemManager.waitAddItem = null;
-
-                UIBase dropUI = GameManager.instance.uiManager.GetOpenedUI(UIIndex.DropItemUI);
-                if (dropUI != null) 
-                {
-                    GameManager.instance.uiManager.CloseUI(dropUI);
-
-                    GameManager.instance.uiManager.OpenUI(UIIndex.ShopUI);
-                }
-
-                /*
-                UIBase pickUI = GameManager.instance.uiManager.GetOpenedUI(UIIndex.PickUI);
-                if (pickUI != null)
-                {
-                    GameManager.instance.uiManager.CloseUI(pickUI);
-                }
-                */
-            }
-            else 
-            {
-                GameManager.instance.itemManager.RemoveItem(index);
-            }
+            GameManager.instance.itemManager.RemoveItem(index);
             GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button19);
             elements[index].SetDropButton(false);
         }
@@ -742,8 +717,11 @@ public partial class MainGameUI : UIBase
         {
             for(int i = preLevel; i < nextLevel; i++) 
             {
+                /*
                 List<ItemBaseResource> canPickItems = GameManager.instance.itemManager.GetPickItems(3);
                 GameManager.instance.uiManager.OpenUI(UIIndex.PickUI, new List<object>() { canPickItems });
+                */
+                GameManager.instance.uiManager.OpenUI(UIIndex.PickUI);
             }
         }
     }

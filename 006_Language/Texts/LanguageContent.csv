@@ -79,3 +79,13 @@ ts_monsterName_PossessedBook,PossessedBook,瘋狂之書
 ts_monsterName_VampireBat,VampireBat,吸血蝙蝠
 
 ts_hpChangeType_Crash,Crash,撞擊
+
+ts_featureName_Feature_1,Mass Production,量產
+ts_featureName_Feature_2,High Quality Supplies,優質補給
+ts_featureName_Feature_3,Elasticity Shell,彈性車體
+ts_featureName_Feature_4,Overgrinding,過度打磨
+
+ts_featureDescription_Feature_1,no content 1,無內容1
+ts_featureDescription_Feature_2,no content 2,無內容2
+ts_featureDescription_Feature_3,no content 3,無內容3
+ts_featureDescription_Feature_4,no content 4,無內容4

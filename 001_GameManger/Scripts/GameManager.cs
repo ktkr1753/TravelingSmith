@@ -25,6 +25,7 @@ public partial class GameManager : Node2D
     [Export] public ExpConfigResource expConfig;
     [Export] public MapAttackObjectConfigResource mapAttackConfig;
     [Export] public UnlockRecipeResource unlockRecipe;
+    [Export] public FeatureConfigResource featureConfig;
 
     [Export] public LocalSettingResource localSetting;
     [Export] public UICommonSettingResource uiCommonSetting;

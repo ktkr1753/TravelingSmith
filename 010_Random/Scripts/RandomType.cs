@@ -8,5 +8,6 @@ public enum RandomType
     PickItem = 2,
     DropItem = 3,
     RandomItem = 4,
+    PickFeature = 5,
     Other = 999,
 }

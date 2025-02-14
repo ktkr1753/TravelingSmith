@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FeatureResource" load_steps=2 format=3 uid="uid://dkb8ar7csj4w5"]
+
+[ext_resource type="Script" path="res://023_Feature/Scripts/FeatureResource.cs" id="1_xrhxh"]
+
+[resource]
+script = ExtResource("1_xrhxh")
+index = 4
+goodEffect = [6]
+badEffect = [105]

@@ -516,19 +516,13 @@ public partial class ShopUI : UIBase
 
         if (pickedItem != null) 
         {
-            Debug.Print("OnAssignMaterialButtonDown 1");
             int buyMoney = GameManager.instance.itemManager.GetBuyMoney(pickedItem);
             if (GameManager.instance.itemManager.money >= buyMoney)
             {
-                Debug.Print("OnAssignMaterialButtonDown 2");
                 GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
                 SetPickedItemElement(assignMaterialItems[nowAssignMaterialIndex]);
                 assignMaterialImage.Visible = false;
                 pickAssignMaterialItem = pickedItem;
-            }
-            else 
-            {
-                Debug.Print("OnAssignMaterialButtonDown 3");
             }
         }
 
@@ -560,13 +554,11 @@ public partial class ShopUI : UIBase
                     {
                         //資料
                         GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - GameManager.instance.itemManager.GetBuyMoney(pickedItem));
-
-                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
                     }
                 }
             }
         }
-
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
         assignMaterialImage.Visible = true;
         SetPickedItemElement(null);
     }
@@ -670,6 +662,7 @@ public partial class ShopUI : UIBase
             result = assignMaterialItems.Count - 1;
         }
         nowAssignMaterialIndex = result;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
     }
 
     public void OnRightMaterialClick() 
@@ -684,5 +677,6 @@ public partial class ShopUI : UIBase
             result = 0;
         }
         nowAssignMaterialIndex = result;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
     }
 }

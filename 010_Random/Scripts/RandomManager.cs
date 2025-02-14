@@ -54,6 +54,7 @@ public partial class RandomManager
     /// <param name="randomType"></param> 該隨機數用途
     /// <param name="bound1"></param> 最小值
     /// <param name="bound2"></param> 最大值
+    /// <param name="pickNum"></param> 數列的元素數量
     /// <returns></returns>
     public List<int> GetNotRepeatList(RandomType randomType, int bound1, int bound2, int pickNum = 0)
     {

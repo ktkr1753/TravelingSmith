@@ -1,13 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://wjnb30pcpwpu"]
+[gd_scene load_steps=5 format=3 uid="uid://wjnb30pcpwpu"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/PickUI/PickUI.cs" id="1_8lcqi"]
 [ext_resource type="Texture2D" uid="uid://c3jdlmk4exaqj" path="res://012_UI/Images/white.png" id="2_hapmo"]
-[ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementPool.cs" id="2_kme4u"]
-[ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="3_283vr"]
-[ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="5_ksm8r"]
-[ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanelPool.cs" id="6_6pmwn"]
+[ext_resource type="PackedScene" uid="uid://bw0yhgegy0bu8" path="res://012_UI/Prefabs/PickUI/PickFeatureElement.tscn" id="6_2nie7"]
+[ext_resource type="Script" path="res://012_UI/Scripts/PickUI/PickFeatureElementPool.cs" id="7_adurk"]
 
-[node name="PickUI" type="Control" node_paths=PackedStringArray("itemElementPool", "infoPanelPool", "confirmButton")]
+[node name="PickUI" type="Control" node_paths=PackedStringArray("featureElementPool", "confirmButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,8 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_8lcqi")
-itemElementPool = NodePath("PanelContainer/VBoxContainer/ItemElementPool")
-infoPanelPool = NodePath("ItemInfoPanelParent")
+featureElementPool = NodePath("PanelContainer/VBoxContainer/FeaturePool")
 confirmButton = NodePath("PanelContainer/VBoxContainer/HBoxContainer2/ConfirmButton")
 uIType = 4
 
@@ -34,6 +31,7 @@ mouse_filter = 2
 texture = ExtResource("2_hapmo")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(320, 190)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -55,21 +53,32 @@ layout_mode = 2
 text = "選擇你的獎勵"
 horizontal_alignment = 1
 
-[node name="ItemElementPool" type="HBoxContainer" parent="PanelContainer/VBoxContainer" node_paths=PackedStringArray("parent", "backup")]
+[node name="Control2" type="Control" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="FeaturePool" type="PanelContainer" parent="PanelContainer/VBoxContainer" node_paths=PackedStringArray("parent", "backup")]
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+script = ExtResource("7_adurk")
+prefab = ExtResource("6_2nie7")
+parent = NodePath("HBoxContainer")
+backup = NodePath("Backup")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/FeaturePool"]
 layout_mode = 2
 alignment = 1
-script = ExtResource("2_kme4u")
-prefab = ExtResource("3_283vr")
-parent = NodePath(".")
-backup = NodePath("../Backup")
 
-[node name="Backup" type="Control" parent="PanelContainer/VBoxContainer"]
+[node name="Backup" type="Control" parent="PanelContainer/VBoxContainer/FeaturePool"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Control" type="Control" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -77,7 +86,6 @@ theme_override_constants/separation = 5
 alignment = 1
 
 [node name="ConfirmButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
-visible = false
 custom_minimum_size = Vector2(50, 25)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -90,35 +98,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"Button_Red"
 text = "跳過"
-
-[node name="ItemInfoPanelParent" type="Control" parent="." node_paths=PackedStringArray("parent", "backup")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("6_6pmwn")
-prefab = ExtResource("5_ksm8r")
-parent = NodePath("Inuse")
-backup = NodePath("Backup")
-
-[node name="Inuse" type="Control" parent="ItemInfoPanelParent"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Backup" type="Control" parent="ItemInfoPanelParent"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/ConfirmButton" to="." method="OnConfirmClick"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/SkipButton" to="." method="OnCancelClick"]

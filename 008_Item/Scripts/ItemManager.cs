@@ -66,6 +66,14 @@ public partial class ItemManager : Node
             }
         }
     }
+    private Godot.Collections.Array<FeatureIndex> _haveFeatures = new Godot.Collections.Array<FeatureIndex>();
+    [Export] public Godot.Collections.Array<FeatureIndex> haveFeatures 
+    {
+        get { return _haveFeatures; }
+        private set {
+            _haveFeatures = value;
+        }
+    }
 
     private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
     [Export] public Godot.Collections.Array<ItemBaseResource> heldItems 
@@ -73,8 +81,6 @@ public partial class ItemManager : Node
 		get { return _heldItems; }
 		private set { _heldItems = value; }
 	}
-
-    public ItemBaseResource waitAddItem = null;
 
     private Godot.Collections.Array<AreaIndex> _defaultAreas = new Godot.Collections.Array<AreaIndex>();
     [Export] public Godot.Collections.Array<AreaIndex> defaultAreas
@@ -1368,5 +1374,17 @@ public partial class ItemManager : Node
         //Debug.Print($"GetPointAroundPoints position:{position}, result:{result.ToStringExtended()}");
 
         return result;
+    }
+
+    public void AddFeature(FeatureIndex featureIndex) 
+    {
+        if (!haveFeatures.Contains(featureIndex)) 
+        {
+            haveFeatures.Add(featureIndex);
+        }
+        else 
+        {
+            Debug.PrintErr($"已擁有該能力, featureIndex:{featureIndex}");
+        }
     }
 }
