@@ -388,7 +388,8 @@ public partial class ItemElement : Control
 		{
             if (circleProgressImage.Material is ShaderMaterial material)
             {
-                float nowPercent = (float)(produce.nowTime / produce.needTime);
+				double needTime = GameManager.instance.itemManager.GetProduceNeedTime(produce);
+                float nowPercent = (float)(produce.nowTime / needTime);
                 material.SetShaderParameter(material_percent, nowPercent);
             }
         }

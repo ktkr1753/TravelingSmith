@@ -10,6 +10,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
     [Export] public Godot.Collections.Array<ItemEffect> effectRanges = new Godot.Collections.Array<ItemEffect>();
     [Export] public int money = 0;
     [Export] public int rank = 0;
+    [Export] public bool isLowProduct = false;
     [Export] public bool isSellable = true;
 
     public virtual ItemBaseResource Clone() 
@@ -21,6 +22,7 @@ public abstract partial class ItemBaseResource : Resource, IClone<ItemBaseResour
         result.effectRanges = effectRanges.Clone();
         result.money = money;
         result.rank = rank;
+        result.isLowProduct = isLowProduct;
         result.isSellable = isSellable;
 
         return result;

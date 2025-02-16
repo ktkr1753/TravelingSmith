@@ -143,9 +143,14 @@ public partial class ShopUI : UIBase
     {
         base.Init();
 
-        GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
+        if (GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.LoseMoney)) 
+        {
+            GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - 2);
+        }
 
+        GameManager.instance.itemManager.onMoneyChange += OnMoneyChange;
         pauseFinishCallback = GameManager.instance.AddNeedPause();
+
         //測試
         TestRandomItem();
 

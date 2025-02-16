@@ -75,6 +75,39 @@ public partial class ItemManager : Node
         }
     }
 
+    private bool isFeatureDirt = true;
+
+    private HashSet<FeatureContentIndex> _featureContents = new HashSet<FeatureContentIndex>();
+    public HashSet<FeatureContentIndex> featureContents 
+    {
+        get 
+        {
+            if (isFeatureDirt) 
+            {
+                _featureContents.Clear();
+                for (int i = 0; i < haveFeatures.Count; i++) 
+                {
+                    if (GameManager.instance.featureConfig.config.TryGetValue(haveFeatures[i], out FeatureResource featureData)) 
+                    {
+                        for(int j = 0; j < featureData.goodEffect.Count; j++) 
+                        {
+                            _featureContents.Add(featureData.goodEffect[j]);
+                        }
+                        for (int j = 0; j < featureData.badEffect.Count; j++)
+                        {
+                            _featureContents.Add(featureData.badEffect[j]);
+                        }
+                    }
+                }
+                isFeatureDirt = false;
+            }
+
+            return _featureContents;
+        }
+    }
+
+
+
     private Godot.Collections.Array<ItemBaseResource> _heldItems = new Godot.Collections.Array<ItemBaseResource>();
     [Export] public Godot.Collections.Array<ItemBaseResource> heldItems 
 	{
@@ -97,7 +130,7 @@ public partial class ItemManager : Node
         private set { _itemEffects = value; }
     }
 
-    private bool isAreasDirt = false;
+    private bool isAreasDirt = true;
 
     private Godot.Collections.Array<AreaIndex> _areas = new Godot.Collections.Array<AreaIndex>();
 
@@ -475,14 +508,16 @@ public partial class ItemManager : Node
 		{
 			if (producingItem is IProduce produce)
 			{
-				if(produce.nowTime + addTime >= produce.needTime) 
+                double needTime = GetProduceNeedTime(produce);
+
+                if (produce.nowTime + addTime >= needTime) 
 				{
                     bool isSuccess = CreateProduct(produce);
                     if (isSuccess) 
                     {
 					    if (produce.isKeepProduce) 
 					    {
-                            produce.nowTime = (produce.nowTime + addTime) % produce.needTime;
+                            produce.nowTime = (produce.nowTime + addTime) % needTime;
                         }
 					    else 
 					    {
@@ -497,12 +532,12 @@ public partial class ItemManager : Node
                     }
                     else //物品太多生產失敗，不做事 
                     {
-                        produce.nowTime = produce.needTime;
+                        produce.nowTime = needTime;
                     }
                 }
 				else 
 				{
-	                produce.nowTime = (produce.nowTime + addTime) % produce.needTime;
+	                produce.nowTime = (produce.nowTime + addTime) % needTime;
 				}
             }
 			else 
@@ -543,6 +578,10 @@ public partial class ItemManager : Node
             if ((heldItems[checkPoint] == null || (heldItems[checkPoint] == produce && produce.durability == 1)) && IsAreaEffect(areas, checkPoint, AreaIndex.Normal))
             {
                 ItemBaseResource item = CreateItem(produce.productItem);
+                if (GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.LowSellMoney)) 
+                {
+                    item.isLowProduct = true;
+                }
                 SetHeldItem(checkPoint, item);
                 GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble);
                 isSuccess = true;
@@ -932,12 +971,31 @@ public partial class ItemManager : Node
     {
         int result = item.money;
 
+        if (item.isLowProduct) 
+        {
+            //減少一半售價(最多減少5)
+            int loseSellMoney = (int)Math.Floor(Math.Clamp(item.money / 2.0, 0, 5));
+            result = result - loseSellMoney;
+        }
+
         if(item is IAttack attacker) 
         {
             if(attacker.durability == 0) //磨損
             {
                 result = (int)Math.Floor(item.money / 2.0);
             }
+        }
+
+        return result;
+    }
+
+    public double GetProduceNeedTime(IProduce produce) 
+    {
+        double result = produce.needTime;
+
+        if (featureContents.Contains(FeatureContentIndex.HighSpeedProduce)) 
+        {
+            result = produce.needTime / 2.0;
         }
 
         return result;
@@ -1381,6 +1439,31 @@ public partial class ItemManager : Node
         if (!haveFeatures.Contains(featureIndex)) 
         {
             haveFeatures.Add(featureIndex);
+            isFeatureDirt = true;
+
+            if(GameManager.instance.featureConfig.config.TryGetValue(featureIndex, out FeatureResource featureData)) 
+            {
+                Action<Godot.Collections.Array<FeatureContentIndex>> check = (featureContentIndexs) =>
+                {
+                    for (int i = 0; i < featureContentIndexs.Count; i++)
+                    {
+                        switch (featureContentIndexs[i])
+                        {
+                            case FeatureContentIndex.AddMainHp:
+                                GameManager.instance.battleManager.maxHP += 30;
+                                GameManager.instance.battleManager.Repair(30);
+                                break;
+                        }
+                    }
+                };
+
+                check(featureData.goodEffect);
+                check(featureData.badEffect);
+            }
+            else 
+            {
+                Debug.PrintErr($"於Config內找不到該能力, featureIndex:{featureIndex}");
+            }
         }
         else 
         {

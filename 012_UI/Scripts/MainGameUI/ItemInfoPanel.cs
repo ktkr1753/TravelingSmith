@@ -247,7 +247,8 @@ public partial class ItemInfoPanel : PanelContainer
         if (item is IProduce produce)
         {
             produceCostTimeParent.Visible = true;
-            produceCostTimeLabel.Text = $"{produce.needTime}";
+            double needTime = GameManager.instance.itemManager.GetProduceNeedTime(produce);
+            produceCostTimeLabel.Text = $"{needTime}";
         }
         else
         {

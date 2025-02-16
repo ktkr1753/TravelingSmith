@@ -22,7 +22,7 @@ public static class Debug
         if(isPrint)
         {
             object[] messagesWithPrefix = GetPrefixMessage(messages);
-            logCount++;
+            AddLogCount();
             GD.Print(messagesWithPrefix);
         }
     }
@@ -32,7 +32,7 @@ public static class Debug
         if (isPrint)
         {
             object[] messagesWithPrefix = GetPrefixMessage(messages);
-            logCount++;
+            AddLogCount();
             GD.PushWarning(messagesWithPrefix);
         }
     }
@@ -41,8 +41,20 @@ public static class Debug
         if(isPrint) 
         {
             object[] messagesWithPrefix = GetPrefixMessage(messages);
-            logCount++;
+            AddLogCount();
             GD.PushError(messagesWithPrefix);
+        }
+    }
+
+    public static void AddLogCount() 
+    {
+        if(logCount + 1 > 10000) 
+        {
+            logCount = 0;
+        }
+        else 
+        {
+            logCount++;
         }
     }
 }
