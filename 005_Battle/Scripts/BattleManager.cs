@@ -113,11 +113,67 @@ public partial class BattleManager : Node
 
     public bool isGameOver = false;
 
+    public bool _isShellReady = false;
+    public bool isShellReady 
+    {
+        get { return _isShellReady; }
+        private set 
+        {
+            if(_isShellReady != value) 
+            {
+                _isShellReady = value;
+                OnIsShellReadyChange(_isShellReady);
+                onIsShellReadyChange?.Invoke(_isShellReady);
+            }
+        }
+    }
+    private void OnIsShellReadyChange(bool nowIsReady)
+    {
+
+    }
+
+    public event Action<bool> onIsShellReadyChange;
+
+    public double nowShellTime = 0;
+
+    public const double shellNeedTime = 20;
+
 
     public void Init() 
 	{
 		isGameOver = false;
         nowHP = maxHP;
+    }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        UpdateShellTime(delta);
+    }
+
+    private void UpdateShellTime(double delta) 
+    {
+        if (isShellReady || !GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.Shell)) 
+        {
+            return;
+        }
+
+        double addTime = delta * GameManager.instance.gameSpeed;
+        if (addTime == 0)
+        {
+            return;
+        }
+
+        if (nowShellTime + addTime > shellNeedTime) 
+        {
+            isShellReady = true;
+            nowShellTime = 0;
+        }
+        else 
+        {
+            nowShellTime += addTime;
+        }
     }
 
     public int GetAttackerPoint(IAttack attacker) 
@@ -135,9 +191,16 @@ public partial class BattleManager : Node
 	{
 		if(damage > 0) 
 		{
-            int preHP = nowHP;
-			nowHP = Math.Max(0, nowHP - damage);
-            onHPChange?.Invoke(preHP, _nowHP, type);
+            if (isShellReady) 
+            {
+                isShellReady = false;
+            }
+            else 
+            {
+                int preHP = nowHP;
+			    nowHP = Math.Max(0, nowHP - damage);
+                onHPChange?.Invoke(preHP, _nowHP, type);
+            }
         }
 	}
 

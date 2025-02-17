@@ -151,7 +151,12 @@ public partial class Map : Node2D
         }
         else 
         {
-            int damage = (int)Math.Floor((GameManager.instance.itemManager.moveSpeed - 10) / 20);
+            int damage = 0;
+
+            if (!GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.NoCrashDamage))
+            {
+                damage = (int)Math.Floor((GameManager.instance.itemManager.moveSpeed - 10) / 20);
+            }
             //Debug.Print($"TargetMove GameManager.instance.itemManager.moveSpeed:{GameManager.instance.itemManager.moveSpeed},damage:{damage}");
             if(damage > 0) 
             {

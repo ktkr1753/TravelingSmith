@@ -21,4 +21,5 @@ texture = SubResource("AtlasTexture_npcus")
 effectRanges = []
 money = 1
 rank = 0
+isLowProduct = false
 isSellable = true

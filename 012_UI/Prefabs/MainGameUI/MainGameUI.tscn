@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=24 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_c7qgf"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="4_tu1ht"]
 [ext_resource type="Texture2D" uid="uid://dorjfo55a68rp" path="res://012_UI/Images/coin.png" id="5_6mqyh"]
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementPool.cs" id="5_fuckt"]
+[ext_resource type="Texture2D" uid="uid://nqxmosmx00gt" path="res://012_UI/Images/shield.png" id="8_7w7l3"]
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/GameSpeedControl.cs" id="8_h57qy"]
 [ext_resource type="Texture2D" uid="uid://bc0uwytnx6uxe" path="res://012_UI/Images/button_speed-pause_normal.png" id="8_mr6r2"]
 [ext_resource type="Texture2D" uid="uid://daoqg7p6bujk2" path="res://012_UI/Images/button_speed-pause_pressed.png" id="9_m08o6"]
@@ -24,7 +25,7 @@
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_alfty"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "itemsPanel", "infoPanelPool", "hpProgressBar", "nowHpLabel", "maxHpLabel", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "itemsPanel", "infoPanelPool", "hpProgressBar", "nowHpLabel", "maxHpLabel", "shieldImage", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,6 +41,7 @@ infoPanelPool = NodePath("ItemInfoPanelParent")
 hpProgressBar = NodePath("MarginContainer/VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/NowHPLabel")
 maxHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/MaxHPLabel")
+shieldImage = NodePath("MarginContainer/VBox/HPPanel/Control/ShieldImage")
 expProgressBar = NodePath("MarginContainer/VBox/ExpPanel/ProgressBar")
 expLabelParent = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer")
 nowExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/NowHPLabel")
@@ -532,6 +534,17 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 2
 texture = ExtResource("4_tu1ht")
+
+[node name="ShieldImage" type="TextureRect" parent="MarginContainer/VBox/HPPanel/Control"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_left = 98.0
+offset_top = -7.0
+offset_right = 130.0
+offset_bottom = 25.0
+texture = ExtResource("8_7w7l3")
+expand_mode = 1
 
 [node name="ExpPanel" type="PanelContainer" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(100, 0)

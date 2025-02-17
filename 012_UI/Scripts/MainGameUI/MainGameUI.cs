@@ -12,6 +12,7 @@ public partial class MainGameUI : UIBase
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
     [Export] private Label maxHpLabel;
+    [Export] private TextureRect shieldImage;
     [Export] private ProgressBar expProgressBar;
     [Export] private Control expLabelParent;
     [Export] private Label nowExpLabel;
@@ -112,6 +113,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
         GameManager.instance.battleManager.onHPChange += OnHpChange;
+        GameManager.instance.battleManager.onIsShellReadyChange += OnShellIsReadyChange;
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
         InitItemElements();
@@ -129,6 +131,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
         GameManager.instance.battleManager.onHPChange -= OnHpChange;
+        GameManager.instance.battleManager.onIsShellReadyChange -= OnShellIsReadyChange;
         GameManager.instance.battleManager.onExpChange -= OnExpChange;
         GameManager.instance.battleManager.onLevelChange -= OnLevelChange;
     }
@@ -322,6 +325,18 @@ public partial class MainGameUI : UIBase
         hpProgressBar.Value = GameManager.instance.battleManager.nowHP;
         maxHpLabel.Text = $"{GameManager.instance.battleManager.maxHP}";
         nowHpLabel.Text = $"{GameManager.instance.battleManager.nowHP}";
+    }
+
+    private void SetShield() 
+    {
+        if (GameManager.instance.battleManager.isShellReady) 
+        {
+            shieldImage.Visible = true;
+        }
+        else 
+        {
+            shieldImage.Visible = false;
+        }
     }
 
     private void SetExp() 
@@ -650,6 +665,12 @@ public partial class MainGameUI : UIBase
     {
         SetHp();
     }
+
+    private void OnShellIsReadyChange(bool isReady) 
+    {
+        SetShield();
+    }
+
     private void OnExpChange(int preExp, int nowExp)
     {
         SetExp();

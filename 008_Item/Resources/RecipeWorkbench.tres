@@ -23,4 +23,5 @@ texture = SubResource("AtlasTexture_0cal1")
 effectRanges = []
 money = 3
 rank = 0
+isLowProduct = false
 isSellable = true
