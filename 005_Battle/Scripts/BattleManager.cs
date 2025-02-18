@@ -117,7 +117,7 @@ public partial class BattleManager : Node
     public bool isShellReady 
     {
         get { return _isShellReady; }
-        private set 
+        set 
         {
             if(_isShellReady != value) 
             {
@@ -179,6 +179,11 @@ public partial class BattleManager : Node
     public int GetAttackerPoint(IAttack attacker) 
     {
         int attackPoint = attacker.attackPoint;
+        if (GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.AddAttackDamage)) 
+        {
+            attackPoint = (int)Math.Ceiling(attackPoint * 1.5);
+        }
+
         if (attacker.durability == 0)
         {
             attackPoint = (int)Math.Floor(attacker.attackPoint / 2.0);

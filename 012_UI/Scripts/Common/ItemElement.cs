@@ -314,7 +314,7 @@ public partial class ItemElement : Control
 			ShaderMaterial material = new ShaderMaterial();
 			material.Shader = clockMaskShader;
 			material.SetShaderParameter(material_selfColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, normalColor.A));
-			material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.0f));
+			material.SetShaderParameter(material_maskColor, new Vector4(normalColor.R, normalColor.G, normalColor.B, 0.3f));
 			material.SetShaderParameter(material_percent, 1f);
 			material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
 			circleProgressImage.Material = material;

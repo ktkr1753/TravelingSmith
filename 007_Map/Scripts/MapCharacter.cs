@@ -32,6 +32,7 @@ public partial class MapCharacter : Node2D
 
     public void Init(Vector2 startPoint) 
     {
+        ResetAnimationSpeed();
         GlobalPosition = startPoint;
         animation.Play(clip_front_idle);
     }
@@ -46,6 +47,7 @@ public partial class MapCharacter : Node2D
         float duration = dis / moveSpeed;
 
         moveTween = GetTree().CreateTween();
+        moveTween.SetSpeedScale((float)GameManager.instance.gameSpeed);
         moveTween.TweenProperty(this, "global_position", endPoint, duration);
         moveTween.TweenCallback(Callable.From(() =>
         {
@@ -64,6 +66,7 @@ public partial class MapCharacter : Node2D
         float duration = dis / moveSpeed;
 
         moveTween = GetTree().CreateTween();
+        moveTween.SetSpeedScale((float)GameManager.instance.gameSpeed);
         moveTween.TweenProperty(this, "global_position", endPoint, duration);
         moveTween.TweenCallback(Callable.From(() =>
         {

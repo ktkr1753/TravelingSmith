@@ -161,6 +161,10 @@ public partial class ItemInfoPanel : PanelContainer
             {
                 attackPointLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
             }
+            else if(attackPoint > attacker.attackPoint) 
+            {
+                attackPointLabel.SelfModulate = GameManager.instance.uiCommonSetting.betterColor;
+            }
             else 
             {
                 attackPointLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;

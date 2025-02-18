@@ -13,6 +13,7 @@ public partial class MainGameUI : UIBase
     [Export] private Label nowHpLabel;
     [Export] private Label maxHpLabel;
     [Export] private TextureRect shieldImage;
+    [Export] private Shader clockMaskShader;
     [Export] private ProgressBar expProgressBar;
     [Export] private Control expLabelParent;
     [Export] private Label nowExpLabel;
@@ -102,6 +103,11 @@ public partial class MainGameUI : UIBase
     public const double flyTime = 0.2;
     public readonly Vector2 infoPanelFix = new Vector2(12, 12);
 
+    public const string material_selfColor = "selfColor";
+    public const string material_maskColor = "maskColor";
+    public const string material_percent = "percent";
+    public const string material_atlasSize = "atlasSize";
+
     public override void Init()
     {
         base.Init();
@@ -113,10 +119,10 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onUseMaterial += OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct += OnCreateProduct;
         GameManager.instance.battleManager.onHPChange += OnHpChange;
-        GameManager.instance.battleManager.onIsShellReadyChange += OnShellIsReadyChange;
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
         InitItemElements();
+        InitShieldMaterial();
         SetView();
     }
 
@@ -131,7 +137,6 @@ public partial class MainGameUI : UIBase
         GameManager.instance.itemManager.onUseMaterial -= OnUseMaterials;
         GameManager.instance.itemManager.onCreateProduct -= OnCreateProduct;
         GameManager.instance.battleManager.onHPChange -= OnHpChange;
-        GameManager.instance.battleManager.onIsShellReadyChange -= OnShellIsReadyChange;
         GameManager.instance.battleManager.onExpChange -= OnExpChange;
         GameManager.instance.battleManager.onLevelChange -= OnLevelChange;
     }
@@ -140,6 +145,7 @@ public partial class MainGameUI : UIBase
     {
         base._Process(delta);
 
+        UpdateShieldState(delta);
         CheckIsPickItem();
         CheckItemsWork();
     }
@@ -327,15 +333,44 @@ public partial class MainGameUI : UIBase
         nowHpLabel.Text = $"{GameManager.instance.battleManager.nowHP}";
     }
 
-    private void SetShield() 
+
+    private void UpdateShieldState(double deltaTime) 
     {
-        if (GameManager.instance.battleManager.isShellReady) 
+        if (GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.Shell))
         {
             shieldImage.Visible = true;
         }
-        else 
+        else
         {
             shieldImage.Visible = false;
+            return;
+        }
+
+        if (shieldImage.Material is ShaderMaterial material)
+        {
+            if (!GameManager.instance.battleManager.isShellReady) 
+            {
+                float nowPercent = (float)(GameManager.instance.battleManager.nowShellTime / BattleManager.shellNeedTime);
+                material.SetShaderParameter(material_percent, nowPercent);
+            }
+            else 
+            {
+                material.SetShaderParameter(material_percent, 1);
+            }
+        }
+    }
+
+    private void InitShieldMaterial()
+    {
+        if (shieldImage.Material == null)
+        {
+            ShaderMaterial material = new ShaderMaterial();
+            material.Shader = clockMaskShader;
+            material.SetShaderParameter(material_selfColor, new Vector4(1.0f,1.0f,1.0f,1.0f));
+            material.SetShaderParameter(material_maskColor, new Vector4(1f, 1f, 1f, 0.5f));
+            material.SetShaderParameter(material_percent, 1f);
+            material.SetShaderParameter(material_atlasSize, new Vector2(1f, 1f));
+            shieldImage.Material = material;
         }
     }
 
@@ -664,11 +699,6 @@ public partial class MainGameUI : UIBase
     private void OnHpChange(int preHP,int nowHP, HPChangeType type) 
     {
         SetHp();
-    }
-
-    private void OnShellIsReadyChange(bool isReady) 
-    {
-        SetShield();
     }
 
     private void OnExpChange(int preExp, int nowExp)

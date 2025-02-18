@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=25 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_c7qgf"]
+[ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_goeng"]
 [ext_resource type="PackedScene" uid="uid://be06qt5siw62v" path="res://012_UI/Prefabs/Common/ItemElement_Clear.tscn" id="3_mpf7q"]
 [ext_resource type="PackedScene" uid="uid://b6ylnogsow47o" path="res://012_UI/Prefabs/MainGameUI/ItemInfoPanel.tscn" id="3_uculn"]
 [ext_resource type="Texture2D" uid="uid://dsab01okder5y" path="res://012_UI/Images/heart.png" id="4_tu1ht"]
@@ -42,6 +43,7 @@ hpProgressBar = NodePath("MarginContainer/VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/NowHPLabel")
 maxHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/MaxHPLabel")
 shieldImage = NodePath("MarginContainer/VBox/HPPanel/Control/ShieldImage")
+clockMaskShader = ExtResource("2_goeng")
 expProgressBar = NodePath("MarginContainer/VBox/ExpPanel/ProgressBar")
 expLabelParent = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer")
 nowExpLabel = NodePath("MarginContainer/VBox/ExpPanel/HBoxContainer/NowHPLabel")
@@ -536,7 +538,6 @@ mouse_filter = 2
 texture = ExtResource("4_tu1ht")
 
 [node name="ShieldImage" type="TextureRect" parent="MarginContainer/VBox/HPPanel/Control"]
-visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 offset_left = 98.0

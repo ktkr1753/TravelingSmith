@@ -710,7 +710,8 @@ public partial class ItemManager : Node
                         {
                             if (attacker.durability > 0) 
                             {
-                                attacker.durability = Math.Max(0, attacker.durability - 1);
+                                int costDurability = GetWeaponCostDurability();
+                                attacker.durability = Math.Max(0, attacker.durability - costDurability);
                                 isAttack = true;
                             }
                             else if(attacker.durability == 0) 
@@ -999,6 +1000,11 @@ public partial class ItemManager : Node
         }
 
         return result;
+    }
+
+    public int GetWeaponCostDurability() 
+    {
+        return featureContents.Contains(FeatureContentIndex.AddDurabilityCost) ? 2 : 1;
     }
 
     public void RefreshAreas(Godot.Collections.Array<AreaIndex> targetArea, Godot.Collections.Dictionary<int, Godot.Collections.Array<ItemEffect>> useUtemEffects) 
@@ -1452,6 +1458,11 @@ public partial class ItemManager : Node
                             case FeatureContentIndex.AddMainHp:
                                 GameManager.instance.battleManager.maxHP += 30;
                                 GameManager.instance.battleManager.Repair(30);
+                                break;
+                            case FeatureContentIndex.Shell:
+                                GameManager.instance.battleManager.isShellReady = true;
+                                break;
+                            default:
                                 break;
                         }
                     }

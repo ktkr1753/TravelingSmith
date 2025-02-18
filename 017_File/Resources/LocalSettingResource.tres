@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_sxe3e")
-bgmVolume = 50
-soundVolume = 50
+bgmVolume = 20
+soundVolume = 20
+gameSpeedSetting = 1.0
