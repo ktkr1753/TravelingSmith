@@ -26,6 +26,7 @@ public partial class ShopUI : UIBase
     [Export] private Control sellPanel;
     [Export] private Control refreshHeldPanel;
     [Export] private Label refreshHeldCostLabel;
+    [Export] private Button multiSellButton;
 
     private PositionState _positionState = PositionState.Out;
     public PositionState positionState 
@@ -132,6 +133,32 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private bool _isMultiSelectedSell = false;
+    public bool isMultiSelectedSell 
+    {
+        get { return _isMultiSelectedSell; }
+        set 
+        {
+            if(_isMultiSelectedSell != value ) 
+            {
+                _isMultiSelectedSell = value;
+                if (_isMultiSelectedSell) 
+                {
+                    RegistryItemElement();
+                }
+                else
+                {
+                    SellAllMultiSelectedItem();
+                    UnregistryItemElement();
+                }
+                SetMultiButton();
+            }
+        }
+    }
+
+
+    public HashSet<int> selectedItemIndexs = new HashSet<int>();
+
     private Action pauseFinishCallback;
 
     public const double flyTime = 0.2;
@@ -165,6 +192,7 @@ public partial class ShopUI : UIBase
         pauseFinishCallback = null;
 
         GameManager.instance.itemManager.onMoneyChange -= OnMoneyChange;
+        UnregistryItemElement();
     }
 
     private void TestRandomItem() 
@@ -282,6 +310,38 @@ public partial class ShopUI : UIBase
         SetRefreshButton();
     }
 
+    private void RegistryItemElement() 
+    {
+        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+        if(mainGameUI == null) 
+        {
+            Debug.PrintWarn("未找到ItemElement");
+            return;
+        }
+
+        for(int i = 0; i < mainGameUI.elements.Count; i++) 
+        {
+            mainGameUI.elements[i].onMainButtonDown += OnElementButtonDown;
+        }
+    }
+
+    private void UnregistryItemElement()
+    {
+        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+        if (mainGameUI == null)
+        {
+            Debug.PrintWarn("未找到ItemElement");
+            return;
+        }
+
+        for (int i = 0; i < mainGameUI.elements.Count; i++)
+        {
+            mainGameUI.elements[i].SetMultiSelected(false);
+            mainGameUI.elements[i].onMainButtonDown -= OnElementButtonDown;
+        }
+    }
+
+
     private void SetView() 
     {
         SetMoveButtonImage();
@@ -381,6 +441,31 @@ public partial class ShopUI : UIBase
             assignMaterialMoneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
         }
         assignMaterialMoneyLabel.Text = $"{buyMoney}";
+    }
+
+    public void SellAllMultiSelectedItem() 
+    {
+        bool isSell = false;
+        foreach(int index in selectedItemIndexs) 
+        {
+            ItemBaseResource item = GameManager.instance.itemManager.heldItems[index];
+            if (item != null && GameManager.instance.itemManager.IsCanRemove(item)) 
+            {
+                bool isSuccess = GameManager.instance.itemManager.SellItem(item);
+
+                if (isSuccess)
+                {
+                    isSell = true;
+                }
+            }
+        }
+
+        selectedItemIndexs.Clear();
+
+        if (isSell) 
+        {
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
+        }
     }
 
     public bool IsInSellRect(Vector2 globalPosition) 
@@ -610,6 +695,28 @@ public partial class ShopUI : UIBase
     }
 
 
+    private void SetMultiButton()
+    {
+        if (isMultiSelectedSell) 
+        {
+            if(selectedItemIndexs.Count == 0) 
+            {
+                multiSellButton.Text = Tr("ts_common_Cancel");
+                multiSellButton.ThemeTypeVariation = "Button_Red";
+            }
+            else 
+            {
+                multiSellButton.Text = Tr("ts_common_Confirm");
+                multiSellButton.ThemeTypeVariation = "Button_Green";
+            }
+        }
+        else 
+        {
+            multiSellButton.Text = Tr("ts_common_Sell");
+            multiSellButton.ThemeTypeVariation = "";
+        }
+    }
+
     public async void OnMoveClick() 
     {
         switch (positionState) 
@@ -683,5 +790,38 @@ public partial class ShopUI : UIBase
         }
         nowAssignMaterialIndex = result;
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
+    }
+
+    public void OnMultiSelectedClick() 
+    {
+        isMultiSelectedSell = !isMultiSelectedSell;
+    }
+
+    public void OnElementButtonDown(int index) 
+    {
+        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+        if (mainGameUI == null)
+        {
+            Debug.PrintWarn("未找到ItemElement");
+            return;
+        }
+
+        if (!selectedItemIndexs.Contains(index)) 
+        {
+            if (mainGameUI.elements[index].item != null && GameManager.instance.itemManager.IsCanRemove(mainGameUI.elements[index].item)) 
+            {
+                mainGameUI.elements[index].SetMultiSelected(true);
+                selectedItemIndexs.Add(index);
+                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
+            }
+        }
+        else 
+        {
+            mainGameUI.elements[index].SetMultiSelected(false);
+            selectedItemIndexs.Remove(index);
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+        }
+
+        SetMultiButton();
     }
 }

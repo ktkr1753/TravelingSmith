@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df5fw6od1g1nd"
-path="res://.godot/imported/anvi_2l.png-74bbf612d614a06a408aad8508dd5a2c.ctex"
+uid="uid://bguewqw6nxm8n"
+path="res://.godot/imported/girl_2-idle.png-9027b7f88871ba84d730a76e1821837e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://012_UI/Images/anvi_2l.png"
-dest_files=["res://.godot/imported/anvi_2l.png-74bbf612d614a06a408aad8508dd5a2c.ctex"]
+source_file="res://012_UI/Images/girl_2-idle.png"
+dest_files=["res://.godot/imported/girl_2-idle.png-9027b7f88871ba84d730a76e1821837e.ctex"]
 
 [params]
 

@@ -28,7 +28,8 @@ public partial class ItemElement : Control
 	[Export] private Label durabilityLabel;
 	[Export] private Control breakHintNode;
 	[Export] private NinePatchRect selectedHint;
-	[Export] public Button mainButton;
+    [Export] private Control multiSelectedHintNode;
+    [Export] public Button mainButton;
 	[Export] public TextureButton dropButton;
     [Export] private TextureRect circleProgressImage;
     [Export] private Shader clockMaskShader;
@@ -480,6 +481,11 @@ public partial class ItemElement : Control
 		{
             circleProgressImage.Visible = false;
         }
+	}
+
+	public void SetMultiSelected(bool isOn) 
+	{
+		multiSelectedHintNode.Visible = isOn;
 	}
 
 	public void SetDropButton(bool isShow) 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5x05yhvprj4w"]
+[gd_scene load_steps=18 format=3 uid="uid://b5x05yhvprj4w"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dofpxugmxnr03" path="res://012_UI/Images/breakSword.png" id="6_hrcjx"]
 [ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="6_upqt5"]
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="7_fw5hp"]
+[ext_resource type="Texture2D" uid="uid://b031qwrft2fvs" path="res://012_UI/Images/yellow.png" id="7_o7vjs"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="8_kno4q"]
 
 [sub_resource type="Animation" id="Animation_11adu"]
@@ -68,7 +69,7 @@ _data = {
 "shine": SubResource("Animation_kqq2o")
 }
 
-[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "areaPool", "image", "productImage", "durabilityLabel", "breakHintNode", "selectedHint", "mainButton", "dropButton", "circleProgressImage")]
+[node name="ItemElement" type="PanelContainer" node_paths=PackedStringArray("animation", "areaPool", "image", "productImage", "durabilityLabel", "breakHintNode", "selectedHint", "multiSelectedHintNode", "mainButton", "dropButton", "circleProgressImage")]
 offset_right = 28.0
 offset_bottom = 28.0
 mouse_filter = 2
@@ -81,6 +82,7 @@ productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")
 durabilityLabel = NodePath("MarginContainer/PanelContainer/DurabilityLabel")
 breakHintNode = NodePath("MarginContainer/PanelContainer/Control3")
 selectedHint = NodePath("SelectedHint")
+multiSelectedHintNode = NodePath("MarginContainer/PanelContainer/Control4")
 mainButton = NodePath("Button")
 dropButton = NodePath("Control/TextureButton")
 circleProgressImage = NodePath("MarginContainer/PanelContainer/Control2/CircleProgress")
@@ -193,6 +195,21 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("6_hrcjx")
+expand_mode = 1
+
+[node name="Control4" type="Control" parent="MarginContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MultiSelectedHintImage" type="TextureRect" parent="MarginContainer/PanelContainer/Control4"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+texture = ExtResource("7_o7vjs")
 expand_mode = 1
 
 [node name="Button" type="Button" parent="."]

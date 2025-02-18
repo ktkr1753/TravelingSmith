@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bk0clgpkqunl2"]
+[gd_scene load_steps=21 format=3 uid="uid://bk0clgpkqunl2"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopUI.cs" id="1_cg8mc"]
 [ext_resource type="PackedScene" uid="uid://cc8o4nxp4cvmf" path="res://012_UI/Prefabs/ShopUI/ShopItemElement.tscn" id="2_2q00o"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="12_chkuv"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="13_ulo8e"]
 [ext_resource type="Texture2D" uid="uid://cj0p3itjrc6ci" path="res://012_UI/Images/changeItem.png" id="15_y8kpw"]
+[ext_resource type="Texture2D" uid="uid://bguewqw6nxm8n" path="res://012_UI/Images/girl_2-idle.png" id="16_tvoyl"]
 
 [sub_resource type="Animation" id="Animation_8diqq"]
 length = 0.001
@@ -72,7 +73,7 @@ _data = {
 "moveOut": SubResource("Animation_5hd6s")
 }
 
-[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "assignMaterialImage", "assignMaterialMoneyLabel", "sellPanel", "refreshHeldPanel", "refreshHeldCostLabel")]
+[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "assignMaterialImage", "assignMaterialMoneyLabel", "sellPanel", "refreshHeldPanel", "refreshHeldCostLabel", "multiSellButton")]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -100,6 +101,7 @@ assignMaterialMoneyLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/
 sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel")
 refreshHeldPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel")
 refreshHeldCostLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer/Label")
+multiSellButton = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton")
 uIType = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -344,6 +346,10 @@ visible = false
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
+[node name="SellButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+layout_mode = 2
+text = "販賣"
+
 [node name="RefreshHeldPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
@@ -383,6 +389,14 @@ layout_mode = 2
 text = "1"
 horizontal_alignment = 2
 
+[node name="ShopCharacterImage" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 46.0
+offset_right = 603.0
+offset_bottom = 142.0
+texture = ExtResource("16_tvoyl")
+
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/Button" to="." method="OnMoveClick"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnRefreshClick"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="OnCloseClick"]
@@ -390,3 +404,4 @@ horizontal_alignment = 2
 [connection signal="button_down" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonDown"]
 [connection signal="button_up" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonUp"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/RightButton" to="." method="OnRightMaterialClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton" to="." method="OnMultiSelectedClick"]
