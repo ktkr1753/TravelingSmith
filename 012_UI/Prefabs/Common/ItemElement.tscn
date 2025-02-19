@@ -7,11 +7,11 @@
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementAreaPool.cs" id="3_yi2pd"]
 [ext_resource type="Script" path="res://002_Tools/Scripts/MultiButton.cs" id="4_lbqt4"]
 [ext_resource type="PackedScene" uid="uid://drmvjph2hilb8" path="res://012_UI/Prefabs/Common/ItemElementArea.tscn" id="4_sbhrf"]
+[ext_resource type="Texture2D" uid="uid://c3jdlmk4exaqj" path="res://012_UI/Images/white.png" id="5_36ql7"]
 [ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="5_rc377"]
 [ext_resource type="Texture2D" uid="uid://dofpxugmxnr03" path="res://012_UI/Images/breakSword.png" id="6_hrcjx"]
 [ext_resource type="Texture2D" uid="uid://8t8p3aambgqw" path="res://012_UI/Images/close_16-pressed.png" id="6_upqt5"]
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="7_fw5hp"]
-[ext_resource type="Texture2D" uid="uid://b031qwrft2fvs" path="res://012_UI/Images/yellow.png" id="7_o7vjs"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="8_kno4q"]
 
 [sub_resource type="Animation" id="Animation_11adu"]
@@ -114,6 +114,22 @@ prefab = ExtResource("4_sbhrf")
 parent = NodePath("AreaGrid")
 backup = NodePath("BackupArea")
 
+[node name="Control4" type="Control" parent="MarginContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MultiSelectedHintImage" type="TextureRect" parent="MarginContainer/PanelContainer/Control4"]
+self_modulate = Color(1, 0.991333, 0.74, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -24.0
+offset_bottom = 24.0
+grow_horizontal = 0
+texture = ExtResource("5_36ql7")
+expand_mode = 1
+
 [node name="AreaGrid" type="GridContainer" parent="MarginContainer/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
@@ -195,21 +211,6 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 texture = ExtResource("6_hrcjx")
-expand_mode = 1
-
-[node name="Control4" type="Control" parent="MarginContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-
-[node name="MultiSelectedHintImage" type="TextureRect" parent="MarginContainer/PanelContainer/Control4"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -8.0
-offset_bottom = 8.0
-grow_horizontal = 0
-texture = ExtResource("7_o7vjs")
 expand_mode = 1
 
 [node name="Button" type="Button" parent="."]

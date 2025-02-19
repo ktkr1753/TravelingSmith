@@ -795,6 +795,7 @@ public partial class ShopUI : UIBase
     public void OnMultiSelectedClick() 
     {
         isMultiSelectedSell = !isMultiSelectedSell;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
     public void OnElementButtonDown(int index) 

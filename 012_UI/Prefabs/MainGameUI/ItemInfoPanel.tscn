@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6ylnogsow47o"]
+[gd_scene load_steps=14 format=3 uid="uid://b6ylnogsow47o"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanel.cs" id="1_jhhof"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_15mni"]
@@ -10,10 +10,67 @@
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="5_3daka"]
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
+[sub_resource type="Animation" id="Animation_y1a1j"]
+resource_name = "fadeIn"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4ensu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o21qh"]
+resource_name = "fadeOut"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t8y0p"]
+_data = {
+"RESET": SubResource("Animation_4ensu"),
+"fadeIn": SubResource("Animation_y1a1j"),
+"fadeOut": SubResource("Animation_o21qh")
+}
+
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
 offset_right = 72.0
 offset_bottom = 70.0
 script = ExtResource("1_jhhof")
+anim = NodePath("AnimationPlayer")
 itemElement = NodePath("VBoxContainer/HBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
@@ -39,6 +96,11 @@ needAreaParent = NodePath("VBoxContainer/NeedAreaHBox")
 needAreaImage = NodePath("VBoxContainer/NeedAreaHBox/TextureRect")
 makeAreaParent = NodePath("VBoxContainer/MakeAreaHBox")
 makeAreaImage = NodePath("VBoxContainer/MakeAreaHBox/TextureRect")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t8y0p")
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

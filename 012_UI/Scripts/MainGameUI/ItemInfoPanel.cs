@@ -1,9 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public partial class ItemInfoPanel : PanelContainer
 {
+    [Export] private AnimationPlayer anim;
 	[Export] private ItemElement itemElement;
 	[Export] private Label nameLabel;
 	[Export] private Label moneyLabel;
@@ -50,6 +52,9 @@ public partial class ItemInfoPanel : PanelContainer
     public event Action<int, ItemBaseResource> onDetailClick;   // <index, item>
     public event Action<int> onCloseClick;  //<index>
 
+    public const string clip_fadeIn = "fadeIn";
+    public const string clip_fadeOut = "fadeOut";
+
     public override void _Ready()
     {
         base._Ready();
@@ -95,6 +100,14 @@ public partial class ItemInfoPanel : PanelContainer
             attacker.onDurabilityChange -= OnDurabilityChange;
         }
     }
+
+    public async Task PlayFadeIn() 
+    {
+        anim.Stop();
+        anim.Play(clip_fadeIn);
+        await ToSignal(anim, "animation_finished").ToTask();
+    }
+
 
     private void SetView() 
 	{

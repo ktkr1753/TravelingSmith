@@ -11,7 +11,7 @@ public partial class ElementPoolBase<T2> : Node where T2 : Node
     public List<T2> inuses = new List<T2>();
     public Queue<T2> unuses = new Queue<T2>();
 
-    public T2 GetElement()
+    public virtual T2 GetElement()
     {
         T2 result = default;
         if (unuses.Count > 0)
@@ -39,7 +39,7 @@ public partial class ElementPoolBase<T2> : Node where T2 : Node
         }
     }
 
-    public void ReturnElement(T2 element)
+    public virtual void ReturnElement(T2 element)
     {
         element.SetParent(backup);
         inuses.Remove(element);

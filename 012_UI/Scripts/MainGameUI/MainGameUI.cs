@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public partial class MainGameUI : UIBase
 {
@@ -457,7 +458,7 @@ public partial class MainGameUI : UIBase
     }
 
 
-    private void SetInfoPanel(int index, ItemBaseResource newItem, Vector2? globalPos = null) 
+    private async void SetInfoPanel(int index, ItemBaseResource newItem, Vector2? globalPos = null) 
     {
         if(infoPanelPool.inuses.Count > index)
         {
@@ -467,7 +468,15 @@ public partial class MainGameUI : UIBase
                 {
                     infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
                 }
+
+                ItemBaseResource preItem = infoPanelPool.inuses[index].item;
                 infoPanelPool.inuses[index].SetData(newItem);
+
+                if(preItem != newItem) 
+                {
+                    infoPanelPool.inuses[index].PlayFadeIn();
+                }
+
                 ReturnInfoPanelElement(index + 1);
             }
             else 
@@ -481,6 +490,7 @@ public partial class MainGameUI : UIBase
             {
                 int newIndex = infoPanelPool.inuses.Count;
                 ItemInfoPanel infoPanel = infoPanelPool.GetElement();
+                infoPanel.PlayFadeIn();
                 infoPanel.onDetailClick += OnInfoDetailClick;
                 infoPanel.onCloseClick += OnInfoCloseClick;
                 if (globalPos != null)
@@ -500,14 +510,26 @@ public partial class MainGameUI : UIBase
             ReturnInfoPanelElement(index);
         }
     }
-    private void ReturnInfoPanelElement(int index) 
+    private async void ReturnInfoPanelElement(int index) 
     {
+        //List<Task> tasks = new List<Task>();
+
         for(int i = infoPanelPool.inuses.Count - 1; i >= index; i--) 
         {
             infoPanelPool.inuses[i].onDetailClick -= OnInfoDetailClick;
             infoPanelPool.inuses[i].onCloseClick -= OnInfoCloseClick;
+
+            /*
+            tasks.Add(new Task(async () =>
+            {
+                await infoPanelPool.inuses[i].PlayFadeOut();
+                infoPanelPool.ReturnElement(infoPanelPool.inuses[i]);
+            }));
+            */
             infoPanelPool.ReturnElement(infoPanelPool.inuses[i]);
         }
+
+        //Task.WaitAll(tasks.ToArray());
     }
 
 
@@ -649,6 +671,7 @@ public partial class MainGameUI : UIBase
         {
             nowSelectedElementIndex = nowEnterElementIndex;
         }
+
         //Debug.Print($"OnElementButtonUp index:{nowSelectedElementIndex}");
     }
 
