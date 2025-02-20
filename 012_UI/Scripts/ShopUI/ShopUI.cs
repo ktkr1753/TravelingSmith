@@ -471,6 +471,7 @@ public partial class ShopUI : UIBase
 
     private void OnShopItemButtonUp(int index) 
     {
+        bool isCostMoney = false;
         ItemBaseResource pickedItem = null;
         ShopItemElement element = null;
         if (nowPickElementIndex != -1)
@@ -503,6 +504,7 @@ public partial class ShopUI : UIBase
                         //資料
                         sellItems.Remove(pickedItem);
                         GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - element.money);
+                        isCostMoney = true;
                         //演出
                         /*
                         mainGameUI.elements[addIndex].isFlying = true;
@@ -519,12 +521,18 @@ public partial class ShopUI : UIBase
                         {
                             GameManager.instance.unlockRecipe.AddUnlockRecipe(recipe.index);
                         }
+
+                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
                     }
                 }
             }
         }
         nowPickElementIndex = -1;
-        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+
+        if (!isCostMoney) 
+        {
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+        }
     }
 
     private void SetPickedItemElement(ItemBaseResource item)
@@ -574,6 +582,8 @@ public partial class ShopUI : UIBase
     private void OnAssignMaterialButtonUp()
     {
         ItemBaseResource pickedItem = pickAssignMaterialItem;
+
+        bool isCostMoney = false;
         if (pickedItem != null)
         {
             MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
@@ -597,11 +607,18 @@ public partial class ShopUI : UIBase
                     {
                         //資料
                         GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - GameManager.instance.itemManager.GetBuyMoney(pickedItem));
+                        isCostMoney = true;
+
+                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
                     }
                 }
             }
         }
-        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+
+        if (!isCostMoney) 
+        {
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);        
+        }
         assignMaterialImage.Visible = true;
         SetPickedItemElement(null);
     }
