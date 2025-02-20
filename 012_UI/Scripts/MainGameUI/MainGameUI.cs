@@ -8,8 +8,7 @@ public partial class MainGameUI : UIBase
 {
     [Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
     [Export] private AnimationPlayer animation;
-    [Export] public PanelContainer itemsPanel;
-    [Export] private ItemInfoPanelPool infoPanelPool;
+    [Export] private ItemInfoPanel itemInfoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
     [Export] private Label maxHpLabel;
@@ -60,9 +59,14 @@ public partial class MainGameUI : UIBase
             }
             if(_nowSelectedElementIndex >= 0 && _nowSelectedElementIndex < GameManager.instance.itemManager.heldItems.Count) 
             {
+                /*
                 Vector2 globalPos = new Vector2();
                 globalPos = GetInfoPanelPos(0);
                 SetInfoPanel(0, GameManager.instance.itemManager.heldItems[nowEnterElementIndex], globalPos);
+                */
+
+                ItemBaseResource itemData = GameManager.instance.itemManager.heldItems[nowEnterElementIndex];
+                SetItemInfoPanel(itemData);
             }
         }
     }
@@ -122,6 +126,9 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onHPChange += OnHpChange;
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
+
+        itemInfoPanel.onDetailClick += OnInfoDetailClick;
+
         InitItemElements();
         InitShieldMaterial();
         SetView();
@@ -140,6 +147,8 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onHPChange -= OnHpChange;
         GameManager.instance.battleManager.onExpChange -= OnExpChange;
         GameManager.instance.battleManager.onLevelChange -= OnLevelChange;
+
+        itemInfoPanel.onDetailClick -= OnInfoDetailClick;
     }
 
     public override void _Process(double delta)
@@ -169,7 +178,7 @@ public partial class MainGameUI : UIBase
                 if(GameManager.instance.itemManager.heldItems[nowSelectedElementIndex] != null) 
                 {
                     nowPickElementIndex = nowSelectedElementIndex;
-                    ReturnInfoPanelElement(0);
+                    //ReturnInfoPanelElement(0);
                 }
                 else 
                 {
@@ -457,87 +466,19 @@ public partial class MainGameUI : UIBase
         }
     }
 
-
-    private async void SetInfoPanel(int index, ItemBaseResource newItem, Vector2? globalPos = null) 
+    public void SetItemInfoPanel(ItemBaseResource newItem) 
     {
-        if(infoPanelPool.inuses.Count > index)
+        if (newItem != null)
         {
-            if(newItem != null) 
-            {
-                if(globalPos != null)
-                {
-                    infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
-                }
-
-                ItemBaseResource preItem = infoPanelPool.inuses[index].item;
-                infoPanelPool.inuses[index].SetData(newItem);
-
-                if(preItem != newItem) 
-                {
-                    infoPanelPool.inuses[index].PlayFadeIn();
-                }
-
-                ReturnInfoPanelElement(index + 1);
-            }
-            else 
-            {
-                ReturnInfoPanelElement(index);
-            }
+            itemInfoPanel.Visible = true;
+            itemInfoPanel.SetData(newItem);
         }
-        else if(globalPos != null)
+        else
         {
-            if (newItem != null)
-            {
-                int newIndex = infoPanelPool.inuses.Count;
-                ItemInfoPanel infoPanel = infoPanelPool.GetElement();
-                infoPanel.PlayFadeIn();
-                infoPanel.onDetailClick += OnInfoDetailClick;
-                infoPanel.onCloseClick += OnInfoCloseClick;
-                if (globalPos != null)
-                {
-                    infoPanelPool.inuses[index].GlobalPosition = globalPos.GetValueOrDefault();
-                }
-                infoPanel.SetData(newItem);
-                infoPanel.SetIndex(newIndex);
-            }
-            else
-            {
-                ReturnInfoPanelElement(index);
-            }
-        }
-        else 
-        {
-            ReturnInfoPanelElement(index);
+            itemInfoPanel.Visible = false;
         }
     }
-    private async void ReturnInfoPanelElement(int index) 
-    {
-        //List<Task> tasks = new List<Task>();
 
-        for(int i = infoPanelPool.inuses.Count - 1; i >= index; i--) 
-        {
-            infoPanelPool.inuses[i].onDetailClick -= OnInfoDetailClick;
-            infoPanelPool.inuses[i].onCloseClick -= OnInfoCloseClick;
-
-            /*
-            tasks.Add(new Task(async () =>
-            {
-                await infoPanelPool.inuses[i].PlayFadeOut();
-                infoPanelPool.ReturnElement(infoPanelPool.inuses[i]);
-            }));
-            */
-            infoPanelPool.ReturnElement(infoPanelPool.inuses[i]);
-        }
-
-        //Task.WaitAll(tasks.ToArray());
-    }
-
-
-    public Vector2 GetInfoPanelPos(int index) 
-    {
-        Vector2 result = new Vector2(30 + (nowSelectedElementIndex % ItemManager.itemColumnNum) * 28 + index * 25, 170 + (nowSelectedElementIndex / ItemManager.itemColumnNum) * 28  + index * 25);
-        return result;
-    }
 
     private void OnElementMouseEnter(int index) 
     {
@@ -589,7 +530,6 @@ public partial class MainGameUI : UIBase
         recordClickPos = GetViewport().GetMousePosition();
 
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
-        //GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
     }
 
     private void OnElementButtonUp(int index) 
@@ -705,12 +645,12 @@ public partial class MainGameUI : UIBase
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowPickElementIndex];
             SetPickedItemElement(item);
-            SetInfoPanel(0, item);
+            SetItemInfoPanel(item);
         }
         else if(index == nowSelectedElementIndex) 
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[nowSelectedElementIndex];
-            SetInfoPanel(0, item);
+            SetItemInfoPanel(item);
         }
     }
 
@@ -770,7 +710,6 @@ public partial class MainGameUI : UIBase
         }
     }
 
-
     private void OnMoneyChange(int money) 
     {
         SetMoney();
@@ -791,10 +730,6 @@ public partial class MainGameUI : UIBase
         {
             for(int i = preLevel; i < nextLevel; i++) 
             {
-                /*
-                List<ItemBaseResource> canPickItems = GameManager.instance.itemManager.GetPickItems(3);
-                GameManager.instance.uiManager.OpenUI(UIIndex.PickUI, new List<object>() { canPickItems });
-                */
                 GameManager.instance.uiManager.OpenUI(UIIndex.PickUI);
             }
         }
@@ -802,15 +737,8 @@ public partial class MainGameUI : UIBase
 
     public void OnInfoDetailClick(int index, ItemBaseResource item) 
     {
-        int newIndex = index + 1;
-        Vector2 globalPos = GetInfoPanelPos(newIndex);
-        SetInfoPanel(newIndex, item, globalPos);
+        SetItemInfoPanel(item);
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
-    public void OnInfoCloseClick(int index) 
-    {
-        ReturnInfoPanelElement(index);
-        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_cancel4);
-    }
 }

@@ -76,7 +76,7 @@ public partial class ItemInfoPanel : PanelContainer
         {
             UnregisterEvent(this.item);
         }
-		this.item = item;
+		this.item = item.Clone();
 		if(item == null) 
 		{
 			return;
@@ -124,8 +124,8 @@ public partial class ItemInfoPanel : PanelContainer
         SetMaxSpeed();
         SetNeedArea();
         SetMakeArea();
-        RefreshContainerSize();
-        ResetContainerPos();
+        //RefreshContainerSize();
+        //ResetContainerPos();
     }
 
 	private void SetName() 

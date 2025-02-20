@@ -79,8 +79,8 @@ anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_cg8mc")
 animation = NodePath("AnimationPlayer")
-refreshCostLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer/Label")
-refreshButton = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button")
+refreshCostLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer/Label")
+refreshButton = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button")
 moveButtonImage = NodePath("HBoxContainer/NinePatchRect")
 arrorImage = NodePath("HBoxContainer/NinePatchRect/TextureRect")
 moveButtonTextures = {
@@ -96,12 +96,12 @@ arrorTextures = {
 4: ExtResource("3_mje0c")
 }
 itemPool = NodePath("HBoxContainer/PanelContainer")
-assignMaterialImage = NodePath("HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/ItemImage")
-assignMaterialMoneyLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2/Label")
-sellPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel")
-refreshHeldPanel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel")
-refreshHeldCostLabel = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer/Label")
-multiSellButton = NodePath("HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton")
+assignMaterialImage = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/ItemImage")
+assignMaterialMoneyLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2/Label")
+sellPanel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel")
+refreshHeldPanel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel")
+refreshHeldCostLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer/Label")
+multiSellButton = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton")
 uIType = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -111,17 +111,10 @@ libraries = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 473.0
-offset_top = 142.0
-offset_right = 640.0
-offset_bottom = 354.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_left = 150.0
+offset_top = 5.0
+offset_right = 473.0
+offset_bottom = 138.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
 visible = false
@@ -166,22 +159,25 @@ layout_mode = 2
 theme_type_variation = &"PanelContainer_Brown"
 script = ExtResource("2_urwec")
 prefab = ExtResource("2_2q00o")
-parent = NodePath("VBoxContainer/GridContainer")
-backup = NodePath("VBoxContainer/BackupControl")
+parent = NodePath("HBoxContainer/VBoxContainer/GridContainer")
+backup = NodePath("HBoxContainer/VBoxContainer/BackupControl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Button" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(65, 25)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -191,7 +187,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 3
@@ -199,41 +195,41 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 1
 
-[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_1prah")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "123"
 horizontal_alignment = 2
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer"]
 self_modulate = Color(0, 0.77, 0.385, 1)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_wk56d")
 stretch_mode = 5
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="TextureButton" type="TextureButton" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture_normal = ExtResource("8_450r2")
@@ -242,148 +238,148 @@ texture_hover = ExtResource("12_chkuv")
 texture_disabled = ExtResource("13_ulo8e")
 stretch_mode = 4
 
-[node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(160, 50)
 layout_mode = 2
 columns = 4
 
-[node name="AssignMaterialHBox" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="AssignMaterialHBox" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox"]
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="LeftButton" type="TextureButton" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="LeftButton" type="TextureButton" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("3_mje0c")
 stretch_mode = 5
 
-[node name="ItemPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ItemPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 theme_type_variation = &"EmptyPanelContainer"
 
-[node name="ItemImage" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel"]
+[node name="ItemImage" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel"]
+[node name="Button" type="Button" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel"]
 layout_mode = 2
 theme_type_variation = &"EmptyButton"
 
-[node name="RightButton" type="TextureButton" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="RightButton" type="TextureButton" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("5_qrf0f")
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_1prah")
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 text = "1"
 horizontal_alignment = 2
 
-[node name="Control2" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox"]
+[node name="Control2" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox"]
 layout_mode = 2
 
-[node name="BackupControl" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="BackupControl" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="SellPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="SellPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"WhitePanelContainer"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 layout_mode = 2
 text = "回收"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("8_3dgtg")
 stretch_mode = 5
 
-[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 
-[node name="SellButton" type="Button" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
+[node name="SellButton" type="Button" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer"]
 layout_mode = 2
 text = "販賣"
 
-[node name="RefreshHeldPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="RefreshHeldPanel" type="PanelContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"WhitePanelContainer"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
 layout_mode = 2
 text = "研究配方"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("15_y8kpw")
 stretch_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
+[node name="money" type="TextureRect" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("9_1prah")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/RefreshHeldPanel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 text = "1"
@@ -391,17 +387,17 @@ horizontal_alignment = 2
 
 [node name="ShopCharacterImage" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 507.0
-offset_top = 46.0
-offset_right = 603.0
-offset_bottom = 142.0
+offset_left = 468.0
+offset_top = 42.0
+offset_right = 564.0
+offset_bottom = 138.0
 texture = ExtResource("16_tvoyl")
 
 [connection signal="pressed" from="HBoxContainer/NinePatchRect/Button" to="." method="OnMoveClick"]
-[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnRefreshClick"]
-[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="OnCloseClick"]
-[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/LeftButton" to="." method="OnLeftMaterialClick"]
-[connection signal="button_down" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonDown"]
-[connection signal="button_up" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonUp"]
-[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/RightButton" to="." method="OnRightMaterialClick"]
-[connection signal="pressed" from="HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton" to="." method="OnMultiSelectedClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnRefreshClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="OnCloseClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/LeftButton" to="." method="OnLeftMaterialClick"]
+[connection signal="button_down" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonDown"]
+[connection signal="button_up" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnAssignMaterialButtonUp"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/RightButton" to="." method="OnRightMaterialClick"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton" to="." method="OnMultiSelectedClick"]

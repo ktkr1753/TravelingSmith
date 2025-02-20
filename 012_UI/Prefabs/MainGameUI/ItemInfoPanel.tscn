@@ -10,6 +10,21 @@
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="5_3daka"]
 
+[sub_resource type="Animation" id="Animation_4ensu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_y1a1j"]
 resource_name = "fadeIn"
 length = 0.5
@@ -25,21 +40,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_4ensu"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_o21qh"]
@@ -67,35 +67,35 @@ _data = {
 }
 
 [node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
-offset_right = 72.0
-offset_bottom = 70.0
+offset_right = 112.0
+offset_bottom = 152.0
 script = ExtResource("1_jhhof")
 anim = NodePath("AnimationPlayer")
 itemElement = NodePath("VBoxContainer/HBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
-useTimeParent = NodePath("VBoxContainer/UseTimeHBox")
-useTimeLabel = NodePath("VBoxContainer/UseTimeHBox/TimeLabel")
-attackPointParent = NodePath("VBoxContainer/AttackPointHBox")
-attackPointLabel = NodePath("VBoxContainer/AttackPointHBox/AttakPointLabel")
-attackRangeParent = NodePath("VBoxContainer/AttackRangeHBox")
-attackRangeLabel = NodePath("VBoxContainer/AttackRangeHBox/AttakRangeLabel")
-repairPointParent = NodePath("VBoxContainer/RepairPointHBox")
-repairPointLabel = NodePath("VBoxContainer/RepairPointHBox/RepairPointLabel")
-materialParent = NodePath("VBoxContainer/MaterialHBox")
-materialPool = NodePath("VBoxContainer/MaterialHBox/GridContainer")
-productParent = NodePath("VBoxContainer/ProductHBox")
-productIcon = NodePath("VBoxContainer/ProductHBox/ItemIcon")
-produceCostTimeParent = NodePath("VBoxContainer/ProductTimeHBox")
-produceCostTimeLabel = NodePath("VBoxContainer/ProductTimeHBox/TimeLabel")
-accelerationParent = NodePath("VBoxContainer/AccelerationHBox")
-accelerationLabel = NodePath("VBoxContainer/AccelerationHBox/AccelerationLabel")
-maxSpeedParent = NodePath("VBoxContainer/MaxSpeedHBox")
-maxSpeedLabel = NodePath("VBoxContainer/MaxSpeedHBox/SpeedLabel")
-needAreaParent = NodePath("VBoxContainer/NeedAreaHBox")
-needAreaImage = NodePath("VBoxContainer/NeedAreaHBox/TextureRect")
-makeAreaParent = NodePath("VBoxContainer/MakeAreaHBox")
-makeAreaImage = NodePath("VBoxContainer/MakeAreaHBox/TextureRect")
+useTimeParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox")
+useTimeLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox/TimeLabel")
+attackPointParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AttackPointHBox")
+attackPointLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AttackPointHBox/AttakPointLabel")
+attackRangeParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AttackRangeHBox")
+attackRangeLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AttackRangeHBox/AttakRangeLabel")
+repairPointParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/RepairPointHBox")
+repairPointLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/RepairPointHBox/RepairPointLabel")
+materialParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox")
+materialPool = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox/GridContainer")
+productParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox")
+productIcon = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/ItemIcon")
+produceCostTimeParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox")
+produceCostTimeLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox/TimeLabel")
+accelerationParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AccelerationHBox")
+accelerationLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AccelerationHBox/AccelerationLabel")
+maxSpeedParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaxSpeedHBox")
+maxSpeedLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaxSpeedHBox/SpeedLabel")
+needAreaParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaHBox")
+needAreaImage = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaHBox/TextureRect")
+makeAreaParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox")
+makeAreaImage = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox/TextureRect")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -128,6 +128,7 @@ size_flags_horizontal = 3
 theme_type_variation = &"EmptyPanelContainer"
 
 [node name="TextureButton" type="TextureButton" parent="VBoxContainer/HBoxContainer/Control"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 texture_normal = ExtResource("2_kpmw6")
@@ -155,101 +156,108 @@ text = "1"
 horizontal_alignment = 2
 text_overrun_behavior = 3
 
-[node name="NeedAreaHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="NeedAreaHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/NeedAreaHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaHBox"]
 layout_mode = 2
 text = "需求區域:"
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/NeedAreaHBox"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaHBox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 expand_mode = 1
 
-[node name="MakeAreaHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MakeAreaHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MakeAreaHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox"]
 layout_mode = 2
 text = "產生區域:"
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MakeAreaHBox"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 expand_mode = 1
 
-[node name="UseTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="UseTimeHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/UseTimeHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox"]
 layout_mode = 2
 text = "使用間隔:"
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer/UseTimeHBox"]
+[node name="TimeLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="SecondLabel" type="Label" parent="VBoxContainer/UseTimeHBox"]
+[node name="SecondLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox"]
 layout_mode = 2
 text = "秒"
 
-[node name="AttackPointHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="AttackPointHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/AttackPointHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AttackPointHBox"]
 layout_mode = 2
 text = "攻擊力:"
 
-[node name="AttakPointLabel" type="Label" parent="VBoxContainer/AttackPointHBox"]
+[node name="AttakPointLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AttackPointHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="AttackRangeHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="AttackRangeHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/AttackRangeHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AttackRangeHBox"]
 layout_mode = 2
 text = "距離:"
 
-[node name="AttakRangeLabel" type="Label" parent="VBoxContainer/AttackRangeHBox"]
+[node name="AttakRangeLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AttackRangeHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="RepairPointHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="RepairPointHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/RepairPointHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/RepairPointHBox"]
 layout_mode = 2
 text = "修復:"
 
-[node name="RepairPointLabel" type="Label" parent="VBoxContainer/RepairPointHBox"]
+[node name="RepairPointLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/RepairPointHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="MaterialHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MaterialHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MaterialHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox"]
 layout_mode = 2
 text = "素材:"
 
-[node name="GridContainer" type="GridContainer" parent="VBoxContainer/MaterialHBox" node_paths=PackedStringArray("parent", "backup")]
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox" node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 2
 theme_override_constants/h_separation = 1
 theme_override_constants/v_separation = 1
@@ -259,64 +267,65 @@ prefab = ExtResource("5_3bx7m")
 parent = NodePath(".")
 backup = NodePath("../Backup")
 
-[node name="Backup" type="Control" parent="VBoxContainer/MaterialHBox"]
+[node name="Backup" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox"]
 visible = false
 layout_mode = 2
 
-[node name="AccelerationHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="AccelerationHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/AccelerationHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AccelerationHBox"]
 layout_mode = 2
 text = "加速度:"
 
-[node name="AccelerationLabel" type="Label" parent="VBoxContainer/AccelerationHBox"]
+[node name="AccelerationLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/AccelerationHBox"]
 layout_mode = 2
 text = "加速度:"
 
-[node name="MaxSpeedHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MaxSpeedHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MaxSpeedHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/MaxSpeedHBox"]
 layout_mode = 2
 text = "最高速度:"
 
-[node name="SpeedLabel" type="Label" parent="VBoxContainer/MaxSpeedHBox"]
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/MaxSpeedHBox"]
 layout_mode = 2
 text = "加速度:"
 
-[node name="ProductHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ProductHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ProductHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox"]
 layout_mode = 2
 text = "產物:"
 
-[node name="ItemIcon" parent="VBoxContainer/ProductHBox" instance=ExtResource("5_3bx7m")]
+[node name="ItemIcon" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox" instance=ExtResource("5_3bx7m")]
 layout_mode = 2
 
-[node name="ProductTimeHBox" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ProductTimeHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ProductTimeHBox"]
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox"]
 layout_mode = 2
 text = "耗時:"
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer/ProductTimeHBox"]
+[node name="TimeLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 text = "12"
 horizontal_alignment = 2
 
-[node name="SecondLabel" type="Label" parent="VBoxContainer/ProductTimeHBox"]
+[node name="SecondLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox"]
 layout_mode = 2
 text = "秒"
 
 [node name="Control" type="Control" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

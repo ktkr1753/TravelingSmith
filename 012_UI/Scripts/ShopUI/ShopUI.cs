@@ -492,6 +492,15 @@ public partial class ShopUI : UIBase
         return result;
     }
 
+    public void SetItemInfo(ItemBaseResource item) 
+    {
+        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+        if (mainGameUI != null) 
+        {
+            mainGameUI.SetItemInfoPanel(item);
+        }
+    }
+
     private void OnShopItemButtonDown(int index) 
     {
         //Debug.Print($"OnShopItemButtonDown index:{index}");
@@ -512,8 +521,10 @@ public partial class ShopUI : UIBase
             if(GameManager.instance.itemManager.money >= element.money) 
             {
                 nowPickElementIndex = inuseOrder;
-                GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
             }
+
+            SetItemInfo(element.item);
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
         }
     }
 
@@ -560,7 +571,6 @@ public partial class ShopUI : UIBase
                             mainGameUI.elements[addIndex].isFlying = false;
                         });
                         */
-                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
                         ClearShopItemElementData(element);
                         itemPool.ReturnElement(element);
 
@@ -573,6 +583,7 @@ public partial class ShopUI : UIBase
             }
         }
         nowPickElementIndex = -1;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
     }
 
     private void SetPickedItemElement(ItemBaseResource item)
@@ -614,6 +625,7 @@ public partial class ShopUI : UIBase
                 assignMaterialImage.Visible = false;
                 pickAssignMaterialItem = pickedItem;
             }
+            SetItemInfo(pickedItem);
         }
 
     }
