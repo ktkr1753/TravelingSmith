@@ -1,11 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://bk0clgpkqunl2"]
+[gd_scene load_steps=15 format=3 uid="uid://bk0clgpkqunl2"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopUI.cs" id="1_cg8mc"]
 [ext_resource type="PackedScene" uid="uid://cc8o4nxp4cvmf" path="res://012_UI/Prefabs/ShopUI/ShopItemElement.tscn" id="2_2q00o"]
 [ext_resource type="Script" path="res://012_UI/Scripts/ShopUI/ShopItemElementPool.cs" id="2_urwec"]
-[ext_resource type="Texture2D" uid="uid://di6nwgy4qdahd" path="res://012_UI/Images/button_3-normal.png" id="2_va0fp"]
 [ext_resource type="Texture2D" uid="uid://g4ryx26aea75" path="res://012_UI/Images/arrow-left.png" id="3_mje0c"]
-[ext_resource type="Texture2D" uid="uid://c6j0bokhqghs7" path="res://012_UI/Images/button_3-disabled.png" id="3_t8xna"]
 [ext_resource type="Texture2D" uid="uid://c7vlv5efiguqd" path="res://012_UI/Images/arrow-right.png" id="5_qrf0f"]
 [ext_resource type="Texture2D" uid="uid://cycebds37dbm6" path="res://012_UI/Images/changeMoney.png" id="8_3dgtg"]
 [ext_resource type="Texture2D" uid="uid://dpf36tj33enxf" path="res://012_UI/Images/close_16-normal.png" id="8_450r2"]
@@ -17,84 +15,13 @@
 [ext_resource type="Texture2D" uid="uid://cj0p3itjrc6ci" path="res://012_UI/Images/changeItem.png" id="15_y8kpw"]
 [ext_resource type="Texture2D" uid="uid://bguewqw6nxm8n" path="res://012_UI/Images/girl_2-idle.png" id="16_tvoyl"]
 
-[sub_resource type="Animation" id="Animation_8diqq"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HBoxContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(473, 142)]
-}
-
-[sub_resource type="Animation" id="Animation_1avap"]
-resource_name = "moveIn"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HBoxContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(473, 142), Vector2(640, 142)]
-}
-
-[sub_resource type="Animation" id="Animation_5hd6s"]
-resource_name = "moveOut"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HBoxContainer:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(640, 142), Vector2(473, 142)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmymt"]
-_data = {
-"RESET": SubResource("Animation_8diqq"),
-"moveIn": SubResource("Animation_1avap"),
-"moveOut": SubResource("Animation_5hd6s")
-}
-
-[node name="ShopUI" type="Control" node_paths=PackedStringArray("animation", "refreshCostLabel", "refreshButton", "moveButtonImage", "arrorImage", "itemPool", "assignMaterialImage", "assignMaterialMoneyLabel", "sellPanel", "refreshHeldPanel", "refreshHeldCostLabel", "multiSellButton")]
+[node name="ShopUI" type="Control" node_paths=PackedStringArray("refreshCostLabel", "refreshButton", "itemPool", "assignMaterialImage", "assignMaterialMoneyLabel", "sellPanel", "refreshHeldPanel", "refreshHeldCostLabel", "multiSellButton")]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_cg8mc")
-animation = NodePath("AnimationPlayer")
 refreshCostLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button/PanelContainer/MarginContainer/HBoxContainer/Label")
 refreshButton = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button")
-moveButtonImage = NodePath("HBoxContainer/NinePatchRect")
-arrorImage = NodePath("HBoxContainer/NinePatchRect/TextureRect")
-moveButtonTextures = {
-1: ExtResource("2_va0fp"),
-2: ExtResource("3_t8xna"),
-3: ExtResource("2_va0fp"),
-4: ExtResource("3_t8xna")
-}
-arrorTextures = {
-1: ExtResource("3_mje0c"),
-2: ExtResource("5_qrf0f"),
-3: ExtResource("5_qrf0f"),
-4: ExtResource("3_mje0c")
-}
 itemPool = NodePath("HBoxContainer/PanelContainer")
 assignMaterialImage = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/ItemPanel/ItemImage")
 assignMaterialMoneyLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer2/Label")
@@ -104,55 +31,12 @@ refreshHeldCostLabel = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBox
 multiSellButton = NodePath("HBoxContainer/PanelContainer/HBoxContainer/HBoxContainer2/SellPanel/VBoxContainer/SellButton")
 uIType = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_pmymt")
-}
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-offset_left = 150.0
-offset_top = 5.0
-offset_right = 473.0
-offset_bottom = 138.0
-
-[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-texture = ExtResource("2_va0fp")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(8, 8)
-mouse_filter = 2
-texture = ExtResource("3_mje0c")
-stretch_mode = 2
-
-[node name="Button" type="Button" parent="HBoxContainer/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"EmptyButton"
+offset_left = 155.0
+offset_top = 3.0
+offset_right = 478.0
+offset_bottom = 136.0
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" node_paths=PackedStringArray("parent", "backup")]
 layout_mode = 2
@@ -393,7 +277,6 @@ offset_right = 564.0
 offset_bottom = 138.0
 texture = ExtResource("16_tvoyl")
 
-[connection signal="pressed" from="HBoxContainer/NinePatchRect/Button" to="." method="OnMoveClick"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button" to="." method="OnRefreshClick"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="OnCloseClick"]
 [connection signal="pressed" from="HBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/AssignMaterialHBox/PanelContainer/VBoxContainer/HBoxContainer/LeftButton" to="." method="OnLeftMaterialClick"]

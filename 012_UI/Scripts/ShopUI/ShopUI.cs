@@ -4,22 +4,8 @@ using System.Collections.Generic;
 
 public partial class ShopUI : UIBase
 {
-    public enum PositionState 
-    {
-        None = 0,
-        In = 1,
-        MovingIn = 2,
-        Out = 3,
-        MovingOut = 4,
-    }
-
-    [Export] private AnimationPlayer animation;
     [Export] private Label refreshCostLabel;
     [Export] private Button refreshButton;
-    [Export] private NinePatchRect moveButtonImage;
-    [Export] private TextureRect arrorImage;
-    [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> moveButtonTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
-    [Export] private Godot.Collections.Dictionary<PositionState, Texture2D> arrorTextures = new Godot.Collections.Dictionary<PositionState, Texture2D>();
     [Export] private ShopItemElementPool itemPool;
     [Export] private TextureRect assignMaterialImage;
     [Export] private Label assignMaterialMoneyLabel;
@@ -27,26 +13,6 @@ public partial class ShopUI : UIBase
     [Export] private Control refreshHeldPanel;
     [Export] private Label refreshHeldCostLabel;
     [Export] private Button multiSellButton;
-
-    private PositionState _positionState = PositionState.Out;
-    public PositionState positionState 
-    {
-        get { return _positionState; }
-        set 
-        {
-            if(_positionState != value) 
-            {
-                _positionState = value;
-                OnPositionStateChange(_positionState);
-            }
-        }
-    }
-
-    private void OnPositionStateChange(PositionState nowPositionState) 
-    {
-        SetMoveButtonImage();
-        SetArrowImage();
-    }
 
     private int _nowPickElementIndex = -1;
     public int nowPickElementIndex
@@ -344,37 +310,12 @@ public partial class ShopUI : UIBase
 
     private void SetView() 
     {
-        SetMoveButtonImage();
-        SetArrowImage();
         SetShopItemElements();
         ResetAssignMaterial();
         SetRefreshButton();
         SetRefreshHeldCost();
     }
-
-    private void SetMoveButtonImage() 
-    {
-        if(moveButtonTextures.TryGetValue(positionState, out Texture2D texture)) 
-        {
-            moveButtonImage.Texture = texture;
-        }
-        else 
-        {
-            Debug.PrintErr($"沒有moveButtonTexture, positionState:{positionState}");
-        }
-    }
-    private void SetArrowImage()
-    {
-        if (arrorTextures.TryGetValue(positionState, out Texture2D texture))
-        {
-            arrorImage.Texture = texture;
-        }
-        else
-        {
-            Debug.PrintErr($"沒有arrorTexture, positionState:{positionState}");
-        }
-    }
-
+    
     private void SetShopItemElements() 
     {
         ClearShopItemElements();
@@ -726,31 +667,6 @@ public partial class ShopUI : UIBase
         {
             multiSellButton.Text = Tr("ts_common_Sell");
             multiSellButton.ThemeTypeVariation = "";
-        }
-    }
-
-    public async void OnMoveClick() 
-    {
-        switch (positionState) 
-        {
-            case PositionState.Out: 
-                {
-                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
-                    positionState = PositionState.MovingIn;
-                    animation.Play(clip_moveIn);
-                    await ToSignal(animation, "animation_finished").ToTask();
-                    positionState = PositionState.In;
-                }
-                break;
-            case PositionState.In: 
-                {
-                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
-                    positionState = PositionState.MovingOut;
-                    animation.Play(clip_moveOut);
-                    await ToSignal(animation, "animation_finished").ToTask();
-                    positionState = PositionState.Out;
-                }
-                break;
         }
     }
 
