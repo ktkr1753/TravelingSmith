@@ -66,7 +66,7 @@ _data = {
 "fadeOut": SubResource("Animation_o21qh")
 }
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyNode", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyNode", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage", "keepProduceParent", "keepProduceButton")]
 offset_right = 112.0
 offset_bottom = 152.0
 script = ExtResource("1_jhhof")
@@ -97,6 +97,8 @@ needAreaParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaH
 needAreaImage = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/NeedAreaHBox/TextureRect")
 makeAreaParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox")
 makeAreaImage = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MakeAreaHBox/TextureRect")
+keepProduceParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce")
+keepProduceButton = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce/Button")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -190,6 +192,19 @@ text = "產生區域:"
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 expand_mode = 1
+
+[node name="KeepProduce" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce"]
+layout_mode = 2
+text = "持續製作:"
+
+[node name="Button" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce"]
+layout_mode = 2
+theme_type_variation = &"Button_Green"
+text = "是"
 
 [node name="UseTimeHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
@@ -332,3 +347,4 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Control/TextureButton" to="." method="OnCloseClick"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce/Button" to="." method="OnKeepProduceButtonClick"]

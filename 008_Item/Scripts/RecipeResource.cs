@@ -63,7 +63,18 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         }
     }
 
-    public bool isKeepProduce { get { return false; } }
+    [Export] private bool _isKeepProduce = true;
+    public bool isKeepProduce
+    {
+        get { return _isKeepProduce; }
+        set
+        {
+            if (_isKeepProduce != value)
+            {
+                _isKeepProduce = value;
+            }
+        }
+    }
 
     private bool _isProducing = false;
     [Export] public bool isProducing
@@ -102,6 +113,7 @@ public partial class RecipeResource : ItemBaseResource, IClone<RecipeResource>, 
         result.productItem = productItem;
         result.needTime = needTime;
         result.nowTime = nowTime;
+        result.isKeepProduce = isKeepProduce;
         result.isProducing = isProducing;
         return result;
     }

@@ -9,7 +9,7 @@ public partial interface IProduce
     public double nowTime { get; set; }
 
     public int durability { get; set; }
-    public bool isKeepProduce { get; }
+    public bool isKeepProduce { get; set; }
     public bool isProducing { get; }
 
     public event Action<bool> onIsProducingChange;

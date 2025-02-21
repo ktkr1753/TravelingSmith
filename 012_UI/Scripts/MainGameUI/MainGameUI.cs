@@ -129,7 +129,7 @@ public partial class MainGameUI : UIBase
     {
         if (nextIndex >= 0 && nextIndex < bluePrintItems.Count)
         {
-            SetItemInfoPanel(bluePrintItems[nextIndex]);
+            SetItemInfoPanel(bluePrintItems[nextIndex].Clone());
             SetBluePrintImage();
         }
     }
@@ -265,12 +265,12 @@ public partial class MainGameUI : UIBase
                             {
                                 if (item is IMake make) 
                                 {
-                                    bool isFail = false;
-                                    if (!make.isCostMaterial)
+                                    if (make.isKeepProduce && !make.isCostMaterial)
                                     {
-                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
+                                        GameManager.instance.itemManager.Make(make, elements);
                                     }
-                                    if (!isFail)
+
+                                    if (make.isCostMaterial)
                                     {
                                         produce.StartProduce();
                                         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit_metal);
@@ -278,8 +278,11 @@ public partial class MainGameUI : UIBase
                                 }
                                 else 
                                 {
-                                    produce.StartProduce();
-                                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit_metal);
+                                    if (produce.isKeepProduce || produce.nowTime > 0) 
+                                    {
+                                        produce.StartProduce();
+                                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_hit_metal);
+                                    }
                                 }
                             }
                             else if (!isProduce && produce.isProducing)
@@ -294,12 +297,12 @@ public partial class MainGameUI : UIBase
                             {
                                 if (item is IMake make)
                                 {
-                                    bool isFail = false;
-                                    if (!make.isCostMaterial)
+                                    if (make.isKeepProduce && !make.isCostMaterial) 
                                     {
-                                        isFail = !GameManager.instance.itemManager.Make(make, elements);
+                                        GameManager.instance.itemManager.Make(make, elements);
                                     }
-                                    if (!isFail)
+  
+                                    if (make.isCostMaterial)
                                     {
                                         produce.StartProduce();
                                         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_fire);
@@ -307,8 +310,11 @@ public partial class MainGameUI : UIBase
                                 }
                                 else 
                                 {
-                                    produce.StartProduce();
-                                    GameManager.instance.soundManager.PlaySound(SoundEnum.sound_fire);
+                                    if (produce.isKeepProduce || produce.nowTime > 0) 
+                                    {
+                                        produce.StartProduce();
+                                        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_fire);
+                                    }
                                 }
                             }
                             else if (!isFire && produce.isProducing)
@@ -344,7 +350,6 @@ public partial class MainGameUI : UIBase
             }
         }
     }
-
 
     private void InitItemElements() 
     {
@@ -823,7 +828,7 @@ public partial class MainGameUI : UIBase
 
     public void OnInfoDetailClick(int index, ItemBaseResource item) 
     {
-        SetItemInfoPanel(item);
+        SetItemInfoPanel(item.Clone());
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
@@ -846,7 +851,7 @@ public partial class MainGameUI : UIBase
             SetPickedItemElement(pickedItem);
             //bluePrintImage.Visible = false;
             pickBluePrintItem = pickedItem;
-            SetItemInfoPanel(pickedItem);
+            SetItemInfoPanel(pickedItem.Clone());
         }
 
     }

@@ -4,7 +4,6 @@ using System;
 [GlobalClass]
 public partial class SelfToolResource : ToolResource, IClone<SelfToolResource>, IProduce
 {
-    public override bool isKeepProduce { get { return false; } }
     public override SelfToolResource Clone()
     {
         SelfToolResource result = base.Clone() as SelfToolResource;

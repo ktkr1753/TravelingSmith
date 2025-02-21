@@ -515,9 +515,30 @@ public partial class ItemManager : Node
                     bool isSuccess = CreateProduct(produce);
                     if (isSuccess) 
                     {
-					    if (produce.isKeepProduce) 
+                        if (producingItem is IMake make1)
+                        {
+                            make1.isCostMaterial = false;
+                        }
+
+                        if (produce.isKeepProduce) 
 					    {
-                            produce.nowTime = (produce.nowTime + addTime) % needTime;
+                            if (producingItem is IMake make2) 
+                            {
+                                bool isSuccessCost = GameManager.instance.itemManager.Make(make2);
+                                if (isSuccessCost)
+                                {
+                                    produce.nowTime = (produce.nowTime + addTime) % needTime;
+                                }
+                                else 
+                                {
+                                    produce.StopProduce();
+                                    produce.nowTime = 0;
+                                }
+                            }
+                            else 
+                            {
+                                produce.nowTime = (produce.nowTime + addTime) % needTime;
+                            }
                         }
 					    else 
 					    {
@@ -525,10 +546,6 @@ public partial class ItemManager : Node
 						    produce.nowTime = 0;
                         }
 
-                        if(producingItem is IMake make) 
-                        {
-                            make.isCostMaterial = false;
-                        }
                     }
                     else //物品太多生產失敗，不做事 
                     {
@@ -552,6 +569,9 @@ public partial class ItemManager : Node
 			producingItems.Remove(needRemoves[i]);
         }
 	}
+
+
+
 
     public bool CreateProduct(IProduce produce)
     {

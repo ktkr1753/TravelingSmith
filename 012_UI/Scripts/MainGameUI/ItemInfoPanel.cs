@@ -32,6 +32,8 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private TextureRect needAreaImage;
     [Export] private Control makeAreaParent;
     [Export] private TextureRect makeAreaImage;
+    [Export] private Control keepProduceParent;
+    [Export] private Button keepProduceButton;
 
 
     private ItemBaseResource _item;
@@ -76,7 +78,7 @@ public partial class ItemInfoPanel : PanelContainer
         {
             UnregisterEvent(this.item);
         }
-		this.item = item.Clone();
+		this.item = item;
 		if(item == null) 
 		{
 			return;
@@ -124,6 +126,7 @@ public partial class ItemInfoPanel : PanelContainer
         SetMaxSpeed();
         SetNeedArea();
         SetMakeArea();
+        SetKeepProduce();
         //RefreshContainerSize();
         //ResetContainerPos();
     }
@@ -377,6 +380,35 @@ public partial class ItemInfoPanel : PanelContainer
         }
     }
 
+    private void SetKeepProduce() 
+    {
+        if(item is IProduce produce) 
+        {
+            if(produce.durability == 1)     //只能用1次就不顯示
+            {
+                keepProduceParent.Visible = false;
+            }
+            else 
+            {
+                keepProduceParent.Visible = true;
+                if (produce.isKeepProduce) 
+                {
+                    keepProduceButton.Text = Tr("ts_common_Yes");
+                    keepProduceButton.ThemeTypeVariation = "Button_Green";
+                }
+                else 
+                {
+                    keepProduceButton.Text = Tr("ts_common_No");
+                    keepProduceButton.ThemeTypeVariation = "Button_Red";
+                }
+            }
+        }
+        else 
+        {
+            keepProduceParent.Visible = false;
+        }
+    }
+
     private void RefreshContainerSize() 
     {
         Size = CustomMinimumSize;
@@ -397,6 +429,16 @@ public partial class ItemInfoPanel : PanelContainer
     private void OnDurabilityChange(int durability) 
     {
         SetMoney();
+    }
+
+    public void OnKeepProduceButtonClick() 
+    {
+        if (item is IProduce produce)
+        {
+            produce.isKeepProduce = !produce.isKeepProduce;
+        }
+        SetKeepProduce();
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
     public void OnItemDetailClick(ItemIcon itemIcon) 

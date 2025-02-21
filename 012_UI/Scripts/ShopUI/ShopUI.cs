@@ -468,7 +468,7 @@ public partial class ShopUI : UIBase
                 nowPickElementIndex = inuseOrder;
             }
 
-            SetItemInfo(element.item);
+            SetItemInfo(element.item.Clone());
             GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
         }
     }
@@ -578,7 +578,7 @@ public partial class ShopUI : UIBase
                 assignMaterialImage.Visible = false;
                 pickAssignMaterialItem = pickedItem;
             }
-            SetItemInfo(pickedItem);
+            SetItemInfo(pickedItem.Clone());
         }
 
     }

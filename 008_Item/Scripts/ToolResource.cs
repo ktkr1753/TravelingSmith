@@ -43,7 +43,17 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         }
     }
 
-    public virtual bool isKeepProduce { get { return true; } }
+    [Export] private bool _isKeepProduce = true;
+    public bool isKeepProduce {
+        get { return _isKeepProduce; }
+        set
+        {
+            if (_isKeepProduce != value)
+            {
+                _isKeepProduce = value;
+            }
+        }
+    }
 
     private bool _isProducing = false;
     [Export] public bool isProducing
@@ -78,6 +88,7 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         result.needTime = needTime;
         result.nowTime = nowTime;
         result.durability = durability;
+        result.isKeepProduce = isKeepProduce;
         result.isProducing = isProducing;
         return result;
     }

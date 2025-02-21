@@ -16,6 +16,7 @@ productItem = 7
 needTime = 10.0
 nowTime = 0.0
 durability = 1
+_isKeepProduce = true
 isProducing = false
 index = 229
 detailType = 1
