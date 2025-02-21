@@ -22,6 +22,7 @@ public partial class ItemElement : Control
 		set { _showProcess = value; }
 	}
 	[Export] private AnimationPlayer animation;
+    [Export] private Material onlyOutLineMaterial;
     [Export] private ItemElementAreaPool areaPool;
     [Export] private TextureRect image;
 	[Export] private TextureRect productImage;
@@ -261,7 +262,6 @@ public partial class ItemElement : Control
         SetCircleColor();
         SetCircleProgress();
 		SetNowPercent(0);
-
     }
 
 	private void SetAreaView() 
@@ -330,7 +330,19 @@ public partial class ItemElement : Control
         }
 		else 
 		{
-	        image.Texture = item.texture;
+			if(item is RecipeResource recipe) 
+			{
+				image.Material = onlyOutLineMaterial;
+                if (GameManager.instance.itemConfig.config.TryGetValue(recipe.productItem, out ItemBaseResource productItem)) 
+				{
+                    image.Texture = productItem.texture;
+				}
+            }
+			else 
+			{
+                image.Material = null;
+                image.Texture = item.texture;
+            }
 		}
     }
 
@@ -338,7 +350,11 @@ public partial class ItemElement : Control
 	{
 		if(item is IProduce produce) 
 		{
-			if(GameManager.instance.itemConfig.config.TryGetValue(produce.productItem, out ItemBaseResource productItem)) 
+			if(produce is IMake) 
+			{
+                productImage.Visible = false;
+            }
+			else if(GameManager.instance.itemConfig.config.TryGetValue(produce.productItem, out ItemBaseResource productItem)) 
 			{
                 productImage.Visible = true;
                 productImage.Texture = productItem.texture;

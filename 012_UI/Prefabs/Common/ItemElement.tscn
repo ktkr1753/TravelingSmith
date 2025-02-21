@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://b5x05yhvprj4w"]
+[gd_scene load_steps=19 format=3 uid="uid://b5x05yhvprj4w"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElement.cs" id="1_nckdc"]
 [ext_resource type="Texture2D" uid="uid://hxp4yinyrsd1" path="res://012_UI/Images/selectedBox.png" id="2_4ipii"]
 [ext_resource type="Shader" path="res://999_Other/Shaders/ClockMask.gdshader" id="2_h72xt"]
+[ext_resource type="Material" uid="uid://ddugq0wc8e2hb" path="res://999_Other/Materials/OnlyOutline.tres" id="2_mbcld"]
 [ext_resource type="Texture2D" uid="uid://dk7nuokvm64vb" path="res://012_UI/Images/circleProgress.png" id="3_mmttk"]
 [ext_resource type="Script" path="res://012_UI/Scripts/Common/ItemElementAreaPool.cs" id="3_yi2pd"]
 [ext_resource type="Script" path="res://002_Tools/Scripts/MultiButton.cs" id="4_lbqt4"]
@@ -76,6 +77,7 @@ mouse_filter = 2
 theme_type_variation = &"EmptyPanelContainer"
 script = ExtResource("1_nckdc")
 animation = NodePath("AnimationPlayer")
+onlyOutLineMaterial = ExtResource("2_mbcld")
 areaPool = NodePath("MarginContainer/PanelContainer")
 image = NodePath("MarginContainer/PanelContainer/ItemImage")
 productImage = NodePath("MarginContainer/PanelContainer/Control/ProductTexture")

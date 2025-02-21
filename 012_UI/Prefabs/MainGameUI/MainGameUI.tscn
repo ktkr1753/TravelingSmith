@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cx4w7dmi1luu7"]
+[gd_scene load_steps=30 format=3 uid="uid://cx4w7dmi1luu7"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/MainGameUI.cs" id="1_2jxto"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_c7qgf"]
@@ -23,10 +23,18 @@
 [ext_resource type="Texture2D" uid="uid://d322onh5qkfxt" path="res://012_UI/Images/button_speed-fastForward_pressed.png" id="17_320u8"]
 [ext_resource type="Texture2D" uid="uid://upej8fcyg85s" path="res://012_UI/Images/button_speed-fastForward_hover.png" id="18_bq83n"]
 [ext_resource type="Texture2D" uid="uid://b7jw4chxwruu6" path="res://012_UI/Images/button_speed-fastForward_disabled.png" id="19_72eb0"]
+[ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="24_20s8s"]
+[ext_resource type="Material" uid="uid://ddugq0wc8e2hb" path="res://999_Other/Materials/OnlyOutline.tres" id="24_bkhvl"]
+[ext_resource type="Texture2D" uid="uid://g4ryx26aea75" path="res://012_UI/Images/arrow-left.png" id="25_hviyi"]
+[ext_resource type="Texture2D" uid="uid://c7vlv5efiguqd" path="res://012_UI/Images/arrow-right.png" id="26_7cv8u"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_alfty"]
 
-[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "itemInfoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "shieldImage", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pm22x"]
+atlas = ExtResource("24_20s8s")
+region = Rect2(48, 72, 24, 24)
+
+[node name="MainGameUI" type="Control" node_paths=PackedStringArray("elements", "animation", "bluePrintFlyTargetNode", "bluePrintImage", "itemInfoPanel", "hpProgressBar", "nowHpLabel", "maxHpLabel", "shieldImage", "expProgressBar", "expLabelParent", "nowExpLabel", "maxExpLabel", "moneyLabel", "accelerationLabel", "speedLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,6 +45,8 @@ mouse_filter = 2
 script = ExtResource("1_2jxto")
 elements = [NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement2"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement3"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement4"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement5"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement6"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement7"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement8"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement9"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement10"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement11"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement12"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement13"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement14"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement15"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement16"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement17"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement18"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement19"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement20"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement21"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement22"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement23"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement24"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement25"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement26"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement27"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement28"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement29"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement30"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement31"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement32"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement33"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement34"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement35"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement36"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement37"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement38"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement39"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement40"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement41"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement42"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement43"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement44"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement45"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement46"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement47"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement48"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement49"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement50"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement51"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement52"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement53"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement54"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement55"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement56"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement57"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement58"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement59"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement60"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement61"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement62"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement63"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement64"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement65"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement66"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement67"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement68"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement69"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement70"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement71"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement72"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement73"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement74"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement75"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement76"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement77"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement78"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement79"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement80"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement81"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement82"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement83"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement84"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement85"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement86"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement87"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement88"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement89"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement90"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement91"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement92"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement93"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement94"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement95"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement96"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement97"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement98"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement99"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement100"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement101"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement102"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement103"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement104"), NodePath("HBoxContainer/PanelContainer/GridContainer/ItemElement105")]
 animation = NodePath("AnimationPlayer")
+bluePrintFlyTargetNode = NodePath("BluePrintPanel/HBoxContainer/TextureRect")
+bluePrintImage = NodePath("BluePrintPanel/HBoxContainer/HBoxContainer/ItemPanel/ItemImage")
 itemInfoPanel = NodePath("HBoxContainer/ItemInfoPanel")
 hpProgressBar = NodePath("MarginContainer/VBox/HPPanel/ProgressBar")
 nowHpLabel = NodePath("MarginContainer/VBox/HPPanel/HBoxContainer/NowHPLabel")
@@ -414,6 +424,7 @@ size_flags_horizontal = 3
 [node name="MainGameItemElement_Clear" parent="." instance=ExtResource("3_mpf7q")]
 visible = false
 layout_mode = 0
+onlyOutLineMaterial = null
 normalColor = Color(0, 0, 0, 0)
 pauseColor = Color(0, 0, 0, 0)
 showColor = Color(0, 0, 0, 0)
@@ -718,6 +729,59 @@ texture_hover = ExtResource("18_bq83n")
 texture_disabled = ExtResource("19_72eb0")
 texture_focused = ExtResource("17_320u8")
 
+[node name="BluePrintPanel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 105.0
+offset_right = 112.0
+offset_bottom = 135.0
+theme_type_variation = &"PanelContainer_Dark"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BluePrintPanel"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="BluePrintPanel/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_pm22x")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="BluePrintPanel/HBoxContainer"]
+layout_mode = 2
+text = "配方"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BluePrintPanel/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="LeftButton" type="TextureButton" parent="BluePrintPanel/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("25_hviyi")
+stretch_mode = 5
+
+[node name="ItemPanel" type="PanelContainer" parent="BluePrintPanel/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+theme_type_variation = &"EmptyPanelContainer"
+
+[node name="ItemImage" type="TextureRect" parent="BluePrintPanel/HBoxContainer/HBoxContainer/ItemPanel"]
+material = ExtResource("24_bkhvl")
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="BluePrintPanel/HBoxContainer/HBoxContainer/ItemPanel"]
+layout_mode = 2
+theme_type_variation = &"EmptyButton"
+
+[node name="RightButton" type="TextureButton" parent="BluePrintPanel/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("26_7cv8u")
+stretch_mode = 5
+
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/PauseButton" to="GameSpeedControl" method="OnPauseClick"]
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/PlayButton" to="GameSpeedControl" method="OnPlayClick"]
 [connection signal="pressed" from="GameSpeedControl/PanelContainer/MarginContainer/HBoxContainer/FastForwardButton" to="GameSpeedControl" method="OnFastForwardClick"]
+[connection signal="pressed" from="BluePrintPanel/HBoxContainer/HBoxContainer/LeftButton" to="." method="OnBluePrintLeftClick"]
+[connection signal="button_down" from="BluePrintPanel/HBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnBluePrintItemButtonDown"]
+[connection signal="button_up" from="BluePrintPanel/HBoxContainer/HBoxContainer/ItemPanel/Button" to="." method="OnBluePrintItemButtonUp"]
+[connection signal="pressed" from="BluePrintPanel/HBoxContainer/HBoxContainer/RightButton" to="." method="OnBluePrintRightClick"]

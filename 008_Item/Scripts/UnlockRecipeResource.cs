@@ -21,6 +21,8 @@ public partial class UnlockRecipeResource : Resource, IClone<UnlockRecipeResourc
         }
     }
 
+    public Action onUnlockRecipesChange;
+
 
     public HashSet<ItemIndex> GetWaitUnlockRecipe() 
     {
@@ -57,6 +59,7 @@ public partial class UnlockRecipeResource : Resource, IClone<UnlockRecipeResourc
         if (!unlockedRecipes.Contains(itemIndex))
         {
             _unlockRecipes.Add(itemIndex);
+            onUnlockRecipesChange?.Invoke();
         }
     }
 

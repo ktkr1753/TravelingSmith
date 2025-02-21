@@ -46,6 +46,11 @@ ts_itemName_RecipeIronChest,Recipe Iron Chest,鐵箱配方
 ts_itemName_RecipeWorkbench,Recipe Workbench,工作臺配方
 ts_itemName_RecipeStoneGolem,Recipe Stone Golem,石魔像配方
 ts_itemName_RecipeButcherKnife,Recipe Butcher Knife,屠宰刀配方
+ts_itemName_RecipeStoneKnife,Recipe Stone Knife,石刀配方
+ts_itemName_RecipeIron,Recipe Iron,鐵配方
+ts_itemName_RecipeGold,Recipe Gold,金配方
+ts_itemName_RecipeFlareGemstone,Recipe Flare Gemstone,焰火石配方
+ts_itemName_RecipeTitanium,Recipe Titanium,鈦金配方
 ts_itemName_Pickaxe,Iron Pickaxe,鐵礦鎬
 ts_itemName_FellingAxe,Felling Axe,伐木斧
 ts_itemName_FlareGemstonePickaxe,Flare Gemstone Pickaxe,焰火石礦鎬

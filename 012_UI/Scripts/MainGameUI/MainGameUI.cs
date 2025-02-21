@@ -8,6 +8,8 @@ public partial class MainGameUI : UIBase
 {
     [Export] public Godot.Collections.Array<ItemElement> elements = new Godot.Collections.Array<ItemElement>();
     [Export] private AnimationPlayer animation;
+    [Export] public Control bluePrintFlyTargetNode;
+    [Export] private TextureRect bluePrintImage;
     [Export] private ItemInfoPanel itemInfoPanel;
     [Export] private ProgressBar hpProgressBar;
     [Export] private Label nowHpLabel;
@@ -104,6 +106,37 @@ public partial class MainGameUI : UIBase
         }
     }
 
+    public List<ItemBaseResource> bluePrintItems = new List<ItemBaseResource>();
+    private int _nowBluePrintItemIndex = -1;
+    public int nowBluePrintItemIndex
+    {
+        get
+        {
+            return _nowBluePrintItemIndex;
+        }
+        set
+        {
+            if (_nowBluePrintItemIndex != value)
+            {
+                int preState = _nowBluePrintItemIndex;
+                _nowBluePrintItemIndex = value;
+                OnBluePrintItemChange(preState, _nowBluePrintItemIndex);
+            }
+        }
+    }
+
+    private void OnBluePrintItemChange(int preIndex, int nextIndex)
+    {
+        if (nextIndex >= 0 && nextIndex < bluePrintItems.Count)
+        {
+            SetItemInfoPanel(bluePrintItems[nextIndex]);
+            SetBluePrintImage();
+        }
+    }
+
+    private ItemBaseResource pickBluePrintItem = null;
+
+
     public const float moveThreshold = 5;
     public const double flyTime = 0.2;
     public readonly Vector2 infoPanelFix = new Vector2(12, 12);
@@ -126,11 +159,13 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onHPChange += OnHpChange;
         GameManager.instance.battleManager.onExpChange += OnExpChange;
         GameManager.instance.battleManager.onLevelChange += OnLevelChange;
+        GameManager.instance.unlockRecipe.onUnlockRecipesChange += OnUnlockRecipesChange;
 
         itemInfoPanel.onDetailClick += OnInfoDetailClick;
 
         InitItemElements();
         InitShieldMaterial();
+        InitBluePrintItems();
         SetView();
     }
 
@@ -147,6 +182,7 @@ public partial class MainGameUI : UIBase
         GameManager.instance.battleManager.onHPChange -= OnHpChange;
         GameManager.instance.battleManager.onExpChange -= OnExpChange;
         GameManager.instance.battleManager.onLevelChange -= OnLevelChange;
+        GameManager.instance.unlockRecipe.onUnlockRecipesChange -= OnUnlockRecipesChange;
 
         itemInfoPanel.onDetailClick -= OnInfoDetailClick;
     }
@@ -370,6 +406,35 @@ public partial class MainGameUI : UIBase
         }
     }
 
+    private void InitBluePrintItems() 
+    {
+        ResetBluePrintItems();
+
+        if (bluePrintItems.Count > 0) 
+        {
+            nowBluePrintItemIndex = 0;
+        }
+    }
+
+    private void ResetBluePrintItems() 
+    {
+        bluePrintItems.Clear();
+
+        HashSet<ItemIndex> unlockRecipes = GameManager.instance.unlockRecipe.GetUnlockedRecipe();
+
+        foreach (ItemIndex recipeIndex in unlockRecipes)
+        {
+            if (GameManager.instance.itemConfig.config.TryGetValue(recipeIndex, out ItemBaseResource itemData))
+            {
+                bluePrintItems.Add(itemData);
+            }
+            else
+            {
+                Debug.PrintErr($"找不到對應道具,recipeIndex:{recipeIndex}");
+            }
+        }
+    }
+
     private void InitShieldMaterial()
     {
         if (shieldImage.Material == null)
@@ -424,6 +489,27 @@ public partial class MainGameUI : UIBase
     private void SetSpeed() 
     {
         speedLabel.Text = $"{ Math.Floor(GameManager.instance.itemManager.moveSpeed)}";
+    }
+
+    private void SetBluePrintImage() 
+    {
+        ItemBaseResource item = bluePrintItems[nowBluePrintItemIndex];
+
+        if (item is RecipeResource recipe) 
+        {
+            if (GameManager.instance.itemConfig.config.TryGetValue(recipe.productItem, out ItemBaseResource productItem))
+            {
+                bluePrintImage.Texture = productItem.texture;
+            }
+            else 
+            {
+                Debug.PrintErr($"不存在該道具, recipe.productItem:{recipe.productItem}");
+            }
+        }
+        else 
+        {
+            Debug.PrintErr($"item不是Recipe, item index:{item.index}");
+        }
     }
 
     private void SetItemSelectedState(int nowEnterElementIndex, int nowSelectedElementIndex)
@@ -739,6 +825,93 @@ public partial class MainGameUI : UIBase
     {
         SetItemInfoPanel(item);
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
+    }
+
+    public void OnUnlockRecipesChange() 
+    {
+        ResetBluePrintItems();
+    }
+
+    public void OnBluePrintItemButtonDown() 
+    {
+        ItemBaseResource pickedItem = null;
+        if (nowBluePrintItemIndex >= 0 && nowBluePrintItemIndex < bluePrintItems.Count)
+        {
+            pickedItem = bluePrintItems[nowBluePrintItemIndex];
+        }
+
+        if (pickedItem != null)
+        {
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
+            SetPickedItemElement(pickedItem);
+            //bluePrintImage.Visible = false;
+            pickBluePrintItem = pickedItem;
+            SetItemInfoPanel(pickedItem);
+        }
+
+    }
+
+    public void OnBluePrintItemButtonUp()
+    {
+        ItemBaseResource pickedItem = pickBluePrintItem;
+
+        if (pickedItem != null)
+        {
+            if (nowEnterElementIndex >= 0)
+            {
+                int addIndex = -1;
+                if (GameManager.instance.itemManager.heldItems[nowEnterElementIndex] == null && GameManager.instance.itemManager.IsAreaEffect(GameManager.instance.itemManager.areas, nowEnterElementIndex, AreaIndex.Normal))
+                {
+                    addIndex = nowEnterElementIndex;
+                    ItemBaseResource item = GameManager.instance.itemManager.CreateItem(pickedItem.index);
+                    GameManager.instance.itemManager.SetHeldItem(addIndex, item);
+                }
+                else
+                {
+                    //addIndex = GameManager.instance.itemManager.AddHeldItem(pickedItem.index);
+                }
+
+                if (addIndex != -1)
+                {
+                    //資料
+                    GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - GameManager.instance.itemManager.GetBuyMoney(pickedItem));
+                }
+            }
+        }
+
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_2);
+        //bluePrintImage.Visible = true;
+        SetPickedItemElement(null);
+    }
+
+    public void OnBluePrintLeftClick() 
+    {
+        int result = -1;
+        if (nowBluePrintItemIndex - 1 >= 0 && nowBluePrintItemIndex - 1 < bluePrintItems.Count)
+        {
+            result = nowBluePrintItemIndex - 1;
+        }
+        else if (bluePrintItems.Count != 0)
+        {
+            result = bluePrintItems.Count - 1;
+        }
+        nowBluePrintItemIndex = result;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
+    }
+
+    public void OnBluePrintRightClick() 
+    {
+        int result = -1;
+        if (nowBluePrintItemIndex + 1 >= 0 && nowBluePrintItemIndex + 1 < bluePrintItems.Count)
+        {
+            result = nowBluePrintItemIndex + 1;
+        }
+        else if (bluePrintItems.Count != 0)
+        {
+            result = 0;
+        }
+        nowBluePrintItemIndex = result;
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
     }
 
 }

@@ -43,6 +43,11 @@ public enum ItemIndex
     RecipeWorkbench = 226,
     RecipeStoneGolem = 227,
     RecipeButcherKnife = 228,
+    RecipeStoneKnife = 229,
+    RecipeIron = 230,
+    RecipeGold = 231,
+    RecipeFlareGemstone = 232,
+    RecipeTitanium = 233,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,

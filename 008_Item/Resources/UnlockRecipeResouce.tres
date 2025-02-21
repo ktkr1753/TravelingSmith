@@ -9,15 +9,15 @@ data = [223, 217]
 
 [sub_resource type="Resource" id="Resource_fdkej"]
 script = ExtResource("2_tx4sd")
-data = [204, 203, 216]
+data = [204, 216]
 
 [sub_resource type="Resource" id="Resource_san2s"]
 script = ExtResource("2_tx4sd")
-data = [219, 224, 226]
+data = [224, 226, 230]
 
 [sub_resource type="Resource" id="Resource_n3g72"]
 script = ExtResource("2_tx4sd")
-data = [201, 202, 208, 218, 214, 220, 225]
+data = [201, 202, 208, 218, 214, 225, 231]
 
 [sub_resource type="Resource" id="Resource_v0pud"]
 script = ExtResource("2_tx4sd")
@@ -25,7 +25,7 @@ data = [210, 227]
 
 [sub_resource type="Resource" id="Resource_b8l16"]
 script = ExtResource("2_tx4sd")
-data = [221, 222]
+data = [233, 232]
 
 [sub_resource type="Resource" id="Resource_pl2qv"]
 script = ExtResource("2_tx4sd")
@@ -34,4 +34,4 @@ data = [206, 211]
 [resource]
 script = ExtResource("1_qqwbv")
 unlockRecipeOrder = [SubResource("Resource_lwy24"), SubResource("Resource_fdkej"), SubResource("Resource_san2s"), SubResource("Resource_n3g72"), SubResource("Resource_v0pud"), SubResource("Resource_b8l16"), SubResource("Resource_pl2qv")]
-unlockedRecipes = Array[int]([])
+unlockedRecipes = Array[int]([229, 203, 213])

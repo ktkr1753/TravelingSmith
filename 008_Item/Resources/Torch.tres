@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RangeResource" load_steps=6 format=3 uid="uid://t5dwn7bpeqtd"]
+[gd_resource type="Resource" script_class="RangeResource" load_steps=7 format=3 uid="uid://t5dwn7bpeqtd"]
 
 [ext_resource type="Script" path="res://008_Item/Scripts/RangeResource.cs" id="1_273lr"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemEffect.cs" id="1_mdicf"]
@@ -7,6 +7,11 @@
 [sub_resource type="Resource" id="Resource_e0l3y"]
 script = ExtResource("1_mdicf")
 position = Vector2i(0, -1)
+type = 16
+
+[sub_resource type="Resource" id="Resource_1fw2b"]
+script = ExtResource("1_mdicf")
+position = Vector2i(0, 1)
 type = 16
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uy0gp"]
@@ -18,8 +23,8 @@ script = ExtResource("1_273lr")
 index = 702
 detailType = 0
 texture = SubResource("AtlasTexture_uy0gp")
-effectRanges = [SubResource("Resource_e0l3y")]
-money = 2
+effectRanges = [SubResource("Resource_e0l3y"), SubResource("Resource_1fw2b")]
+money = 3
 rank = 0
 isLowProduct = false
 isSellable = true

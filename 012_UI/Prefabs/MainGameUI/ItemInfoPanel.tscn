@@ -66,13 +66,14 @@ _data = {
 "fadeOut": SubResource("Animation_o21qh")
 }
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyNode", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage")]
 offset_right = 112.0
 offset_bottom = 152.0
 script = ExtResource("1_jhhof")
 anim = NodePath("AnimationPlayer")
 itemElement = NodePath("VBoxContainer/HBoxContainer/MainGameItemElement")
 nameLabel = NodePath("VBoxContainer/NameLabel")
+moneyNode = NodePath("VBoxContainer/MoneyHBox")
 moneyLabel = NodePath("VBoxContainer/MoneyHBox/Label")
 useTimeParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox")
 useTimeLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/UseTimeHBox/TimeLabel")
@@ -142,6 +143,7 @@ text = "名稱"
 horizontal_alignment = 1
 
 [node name="MoneyHBox" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 alignment = 1
 

@@ -1,23 +1,17 @@
-[gd_resource type="Resource" script_class="SelfToolResource" load_steps=4 format=3 uid="uid://wjypj5r3ndhb"]
+[gd_resource type="Resource" script_class="MaterialResource" load_steps=4 format=3 uid="uid://wjypj5r3ndhb"]
 
-[ext_resource type="Script" path="res://008_Item/Scripts/SelfToolResource.cs" id="1_e0p7f"]
+[ext_resource type="Script" path="res://008_Item/Scripts/MaterialResource.cs" id="1_jv3fe"]
 [ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_66ytg"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n7afr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikje7"]
 atlas = ExtResource("2_66ytg")
 region = Rect2(192, 0, 24, 24)
 
 [resource]
-script = ExtResource("1_e0p7f")
-type = 1
-productItem = 7
-needTime = 10.0
-nowTime = 0.0
-durability = 1
-isProducing = false
+script = ExtResource("1_jv3fe")
 index = 609
 detailType = 0
-texture = SubResource("AtlasTexture_n7afr")
+texture = SubResource("AtlasTexture_ikje7")
 effectRanges = []
 money = 1
 rank = 0

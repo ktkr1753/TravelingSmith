@@ -8,8 +8,8 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private AnimationPlayer anim;
 	[Export] private ItemElement itemElement;
 	[Export] private Label nameLabel;
-	[Export] private Label moneyLabel;
-
+    [Export] private Control moneyNode;
+    [Export] private Label moneyLabel;
     [Export] private Control useTimeParent;
     [Export] private Label useTimeLabel;
     [Export] private Control attackPointParent;
@@ -135,16 +135,24 @@ public partial class ItemInfoPanel : PanelContainer
 
 	private void SetMoney() 
 	{
-        int sellMoney = GameManager.instance.itemManager.GetSellMoney(item);
-
-		moneyLabel.Text = $"{sellMoney}";
-        if(sellMoney < item.money) 
+        if (item.isSellable) 
         {
-            moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+            moneyNode.Visible = true;
+            int sellMoney = GameManager.instance.itemManager.GetSellMoney(item);
+
+		    moneyLabel.Text = $"{sellMoney}";
+            if(sellMoney < item.money) 
+            {
+                moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+            }
+            else 
+            {
+                moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+            }
         }
         else 
         {
-            moneyLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+            moneyNode.Visible = false;
         }
     }
 

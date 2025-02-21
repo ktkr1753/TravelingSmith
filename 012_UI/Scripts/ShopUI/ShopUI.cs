@@ -13,6 +13,8 @@ public partial class ShopUI : UIBase
     [Export] private Control refreshHeldPanel;
     [Export] private Label refreshHeldCostLabel;
     [Export] private Button multiSellButton;
+    [Export] private Button getRecipeButton;
+    [Export] private Label getRecipeCostLabel;
 
     private int _nowPickElementIndex = -1;
     public int nowPickElementIndex
@@ -128,6 +130,7 @@ public partial class ShopUI : UIBase
     private Action pauseFinishCallback;
 
     public const double flyTime = 0.2;
+    public const int sellRecipeNum = 0;
 
     public const string clip_moveIn = "moveIn";
     public const string clip_moveOut = "moveOut";
@@ -240,10 +243,10 @@ public partial class ShopUI : UIBase
         //Debug.Print($"materialIndexs:{materialIndexs.ToStringExtended()}");
         //Debug.Print($"recipeIndexs:{recipeIndexs.ToStringExtended()}");
 
-        for (int i = 0; i < 4; i++) 
+        for (int i = 0; i < sellRecipeNum; i++) 
         {
             ItemIndex itemIndex = ItemIndex.None;
-            if (i < 4)
+            if (i < sellRecipeNum)
             {
                 if(recipeIndexs.Count == 0) 
                 {
@@ -314,6 +317,7 @@ public partial class ShopUI : UIBase
         ResetAssignMaterial();
         SetRefreshButton();
         SetRefreshHeldCost();
+        SetGetRecipeButton();
     }
     
     private void SetShopItemElements() 
@@ -390,7 +394,7 @@ public partial class ShopUI : UIBase
         foreach(int index in selectedItemIndexs) 
         {
             ItemBaseResource item = GameManager.instance.itemManager.heldItems[index];
-            if (item != null && GameManager.instance.itemManager.IsCanRemove(item)) 
+            if (item != null && item.isSellable && GameManager.instance.itemManager.IsCanRemove(item)) 
             {
                 bool isSuccess = GameManager.instance.itemManager.SellItem(item);
 
@@ -570,7 +574,7 @@ public partial class ShopUI : UIBase
             if (GameManager.instance.itemManager.money >= buyMoney)
             {
                 GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
-                SetPickedItemElement(assignMaterialItems[nowAssignMaterialIndex]);
+                SetPickedItemElement(pickedItem);
                 assignMaterialImage.Visible = false;
                 pickAssignMaterialItem = pickedItem;
             }
@@ -687,11 +691,27 @@ public partial class ShopUI : UIBase
         }
     }
 
+    private void SetGetRecipeButton() 
+    {
+        if (GameManager.instance.itemManager.money >= refreshHeldCost)
+        {
+            getRecipeButton.Disabled = false;
+            getRecipeCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.normalColor;
+        }
+        else
+        {
+            getRecipeButton.Disabled = true;
+            getRecipeCostLabel.SelfModulate = GameManager.instance.uiCommonSetting.worseColor;
+        }
+        getRecipeCostLabel.Text = $"{refreshHeldCost}";
+    }
+
     private void OnMoneyChange(int money) 
     {
         SetRefreshButton();
         SetRefreshHeldCost();
         SetAssignMaterialMoney();
+        SetGetRecipeButton();
     }
 
 
@@ -754,7 +774,8 @@ public partial class ShopUI : UIBase
 
         if (!selectedItemIndexs.Contains(index)) 
         {
-            if (mainGameUI.elements[index].item != null && GameManager.instance.itemManager.IsCanRemove(mainGameUI.elements[index].item)) 
+            if (mainGameUI.elements[index].item != null && mainGameUI.elements[index].item.isSellable 
+                && GameManager.instance.itemManager.IsCanRemove(mainGameUI.elements[index].item)) 
             {
                 mainGameUI.elements[index].SetMultiSelected(true);
                 selectedItemIndexs.Add(index);
@@ -769,5 +790,34 @@ public partial class ShopUI : UIBase
         }
 
         SetMultiButton();
+    }
+
+    public void OnGetRecipeClick() 
+    {
+        List<ItemBaseResource> canBeRandomItems = new List<ItemBaseResource>();
+        HashSet<ItemIndex> waitUnlockRecipe = GameManager.instance.unlockRecipe.GetWaitUnlockRecipe();
+        foreach (var KV in GameManager.instance.itemConfig.config)
+        {
+            if (waitUnlockRecipe.Contains(KV.Value.index))
+            {
+                canBeRandomItems.Add(KV.Value);
+            }
+        }
+
+        int rnd = GameManager.instance.randomManager.GetRange(RandomType.RandomItem, 0, canBeRandomItems.Count);
+        ItemBaseResource randomItem = canBeRandomItems[rnd].Clone();
+        GameManager.instance.unlockRecipe.AddUnlockRecipe(randomItem.index);
+        GameManager.instance.itemManager.money = Math.Max(0, GameManager.instance.itemManager.money - refreshHeldCost);
+
+        refreshHeldCount++;
+        SetGetRecipeButton();
+
+        MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
+        if (mainGameUI != null) 
+        {
+            GameManager.instance.uiManager.StartFlyItem(randomItem, getRecipeButton.GlobalPosition, mainGameUI.bluePrintFlyTargetNode.GlobalPosition, 0.3);
+        }
+
+        GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);
     }
 }
