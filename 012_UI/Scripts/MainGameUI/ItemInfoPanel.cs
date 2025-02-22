@@ -51,6 +51,14 @@ public partial class ItemInfoPanel : PanelContainer
         private set { _index = value; }
     }
 
+
+    private bool _interactable = true;
+    public bool interactable 
+    {
+        get { return _interactable; }
+        private set { _interactable = value; }
+    }
+
     public event Action<int, ItemBaseResource> onDetailClick;   // <index, item>
     public event Action<int> onCloseClick;  //<index>
 
@@ -72,14 +80,15 @@ public partial class ItemInfoPanel : PanelContainer
         this.index = index;
     }
 
-    public void SetData(ItemBaseResource item) 
+    public void SetData(ItemBaseResource item, bool interactable = true) 
 	{
         if(this.item != null) 
         {
             UnregisterEvent(this.item);
         }
 		this.item = item;
-		if(item == null) 
+        this.interactable = interactable;
+        if (item == null) 
 		{
 			return;
 		}
@@ -391,6 +400,14 @@ public partial class ItemInfoPanel : PanelContainer
             else 
             {
                 keepProduceParent.Visible = true;
+                if (interactable)
+                {
+                    keepProduceButton.Disabled = false;
+                }
+                else
+                {
+                    keepProduceButton.Disabled = true;
+                }
                 if (produce.isKeepProduce) 
                 {
                     keepProduceButton.Text = Tr("ts_common_Yes");

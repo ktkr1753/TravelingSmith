@@ -129,7 +129,7 @@ public partial class MainGameUI : UIBase
     {
         if (nextIndex >= 0 && nextIndex < bluePrintItems.Count)
         {
-            SetItemInfoPanel(bluePrintItems[nextIndex].Clone());
+            SetItemInfoPanel(bluePrintItems[nextIndex].Clone(), false);
             SetBluePrintImage();
         }
     }
@@ -557,12 +557,12 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    public void SetItemInfoPanel(ItemBaseResource newItem) 
+    public void SetItemInfoPanel(ItemBaseResource newItem, bool interactable = true) 
     {
         if (newItem != null)
         {
             itemInfoPanel.Visible = true;
-            itemInfoPanel.SetData(newItem);
+            itemInfoPanel.SetData(newItem, interactable);
         }
         else
         {
@@ -828,7 +828,7 @@ public partial class MainGameUI : UIBase
 
     public void OnInfoDetailClick(int index, ItemBaseResource item) 
     {
-        SetItemInfoPanel(item.Clone());
+        SetItemInfoPanel(item.Clone(), false);
         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button2);
     }
 
@@ -851,7 +851,7 @@ public partial class MainGameUI : UIBase
             SetPickedItemElement(pickedItem);
             //bluePrintImage.Visible = false;
             pickBluePrintItem = pickedItem;
-            SetItemInfoPanel(pickedItem.Clone());
+            SetItemInfoPanel(pickedItem.Clone(), false);
         }
 
     }

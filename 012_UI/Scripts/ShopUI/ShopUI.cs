@@ -437,12 +437,12 @@ public partial class ShopUI : UIBase
         return result;
     }
 
-    public void SetItemInfo(ItemBaseResource item) 
+    public void SetItemInfo(ItemBaseResource item, bool interactable = true) 
     {
         MainGameUI mainGameUI = GameManager.instance.uiManager.GetOpenedUI<MainGameUI>(UIIndex.MainGameUI);
         if (mainGameUI != null) 
         {
-            mainGameUI.SetItemInfoPanel(item);
+            mainGameUI.SetItemInfoPanel(item, interactable);
         }
     }
 
@@ -468,7 +468,7 @@ public partial class ShopUI : UIBase
                 nowPickElementIndex = inuseOrder;
             }
 
-            SetItemInfo(element.item.Clone());
+            SetItemInfo(element.item.Clone(), false);
             GameManager.instance.soundManager.PlaySound(SoundEnum.sound_bubble_1);
         }
     }
@@ -578,7 +578,7 @@ public partial class ShopUI : UIBase
                 assignMaterialImage.Visible = false;
                 pickAssignMaterialItem = pickedItem;
             }
-            SetItemInfo(pickedItem.Clone());
+            SetItemInfo(pickedItem.Clone(), false);
         }
 
     }
