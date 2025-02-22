@@ -279,7 +279,7 @@ public partial class ItemElement : Control
 
 	private void RegisterEvent(ItemBaseResource item) 
 	{
-		if(item is IProduce produce) 
+		if(item is ProduceResource produce) 
 		{
 			produce.onIsProducingChange += OnProducingChange;
             produce.onDurabilityChange += OnDurabilityChange;
@@ -294,7 +294,7 @@ public partial class ItemElement : Control
 
 	private void UnregisterEvent(ItemBaseResource item) 
 	{
-        if (item is IProduce produce)
+        if (item is ProduceResource produce)
         {
             produce.onIsProducingChange -= OnProducingChange;
             produce.onDurabilityChange -= OnDurabilityChange;
@@ -330,10 +330,10 @@ public partial class ItemElement : Control
         }
 		else 
 		{
-			if(item is RecipeResource recipe) 
+			if(item is ProduceResource produce && produce.nowParameter is IMake make) 
 			{
 				image.Material = onlyOutLineMaterial;
-                if (GameManager.instance.itemConfig.config.TryGetValue(recipe.productItem, out ItemBaseResource productItem)) 
+                if (GameManager.instance.itemConfig.config.TryGetValue(make.productItem, out ItemBaseResource productItem)) 
 				{
                     image.Texture = productItem.texture;
 				}
@@ -348,20 +348,20 @@ public partial class ItemElement : Control
 
 	private void SetProductImage() 
 	{
-		if(item is IProduce produce) 
+		if(item is ProduceResource produce) 
 		{
-			if(produce is IMake) 
+			if(produce.nowParameter is IMake) 
 			{
                 productImage.Visible = false;
             }
-			else if(GameManager.instance.itemConfig.config.TryGetValue(produce.productItem, out ItemBaseResource productItem)) 
+			else if(GameManager.instance.itemConfig.config.TryGetValue(produce.nowParameter.productItem, out ItemBaseResource productItem)) 
 			{
                 productImage.Visible = true;
                 productImage.Texture = productItem.texture;
 			}
 			else 
 			{
-				Debug.PrintErr($"找不到該道具, index:{produce.productItem}");
+				Debug.PrintErr($"找不到該道具, produce index:{produce.index}, productItem index:{produce.nowParameter.productItem}");
 			}
         }
 		else 
@@ -374,7 +374,7 @@ public partial class ItemElement : Control
 	{
         if (circleProgressImage.Material is ShaderMaterial material) 
 		{
-			if (item is IProduce produce)
+			if (item is ProduceResource produce)
 			{
 				if (produce.isProducing)
 				{
@@ -401,7 +401,7 @@ public partial class ItemElement : Control
 
 	private void SetNowPercent(double deltaTime) 
 	{
-        if (item is IProduce produce) 
+        if (item is ProduceResource produce) 
 		{
             if (circleProgressImage.Material is ShaderMaterial material)
             {
@@ -460,7 +460,7 @@ public partial class ItemElement : Control
                 }
 			}
 		}
-		else if (item is IProduce produce && !(item is SelfToolResource)) 
+		else if (item is ProduceResource produce) 
 		{
 			if(produce.durability > 0) 
 			{
@@ -489,7 +489,7 @@ public partial class ItemElement : Control
             return;
 		}
 
-		if(item is IProduce produce || item is IUseable useable) 
+		if(item is ProduceResource produce || item is IUseable useable) 
 		{
 			circleProgressImage.Visible = true;
 		}

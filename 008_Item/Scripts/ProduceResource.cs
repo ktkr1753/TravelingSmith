@@ -2,41 +2,54 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IProduce
+public partial class ProduceResource : ItemBaseResource, IClone<ProduceResource>
 {
     private ProduceType _type;
-    [Export] public ProduceType type
+    [Export]
+    public ProduceType type
     {
         get { return _type; }
         set { _type = value; }
     }
 
-    private ItemIndex _productItem = ItemIndex.None;
-    [Export] public ItemIndex productItem 
+    private Godot.Collections.Array<ProduceParameter> _parameters = new Godot.Collections.Array<ProduceParameter>();
+    [Export] public Godot.Collections.Array<ProduceParameter> parameters
     {
-        get { return _productItem; }
-        set { _productItem = value; }
+        get { return _parameters; }
+        set { _parameters = value; }
     }
-    private double _needTime = 0;
-    [Export] public double needTime 
+
+    private int _nowParameterIndex = 0;
+    [Export] public int nowParameterIndex
     {
-        get { return _needTime; }
-        set { _needTime = value; }
+        get { return _nowParameterIndex; }
+        set { _nowParameterIndex = value; }
     }
+
+    public ProduceParameter nowParameter 
+    {
+        get 
+        {
+            return parameters[nowParameterIndex];
+        }
+    }
+
     private double _nowTime = 0;
-    [Export] public double nowTime
+    [Export]
+    public double nowTime
     {
         get { return _nowTime; }
         set { _nowTime = value; }
     }
 
     private int _durability = -1;
-    [Export] public int durability 
+    [Export]
+    public int durability
     {
         get { return _durability; }
-        set 
+        set
         {
-            if (_durability != value) 
+            if (_durability != value)
             {
                 _durability = value;
                 onDurabilityChange?.Invoke(_durability);
@@ -45,7 +58,8 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
     }
 
     [Export] private bool _isKeepProduce = true;
-    public bool isKeepProduce {
+    public bool isKeepProduce
+    {
         get { return _isKeepProduce; }
         set
         {
@@ -57,11 +71,12 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
     }
 
     private bool _isProducing = false;
-    [Export] public bool isProducing
+    [Export]
+    public bool isProducing
     {
         get { return _isProducing; }
-        private set 
-        { 
+        private set
+        {
             _isProducing = value;
             onIsProducingChange?.Invoke(_isProducing);
         }
@@ -81,12 +96,12 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         GameManager.instance.itemManager.RemoveProducingItem(this);
     }
 
-    public override ToolResource Clone()
+    public override ProduceResource Clone()
     {
-        ToolResource result = base.Clone() as ToolResource;
+        ProduceResource result = base.Clone() as ProduceResource;
         result.type = type;
-        result.productItem = productItem;
-        result.needTime = needTime;
+        result.parameters = parameters.Clone();
+        result.nowParameterIndex = nowParameterIndex;
         result.nowTime = nowTime;
         result.durability = durability;
         result.isKeepProduce = isKeepProduce;
@@ -94,8 +109,8 @@ public partial class ToolResource : ItemBaseResource, IClone<ToolResource>, IPro
         return result;
     }
 
-    public override ToolResource CreateInstanceForClone()
+    public override ProduceResource CreateInstanceForClone()
     {
-        return new ToolResource();
+        return new ProduceResource();
     }
 }

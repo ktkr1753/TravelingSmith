@@ -174,8 +174,8 @@ public partial class ItemManager : Node
     public event Action<double> onMoveSpeedChange;
     public event Action<int> onHeldItemChange;
     public event Action<int> onItemEffectsChange;
-    public event Action<IMake, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<make, <usedItemIndexs, usedItem>>
-    public event Action<IProduce, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
+    public event Action<ProduceResource, HashSet<KeyValuePair<int, ItemBaseResource>>> onUseMaterial;         //<produce, <usedItemIndexs, usedItem>>
+    public event Action<ProduceResource, int, ItemBaseResource> onCreateProduct;       //<produce, productItemIndex, productItem>
 
 
     public const int itemNum = 105;
@@ -422,48 +422,55 @@ public partial class ItemManager : Node
         return isSuccess;
     }
 
-    public bool TryMake(IMake make) 
+    public bool TryMake(ProduceResource produce) 
     {
-        return TryMake(make, out HashSet<int> usedItemsIndex);
+        return TryMake(produce, out HashSet<int> usedItemsIndex);
     }
 
-	public bool TryMake(IMake make, out HashSet<int> usedItemsIndex, Godot.Collections.Array<ItemElement> itemElements = null) 
+	public bool TryMake(ProduceResource produce, out HashSet<int> usedItemsIndex, Godot.Collections.Array<ItemElement> itemElements = null) 
 	{
         bool isFail = false;
         usedItemsIndex = new HashSet<int>();
 
-        for (int i = 0; i < make.materials.Count; i++)
+        if(produce.nowParameter is IMake make) 
         {
-            bool isFind = false;
-            for (int j = 0; j < GameManager.instance.itemManager.heldItems.Count; j++)
+            for (int i = 0; i < make.materials.Count; i++)
             {
-                if (usedItemsIndex.Contains(j))
+                bool isFind = false;
+                for (int j = 0; j < GameManager.instance.itemManager.heldItems.Count; j++)
                 {
-                    continue;
+                    if (usedItemsIndex.Contains(j))
+                    {
+                        continue;
+                    }
+                    else if (make.materials[i] == GameManager.instance.itemManager.heldItems[j]?.index 
+                        && (itemElements == null || !itemElements[j].isFlying)) //視覺物件正在飛的話就不拿來用
+                    {
+                        usedItemsIndex.Add(j);
+                        isFind = true;
+                        break;
+                    }
                 }
-                else if (make.materials[i] == GameManager.instance.itemManager.heldItems[j]?.index 
-                    && (itemElements == null || !itemElements[j].isFlying)) //視覺物件正在飛的話就不拿來用
+
+                if (!isFind)
                 {
-                    usedItemsIndex.Add(j);
-                    isFind = true;
+                    isFail = true;
                     break;
                 }
             }
-
-            if (!isFind)
-            {
-                isFail = true;
-                break;
-            }
+        }
+        else 
+        {
+            isFail = true;
         }
 
         return !isFail;
     }
 
-    public bool Make(IMake make, Godot.Collections.Array<ItemElement> itemElements = null) 
+    public bool Make(ProduceResource produce, Godot.Collections.Array<ItemElement> itemElements = null) 
     {
         bool result = false;
-        if(TryMake(make, out HashSet<int> usedItemsIndex, itemElements) && !make.isCostMaterial) 
+        if(produce.nowParameter is IMake make && TryMake(produce, out HashSet<int> usedItemsIndex, itemElements) && !make.isCostMaterial) 
         {
             HashSet<KeyValuePair<int, ItemBaseResource>> items = new HashSet<KeyValuePair<int, ItemBaseResource>>();
             foreach (int index in usedItemsIndex)
@@ -473,7 +480,7 @@ public partial class ItemManager : Node
             }
 
             make.isCostMaterial = true;
-            onUseMaterial?.Invoke(make, items);
+            onUseMaterial?.Invoke(produce, items);
             result = true;
         }
         return result;
@@ -481,7 +488,7 @@ public partial class ItemManager : Node
 
 	public void AddProducingItem(ItemBaseResource item) 
 	{
-		if(item is IProduce && !producingItems.Contains(item)) 
+		if(item is ProduceResource && !producingItems.Contains(item)) 
 		{
 			producingItems.Add(item);
         }
@@ -506,7 +513,7 @@ public partial class ItemManager : Node
 
 		foreach(var producingItem in producingItems) 
 		{
-			if (producingItem is IProduce produce)
+			if (producingItem is ProduceResource produce)
 			{
                 double needTime = GetProduceNeedTime(produce);
 
@@ -515,16 +522,16 @@ public partial class ItemManager : Node
                     bool isSuccess = CreateProduct(produce);
                     if (isSuccess) 
                     {
-                        if (producingItem is IMake make1)
+                        if (produce.nowParameter is IMake make)
                         {
-                            make1.isCostMaterial = false;
+                            make.isCostMaterial = false;
                         }
 
                         if (produce.isKeepProduce) 
 					    {
-                            if (producingItem is IMake make2) 
+                            if (produce.nowParameter is IMake) 
                             {
-                                bool isSuccessCost = GameManager.instance.itemManager.Make(make2);
+                                bool isSuccessCost = GameManager.instance.itemManager.Make(produce);
                                 if (isSuccessCost)
                                 {
                                     produce.nowTime = (produce.nowTime + addTime) % needTime;
@@ -573,7 +580,7 @@ public partial class ItemManager : Node
 
 
 
-    public bool CreateProduct(IProduce produce)
+    public bool CreateProduct(ProduceResource produce)
     {
         bool isSuccess = false;
 
@@ -597,7 +604,7 @@ public partial class ItemManager : Node
             int checkPoint = checkPoints[i];
             if ((heldItems[checkPoint] == null || (heldItems[checkPoint] == produce && produce.durability == 1)) && IsAreaEffect(areas, checkPoint, AreaIndex.Normal))
             {
-                ItemBaseResource item = CreateItem(produce.productItem);
+                ItemBaseResource item = CreateItem(produce.nowParameter.productItem);
                 if (GameManager.instance.itemManager.featureContents.Contains(FeatureContentIndex.LowSellMoney)) 
                 {
                     item.isLowProduct = true;
@@ -923,6 +930,7 @@ public partial class ItemManager : Node
         }
     }
 
+    /*
     public List<ItemBaseResource> GetPickItems(int itemNum) 
     {
         List<ItemBaseResource> result = new List<ItemBaseResource>();
@@ -930,33 +938,36 @@ public partial class ItemManager : Node
         List<ItemBaseResource> tempItems = new List<ItemBaseResource>();
         foreach(var KV in GameManager.instance.itemConfig.config) 
         {
-            if(KV.Value is ToolResource tool) 
+            if(KV.Value is ProduceResource produce) 
             {
-                tempItems.Add(KV.Value);
-            }
-            else if(KV.Value is RecipeResource recipe) 
-            {
-                bool isFail = false;
-                for(int i = 0; i < recipe.materials.Count; i++) 
+                if(produce.nowParameter is MakeParameter make) 
                 {
-                    bool isFind = false;
-                    for(int j = 0; j < heldItems.Count; j++) 
+                    bool isFail = false;
+                    for(int i = 0; i < make.materials.Count; i++) 
                     {
-                        if (heldItems[j]?.index == recipe.materials[i] || (heldItems[j] is ToolResource heldTool && heldTool.productItem == recipe.materials[i])) 
+                        bool isFind = false;
+                        for(int j = 0; j < heldItems.Count; j++) 
                         {
-                            isFind = true;
+                            if (heldItems[j]?.index == make.materials[i] || (heldItems[j] is ProduceResource produceItem && produceItem.nowParameter.productItem == make.materials[i])) 
+                            {
+                                isFind = true;
+                                break;
+                            }
+                        }
+
+                        if (!isFind) 
+                        {
+                            isFail = true;
                             break;
                         }
                     }
 
-                    if (!isFind) 
+                    if (!isFail) 
                     {
-                        isFail = true;
-                        break;
+                        tempItems.Add(KV.Value);
                     }
                 }
-
-                if (!isFail) 
+                else
                 {
                     tempItems.Add(KV.Value);
                 }
@@ -980,6 +991,7 @@ public partial class ItemManager : Node
 
         return result;
     }
+    */
 
     public int GetBuyMoney(ItemBaseResource item) 
     {
@@ -1010,13 +1022,13 @@ public partial class ItemManager : Node
         return result;
     }
 
-    public double GetProduceNeedTime(IProduce produce) 
+    public double GetProduceNeedTime(ProduceResource produce) 
     {
-        double result = produce.needTime;
+        double result = produce.nowParameter.needTime;
 
         if (featureContents.Contains(FeatureContentIndex.HighSpeedProduce)) 
         {
-            result = produce.needTime / 2.0;
+            result = produce.nowParameter.needTime / 2.0;
         }
 
         return result;

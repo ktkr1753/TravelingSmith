@@ -255,7 +255,7 @@ public partial class MainGameUI : UIBase
                 isFire = true;
             }
 
-            if (item is IProduce produce)
+            if (item is ProduceResource produce)
             {
                 switch (produce.type) 
                 {
@@ -263,11 +263,11 @@ public partial class MainGameUI : UIBase
                         {
                             if (isProduce && !produce.isProducing) 
                             {
-                                if (item is IMake make) 
+                                if (produce.nowParameter is IMake make) 
                                 {
-                                    if (make.isKeepProduce && !make.isCostMaterial)
+                                    if (produce.isKeepProduce && !make.isCostMaterial)
                                     {
-                                        GameManager.instance.itemManager.Make(make, elements);
+                                        GameManager.instance.itemManager.Make(produce, elements);
                                     }
 
                                     if (make.isCostMaterial)
@@ -295,11 +295,11 @@ public partial class MainGameUI : UIBase
                         {
                             if (isFire && !produce.isProducing) 
                             {
-                                if (item is IMake make)
+                                if (produce.nowParameter is IMake make)
                                 {
-                                    if (make.isKeepProduce && !make.isCostMaterial) 
+                                    if (produce.isKeepProduce && !make.isCostMaterial) 
                                     {
-                                        GameManager.instance.itemManager.Make(make, elements);
+                                        GameManager.instance.itemManager.Make(produce, elements);
                                     }
   
                                     if (make.isCostMaterial)
@@ -500,20 +500,20 @@ public partial class MainGameUI : UIBase
     {
         ItemBaseResource item = bluePrintItems[nowBluePrintItemIndex];
 
-        if (item is RecipeResource recipe) 
+        if (item is ProduceResource produce && produce.nowParameter is IMake make) 
         {
-            if (GameManager.instance.itemConfig.config.TryGetValue(recipe.productItem, out ItemBaseResource productItem))
+            if (GameManager.instance.itemConfig.config.TryGetValue(make.productItem, out ItemBaseResource productItem))
             {
                 bluePrintImage.Texture = productItem.texture;
             }
             else 
             {
-                Debug.PrintErr($"不存在該道具, recipe.productItem:{recipe.productItem}");
+                Debug.PrintErr($"不存在該道具, make.productItem:{make.productItem}");
             }
         }
         else 
         {
-            Debug.PrintErr($"item不是Recipe, item index:{item.index}");
+            Debug.PrintErr($"item不是IMake, item index:{item.index}");
         }
     }
 
@@ -760,12 +760,12 @@ public partial class MainGameUI : UIBase
         SetExp();
     }
 
-    private void OnUseMaterials(IMake make, HashSet<KeyValuePair<int, ItemBaseResource>> usedMaterials) 
+    private void OnUseMaterials(ProduceResource produce, HashSet<KeyValuePair<int, ItemBaseResource>> usedMaterials) 
     {
         int endIndex = -1;
         for (int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++) 
         {
-            if (GameManager.instance.itemManager.heldItems[i] == make) 
+            if (GameManager.instance.itemManager.heldItems[i] == produce) 
             {
                 endIndex = i;            
             }
@@ -783,7 +783,7 @@ public partial class MainGameUI : UIBase
         }
     }
 
-    private void OnCreateProduct(IProduce produce, int endIndex, ItemBaseResource item) 
+    private void OnCreateProduct(ProduceResource produce, int endIndex, ItemBaseResource item) 
     {
         for(int i = 0; i < GameManager.instance.itemManager.heldItems.Count; i++) 
         {

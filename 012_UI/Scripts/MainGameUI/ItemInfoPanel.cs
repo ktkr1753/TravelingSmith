@@ -244,7 +244,7 @@ public partial class ItemInfoPanel : PanelContainer
         }
         materialPool.ReturnAllElement();
 
-        if (item is IMake make)
+        if (item is ProduceResource produce && produce.nowParameter is IMake make)
         {
             materialParent.Visible = true;
             for(int i = 0; i < make.materials.Count; i++) 
@@ -265,7 +265,7 @@ public partial class ItemInfoPanel : PanelContainer
 
     private void SetProduct() 
     {
-        if (item is IProduce produce && GameManager.instance.itemConfig.config.TryGetValue(produce.productItem, out ItemBaseResource productItem)) 
+        if (item is ProduceResource produce && GameManager.instance.itemConfig.config.TryGetValue(produce.nowParameter.productItem, out ItemBaseResource productItem)) 
         {
             productParent.Visible = true;
             productIcon.onMainClick -= OnItemDetailClick;
@@ -281,7 +281,7 @@ public partial class ItemInfoPanel : PanelContainer
 
     private void SetProduceCostTime() 
     {
-        if (item is IProduce produce)
+        if (item is ProduceResource produce)
         {
             produceCostTimeParent.Visible = true;
             double needTime = GameManager.instance.itemManager.GetProduceNeedTime(produce);
@@ -330,7 +330,7 @@ public partial class ItemInfoPanel : PanelContainer
         {
             needShowArea = AreaIndex.Useable;
         }
-        else if(item is IProduce producer) 
+        else if(item is ProduceResource producer) 
         {
             switch (producer.type) 
             {
@@ -391,7 +391,7 @@ public partial class ItemInfoPanel : PanelContainer
 
     private void SetKeepProduce() 
     {
-        if(item is IProduce produce) 
+        if(item is ProduceResource produce) 
         {
             if(produce.durability == 1)     //只能用1次就不顯示
             {
@@ -450,7 +450,7 @@ public partial class ItemInfoPanel : PanelContainer
 
     public void OnKeepProduceButtonClick() 
     {
-        if (item is IProduce produce)
+        if (item is ProduceResource produce)
         {
             produce.isKeepProduce = !produce.isKeepProduce;
         }

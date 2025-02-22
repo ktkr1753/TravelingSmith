@@ -1,23 +1,30 @@
-[gd_resource type="Resource" script_class="ToolResource" load_steps=4 format=3 uid="uid://y4q8uoeq7snd"]
+[gd_resource type="Resource" script_class="ProduceResource" load_steps=6 format=3 uid="uid://y4q8uoeq7snd"]
 
-[ext_resource type="Script" path="res://008_Item/Scripts/ToolResource.cs" id="1_j4yna"]
+[ext_resource type="Script" path="res://008_Item/Scripts/ProduceParameter.cs" id="1_veaxg"]
+[ext_resource type="Script" path="res://008_Item/Scripts/ProduceResource.cs" id="2_8pm2g"]
 [ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_xebcd"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1frpg"]
+[sub_resource type="Resource" id="Resource_jqueu"]
+script = ExtResource("1_veaxg")
+productItem = 610
+needTime = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qioe"]
 atlas = ExtResource("2_xebcd")
 region = Rect2(0, 48, 24, 24)
 
 [resource]
-script = ExtResource("1_j4yna")
+script = ExtResource("2_8pm2g")
 type = 1
-productItem = 610
-needTime = 20.0
+parameters = [SubResource("Resource_jqueu")]
+nowParameterIndex = 0
 nowTime = 0.0
 durability = -1
+_isKeepProduce = true
 isProducing = false
 index = 301
 detailType = 3
-texture = SubResource("AtlasTexture_1frpg")
+texture = SubResource("AtlasTexture_4qioe")
 effectRanges = []
 money = 4
 rank = 0

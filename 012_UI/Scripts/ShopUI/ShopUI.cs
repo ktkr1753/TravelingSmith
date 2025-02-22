@@ -224,18 +224,17 @@ public partial class ShopUI : UIBase
                                 materialIndexs.Add(itemIndex);
                             }
                             continue;
+                        default:
+                            materialIndexs.Add(itemIndex);
+                            break;
                     }
                 }
-                else if(item is RecipeResource recipe && item.detailType == ItemDetailType.Paper && recipe.isSellable) 
+                else if(item is ProduceResource produce && item.detailType == ItemDetailType.Paper && produce.isSellable) 
                 {
-                    if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(recipe.index) || waitUnlockRecipe.Contains(recipe.index)) 
+                    if (GameManager.instance.unlockRecipe.unlockedRecipes.Contains(produce.index) || waitUnlockRecipe.Contains(produce.index)) 
                     {
                         recipeIndexs.Add(itemIndex);
                     }
-                }
-                else if(item is SelfToolResource selfTool && selfTool.isSellable) 
-                {
-                    materialIndexs.Add(itemIndex);
                 }
             }
         }
@@ -521,9 +520,9 @@ public partial class ShopUI : UIBase
                         ClearShopItemElementData(element);
                         itemPool.ReturnElement(element);
 
-                        if(pickedItem is RecipeResource recipe && pickedItem.detailType == ItemDetailType.Paper) 
+                        if(pickedItem is ProduceResource produce && pickedItem.detailType == ItemDetailType.Paper) 
                         {
-                            GameManager.instance.unlockRecipe.AddUnlockRecipe(recipe.index);
+                            GameManager.instance.unlockRecipe.AddUnlockRecipe(produce.index);
                         }
 
                         GameManager.instance.soundManager.PlaySound(SoundEnum.sound_get_money);

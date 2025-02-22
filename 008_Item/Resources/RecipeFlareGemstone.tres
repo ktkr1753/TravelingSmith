@@ -1,25 +1,32 @@
-[gd_resource type="Resource" script_class="RecipeResource" load_steps=4 format=3 uid="uid://1re1cbhu8k2b"]
+[gd_resource type="Resource" script_class="ProduceResource" load_steps=6 format=3 uid="uid://1re1cbhu8k2b"]
 
-[ext_resource type="Script" path="res://008_Item/Scripts/RecipeResource.cs" id="1_4y8y8"]
+[ext_resource type="Script" path="res://008_Item/Scripts/MakeParameter.cs" id="1_dmkxq"]
+[ext_resource type="Script" path="res://008_Item/Scripts/ProduceResource.cs" id="2_jrnwu"]
 [ext_resource type="Texture2D" uid="uid://beuq7o0hc0y8j" path="res://008_Item/Images/TravelingSmith_item.png" id="2_qv3hg"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g6g07"]
-atlas = ExtResource("2_qv3hg")
-region = Rect2(48, 72, 24, 24)
-
-[resource]
-script = ExtResource("1_4y8y8")
-type = 2
+[sub_resource type="Resource" id="Resource_kb7ia"]
+script = ExtResource("1_dmkxq")
 materials = [607]
 isCostMaterial = false
 productItem = 608
 needTime = 10.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpblr"]
+atlas = ExtResource("2_qv3hg")
+region = Rect2(48, 72, 24, 24)
+
+[resource]
+script = ExtResource("2_jrnwu")
+type = 2
+parameters = [SubResource("Resource_kb7ia")]
+nowParameterIndex = 0
 nowTime = 0.0
 durability = 1
+_isKeepProduce = true
 isProducing = false
 index = 232
 detailType = 1
-texture = SubResource("AtlasTexture_g6g07")
+texture = SubResource("AtlasTexture_mpblr")
 effectRanges = []
 money = 3
 rank = 0
