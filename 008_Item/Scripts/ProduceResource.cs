@@ -23,8 +23,32 @@ public partial class ProduceResource : ItemBaseResource, IClone<ProduceResource>
     [Export] public int nowParameterIndex
     {
         get { return _nowParameterIndex; }
-        set { _nowParameterIndex = value; }
+        set 
+        { 
+            if(_nowParameterIndex != value) 
+            {
+                int preState = _nowParameterIndex;
+                _nowParameterIndex = value;
+                OnParameterIndexChange(preState, _nowParameterIndex);
+                onParameterIndexChange?.Invoke(preState, _nowParameterIndex);
+            }
+        }
     }
+
+    private void OnParameterIndexChange(int preState, int nextState) 
+    {
+        if(0 <= preState && preState < parameters.Count) 
+        {
+            if (parameters[preState] is IMake make) 
+            {
+                make.isCostMaterial = false;
+            }
+        }
+
+        nowTime = 0;
+    }
+
+    public Action<int, int> onParameterIndexChange;
 
     public ProduceParameter nowParameter 
     {

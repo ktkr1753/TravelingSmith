@@ -283,6 +283,7 @@ public partial class ItemElement : Control
 		{
 			produce.onIsProducingChange += OnProducingChange;
             produce.onDurabilityChange += OnDurabilityChange;
+			produce.onParameterIndexChange += OnParameterIndexChange;
         }
         else if (item is IUseable useable)
         {
@@ -298,6 +299,7 @@ public partial class ItemElement : Control
         {
             produce.onIsProducingChange -= OnProducingChange;
             produce.onDurabilityChange -= OnDurabilityChange;
+            produce.onParameterIndexChange -= OnParameterIndexChange;
         }
         else if (item is IUseable useable) 
 		{
@@ -528,6 +530,11 @@ public partial class ItemElement : Control
 	{
 
 	}
+
+    private void OnParameterIndexChange(int preState, int nextState)
+    {
+        SetProductImage();
+    }
 
     private void OnMouseEnter() 
 	{

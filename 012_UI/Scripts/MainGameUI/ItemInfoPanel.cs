@@ -22,6 +22,8 @@ public partial class ItemInfoPanel : PanelContainer
     [Export] private ItemIconPool materialPool;
     [Export] private Control productParent;
     [Export] private ItemIcon productIcon;
+    [Export] private TextureButton productLeftButton;
+    [Export] private TextureButton productRightButton;
     [Export] private Control produceCostTimeParent;
     [Export] private Label produceCostTimeLabel;
     [Export] private Control accelerationParent;
@@ -102,6 +104,10 @@ public partial class ItemInfoPanel : PanelContainer
         {
             attacker.onDurabilityChange += OnDurabilityChange;
         }
+        if (item is ProduceResource produce) 
+        {
+            produce.onParameterIndexChange += OnParameterIndexChange;
+        }
     }
 
     private void UnregisterEvent(ItemBaseResource item) 
@@ -109,6 +115,10 @@ public partial class ItemInfoPanel : PanelContainer
         if (item is IAttack attacker)
         {
             attacker.onDurabilityChange -= OnDurabilityChange;
+        }
+        if (item is ProduceResource produce)
+        {
+            produce.onParameterIndexChange -= OnParameterIndexChange;
         }
     }
 
@@ -271,6 +281,17 @@ public partial class ItemInfoPanel : PanelContainer
             productIcon.onMainClick -= OnItemDetailClick;
             productIcon.onMainClick += OnItemDetailClick;
             productIcon.SetData(productItem);
+
+            if(produce.parameters.Count > 1) 
+            {
+                productLeftButton.Visible = true;
+                productRightButton.Visible = true;
+            }
+            else 
+            {
+                productLeftButton.Visible = false;
+                productRightButton.Visible = false;
+            }
         }
         else 
         {
@@ -448,6 +469,11 @@ public partial class ItemInfoPanel : PanelContainer
         SetMoney();
     }
 
+    private void OnParameterIndexChange(int preState, int nextState) 
+    {
+        SetProduct();
+    }
+
     public void OnKeepProduceButtonClick() 
     {
         if (item is ProduceResource produce)
@@ -461,6 +487,42 @@ public partial class ItemInfoPanel : PanelContainer
     public void OnItemDetailClick(ItemIcon itemIcon) 
     {
         onDetailClick?.Invoke(index, itemIcon.data);
+    }
+
+    public void OnProduceLeftClick() 
+    {
+        if(item is ProduceResource produce) 
+        {
+            int result = -1;
+            if(0 <= produce.nowParameterIndex -1 && produce.nowParameterIndex -1 < produce.parameters.Count) 
+            {
+                result = produce.nowParameterIndex - 1;
+            }
+            else if (produce.parameters.Count != 0)
+            {
+                result = produce.parameters.Count - 1;
+            }
+            produce.nowParameterIndex = result;
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
+        }
+    }
+
+    public void OnProduceRightClick()
+    {
+        if (item is ProduceResource produce) 
+        {
+            int result = -1;
+            if (0 <= produce.nowParameterIndex + 1 && produce.nowParameterIndex + 1 < produce.parameters.Count)
+            {
+                result = produce.nowParameterIndex + 1;
+            }
+            else if (produce.parameters.Count != 0)
+            {
+                result = 0;
+            }
+            produce.nowParameterIndex = result;
+            GameManager.instance.soundManager.PlaySound(SoundEnum.sound_button32);
+        }
     }
 
     public void OnCloseClick() 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b6ylnogsow47o"]
+[gd_scene load_steps=16 format=3 uid="uid://b6ylnogsow47o"]
 
 [ext_resource type="Script" path="res://012_UI/Scripts/MainGameUI/ItemInfoPanel.cs" id="1_jhhof"]
 [ext_resource type="PackedScene" uid="uid://b5x05yhvprj4w" path="res://012_UI/Prefabs/Common/ItemElement.tscn" id="2_15mni"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://da8rx8sf38p15" path="res://012_UI/Images/close_16-hover.png" id="4_s6mg5"]
 [ext_resource type="PackedScene" uid="uid://5qah1s74j6mg" path="res://012_UI/Prefabs/Common/ItemIcon.tscn" id="5_3bx7m"]
 [ext_resource type="Texture2D" uid="uid://tvrswqn58jex" path="res://012_UI/Images/close_16-disabled.png" id="5_3daka"]
+[ext_resource type="Texture2D" uid="uid://g4ryx26aea75" path="res://012_UI/Images/arrow-left.png" id="10_wvu1b"]
+[ext_resource type="Texture2D" uid="uid://c7vlv5efiguqd" path="res://012_UI/Images/arrow-right.png" id="11_dxgeq"]
 
 [sub_resource type="Animation" id="Animation_4ensu"]
 length = 0.001
@@ -66,7 +68,7 @@ _data = {
 "fadeOut": SubResource("Animation_o21qh")
 }
 
-[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyNode", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage", "keepProduceParent", "keepProduceButton")]
+[node name="ItemInfoPanel" type="PanelContainer" node_paths=PackedStringArray("anim", "itemElement", "nameLabel", "moneyNode", "moneyLabel", "useTimeParent", "useTimeLabel", "attackPointParent", "attackPointLabel", "attackRangeParent", "attackRangeLabel", "repairPointParent", "repairPointLabel", "materialParent", "materialPool", "productParent", "productIcon", "productLeftButton", "productRightButton", "produceCostTimeParent", "produceCostTimeLabel", "accelerationParent", "accelerationLabel", "maxSpeedParent", "maxSpeedLabel", "needAreaParent", "needAreaImage", "makeAreaParent", "makeAreaImage", "keepProduceParent", "keepProduceButton")]
 offset_right = 112.0
 offset_bottom = 152.0
 script = ExtResource("1_jhhof")
@@ -87,6 +89,8 @@ materialParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaterialH
 materialPool = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/MaterialHBox/GridContainer")
 productParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox")
 productIcon = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/ItemIcon")
+productLeftButton = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/LeftButton")
+productRightButton = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/RightButton")
 produceCostTimeParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox")
 produceCostTimeLabel = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/ProductTimeHBox/TimeLabel")
 accelerationParent = NodePath("VBoxContainer/ScrollContainer/VBoxContainer/AccelerationHBox")
@@ -320,8 +324,18 @@ layout_mode = 2
 layout_mode = 2
 text = "產物:"
 
+[node name="LeftButton" type="TextureButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox"]
+layout_mode = 2
+texture_normal = ExtResource("10_wvu1b")
+stretch_mode = 5
+
 [node name="ItemIcon" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox" instance=ExtResource("5_3bx7m")]
 layout_mode = 2
+
+[node name="RightButton" type="TextureButton" parent="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox"]
+layout_mode = 2
+texture_normal = ExtResource("11_dxgeq")
+stretch_mode = 5
 
 [node name="ProductTimeHBox" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer"]
 visible = false
@@ -348,3 +362,5 @@ size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Control/TextureButton" to="." method="OnCloseClick"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/KeepProduce/Button" to="." method="OnKeepProduceButtonClick"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/LeftButton" to="." method="OnProduceLeftClick"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer/ProductHBox/RightButton" to="." method="OnProduceRightClick"]
