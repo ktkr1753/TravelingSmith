@@ -19,17 +19,17 @@ public enum ItemIndex
     RecipeStraightSword = 202,
     RecipeBoard = 203,
     RecipeHuntingBow = 204,
-    TitaniumForge = 205,
+    TitaniumForge = 205,                        //之後刪掉
     RecipeKnightsSword = 206,
     RecipePearlNecklace = 207,
     RecipeIronRing = 208,
-    GoldForge = 209,
+    GoldForge = 209,                            //之後刪掉
     RecipeMatchStaff = 210,
     RecipeCeremonialStaff = 211,
     FlareGemstoneBurin = 212,
     RecipeWoodenWheel = 213,
     RecipeIronWheel = 214,
-    IronForge = 215,
+    IronForge = 215,                            //之後刪掉
     RecipePickaxe = 216,
     RecipeFellingAxe = 217,
     RecipeFlareGemstonePickaxe = 218,
@@ -44,10 +44,12 @@ public enum ItemIndex
     RecipeStoneGolem = 227,
     RecipeButcherKnife = 228,
     RecipeStoneKnife = 229,
-    RecipeIron = 230,
-    RecipeGold = 231,
-    RecipeFlareGemstone = 232,
-    RecipeTitanium = 233,
+    RecipeIron = 230,                           //之後刪掉
+    RecipeGold = 231,                           //之後刪掉
+    RecipeFlareGemstone = 232,  
+    RecipeTitanium = 233,                       //之後刪掉
+    Forge = 234,
+    RecipeForge = 235,
     //生產 301~400
     Pickaxe = 301,
     FellingAxe = 302,

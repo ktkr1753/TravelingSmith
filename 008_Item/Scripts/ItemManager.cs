@@ -209,6 +209,10 @@ public partial class ItemManager : Node
             {
                 item = GameManager.instance.itemManager.CreateItem(ItemIndex.WoodenWheel);
             }
+            if (i == 53)
+            {
+                item = GameManager.instance.itemManager.CreateItem(ItemIndex.RecipeForge);
+            }
 
             SetHeldItem(i, item);
         }
@@ -527,8 +531,8 @@ public partial class ItemManager : Node
                             make.isCostMaterial = false;
                         }
 
-                        if (produce.isKeepProduce) 
-					    {
+                        if (produce.durability != 0 && produce.isKeepProduce) 
+                        {
                             if (produce.nowParameter is IMake) 
                             {
                                 bool isSuccessCost = GameManager.instance.itemManager.Make(produce);

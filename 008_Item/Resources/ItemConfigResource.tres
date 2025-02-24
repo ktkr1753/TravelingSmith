@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=70 format=3 uid="uid://dkr82wb8aifgn"]
+[gd_resource type="Resource" script_class="ItemConfigResource" load_steps=72 format=3 uid="uid://dkr82wb8aifgn"]
 
 [ext_resource type="Resource" uid="uid://dl367yta527ie" path="res://008_Item/Resources/Iron.tres" id="1_0c7qs"]
 [ext_resource type="Script" path="res://008_Item/Scripts/ItemConfigResource.cs" id="1_26gdp"]
@@ -69,6 +69,8 @@
 [ext_resource type="Resource" uid="uid://diseqw08lbqkp" path="res://008_Item/Resources/RecipeGold.tres" id="66_7wg7t"]
 [ext_resource type="Resource" uid="uid://1re1cbhu8k2b" path="res://008_Item/Resources/RecipeFlareGemstone.tres" id="67_g6tmt"]
 [ext_resource type="Resource" uid="uid://drpkhrdu4hm0m" path="res://008_Item/Resources/RecipeTitanium.tres" id="68_8340c"]
+[ext_resource type="Resource" uid="uid://uk86nk4jfc2s" path="res://008_Item/Resources/Forge.tres" id="69_ec285"]
+[ext_resource type="Resource" uid="uid://1qqc4opagtha" path="res://008_Item/Resources/RecipeForge.tres" id="70_x54gu"]
 
 [resource]
 script = ExtResource("1_26gdp")
@@ -114,6 +116,8 @@ config = {
 231: ExtResource("66_7wg7t"),
 232: ExtResource("67_g6tmt"),
 233: ExtResource("68_8340c"),
+234: ExtResource("69_ec285"),
+235: ExtResource("70_x54gu"),
 301: ExtResource("3_im246"),
 302: ExtResource("9_1ewuy"),
 303: ExtResource("28_hkpuh"),

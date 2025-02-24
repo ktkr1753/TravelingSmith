@@ -332,7 +332,7 @@ public partial class ItemElement : Control
         }
 		else 
 		{
-			if(item is ProduceResource produce && produce.nowParameter is IMake make) 
+			if(item is ProduceResource produce && produce.nowParameter is IMake make && produce.detailType == ItemDetailType.Paper) 
 			{
 				image.Material = onlyOutLineMaterial;
                 if (GameManager.instance.itemConfig.config.TryGetValue(make.productItem, out ItemBaseResource productItem)) 
@@ -352,9 +352,9 @@ public partial class ItemElement : Control
 	{
 		if(item is ProduceResource produce) 
 		{
-			if(produce.nowParameter is IMake) 
+			if(produce.nowParameter is IMake && produce.detailType == ItemDetailType.Paper) 
 			{
-                productImage.Visible = false;
+				productImage.Visible = false;
             }
 			else if(GameManager.instance.itemConfig.config.TryGetValue(produce.nowParameter.productItem, out ItemBaseResource productItem)) 
 			{

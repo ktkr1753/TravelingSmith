@@ -282,7 +282,18 @@ public partial class ItemInfoPanel : PanelContainer
             productIcon.onMainClick += OnItemDetailClick;
             productIcon.SetData(productItem);
 
-            if(produce.parameters.Count > 1) 
+            if (interactable)
+            {
+                productLeftButton.Disabled = false;
+                productRightButton.Disabled = false;
+            }
+            else
+            {
+                productLeftButton.Disabled = true;
+                productRightButton.Disabled = true;
+            }
+
+            if (produce.parameters.Count > 1) 
             {
                 productLeftButton.Visible = true;
                 productRightButton.Visible = true;
@@ -471,6 +482,7 @@ public partial class ItemInfoPanel : PanelContainer
 
     private void OnParameterIndexChange(int preState, int nextState) 
     {
+        SetMaterial();
         SetProduct();
     }
 

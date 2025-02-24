@@ -732,7 +732,7 @@ texture_focused = ExtResource("17_320u8")
 [node name="BluePrintPanel" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_top = 105.0
-offset_right = 112.0
+offset_right = 105.0
 offset_bottom = 135.0
 theme_type_variation = &"PanelContainer_Dark"
 
@@ -749,8 +749,13 @@ stretch_mode = 3
 layout_mode = 2
 text = "配方"
 
+[node name="Control" type="Control" parent="BluePrintPanel/HBoxContainer"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="BluePrintPanel/HBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 2
 alignment = 1
 
 [node name="LeftButton" type="TextureButton" parent="BluePrintPanel/HBoxContainer/HBoxContainer"]
